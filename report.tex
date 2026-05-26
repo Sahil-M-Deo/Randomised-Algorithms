@@ -1,0 +1,496 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+\title{Randomised Algorithms}
+\author{Sahil M Deo}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+\subsection{What even is a Randomised Algorithm?}
+
+A randomised algorithm is an algorithm that makes random choices during its execution. Unlike deterministic algorithms, whose behaviour is completely determined by the input, the behaviour of a randomised algorithm may vary between different executions on the same input.
+
+Typically, the algorithm uses a random number generator (rng for short) to decide between multiple possible actions. As a result, quantities such as running time, memory usage, or even correctness\footnote{
+The fact that correctness itself may become probabilistic can initially seem undesirable, especially in critical systems where absolute correctness is expected. However, in many practical situations, a sufficiently small error probability is considered acceptable. For example, if an algorithm can be shown to fail with probability at most \(10^{-30}\), then the chance of failure may already be smaller than the probability of random hardware faults such as memory bit flips caused by cosmic radiation, which programmers typically ignore during ordinary software development.
+} can become random variables (though usually not all of them at the same time).
+
+
+The performance of a randomised algorithm is therefore analysed using probability and expectation. If $T_{run}$ denotes the runtime of the algorithm, we are usually interested in quantities such as $T_{algo}=E[T_{run}]$ over all possible random choices made by the algorithm.\footnote{$T_{algo}$ can still be a random variable over the input - so this may \textbf{not} be the same as average case performance of the algorithm $T_{avg}$, which is an expected value over all possible inputs.}
+
+\vspace{0.6em}
+Randomised algorithms are often used for the following purposes:
+
+
+
+\begin{itemize}
+    \item avoid adversarial worst case inputs,
+    \item simplify algorithm design,
+    \item obtain fast approximate solutions.
+\end{itemize}
+
+\subsection{Implementation of Randomness in \texttt{C++}}
+
+Lets make things more concrete with some actual code and implementation details!
+Modern \texttt{C++} provides pseudo-random\footnote{Since computers are deterministic, they rely on parameters like atmospheric noise and temperature for randomness. The details are irrelevant for us... We will take pseudo random as true random for our purposes} number generators through the \texttt{<random>} library. A commonly used generator is \texttt{mt19937}, which is based on the Mersenne Twister algorithm.
+
+\begin{verbatim}
+#include <bits/stdc++.h>
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count()); //using time as a seed
+\end{verbatim}
+
+This creates an object rng with seed\footnote{seed values are used in pseudo random generators as a way to recreate the generated random numbers. This can be used for debugging a randomised algorithm.} as current time which will be passed as a parameter to other functions. It has the capability to produce "truly" random 32-bit integers.
+
+\subsubsection*{Generating Random Integers}
+
+To generate a random integer uniformly from a range \([L,R]\), we use
+
+\begin{verbatim}
+uniform_int_distribution<int>uid(L,R);
+
+int x=uid(rng);
+int y=uid(rng);
+.
+.
+.
+\end{verbatim}
+
+Each generation takes around constant time.
+
+\subsubsection*{Generating Random Real Numbers}
+
+To generate a real number uniformly from an interval \([x,y)\), we use
+
+\begin{verbatim}
+uniform_real_distribution<double>urd(x,y);
+
+double x=urd(rng);
+double y=urd(rng);
+.
+.
+.
+\end{verbatim}
+
+This also takes \(\Theta(1)\) time per generation.
+
+\subsubsection*{Generating a Random Permutation}
+
+A random permutation of an array (in-place modification) can be generated using \texttt{shuffle}:
+
+\begin{verbatim}
+shuffle(a.begin(),a.end(),rng);
+\end{verbatim}
+
+Internally, this does something like:
+
+\begin{verbatim}
+for(int i=n-1;i>0;i--)
+{
+    int j=random integer from [0,i];
+    swap(a[i],a[j]);
+}
+\end{verbatim}
+
+(Try to think why all permutations are equally likely with this method!)
+
+\subsubsection*{Implementing Random Decisions}
+
+Sometimes, an algorithm must choose between multiple actions with specified probabilities. For example, let three actions X,Y,Z be such that they are executed with probabilities:
+
+\[
+\Pr(X)=\frac{1}{5},
+\qquad
+\Pr(Y)=\frac{3}{5},
+\qquad
+\Pr(Z)=\frac{1}{5}
+\]
+
+One simple way to implement this is to generate a random integer uniformly from \(1\) to \(5\):
+
+\begin{verbatim}
+uniform_int_distribution<int>uid(1,5);
+
+int v=uid(rng);
+
+if(v==1)
+{
+    //do X
+}
+else if(v<=4)
+{
+    //do Y
+}
+else
+{
+    //do Z
+}
+\end{verbatim}
+
+thus implementing the required probabilities.
+
+\section{Algorithmic Performance} 
+
+For algorithms whose performance\footnote{
+Although this section focuses primarily on running time, the same methods of analysis can also be applied to other resources such as memory usage.
+} depends on the input size or other input parameters, we usually estimate the number of elementary operations performed as a function of the input size \(n\) or the maximum value of input $A_{max}$, usually denoted by $A$. This gives a mathematical way to compare algorithms independent of hardware or implementation details.
+\\\\
+A classical example is Bubble Sort. The algorithm repeatedly traverses the array, comparing adjacent elements and swapping them whenever they are in the wrong order. After each pass, the largest remaining element moves to its correct position near the end of the array.
+\\\\
+With some thought it can be proved that the total number of swaps performed by Bubble Sort is exactly equal to the number of inversions $N_{inv}$ in the input array. (An inversion is a pair of indices \((i,j)\) such that \(i<j\) but \(a_i>a_j\).) By taking swaps to be one operation taking constant time, we can estimate runtime of Bubble sort to be $T_{run}\propto N_{inv}$
+
+\subsection{Worst Case Analysis}
+
+In worst case analysis, we determine the maximum possible number of operations over all valid inputs of size \(n\). For Bubble Sort, the worst case occurs when the array is sorted in reverse order, where every pair is inverted. 
+
+\[N_{inv,max}=\binom{n}{2}=
+\frac{n(n-1)}{2}
+\]
+
+Worst case analysis is useful because it guarantees an upper bound on the running time regardless of the input provided.
+
+\subsection{Average Case Analysis} 
+
+In average case analysis, we compute the expected number of operations assuming that all valid inputs are equally likely.
+
+For Bubble Sort, this corresponds to analysing the expected number of inversions in a random permutation of size \(n\). For every pair of indices \((i,j)\) with \(i<j\), the probability that the pair forms an inversion is
+
+\[
+\Pr\big((i,j)\text{ is an inversion}\big)=\frac{1}{2}
+\]
+
+\noindent Define the indicator variable:
+
+\[
+I_{ij}=
+\begin{cases}
+1,&\text{if }(i,j)\text{ is an inversion}\\
+0,&\text{otherwise}
+\end{cases}
+\]
+
+\[
+N_{\mathrm{inv}}=\sum_{1\le i<j\le n}I_{ij}
+\]
+
+\[
+\mathbb{E}[N_{\mathrm{inv}}]
+=
+\mathbb{E}\left[\sum_{1\le i<j\le n}I_{ij}\right]
+=
+\sum_{1\le i<j\le n}\mathbb{E}[I_{ij}]
+\]
+\[
+\mathbb{E}[I_{ij}]
+=
+1\cdot\frac{1}{2}+0\cdot\frac{1}{2}
+=
+\frac{1}{2}
+\]
+
+Therefore,
+
+\[
+\mathbb{E}[N_{\mathrm{inv}}]
+=
+\sum_{1\le i<j\le n}\frac{1}{2}
+=
+\frac{1}{2}\binom{n}{2}
+=
+\frac{n(n-1)}{4}
+\]
+
+So notice that if we randomise the input sequence, $T_{algo}$ becomes equal to $T_{avg}$ thus improving performance by a factor\footnote{Randomising the input itself takes about n operations, so more rigorously we would say an asymptotic factor of 2. In most cases we will be able to neglect the time required to randomise the input.} of 2.
+\subsection{Time Complexity Analysis}
+
+We are sometimes interested in comparing runtimes like $T_{run}=n^2$ to $T_{run}=100nlogn$.
+To compare growth rates, we use asymptotic notation:
+
+\[
+T(n)=\Theta(f(n))
+\]
+
+means that \(T(n)\) grows asymptotically at the same rate as \(f(n)\).
+
+My favourite way to think about time complexity is as follows: we try to find the ``simplest'' function \(f(n)\) such that
+
+\[
+\lim_{n\to\infty}\frac{T(n)}{f(n)}=k,
+\qquad
+k\in\mathbb{R}_{>0}
+\]
+
+That is, \(T(n)\) and \(f(n)\) grow at the same asymptotic rate up to a positive constant factor.
+
+For example, Bubble Sort performs on the order of \(n^2\) operations in both the average and worst case, so its time complexity is
+
+\[
+T(n)=\Theta(n^2)
+\]
+
+Asymptotic analysis allows us to compare algorithms by their rate of growth rather than implementation-dependent constants.
+
+This allows us to say that A: $T_{run}=n^2$ is worse than B: $T_{run}=100nlogn$ since A has $T(n)=\Theta(n^2)$ and B has $T(n)=\Theta(nlogn)$ even though for some small n the first one may well be better, but for small n the performance doesn't really matter\dots
+
+\section{Standard Examples}
+\subsection{Quick Sort}
+
+Quick Sort is one of the most important examples of a randomised algorithm in practice. The basic idea is very simple:
+
+\begin{enumerate}
+    \item Choose a pivot element.
+    \item Partition the array into:
+    \begin{itemize}
+        \item elements smaller than the pivot,
+        \item elements equal to the pivot,
+        \item elements greater than the pivot.
+    \end{itemize}
+    This takes n comparisions with our pivot 
+    \item Recursively sort the smaller and larger parts.
+\end{enumerate}
+
+A deterministic implementation may always choose the first or last element as pivot. Unfortunately, this can lead to very poor performance on adversarial inputs. For example, if the array is already sorted and we always choose the first element as pivot, the recursion becomes extremely unbalanced:
+
+\[
+(n-1)+(n-2)+\dots+1
+=
+\Theta(n^2)
+\]
+
+Thus deterministic Quick Sort has worst case complexity
+
+\[
+T(n)=\Theta(n^2)
+\]
+
+The standard randomised version instead chooses the pivot uniformly at random.
+
+\begin{verbatim}
+uniform_int_distribution<int>uid(0,a.size()-1);
+int pivot=uid(rng);
+swap(a[pivot],a[r]);
+\end{verbatim}
+
+This tiny modification dramatically changes the behaviour of the algorithm. Intuitively, it becomes very unlikely that we repeatedly choose extremely bad pivots.
+
+\subsubsection*{Runtime Analysis}
+
+Let \(T(n)\) denote the expected runtime of randomised Quick Sort on an array of size \(n\) over all possible inputs.
+
+Suppose the pivot finally ends up at position \(k\), where \(0\le k\le n-1\). Then the recursive subproblems have sizes \(k\) and \(n-1-k\). Since partitioning itself takes n operations, we obtain the recurrence
+
+\[
+T(n)
+=
+T(k)+T(n-1-k)+n
+\]
+
+Because the pivot is chosen uniformly at random, every value of \(k\) is equally likely. Taking expectation over all random choices made by the algorithm gives
+
+\[
+T(n)
+=
+n
++
+\frac{1}{n}\sum_{k=0}^{n-1}
+\Big(
+T(k)+T(n-1-k)
+\Big)
+\]
+
+By symmetry,
+
+\[
+\sum_{k=0}^{n-1}T(k)
+=
+\sum_{k=0}^{n-1}T(n-1-k)
+\]
+
+therefore
+
+\[
+T(n)
+=
+\Theta(n)
++
+\frac{2}{n}\sum_{k=0}^{n-1}T(k)
+\]
+
+
+\[
+S(n)=\sum_{k=0}^{n}T(k)
+\]
+
+Then
+
+\[
+T(n)=S(n)-S(n-1)
+\]
+
+and the recurrence becomes
+
+\[
+S(n)-S(n-1)
+=
+cn+\frac{2}{n}S(n-1)
+\]
+\[
+S(n)
+=
+\left(1+\frac{2}{n}\right)S(n-1)+cn
+\]
+
+\[
+\frac{S(n)}{(n+1)(n+2)}
+=
+\frac{S(n-1)}{n(n+1)}
++
+\frac{cn}{(n+1)(n+2)}
+\]
+
+Summing this recurrence telescopically gives
+
+\[
+\frac{S(n)}{(n+1)(n+2)}
+=
+\Theta\left(
+\sum_{k=1}^{n}\frac{1}{k}
+\right)
+=
+\Theta(\log n)
+\]
+
+Therefore,
+
+\[
+S(n)=\Theta(n^2\log n)
+\]
+
+Finally,
+
+\[
+T(n)
+=
+S(n)-S(n-1)
+=
+\Theta(n\log n)
+\]
+
+Hence the expected runtime of randomised Quick Sort is
+
+\[
+T(n)=\Theta(n\log n)
+\]
+
+This analysis demonstrated a powerful technique to find the expected runtime - recursion on input size. It was a bit messy and lengthy, but sometimes yields results very quickly. 
+
+ Another possible way is through indicator variables. Observe that any pair of elements is compared at most once during the entire execution of Quick Sort.
+
+Let
+
+\[
+I_{ij}=
+\begin{cases}
+1,&\text{if elements }i,j\text{ are compared}\\
+0,&\text{otherwise}
+\end{cases}
+\]
+
+Then the total number of comparisons is
+
+\[
+C=\sum_{1\le i<j\le n}I_{ij}
+\]
+
+Two elements are compared only if one of them becomes the first pivot chosen among all elements lying between them in sorted order. It can be shown that
+
+\[
+\Pr(I_{ij}=1)=\frac{2}{j-i+1}
+\]
+
+Therefore,
+
+\[
+\mathbb{E}[C]
+=
+\sum_{1\le i<j\le n}\frac{2}{j-i+1}
+=
+\Theta(n\log n)
+\]
+
+Hence randomised Quick Sort has expected complexity
+
+\[
+T(n)=\Theta(n\log n)
+\]
+
+\subsection{Quick Select}
+
+The Problem: find the \(k\)-th smallest element of an unsorted input array\\
+
+
+\noindent An obvious method is to sort the array using Merge Sort in $\theta(nlogn)$ and just access the \(k\)-th element - this is overall $\theta(nlogn)$ and is deterministic. Then how could randomness help?\\
+
+
+Quick Select is an algorithm used to find the \(k\)-th smallest element of an array.
+
+Similar to Quick Sort, the algorithm chooses a pivot and partitions the array into three categories by doing n-1 comparisons between the pivot and every other element as before:
+\begin{itemize}
+    \item elements smaller than the pivot,
+    \item elements equal to the pivot,
+    \item elements greater than the pivot.
+\end{itemize}
+
+However, unlike Quick Sort, we recurse into only \textbf{one} side:
+\begin{itemize}
+    \item if the pivot ends up at position \(k\), we are done,
+    \item if \(k\) lies to the left, recurse left,
+    \item otherwise recurse right.
+\end{itemize}
+
+Thus each step discards a significant fraction of the array. This is a similar approach to Binary Search.
+
+\subsubsection*{Expected Runtime}
+
+Suppose partitioning takes n time where array size is n. Let T(n) be the runtime. If
+the pivot is the $i$-th smallest element, then 
+\[
+T(n)=n+
+\]
+which is a geometric series:
+
+\[
+T(n)=\Theta(n)
+\]
+
+Thus randomised Quick Select runs in expected linear time.
+
+\end{document}
