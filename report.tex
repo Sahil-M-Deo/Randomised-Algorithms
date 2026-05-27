@@ -765,7 +765,7 @@ round\left(\frac{n}{e}\right)
 $
 quite closely even for relatively small values of \(n\).
 
-\section{My Examples}
+\section{Hashing}
 \subsection{Matrix Problem}
 
 Problem\footnote{This question was taken from Codeforces 1980E} Statement: Given two \(n\times m\) matrices \(A\) and \(B\), determine if they are equivalent under row and column permutations. That is, can we permute the rows and columns of \(A\) to obtain \(B\)?
@@ -941,14 +941,7 @@ This method is very easy to implement and runs in $\mathcal{O}(n)$ time, which i
 However, it relies on the assumption that the hash values are unique for different multisets.\\
 We can improve this (if needed) by doing a second round of hashing with a different hash function like polynomial hashing. \\
 
-\section{Heuristic Algorithms}
-
-Many computational problems of practical interest have a statement like ``Given a graph find a set of vertices of size atmost x satisfying property P.'' \\
-Now one way to guarantee a solution is to find the minimum sized set of vertices satisfying P, but this is usually not doable in polynomial time. \\
-So we are often forced to settle for a solution that is not necessarily optimal but can be found efficiently. 
-Such algorithms are \emph{heuristic algorithms}: algorithms designed to quickly find solutions that are often good in practice,
-even if they do not always provide provable optimality guarantees or even any guarantees at all. \\ 
-Inherently the analysis of heuristic algorithms involve probability and expectation, making them a natural application of the tools we have developed so far.
+\section{Probabilistic Method}
 
 \subsection{The Dominating Set Problem}
 
@@ -973,7 +966,7 @@ Intuitively, we may think of the vertices in \(D\) as ``control centers'' or ``f
 
 Unfortunately, finding the minimum dominating set is NP-hard, so we want to find a polynomial time algorithm that gives us a 
 reasonably small\footnote{We care more about the asymptotic behaviour of the size of set produced by the algorithm and less about which polynomial time complexity the algorithm has} dominating set.
-\subsubsection{A Randomised Solution}
+\subsubsection*{A Randomised Solution}
 
 Suppose the graph has minimum degree \(d\). We now consider the following extremely simple randomised strategy:
 
@@ -1105,7 +1098,112 @@ which decreases exponentially fast. \\
 So the tradeoff is choosing a larger $c$ has a smaller expected number of repetitions ($\frac{n^{c-1}}{n^{c-1}-1}$)\footnote{Since the probability of failure is $p=(n^{c-1}-1)/n^{c-1}$ and this is a bernoulli trial, the expected number of trials for success is 1/p } but a larger dominating set,
 while choosing a smaller $c$ has a larger expected number of repetitions but a smaller dominating set.
 
-\subsubsection{A Greedy Heuristic}
+\subsection{Bipartite Subgraph}
+
+\textbf{Problem statement.}
+Given an undirected graph $G=(V,E)$ with $|E|=m$, we wish to find a bipartition of $V$ that maximizes the number of edges between vertices of different partitions.
+Equivalently, we want a 2-coloring of the vertices that maximizes the number of bichromatic edges. We aim to show that we can always guarantee at least $m/2$ edges in the cut.
+
+\subsubsection*{A Weak Tail Lower Bound}
+
+Let $X\in\{0,1,\dots,m\}$ be the number of bichromatic edges under a random 2-coloring of the vertices. We have
+\[
+\mathbb{E}[X]=\frac{m}{2}.
+\]
+
+We derive a crude lower bound on $\Pr\!\left(X\ge \frac{m}{2}\right)$ via a two-point extremal argument.
+
+\medskip
+\textbf{Case 1: $m=2k$ (even).}
+
+Let $p=\Pr(X\ge k)$. The maximum value of $E(X)$ under these constraints would be achieved 
+when we push all mass in $\{0,1,\dots,k-1\}$ to $k-1$, and all mass in $\{k,\dots,2k\}$ to $2k$. Then
+\[
+\mathbb{E}[X]\le (1-p)(k-1)+p(2k).
+\]
+
+Using $\mathbb{E}[X]=k$,
+\[
+k \le (1-p)(k-1)+2kp
+\]
+\[
+k \le k-1+p(k+1)
+\]
+\[
+1 \le p(k+1)
+\]
+\[
+p \ge \frac{1}{k+1}=\frac{2}{m+2}.
+\]
+
+\[
+\implies
+\Pr\!\left(X\ge \frac{m}{2}\right)\ge \frac{2}{m+2}.
+\]
+
+\medskip
+\textbf{Case 2: $m=2k+1$ (odd).}
+
+Let $p=\Pr(X\ge k+1)$. The maximum value of $E(X)$ under these constraints would be achieved when
+all mass in $\{0,1,\dots,k\}$ is pushed to $k$, and all mass in $\{k+1,\dots,2k+1\}$ is pushed to $2k+1$. 
+Then
+\[
+\mathbb{E}[X]\le (1-p)k+p(2k+1).
+\]
+
+Using $\mathbb{E}[X]=k+\tfrac{1}{2}$,
+\[
+k+\frac{1}{2} \le k+p(k+1)
+\]
+\[
+\frac{1}{2} \le p(k+1)
+\]
+\[
+p \ge \frac{1}{2(k+1)}=\frac{1}{m+1}.
+\]
+
+\[
+\implies
+\Pr\!\left(X\ge \frac{m}{2}\right)\ge \frac{1}{m+1}.
+\]
+
+\medskip
+\textbf{Conclusion.}
+\[
+\Pr\!\left(X\ge \frac{m}{2}\right)\ge min(\frac{2}{m+2},\frac{1}{m+1}) = \frac{1}{m+1}.
+\]
+
+\subsubsection*{Just Try}
+
+An even simpler (though less satisfying) method is repetition.
+
+From the probabilistic analysis, a random coloring satisfies
+\[
+\Pr\left(X \ge \frac{m}{2}\right) \ge c
+\]
+for some constant $c > 0$ (in fact, at least $1/(m+1)$ from the crude bound above).
+
+Therefore, if we repeatedly sample random colorings independently, the probability that none of $T$ trials succeeds is at most
+\[
+(1-c)^T.
+\]
+
+Choosing $T = \Theta(\log(1/\delta))$ ensures failure probability at most $\delta$.
+
+While simple, this method does not exploit structure of intermediate solutions and relies purely on repeated random sampling rather than improvement steps.
+
+\section{Heuristic Algorithms}
+
+Many computational problems of practical interest have a statement like ``Given a graph find a set of vertices of size atmost x satisfying property P.'' \\
+Now one way to guarantee a solution is to find the minimum sized set of vertices satisfying P, but this is usually not doable in polynomial time. \\
+So we are often forced to settle for a solution that is not necessarily optimal but can be found efficiently. 
+Such algorithms are \emph{heuristic algorithms}: algorithms designed to quickly find solutions that are often good in practice,
+even if they do not always provide provable optimality guarantees or even any guarantees at all. \\ 
+Inherently the analysis of heuristic algorithms involve probability and expectation, making them a natural application of the tools we have developed so far.
+
+\subsection{The Dominating Set Problem Revisited}
+
+\subsubsection*{A Greedy Heuristic}
 
 Another very natural approach is the following greedy algorithm:
 
@@ -1253,10 +1351,10 @@ Hence the greedy algorithm produces a dominating set of size at most
 
 \textbf{Problem Statement:}
 We are given a set of exams and a set of students. Each student is enrolled in a subset of the exams. 
-We wish to schedule as many exams as possible in the same time slot, subject to the constraint 
-that no student should have two exams scheduled at the same time\footnote{Or you could just give them a Time Turner and hope for the best :)}.
-
-Equivalently, if two exams share at least one student, they cannot be scheduled together.
+We wish to schedule as many exams as possible in the first time slot\footnote{this is different
+from the problem of the overall scheduling problem which is equivalent to finding the Chromatic Number. This is a simpler problem where we only care about the first time slot.}, 
+subject to the constraint that no student should have two exams scheduled at the 
+same time\footnote{Or you could just give them a Time Turner and hope for the best :)}.
 
 The goal is to find a largest possible subset of exams that can be scheduled simultaneously without any conflict.
 
@@ -1272,7 +1370,7 @@ In this formulation, a feasible schedule corresponds to a set of vertices with n
 
 Thus, the problem reduces to finding a maximum independent set in a graph.
 
-\subsubsection{A Probabilistic Method Analysis}
+\subsubsection{Random Permutation}
 
 $V$ is the set of all vertices.
 Maintain a set - the independent set we are building ($S$).
@@ -1319,7 +1417,7 @@ where \(d\) is the average degree of the graph. Hence:
 \alpha(G) \ge \frac{n}{d+1}
 \]
 
-\subsubsection{A Local Random Decision Method}
+\subsubsection{Local Decision}
 
 We now describe an alternative randomized construction that produces a large independent set via local random choices.
 
@@ -1395,5 +1493,53 @@ Using the standard bound \(\left(1-\frac{1}{d+1}\right)^d \ge e^{-d/(d+1)}\), we
 \mathbb{E}[|S|]\ge \frac{n}{d+1}\cdot e^{-d/(d+1)}. \ge \frac{n}{e(d+1)}.
 \]
 
-So we would expect to need to repeat this process about \(e(d+1)\) times to schedule all exams. 
+\subsection{Bipartite Subgraph Revisited}
+
+Recall the problem of finding a bipartition of the vertices that maximizes the number of bichromatic edges. 
+We showed that a random coloring achieves at least $m/2$ bichromatic edges in expectation, and with some probability. 
+Now we refine our approach by showing that we can always find a coloring with at least $m/2$ bichromatic edges via a self-correction procedure.
+\subsubsection*{Self-Correction}
+
+Start with a random coloring of the vertices. If it has at least $m/2$ bichromatic edges, we are done. 
+
+Otherwise, let $X$ be the number of bichromatic edges. We have $X < m/2$, so there are more monochromatic edges than bichromatic edges.
+Call a vertex $v$ \emph{bad} if it has more monochromatic incident edges than bichromatic incident edges. Otherwise it is \emph{good}.
+
+\textbf{Claim:} If the current cut has fewer than $m/2$ crossing edges, then a bad vertex must exist.
+
+\textbf{Proof idea:} Each monochromatic edge contributes equally to two endpoints.
+So total number of monochromatic edges is half the sum of monochromatic degrees of vertices. 
+If globally there are more monochromatic edges than crossing ones, 
+by pigeonhole principle\footnote{You may also prove this by contradiction -- 
+if all vertices are bad, then the total number of monochromatic edges is more than the total number of bichromatic edges by summing the inequality, contradicting the assumption.}, 
+some vertex must be incident to more monochromatic than bichromatic edges.
+
+Now consider flipping the color of a bad vertex $v$. Let $d_h(v)$ be the number of monochromatic (same-color) edges incident to $v$ and $d_c(v)$ the number of bichromatic edges. Since $d_h(v)>d_c(v)$, flipping $v$ increases $X$ by
+\[
+\Delta X = d_h(v)-d_c(v) > 0.
+\]
+
+Thus, each flip strictly increases the number of bichromatic edges.
+
+\textbf{Algorithm sketch:}
+\begin{verbatim}
+initialize random coloring of vertices
+compute X
+
+while exists bad vertex v:
+    flip color of v
+    update X locally
+\end{verbatim}
+
+\textbf{Complexity analysis:}
+Each flip increases $X$ by at least $1$, and $X \le m$, so there are at most $m$ flips.
+
+If we maintain for each vertex the counts of monochromatic and bichromatic incident edges, each flip can be updated in $O(\deg(v))$. Over all flips, total time is
+\[
+O\left(\sum_{v \text{ flipped}} \deg(v)\right) = O(m).
+\]
+
+Hence the full procedure runs in $O(m)$ after initialization.
+
 \end{document}
+
