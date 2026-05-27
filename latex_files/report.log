@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  27 MAY 2026 15:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  27 MAY 2026 17:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -547,94 +547,103 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 696.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 770--772
+Underfull \hbox (badness 10000) in paragraph at lines 771--773
 
  []
 
 [11]
-Underfull \hbox (badness 10000) in paragraph at lines 787--790
+Underfull \hbox (badness 10000) in paragraph at lines 788--791
 
  []
 
 
-Overfull \hbox (11.01852pt too wide) in paragraph at lines 810--810
+Overfull \hbox (11.01852pt too wide) in paragraph at lines 811--811
 []    \T1/cmtt/m/n/10.95 if (!F.count(temp)) //early exit if this row doesn't e
 xist in the first matrix[] 
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 833--834
+Underfull \hbox (badness 10000) in paragraph at lines 834--835
 
  []
 
 [13]
-Overfull \hbox (73.2606pt too wide) in paragraph at lines 871--871
+Overfull \hbox (73.2606pt too wide) in paragraph at lines 872--872
 []    \T1/cmtt/m/n/10.95 if(!s.count(pair_hash(v1,v2))) //early exit if this ro
 w doesn't exist in the first matrix[] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 901--902
+Underfull \hbox (badness 10000) in paragraph at lines 902--903
 
  []
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 939--942
+Underfull \hbox (badness 10000) in paragraph at lines 940--943
 
  []
 
-[15] (C:\Users\hp\OneDrive\Desktop\Randomised Algos\latex_files\report.aux)
+[15] [16]
+Underfull \hbox (badness 10000) in paragraph at lines 1101--1104
+
+ []
+
+[17] [18] [19] [20] [21]
+(C:\Users\hp\OneDrive\Desktop\Randomised Algos\latex_files\report.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 98DACE21CB0E3114163D9667E4247A8B;3188.
+(rerunfilecheck)             Checksum: 58F6FB19DFF201EA1B10E741DDAA64FC;4473.
  ) 
 Here is how much of TeX's memory you used:
- 12254 strings out of 467691
- 187558 string characters out of 5416439
- 623206 words of memory out of 5000000
- 41068 multiletter control sequences out of 15000+600000
- 651762 words of font info for 106 fonts, out of 8000000 for 9000
+ 12296 strings out of 467691
+ 188061 string characters out of 5416439
+ 625220 words of memory out of 5000000
+ 41076 multiletter control sequences out of 15000+600000
+ 652448 words of font info for 107 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,9n,79p,675b,645s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti109
-5.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx
-0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\e
-crm0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
-0\ecrm0600.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dp
-i600\ectt1200.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
-/dpi600\tcrm1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen
-/ec/dpi600\ecrm0800.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
-pen/ec/dpi600\ecbx1200.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jk
-nappen/ec/dpi600\ectt1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour
-/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljf
-our/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/
-ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/
-pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\hp\AppData\Local\MiKTeX\fon
-ts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk><C:/Users/hp/AppData/Local/Programs
-/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/hp/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/hp/AppData/Lo
-cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/hp/AppD
-ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/hp
-/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Use
-rs/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C
-:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmib10
-.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cme
-xtra/cmmib8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
-msfonts/cm/cmr10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/pub
-lic/amsfonts/cm/cmr6.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1
-/public/amsfonts/cm/cmr8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/t
-ype1/public/amsfonts/cm/cmr9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fon
-ts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/hp/AppData/Local/Programs/MiKT
-eX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/hp/AppData/Local/Programs
-/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/hp/AppData/Local/Pro
-grams/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+ <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti090
+0.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti
+1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\e
+cbx0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
+0\ecrm0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dp
+i600\ecrm0600.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
+/dpi600\ectt1200.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen
+/ec/dpi600\tcrm1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
+pen/ec/dpi600\ecrm0800.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jk
+nappen/ec/dpi600\ecbx1200.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour
+/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljf
+our/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/
+ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/
+pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\hp\AppData\Local\MiKTeX\fon
+ts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\hp\AppData\Local\MiKTeX\
+fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk><C:/Users/hp/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/hp/AppData/Local
+/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/hp/AppData
+/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cmextra/cmex9.pfb><C:/Users/
+hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/
+Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb
+><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi
+8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm
+/cmmi9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
+ts/cm/cmmib10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public
+/amsfonts/cmextra/cmmib8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/t
+ype1/public/amsfonts/cm/cmr10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fo
+nts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/hp/AppData/Local/Programs/MiKTe
+X/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/hp/AppData/Local/Programs/M
+iKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/hp/AppData/Local/Progra
+ms/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/hp/AppData/Local/
+Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/hp/AppData/L
+ocal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/hp/AppD
+ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Users/hp
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
 Output written on "C:\Users\hp\OneDrive\Desktop\Randomised Algos\latex_files\re
-port.pdf" (15 pages, 358180 bytes).
+port.pdf" (21 pages, 424930 bytes).
 PDF statistics:
- 744 PDF objects out of 1000 (max. 8388607)
- 59 named destinations out of 1000 (max. 500000)
- 153 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 880 PDF objects out of 1000 (max. 8388607)
+ 92 named destinations out of 1000 (max. 500000)
+ 209 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -941,4 +941,459 @@ This method is very easy to implement and runs in $\mathcal{O}(n)$ time, which i
 However, it relies on the assumption that the hash values are unique for different multisets.\\
 We can improve this (if needed) by doing a second round of hashing with a different hash function like polynomial hashing. \\
 
+\section{Heuristic Algorithms}
+
+Many computational problems of practical interest have a statement like ``Given a graph find a set of vertices of size atmost x satisfying property P.'' \\
+Now one way to guarantee a solution is to find the minimum sized set of vertices satisfying P, but this is usually not doable in polynomial time. \\
+So we are often forced to settle for a solution that is not necessarily optimal but can be found efficiently. 
+Such algorithms are \emph{heuristic algorithms}: algorithms designed to quickly find solutions that are often good in practice,
+even if they do not always provide provable optimality guarantees or even any guarantees at all. \\ 
+Inherently the analysis of heuristic algorithms involve probability and expectation, making them a natural application of the tools we have developed so far.
+
+\subsection{The Dominating Set Problem}
+
+\textbf{Problem Statement:}
+Given a graph:
+\[
+G=(V,E)
+\]
+find a smallest possible subset:
+\[
+D\subseteq V
+\]
+such that every vertex in the graph is either:
+\begin{itemize}
+    \item contained in \(D\), or
+    \item adjacent to some vertex in \(D\).
+\end{itemize}
+
+Such a set is called a \emph{dominating set}.
+
+Intuitively, we may think of the vertices in \(D\) as ``control centers'' or ``facilities'' such that every location in the graph is either itself a facility or directly connected to one.
+
+Unfortunately, finding the minimum dominating set is NP-hard, so we want to find a polynomial time algorithm that gives us a 
+reasonably small\footnote{We care more about the asymptotic behaviour of the size of set produced by the algorithm and less about which polynomial time complexity the algorithm has} dominating set.
+\subsubsection{A Randomised Solution}
+
+Suppose the graph has minimum degree \(d\). We now consider the following extremely simple randomised strategy:
+
+\begin{quote}
+Choose \(k\) vertices randomly out of the n vertices (uniformly among the $\binom{n}{k}$ possible choices).
+If the chosen set forms a dominating set, output it. Otherwise, declare failure.
+\end{quote}
+At first glance, this algorithm seems dumb. 
+However, it turns out that if we choose \(k\) large enough, the probability of failure becomes small.
+The key question thus becomes:
+\begin{quote}
+What is the probability of failure as a function of \(k\), \(n\), and \(d\)?
+\end{quote}
+We now analyse this probability.
+
+\subsubsection*{Probability That a Vertex Remains Undominated}
+
+Fix a vertex: $v\in V$
+
+Since the graph has minimum degree \(d\), $N[v]$
+contains at least $d+1$ vertices.
+
+For \(v\) to remain undominated, none of the selected \(k\) vertices may lie inside $N[v]$
+
+When choosing vertices uniformly at random, the probability that a single chosen vertex does \emph{not} belong to \(N[v]\) is at most:
+\[
+1-\frac{d+1}{n}
+\]
+
+\[
+\implies
+\Pr[v\text{ remains undominated}]
+\le
+\left(1-\frac{d+1}{n}\right)^k
+\]
+
+Using:
+\[
+1-x\le e^{-x}
+\]
+
+we obtain:
+\[
+\Pr[v\text{ remains undominated}]
+\le
+e^{-k(d+1)/n}
+\]
+
+\subsubsection*{Bounding the Failure Probability}
+
+The algorithm fails if at least one vertex remains undominated.
+
+Applying the union bound\footnote{
+The \emph{union bound} states that for any events:
+$A_1,A_2,\dots,A_n$
+we always have:
+$\Pr\left[\bigcup_{i=1}^{n}A_i\right]\le\sum_{i=1}^{n}\Pr[A_i]$
+}
+
+\[
+\Pr[\text{failure}]
+\le
+n\cdot e^{-k(d+1)/n}
+\]
+
+We would like this probability to be strictly less than \(1\). Therefore we require:
+\[
+n e^{-k(d+1)/n}<1
+\]
+
+Taking natural logarithms:
+\[
+\ln n-\frac{k(d+1)}{n}<0
+\]
+
+Rearranging:
+\[
+k>\frac{n\ln n}{d+1}
+\]
+
+Thus, choosing:
+\[
+k=\frac{cn\ln n}{d+1}
+\]
+for any constant:
+\[
+c>1
+\]
+gives:
+\[
+\Pr[\text{failure}]
+\le
+n^{1-c}
+\]
+
+which tends to \(0\) as \(n\to\infty\).
+
+\subsubsection*{What Does This Actually Mean?}
+
+The important point is not merely that the algorithm succeeds with high probability.
+
+Rather, we have shown something stronger:
+
+\begin{quote}
+There exists a dominating set\footnote{
+This method has a limitation - if $d<c\ln n$, 
+then the size of the dominating set produced by the algorithm is basically the whole set of vertices, making it useless.} of size roughly:
+\[
+\frac{n\log n}{d}
+\]
+\end{quote}
+
+Indeed, if no such dominating set existed, our algorithm could never possibly succeed.
+
+Thus a simple probabilistic argument simultaneously:
+\begin{itemize}
+    \item proves the existence of a reasonably small dominating set,
+    \item and gives a randomised algorithm capable of finding one.
+\end{itemize}
+
+\subsubsection*{Amplifying the Success Probability}
+
+Even if a single run fails, we may simply repeat the algorithm independently.
+
+If the failure probability of one run is $\bm{p}=\frac{1}{n^{c-1}}$, 
+then after $\bm{t}$ independent repetitions, the probability that \emph{every} run fails equals $\bm{p^t}$
+which decreases exponentially fast. \\
+
+So the tradeoff is choosing a larger $c$ has a smaller expected number of repetitions ($\frac{n^{c-1}}{n^{c-1}-1}$)\footnote{Since the probability of failure is $p=(n^{c-1}-1)/n^{c-1}$ and this is a bernoulli trial, the expected number of trials for success is 1/p } but a larger dominating set,
+while choosing a smaller $c$ has a larger expected number of repetitions but a smaller dominating set.
+
+\subsubsection{A Greedy Heuristic}
+
+Another very natural approach is the following greedy algorithm:
+
+\begin{quote}
+Repeatedly select the vertex that dominates the largest number of currently undominated vertices.
+\end{quote}
+
+More precisely:
+\begin{enumerate}
+    \item Initially, all vertices are marked undominated.
+    \item At each step, choose a vertex whose closed neighbourhood \(N[v]\) contains the largest number of undominated vertices.
+    \item Add this vertex to the dominating set.
+    \item Mark all vertices in \(N[v]\) as dominated.
+    \item Repeat until every vertex becomes dominated.
+\end{enumerate}
+
+This heuristic is extremely intuitive: at every step we greedily maximise immediate progress.
+
+\subsubsection*{Analysing the Greedy Heuristic}
+Let \(\mathrm{OPT}\) denote the size of a minimum dominating set.
+
+Suppose that at some stage of the algorithm there remain \(r\) undominated vertices.
+
+Since the optimal solution uses only \(\mathrm{OPT}\) vertices to dominate the entire graph, those same \(\mathrm{OPT}\) vertices must also collectively dominate these remaining \(r\) vertices.
+
+Therefore, by the pigeonhole principle, at least one of those optimal vertices must dominate at least \(\frac{r}{\mathrm{OPT}}\) of the currently undominated vertices.
+
+But the greedy algorithm always chooses a vertex dominating as many undominated vertices as possible. Hence the greedy step must dominate at least \(\frac{r}{\mathrm{OPT}}\) new vertices.
+
+Thus after one greedy step, the number of remaining undominated vertices becomes at most
+\[
+r-\frac{r}{\mathrm{OPT}}
+=
+r\left(1-\frac{1}{\mathrm{OPT}}\right)
+\]
+
+If \(r_t\) denotes the number of undominated vertices after \(t\) greedy steps, then
+\[
+r_{t+1}
+\le
+r_t\left(1-\frac1{\mathrm{OPT}}\right)
+\]
+
+Since initially \(r_0=n\), we obtain
+\[
+r_t
+\le
+n\left(1-\frac1{\mathrm{OPT}}\right)^t
+\]
+
+We would like all vertices to become dominated, i.e. \(r_t<1\).
+
+Since
+\[
+r_t
+\le
+n\left(1-\frac1{\mathrm{OPT}}\right)^t
+\]
+
+it suffices to find the smallest \(t\) such that
+\[
+n\left(1-\frac1{\mathrm{OPT}}\right)^t<1
+\]
+
+Rearranging:
+\[
+\left(1-\frac1{\mathrm{OPT}}\right)^t<\frac1n
+\]
+
+Taking logarithms:
+\[
+t\ln\left(1-\frac1{\mathrm{OPT}}\right)<-\ln n
+\]
+
+Since \(\ln(1-\frac1{\mathrm{OPT}})<0\), dividing reverses the inequality:
+\[
+t>
+\frac{\ln n}{
+-\ln\left(1-\frac1{\mathrm{OPT}}\right)
+}
+\]
+
+Let \(S\) denote the size of the dominating set produced by the greedy algorithm. Then \(S\) is the smallest integer \(t\) satisfying the above inequality. Thus:
+\[
+S=
+\left\lceil
+\frac{\ln n}{
+-\ln\left(1-\frac{1}{\mathrm{OPT}}\right)
+}
+\right\rceil
+\le
+\frac{\ln n}{
+-\ln\left(1-\frac{1}{\mathrm{OPT}}\right)
+}
++1
+\]
+
+Now using the inequality
+\[
+-\ln(1-x)\ge x
+\]
+
+with \(x=\frac1{\mathrm{OPT}}\), we obtain
+\[
+-\ln\left(1-\frac1{\mathrm{OPT}}\right)
+\ge
+\frac1{\mathrm{OPT}}
+\]
+
+Taking reciprocals reverses the inequality:
+\[
+\frac1{
+-\ln\left(1-\frac1{\mathrm{OPT}}\right)
+}
+\le
+\mathrm{OPT}
+\]
+
+Therefore:
+\[
+S
+\le
+\ln n\cdot
+\frac1{
+-\ln\left(1-\frac1{\mathrm{OPT}}\right)
+}
++1
+\]
+
+\[
+\implies
+S
+\le
+\mathrm{OPT}\ln n+1
+\]
+
+Hence the greedy algorithm produces a dominating set of size at most
+\[
+\boxed{
+\mathrm{OPT}\ln n+1
+}
+\]
+
+\subsection{Exam Scheduling}
+
+\textbf{Problem Statement:}
+We are given a set of exams and a set of students. Each student is enrolled in a subset of the exams. 
+We wish to schedule as many exams as possible in the same time slot, subject to the constraint 
+that no student should have two exams scheduled at the same time\footnote{Or you could just give them a Time Turner and hope for the best :)}.
+
+Equivalently, if two exams share at least one student, they cannot be scheduled together.
+
+The goal is to find a largest possible subset of exams that can be scheduled simultaneously without any conflict.
+
+\subsubsection*{Graph Theoretic Formulation}
+
+We model the problem using a graph \(G=(V,E)\) where:
+\begin{itemize}
+    \item each vertex represents an exam,
+    \item an edge exists between two vertices if there is at least one student enrolled in both corresponding exams.
+\end{itemize}
+
+In this formulation, a feasible schedule corresponds to a set of vertices with no edges between them. Such a set is called an \emph{independent set}.
+
+Thus, the problem reduces to finding a maximum independent set in a graph.
+
+\subsubsection{A Probabilistic Method Analysis}
+
+$V$ is the set of all vertices.
+Maintain a set - the independent set we are building ($S$).
+Pick a random vertex from $V$ -- delete it from $V$ and if none of its neighbours are in $S$, put it in $S$.
+Keep doing this until $V$ is empty. This guarantees forming a valid independent set.
+
+Note that the order in which we pick vertices is a uniformly random permutation of the vertices.
+
+\subsubsection*{Probability a Vertex is Selected}
+
+Fix a vertex \(v\). Consider the set consisting of \(v\) and its neighbours \(N(v)\). There are \(d(v)+1\) vertices in total.
+
+Since all relative orderings are equally likely, the probability that \(v\) is the picked earliest among these vertices is:
+\[
+\Pr[v \in S] = \frac{1}{d(v)+1}
+\]
+
+\subsubsection*{Expected Size of the Independent Set}
+
+Let \(I_v\) be the indicator random variable for the event \(v \in S\). Then:
+\[
+|S| = \sum_{v \in V} I_v
+\]
+
+Taking expectation and using linearity:
+\[
+\mathbb{E}[|S|] = \sum_{v \in V} \mathbb{E}[I_v]
+= \sum_{v \in V} \frac{1}{d(v)+1}
+\]
+
+Therefore, there exists an independent set of size at least:
+\[
+\sum_{v \in V} \frac{1}{d(v)+1}
+\]
+
+Denoting the maximum independent set size by \(\alpha(G)\), we have:
+\[\alpha(G) \ge \sum_{v \in V} \frac{1}{d(v)+1}\]
+Using the AM-HM inequality, we have:
+\[
+\sum_{v \in V} \frac{1}{d(v)+1} \ge \frac{n}{d+1}
+\]
+where \(d\) is the average degree of the graph. Hence:
+\[
+\alpha(G) \ge \frac{n}{d+1}
+\]
+
+\subsubsection{A Local Random Decision Method}
+
+We now describe an alternative randomized construction that produces a large independent set via local random choices.
+
+Each vertex independently chooses a random value:
+\[
+X_v =
+\begin{cases}
+1 & \text{with probability } p \\
+0 & \text{with probability } 1-p
+\end{cases}
+\]
+
+We construct a set \(S\) by including a vertex \(v\) if:
+\begin{itemize}
+    \item \(X_v = 1\), and
+    \item for every neighbour \(u \in N(v)\), \(X_u = 0\).
+\end{itemize}
+
+\subsubsection*{Probability of Inclusion}
+
+Fix a vertex \(v\). The probability that \(v\) is included in \(S\) is:
+\[
+\Pr[v \in S] = p(1-p)^{d(v)}
+\]
+
+Therefore:
+\[
+\mathbb{E}[|S|] = \sum_{v \in V} p(1-p)^{d(v)}
+\]
+
+\subsubsection*{Guarantee on Expected Size}
+
+We analyze the randomized construction where each vertex is selected independently with probability \(p\), and a vertex \(v\) is included in the independent set \(S\) if it is selected and none of its neighbors are selected. Then:
+\[
+\mathbb{E}[|S|]=\sum_{v\in V} p(1-p)^{d(v)}.
+\]
+
+Using convexity of \(f(x)=(1-p)^x\) and Jensen’s inequality, we obtain:
+\[
+\sum_{v\in V}(1-p)^{d(v)}\ge n(1-p)^d,
+\]
+where \(d=\frac{1}{n}\sum_{v\in V}d(v)\) is the average degree. Hence:
+\[
+\mathbb{E}[|S|]\ge np(1-p)^d.
+\]
+
+We now optimize the function:
+\[
+f(p)=p(1-p)^d.
+\]
+
+Differentiating:
+\[
+f'(p)=(1-p)^d - pd(1-p)^{d-1}
+=(1-p)^{d-1}\big((1-p)-pd\big).
+\]
+
+Setting \(f'(p)=0\), we obtain:
+\[
+1-p-pd=0
+\quad\Rightarrow\quad
+p=\frac{1}{d+1}.
+\]
+
+Substituting this optimal value gives:
+\[
+\mathbb{E}[|S|]\ge n\cdot \frac{1}{d+1}\left(1-\frac{1}{d+1}\right)^d
+=\frac{n}{d+1}\left(\frac{d}{d+1}\right)^d.
+\]
+
+Using the standard bound \(\left(1-\frac{1}{d+1}\right)^d \ge e^{-d/(d+1)}\), we obtain:
+\[
+\mathbb{E}[|S|]\ge \frac{n}{d+1}\cdot e^{-d/(d+1)}. \ge \frac{n}{e(d+1)}.
+\]
+
+So we would expect to need to repeat this process about \(e(d+1)\) times to schedule all exams. 
 \end{document}
