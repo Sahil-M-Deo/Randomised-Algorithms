@@ -8,8 +8,12 @@
 \contentsline {section}{\numberline {3}Standard Examples}{5}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Quick Sort}{5}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Quick Select}{8}{subsection.3.2}%
-\contentsline {section}{\numberline {4}My Examples}{8}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Matrix Problem}{8}{subsection.4.1}%
-\contentsline {subsubsection}{\numberline {4.1.1}Deterministic Method}{9}{subsubsection.4.1.1}%
-\contentsline {subsubsection}{\numberline {4.1.2}Randomised Method}{9}{subsubsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.2}Rolling Window Multiset}{10}{subsection.4.2}%
+\contentsline {subsection}{\numberline {3.3}The Dating Problem}{8}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Why Threshold Strategies are Optimal}{9}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Finding the Optimal Threshold}{10}{subsubsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.3}Behaviour for Small \(n\)}{11}{subsubsection.3.3.3}%
+\contentsline {section}{\numberline {4}My Examples}{12}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Matrix Problem}{12}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Deterministic Method}{12}{subsubsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.2}Randomised Method}{13}{subsubsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.2}Rolling Window Multiset}{14}{subsection.4.2}%

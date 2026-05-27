@@ -15,6 +15,7 @@
 \usepackage{enumitem}
 \usepackage{booktabs}
 \usepackage{array}
+\usepackage{bm}
 
 \hypersetup{
     colorlinks=true,
@@ -491,6 +492,278 @@ T(n)=\Theta(n)
 \]
 
 Thus randomised Quick Select runs in expected linear time.
+
+\subsection{The Dating Problem}
+
+\textbf{Problem Statement:}
+Consider the problem
+\footnote{Although this problem belongs more to optimal stopping theory rather than randomized algorithms,
+it illustrates several recurring themes in probabilistic algorithm design}
+of finding the best partner. Assume that the number of people you will eventually date is fixed, i.e. some known value \(n\). The people appear in a uniformly random order. After dating a person, you must immediately decide whether to commit to them forever or reject them permanently and continue searching. Figure out a strategy that maximises the probability of ending up with the best partner.\footnote{This is a different problem from maximising the expected ``value'' of your partner. Here the objective is specifically to maximise the probability of selecting the single best partner among all \(n\) people.}
+
+We assume that while dating person \(i\), we only know how they compare relative to the people we have already dated. In particular, we can determine whether they are the best person seen so far.
+
+
+\noindent Most sources directly jump to the famous strategy of:
+\begin{quote}
+``Reject the first \(r\) people, then accept the first person afterwards who is better than everyone seen so far.''
+\end{quote}
+
+However, they often omit the proof of why an optimal strategy must necessarily have this threshold form. We first prove this fact.
+
+\subsubsection{Why Threshold Strategies are Optimal}
+
+Suppose we are currently considering the \(k\)-th person.
+
+If the current person is \emph{not} the best among the first \(k\) people seen so far, then accepting them can never succeed:
+This is because there already exists an earlier person who is strictly better, and that earlier person has already been rejected.
+Hence an optimal strategy should only ever consider accepting people who are the best seen so far.
+
+Now suppose the current person \emph{is} the best among the first \(k\) people seen so far. 
+Let $\bm{q_k}$ be the optimal probability of eventually selecting the globally best person if we reject the $k$-th person and continue optimally afterwards.
+
+If we instead accept the current person immediately, what is the probability of success?
+
+Since the ordering of the \(n\) people is uniformly random, each of the first \(k\) positions is equally likely to contain the globally best person. 
+Conditioned on the fact that the current person is the best among the first \(k\), the probability that they are actually the globally best person equals:
+\[
+\frac{k}{n}
+\]
+
+Therefore:
+\begin{itemize}
+    \item accepting gives success probability \(\frac{k}{n}\),
+    \item rejecting gives success probability \(q_k\).
+\end{itemize}
+
+Hence the optimal decision is to accept iff $\frac{k}{n} \ge q_k$ \footnote{This is a common theme in \textbf{online algorithms} - the optimal decision at each step is determined by comparing the value of accepting now to the expected value of rejecting and continuing optimally.}. \\
+
+
+Now observe that \(\frac{k}{n}\) is increasing with \(k\). \\
+
+On the other hand, \(q_k\) is decreasing with \(k\). To see this, note that from time \(k\), one valid strategy is:
+\begin{quote}
+``Reject one more person no matter what, and then behave optimally from time \(k+1\) onwards.''
+\end{quote}
+
+This strategy achieves success probability exactly \(q_{k+1}\). Since \(q_k\) is the \emph{optimal} achievable success probability starting from time \(k\), we must have:
+\[
+q_k \ge q_{k+1}
+\]
+
+Therefore there exists some threshold \(0 \le r \le n\) such that:
+\begin{itemize}
+    \item for \(k \le r\), rejecting is optimal,
+    \item for \(k > r\), accepting the first ``best-so-far'' person is optimal.
+\end{itemize}
+
+Hence every optimal strategy must be a threshold strategy.
+Note r=0 corresponds to accepting the first person, and r=n corresponds to rejecting everyone and ending up with no partner. 
+Both of these are valid threshold strategies, though they are not very good ones \footnote{Though it may be argued that having no partner is the best choice - this is beyond the scope of this book and is left as an exercise for the reader.}.
+
+\subsubsection{Finding the Optimal Threshold}
+
+We now analyse the threshold strategy:
+\begin{quote}
+Reject the first \(r\) people, then accept the first person afterwards who is better than everyone seen so far.
+\end{quote}
+
+Suppose the globally best person appears at position \(k\).
+
+For our strategy to succeed:
+\begin{enumerate}
+    \item we must have \(k > r\),
+    \item among the first \(k-1\) people, the best person must appear within the first \(r\) positions.
+\end{enumerate}
+
+The first condition ensures that we do not automatically reject the best person.
+
+The second condition ensures that no earlier candidate after position \(r\) triggers acceptance before the globally best person appears.
+
+Now:
+\[
+\Pr[\text{best person appears at position }k] = \frac{1}{n}
+\]
+
+Further, among the first \(k-1\) people, each position is equally likely to contain their maximum. Therefore:
+\[
+\Pr[\text{maximum among first }k-1\text{ lies in first }r]
+=
+\frac{r}{k-1}
+\]
+
+Hence:
+\[
+\Pr[\text{success}]
+=
+\sum_{k=r+1}^{n}
+\frac{1}{n}\cdot\frac{r}{k-1}
+\]
+
+\[
+=
+\frac{r}{n}
+\sum_{k=r}^{n-1}\frac{1}{k}
+\]
+
+Using the approximation:
+\[
+\sum_{k=r}^{n-1}\frac{1}{k}
+\approx
+\ln\left(\frac{n}{r}\right)
+\]
+
+we obtain:
+\[
+P(r)
+\approx
+\frac{r}{n}\ln\left(\frac{n}{r}\right)
+\]
+
+Let:
+\[
+x=\frac{r}{n}
+\]
+
+Then:
+\[
+P(x)=x\ln\left(\frac{1}{x}\right)
+\]
+
+Differentiating:
+\[
+P'(x)=\ln\left(\frac{1}{x}\right)-1
+\]
+
+Setting:
+\[
+P'(x)=0
+\]
+
+gives:
+\[
+\ln\left(\frac{1}{x}\right)=1
+\]
+
+\[
+x=\frac{1}{e}
+\]
+
+Thus the optimal strategy is:
+\begin{quote}
+Reject approximately the first \(\frac{n}{e}\) people, then accept the first person afterwards who is better than everyone seen so far.
+\end{quote}
+
+The corresponding success probability is:
+\[
+\boxed{\frac{1}{e}}
+\]
+
+which is approximately \(36.8\%\). Not bad at all!
+
+Strictly speaking, we should also verify that this critical point indeed corresponds to a maximum rather than a minimum. One way is via the second derivative test:
+\[
+P''(x)=-\frac{1}{x}<0
+\]
+for all \(x>0\), so \(P(x)\) is concave and hence the critical point is necessarily a global maximum.
+
+Alternatively, we can avoid calculus entirely by inspecting the behaviour near the boundaries. Observe:
+\[
+P(x)=x\ln\left(\frac1x\right)
+\]
+
+As \(x\to0\),
+\[
+P(x)\to0
+\]
+since \(x\) decays faster than \(\ln(1/x)\) grows.
+
+Similarly, as \(x\to1\),
+\[
+P(x)\to0
+\]
+because:
+\[
+\ln(1)=0
+\]
+
+Since \(P(x)\) is positive for \(0<x<1\), rises away from \(0\), and eventually falls back to \(0\), the unique critical point at:
+\[
+x=\frac1e
+\]
+must correspond to the global maximum.
+
+\subsubsection{Behaviour for Small \(n\)}
+
+We used some limiting n approximations in finding the optimal threshold (I hope you noticed!).
+In case you were not planning on dating a tending to infinite number of people, you might be interested in the optimal strategy for small values of \(n\).
+For finite \(n\), the exact success probability for threshold \(r\) is:
+\[
+P(r)=\frac{r}{n}\sum_{k=r}^{n-1}\frac1k
+\]
+
+Computationally we can now easily find max for each \(n\):
+\[
+\begin{array}{c|cccccc}
+n & 2 & 3 & 4 & 5 & 6 & 7\\
+\hline
+n/e
+& 0.74
+& 1.10
+& 1.47
+& 1.84
+& 2.21
+& 2.58
+\\
+\hline
+\operatorname{round}(n/e)
+& 1
+& 1
+& 1
+& 2
+& 2
+& 3
+\\
+\hline
+\text{Actual optimal }r
+& \mathbf{1}
+& \mathbf{1}
+& \mathbf{1}
+& \mathbf{2}
+& \mathbf{2}
+& \mathbf{3}
+\end{array}
+\]
+
+\vspace{1em}
+
+The corresponding optimal success probabilities are:
+
+\[
+\begin{array}{c|cccccc}
+n & 2 & 3 & 4 & 5 & 6 & 7\\
+\hline
+\Pr[\text{success}]
+&
+\mathbf{0.500}
+&
+\mathbf{0.500}
+&
+\mathbf{0.458}
+&
+\mathbf{0.433}
+&
+\mathbf{0.428}
+&
+\mathbf{0.414}
+\end{array}
+\]
+
+We observe that the optimal threshold tracks the value suggested by:
+$
+round\left(\frac{n}{e}\right)
+$
+quite closely even for relatively small values of \(n\).
 
 \section{My Examples}
 \subsection{Matrix Problem}
