@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  26 MAY 2026 21:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  27 MAY 2026 11:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -517,26 +517,63 @@ Underfull \hbox (badness 10000) in paragraph at lines 457--458
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 460--461
+Underfull \hbox (badness 10000) in paragraph at lines 459--460
 
  []
 
-[7] [8] (C:\Users\hp\OneDrive\Desktop\SOS\latex_files\report.aux)
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 498--500
+
+ []
+
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 515--518
+
+ []
+
+
+Overfull \hbox (11.01852pt too wide) in paragraph at lines 538--538
+[]    \T1/cmtt/m/n/10.95 if (!F.count(temp)) //early exit if this row doesn't e
+xist in the first matrix[] 
+ []
+
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 561--562
+
+ []
+
+
+Overfull \hbox (73.2606pt too wide) in paragraph at lines 599--599
+[]    \T1/cmtt/m/n/10.95 if(!s.count(pair_hash(v1,v2))) //early exit if this ro
+w doesn't exist in the first matrix[] 
+ []
+
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 629--630
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 667--670
+
+ []
+
+[11] [12] (C:\Users\hp\OneDrive\Desktop\SOS\latex_files\report.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 1F37E07C22598938D2C4393200F5A7C4;1631.
+(rerunfilecheck)             Checksum: 7B2545598724EECE09F78330F7E26AE7;2370.
  ) 
 Here is how much of TeX's memory you used:
- 12094 strings out of 467691
- 185333 string characters out of 5416439
- 618270 words of memory out of 5000000
- 40952 multiletter control sequences out of 15000+600000
+ 12110 strings out of 467691
+ 185541 string characters out of 5416439
+ 618278 words of memory out of 5000000
+ 40957 multiletter control sequences out of 15000+600000
  645546 words of font info for 87 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,9n,79p,591b,494s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,9n,79p,593b,494s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx090
 0.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm
 0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\e
@@ -565,10 +602,10 @@ b><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr
 nts/cm/cmsy6.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/
 amsfonts/cm/cmsy8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/pu
 blic/amsfonts/symbols/msbm10.pfb>
-Output written on C:\Users\hp\OneDrive\Desktop\SOS\latex_files\report.pdf (8 pa
-ges, 265178 bytes).
+Output written on C:\Users\hp\OneDrive\Desktop\SOS\latex_files\report.pdf (12 p
+ages, 300192 bytes).
 PDF statistics:
- 542 PDF objects out of 1000 (max. 8388607)
- 35 named destinations out of 1000 (max. 500000)
- 81 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 644 PDF objects out of 1000 (max. 8388607)
+ 46 named destinations out of 1000 (max. 500000)
+ 121 words of extra memory for PDF output out of 10000 (max. 10000000)
 

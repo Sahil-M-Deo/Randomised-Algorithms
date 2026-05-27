@@ -8,3 +8,8 @@
 \contentsline {section}{\numberline {3}Standard Examples}{5}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Quick Sort}{5}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Quick Select}{8}{subsection.3.2}%
+\contentsline {section}{\numberline {4}My Examples}{8}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Matrix Problem}{8}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Deterministic Method}{9}{subsubsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.2}Randomised Method}{9}{subsubsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.2}Rolling Window Multiset}{10}{subsection.4.2}%
