@@ -1,4 +1,4 @@
-\documentclass[11pt]{article}
+\documentclass[11pt]{book}
 
 \usepackage[a4paper,margin=1in]{geometry}
 
@@ -9,8 +9,7 @@
 
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage{hyperref}
-
+\usepackage[colorlinks=true,linkcolor=black]{hyperref}
 \usepackage{enumitem}
 \usepackage{booktabs}
 \usepackage{array}
@@ -19,12 +18,6 @@
 \usetikzlibrary{calc}
 \usetikzlibrary{positioning,arrows.meta}
 
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    urlcolor=blue,
-    citecolor=blue
-}
 
 \title{Randomised Algorithms}
 \author{Sahil Mukesh Deo}
@@ -37,9 +30,9 @@
 \tableofcontents
 \newpage
 
-\section{Introduction}
+\chapter{Introduction}
 
-\subsection{What even is a Randomised Algorithm?}
+\section{What even is a Randomised Algorithm?}
 
 A randomised algorithm is an algorithm that makes random choices during its execution. Unlike deterministic algorithms, whose behaviour is completely determined by the input, the behaviour of a randomised algorithm may vary between different executions on the same input.
 
@@ -70,7 +63,7 @@ Randomised algorithms are often used for the following purposes:
     \item obtain polynomial-time approximate solutions to NP problems (the field of heuristic algorithms)
 \end{itemize}
 
-\subsection{Implementation of Randomness in \texttt{C++}}
+\section{Implementation of Randomness in \texttt{C++}}
 
 Lets make things more concrete with some actual code and implementation details!
 Modern \texttt{C++} provides pseudo-random\footnote{Since computers are deterministic, they rely on parameters like atmospheric noise and temperature for randomness. The details are irrelevant for us... We will take pseudo random as true random for our purposes} number generators through the \texttt{<random>} library. A commonly used generator is \texttt{mt19937}, which is based on the Mersenne Twister algorithm.
@@ -84,7 +77,7 @@ This creates an object rng with seed\footnote{Seed values are used in pseudo ran
 set it to the current time in milliseconds or something similar and that should be good enough!} as current time which will be passed as a parameter to other functions.
  It has the capability to produce "truly" random 32-bit integers.
 
-\subsubsection*{Generating Random Integers}
+\subsection*{Generating Random Integers}
 
 To generate a random integer uniformly from a range \([L,R]\), we use
 
@@ -100,7 +93,7 @@ int y=uid(rng);
 
 Each generation takes around constant time.
 
-\subsubsection*{Generating Random Real Numbers}
+\subsection*{Generating Random Real Numbers}
 
 To generate a real number uniformly from an interval \([x,y)\), we use
 
@@ -116,7 +109,7 @@ double y=urd(rng);
 
 This also takes constant time per generation.
 
-\subsubsection*{Generating a Random Permutation}
+\subsection*{Generating a Random Permutation}
 
 A random permutation of an array (in-place modification) can be generated using \texttt{shuffle}:
 
@@ -136,7 +129,7 @@ for(int i=n-1;i>0;i--)
 
 (Try to think why all permutations are equally likely with this method!)
 
-\subsubsection*{Implementing Random Decisions}
+\subsection*{Implementing Random Decisions}
 
 Sometimes, an algorithm must choose between multiple actions with specified probabilities. For example, let three actions X,Y,Z be such that they are executed with probabilities:
 
@@ -171,7 +164,7 @@ else
 
 thus implementing the required probabilities.
 
-\section{Algorithmic Performance} 
+\chapter{Algorithmic Performance} 
 
 For algorithms whose performance\footnote{
 Although this section focuses primarily on running time, the same methods of analysis can also be applied to other resources such as memory usage.
@@ -181,7 +174,7 @@ A classical example is Bubble Sort. The algorithm repeatedly traverses the array
 \\\\
 With some thought it can be proved that the total number of swaps performed by Bubble Sort is exactly equal to the number of inversions $N_{inv}$ in the input array. (An inversion is a pair of indices \((i,j)\) such that \(i<j\) but \(a_i>a_j\).) By taking swaps to be one operation taking constant time, we can estimate runtime of Bubble sort to be $T_{run}\propto N_{inv}$
 
-\subsection{Worst Case Analysis}
+\section{Worst Case Analysis}
 
 In worst case analysis, we determine the maximum possible number of operations over all valid inputs of size \(n\). For Bubble Sort, the worst case occurs when the array is sorted in reverse order, where every pair is inverted. 
 
@@ -191,7 +184,7 @@ In worst case analysis, we determine the maximum possible number of operations o
 
 Worst case analysis is useful because it guarantees an upper bound on the running time regardless of the input provided.
 
-\subsection{Average Case Analysis} 
+\section{Average Case Analysis} 
 
 In average case analysis, we compute the expected number of operations assuming that all valid inputs are equally likely.
 
@@ -244,7 +237,7 @@ Using linearity of expectation\footnote{Refer Appendix \ref{linearity_of_expecta
 \]
 
 So notice that if we randomise the input sequence, $T_{algo}$ becomes equal to $T_{avg}$ thus improving performance by a factor\footnote{Randomising the input itself takes about n operations, so more rigorously we would say an asymptotic factor of 2. In most cases we will be able to neglect the time required to randomise the input.} of 2.
-\subsection{Time Complexity Analysis}
+\section{Time Complexity Analysis}
 
 We are sometimes interested in comparing runtimes like $T_{run}=n^2$ to $T_{run}=100nlogn$.
 To compare growth rates, we use asymptotic notation:
@@ -276,8 +269,8 @@ Asymptotic analysis allows us to compare algorithms by their rate of growth rath
 This allows us to say that A: $T_{run}=n^2$ is worse than B: $T_{run}=100nlogn$ since A has $T(n)=\Theta(n^2)$ and B has $T(n)=\Theta(nlogn)$ even though for some small n the first one may
  well be better, but for small n the performance doesn't really matter anyway\dots
 
-\section{The Classics}
-\subsection{Quick Sort}
+\chapter{The Classics}
+\section{Quick Sort}
 
 Quick Sort is one of the most important examples of a randomised algorithm in practice. The basic idea is very simple:
 
@@ -317,7 +310,7 @@ swap(a[pivot],a[r]);
 
 This tiny modification dramatically changes the behaviour of the algorithm. Intuitively, it becomes very unlikely that we repeatedly choose extremely bad pivots.
 
-\subsubsection*{Runtime Analysis}
+\subsection*{Runtime Analysis}
 
 Let \(T(n)\) denote the expected runtime of randomised Quick Sort on an array of size \(n\) over all possible inputs.
 
@@ -468,7 +461,7 @@ Hence randomised Quick Sort has expected complexity
 T(n)=\Theta(n\log n)
 \]
 
-\subsection{Quick Select}
+\section{Quick Select}
 
 The Problem: find the \(k\)-th smallest element of an unsorted input array\\
 
@@ -493,7 +486,7 @@ However, unlike Quick Sort, we recurse into only \textbf{one} side:
 
 Thus each step discards a significant fraction of the array. This is a similar approach to Binary Search.
 
-\subsubsection*{Expected Runtime}
+\subsection*{Expected Runtime}
 
 Suppose partitioning takes n time where array size is n. Let T(n) be the runtime. If
 the pivot is the $i$-th smallest element, then 
@@ -508,9 +501,9 @@ T(n)=\Theta(n)
 
 Thus randomised Quick Select runs in expected linear time.
 
-\section{Online Decision Algorithms}
+\chapter{Online Decision Algorithms}
 
-\subsection*{What is an Online Algorithm?}
+\section*{What is an Online Algorithm?}
 
 An online algorithm is an algorithm that processes its input piece-by-piece in a serial fashion,
  without having the entire input available from the start. In some problems, this doesn't matter -- 
@@ -523,7 +516,7 @@ success or to achieve a good competitive ratio\footnote{Competitive ratio is a m
 performs compared to an optimal offline algorithm that has access to the entire input from the start. The term n-competitive 
 is used when an algorithm achieves atleast $\frac{1}{n}$ times the "performance" of an optimal offline algorithm.}.
 
-\subsection{The Dating Problem}
+\section{The Dating Problem}
 
 \textbf{Problem Statement:}
 Consider the problem
@@ -542,7 +535,7 @@ directly jump to the famous strategy of:
 
 However, they often omit the proof of why an optimal strategy must necessarily have this threshold form. We first prove this fact.
 
-\subsubsection*{Optimality Proof}
+\subsection*{Optimality Proof}
 
 Suppose we are currently considering the \(k\)-th person.
 
@@ -595,7 +588,7 @@ Note r=0 corresponds to accepting the first person, and r=n corresponds to rejec
 Both of these are valid threshold strategies, though they are not very good ones\footnote{Though it may be argued that having no partner is the best choice - 
 this is beyond the scope of this text and is left as an exercise for the reader.}.
 
-\subsubsection*{Finding the Optimal Threshold}
+\subsection*{Finding the Optimal Threshold}
 
 We now analyse the threshold strategy:
 \begin{quote}
@@ -727,7 +720,7 @@ x=\frac1e
 \]
 must correspond to the global maximum.
 
-\subsubsection*{Behaviour for Small \(n\)}
+\subsection*{Behaviour for Small \(n\)}
 
 We used some limiting n approximations in finding the optimal threshold (I hope you noticed!).
 In case you were not planning on dating a tending-to-infinite number of people, you might be interested in the optimal strategy for small values of \(n\).
@@ -797,7 +790,7 @@ We observe that the optimal threshold follows the value suggested by
 $\frac{n}{e}$ even for relatively small values of \(n\), and it will get closer and closer as \(n\) increases. 
 The success probability is already around \(41.4\%\) for \(n=7\), and it will approach the limiting value of \(\frac{1}{e}\approx 36.8\%\) as \(n\) grows.
 
-\subsection{The Parallel Processing Problem}
+\section{The Parallel Processing Problem}
 
 Consider a setting with $m$ identical machines processing incoming tasks. The tasks arrive 
 one after another, and the arrival times are sufficiently close that 
@@ -823,7 +816,7 @@ This is a natural objective since the overall processing time
  is determined by the machine that finishes last\footnote{This 
  concept is similar to the Rate Determining Step (RDS) in the field of Chemical Kinetics}.
 
-\subsubsection{Greedy Algorithm}
+\subsection{Greedy Algorithm}
 
 A natural strategy is the following greedy algorithm.
 
@@ -840,7 +833,7 @@ For every incoming job $j$ with processing time $p_j$:
 }}
 \end{center}
 
-\subsubsection{Performance Analysis}
+\subsection{Performance Analysis}
 
 Interestingly, we do not actually have a polynomial time algorithm to find the optimal offline solution to this problem.
 
@@ -891,7 +884,7 @@ Hence,
 Therefore the greedy online load balancing algorithm is $\left(2-\frac1m\right)$-competitive, usually written as $2$-competitive 
 since the difference is negligible for large $m$.
 
-\subsubsection{Tightness of the Bound}
+\subsection{Tightness of the Bound}
 
 The previous analysis showed that the greedy algorithm is $\left(2-\frac1m\right)$-competitive.
  We now construct an example showing that the analysis cannot,
@@ -924,11 +917,11 @@ On the other hand, an optimal offline algorithm could have assigned the first 12
 After processing these 13 jobs, each machine has load 4. Thus the optimal makespan is 4,
  and the competitive ratio is $\frac{7}{4}$, which is indeed our bound of $2-\frac{1}{4}$.
 
-\section{Data Structures}
+\chapter{Data Structures}
 
-\subsection{Skip Lists}
+\section{Skip Lists}
 
-\subsubsection*{Why not just use Arrays?}
+\subsection*{Why not just use Arrays?}
 Suppose we store the following array in contiguous memory:
 \[
 \begin{tikzpicture}[
@@ -1023,7 +1016,7 @@ font=\small
 Insertion into an array requires shifting \(\Theta(n)\) elements in the worst as well as
  average case, so a single insertion is \(\Theta(n)\) time complexity.
 
-\subsubsection*{How are Linked Lists any better?}
+\subsection*{How are Linked Lists any better?}
 
 let us briefly recall the linked list data structure.
 
@@ -1205,7 +1198,7 @@ font=\small
 \]
 
 We used a constant number of pointer operations (3) to insert an element into the list. Thus insertion is \(\Theta(1)\) time complexity.
-\subsubsection*{Why Skip Lists?}
+\subsection*{Why Skip Lists?}
 
 Although insertion is \(\Theta(1)\) time complexity, searching for an element in linked 
 lists is \(\Theta(n)\) time complexity because we have to traverse the whole list. Even if the linked list is "sorted", 
@@ -1270,7 +1263,7 @@ every node/.style={font=\small}
 
 Higher levels contain fewer elements and allow us to jump across large portions of the list quickly.
 
-\subsubsection*{Searching in a Skip List}
+\subsection*{Searching in a Skip List}
 
 Suppose we wish to search for the element \(7\).
 
@@ -1656,7 +1649,7 @@ every node/.style={font=\small}
 
 We move right to \(7\) and locate the desired element.
 
-\subsubsection*{Why is the Expected Complexity $\Theta(\log n)$?}
+\subsection*{Why is the Expected Complexity $\Theta(\log n)$?}
 
 The logarithmic complexity of skip lists arises from the probabilistic structure of the levels.
 
@@ -1794,9 +1787,9 @@ Randomization avoids this problem by assigning heights independently to each nod
 Thus, updates are $\Theta(height)=\Theta(\log n)$ while the structure stays balanced in expectation.
 
 Thus, randomized skip lists achieve logarithmic expected search complexity without requiring complicated balancing operations such as rotations or restructuring.
-\section{Hashing}
+\chapter{Hashing}
 
-\subsection{What even is Hashing?}
+\section{What even is Hashing?}
 
 A recurring theme in randomized algorithms is the idea of replacing a large object by a much smaller \textit{fingerprint} or \textit{hash} which approximately preserves equality.
 
@@ -1814,7 +1807,7 @@ Two inputs having the same hash is called a \textit{collision}. The probability 
 the specific hash function used and the distribution of inputs. A good hash function should minimize the 
 probability of collisions for typical inputs.
 
-\subsection{Polynomial Verification}
+\section{Polynomial Verification}
 
 Suppose we are given two expressions:
 \[
@@ -1866,7 +1859,7 @@ but they have a large constant factor and also are very difficult to implement} 
 Note that choosing 3 random values has no particular significance - we could choose any small
 constant number of random values to achieve this - it is a tradeoff between time and correctness probability.
 
-\subsection{Matrix Multiplication Verification}
+\section{Matrix Multiplication Verification}
 
 Suppose we are given matrices
 \[
@@ -1888,7 +1881,7 @@ time, while the fastest known algorithms run in roughly
 time, though they are highly complicated and rarely used in practice. \\
 
 
-\subsubsection{Freivalds' Algorithm}
+\subsection{Freivalds' Algorithm}
 
 Choose a random vector $X\in\{0,1\}^n$, aka of form \[\begin{bmatrix}
 x_1\\
@@ -1919,7 +1912,7 @@ and define the hash of a matrix \(M\) as
 Each additional random vector independently decreases the probability of error.
 Here k must be $\Theta(1)$ to preserve the overall $\Theta(n^2)$ time complexity.
 
-\subsubsection{Error Probability Analysis}
+\subsection{Error Probability Analysis}
 
 \[
 \text{Let }M=AB-C
@@ -1960,7 +1953,7 @@ In practice, we can simply use 32-bit integers, which would give an error probab
 which is negligible for all practical purposes. Of course, to be more sure we could run it multiple times independently\dots
 
 
-\subsection{A Matrix Problem}
+\section{A Matrix Problem}
 
 \textbf{Problem Statement\footnote{This question was taken from Codeforces 1980E}:} Given two \(n\times m\) matrices \(A\) and \(B\), determine if they are equivalent under row and column permutations. That is, can we permute the rows and columns of \(A\) to obtain \(B\)?
 \\ Additional Constraints: A and B both satisfy -- the set of all entries is \{1,2, \dots, nm\}. \\
@@ -1969,7 +1962,7 @@ which is negligible for all practical purposes. Of course, to be more sure we co
 $i$-th row of a matrix M, and similarly C(M) then the matrices A and B are equivalent under row and column permutations
 if and only if R(A) = R(B) and C(A) = C(B).
 
-\subsubsection*{Proof of Reduction}
+\subsection*{Proof of Reduction}
 Clearly, if A and B are equivalent under row and column permutations, then R(A) = R(B) and C(A) = C(B) 
 since the row and column sets are preserved under these permutations. This proves that the set of all B such that R(B) = R(A) and C(B) = C(A)
 contains all matrices equivalent to A under row and column permutations (i.e. the set of all B such that 
@@ -1986,7 +1979,7 @@ Hence R(A) = R(B) and C(A) = C(B) implies that A and B are equivalent under row 
 (Note that we assumed all entries are distinct in the above proof)\\
 
 This reduced problem can be solved by two approaches:
-\subsubsection[Deterministic Method]{Method 1: Set of Sets Approach (Row and Column sets)}
+\subsection[Deterministic Method]{Method 1: Set of Sets Approach (Row and Column sets)}
 
 Formally, let
 \[
@@ -2023,7 +2016,7 @@ for(int i=0;i<n;i++)
 }
 \end{verbatim}
 
-\subsubsection[Hashing Method]{Method 2: Hashing Based Verification of Rows and Columns}
+\subsection[Hashing Method]{Method 2: Hashing Based Verification of Rows and Columns}
 
 To obtain a more efficient solution, each row is hashed to a pair of values $(\text{sum}, \text{squaresum})$, where $\text{sum}$ and $\text{squaresum}$ denote the sum and sum of squares of elements in the row respectively. This representation is much easier to compare across rows.
 
@@ -2084,7 +2077,7 @@ loop(i,n)
 }
 \end{verbatim}
 
-\subsection{A Sliding Window Problem}
+\section{A Sliding Window Problem}
 
 \textbf{Problem Statement:} Two integer arrays $x$ and $y$, each of size $n$, are given along with an integer $k$ $(1 \le k \le n)$. For every contiguous subarray (window) of size $k$, determine whether the corresponding windows in $x$ and $y$ contain the same multiset of elements at every position.
 
@@ -2094,7 +2087,7 @@ More precisely, for every index (1-based) $i$ such that $1 \le i \le n-k+1$, we 
 \]
 and check whether they are identical for all $i$.
 
-\subsubsection*{Rolling Hash Method}
+\subsection*{Rolling Hash Method}
 
 To obtain an efficient solution, we maintain two rolling hashes for each window:
 \[
@@ -2156,9 +2149,9 @@ which is what I meant by using a \textbf{rolling hash}.
 However, it relies on the assumption that the hash values are unique for different multisets.
 We can improve this (if needed) by doing a second round of hashing with a different hash function like polynomial hashing. 
 
-\section{The Probabilistic Method}
+\chapter{The Probabilistic Method}
 
-\subsection{The Dominating Set Problem}
+\section{The Dominating Set Problem}
 
 \textbf{Problem Statement:}
 Given a graph:
@@ -2181,7 +2174,7 @@ Intuitively, we may think of the vertices in \(D\) as ``control centers'' or ``f
 
 Unfortunately, finding the minimum dominating set is NP-hard, so we want to find a polynomial time algorithm that gives us a 
 reasonably small\footnote{We care more about the asymptotic behaviour of the size of set produced by the algorithm and less about which polynomial time complexity the algorithm has.} dominating set.
-\subsubsection*{A Randomised Solution}
+\subsection*{A Randomised Solution}
 
 Suppose the graph has minimum degree \(d\). We now consider the following extremely simple randomised strategy:
 
@@ -2197,7 +2190,7 @@ What is the probability of failure as a function of \(k\), \(n\), and \(d\)?
 \end{quote}
 We now analyse this probability.
 
-\subsubsection*{Probability That a Vertex Remains Undominated}
+\subsection*{Probability That a Vertex Remains Undominated}
 
 Fix a vertex $v\in V$. Since the graph has minimum degree \(d\), $N[v]$ contains 
 at least $d+1$ vertices. For \(v\) to remain undominated, none of the selected \(k\) 
@@ -2222,7 +2215,7 @@ Using the inequality\footnote{Refer Appendix \ref{exp_inequality}} $1-x\le e^{-x
 e^{-k(d+1)/n}
 \]
 
-\subsubsection*{Bounding the Failure Probability}
+\subsection*{Bounding the Failure Probability}
 
 The algorithm fails if at least one vertex remains undominated.
 
@@ -2260,7 +2253,7 @@ $
 n^{1-c}
 $ which tends to \(0\) as \(n\to\infty\).
 
-\subsubsection*{What Does This Actually Mean?}
+\subsection*{What Does This Actually Mean?}
 
 The important point is not merely that the algorithm succeeds with high probability.
 
@@ -2283,7 +2276,7 @@ Thus a simple probabilistic argument simultaneously:
     \item and gives a randomised algorithm capable of finding one.
 \end{itemize}
 
-\subsubsection*{Amplifying the Success Probability}
+\subsection*{Amplifying the Success Probability}
 
 Even if a single run fails, we may simply repeat the algorithm independently.
 
@@ -2294,13 +2287,13 @@ which decreases exponentially fast. \\
 So the tradeoff is choosing a larger $c$ has a smaller expected number of repetitions ($\frac{n^{c-1}}{n^{c-1}-1}$)\footnote{Since the probability of failure is $p=(n^{c-1}-1)/n^{c-1}$ and this is a bernoulli trial, the expected number of trials for success is 1/p } but a larger dominating set,
 while choosing a smaller $c$ has a larger expected number of repetitions but a smaller dominating set.
 
-\subsection{Bipartite Subgraph}
+\section{Bipartite Subgraph}
 
 \textbf{Problem statement.}
 Given an undirected graph $G=(V,E)$ with $|E|=m$, we wish to find a bipartition of $V$ that maximizes the number of edges between vertices of different partitions.
 Equivalently, we want a 2-coloring of the vertices that maximizes the number of bichromatic edges. We aim to show that we can always guarantee at least $m/2$ edges in the cut.
 
-\subsubsection*{Expected Number of Bichromatic Edges}
+\subsection*{Expected Number of Bichromatic Edges}
 Let X be the number of bichromatic edges under a random 2-coloring of the vertices. 
 Each edge has a probability $\frac{1}{2}$ of being bichromatic, so define the indicator variable $I_{i}$ as 1
  when the edge numbered $i$ is bichromatic and 0 otherwise. We can conclude that for a random vertex 2-coloring, 
@@ -2310,7 +2303,7 @@ Since $X=\sum_{i=1}^{m}I_{i}$, we have:
 \mathbb{E}[X]=\mathbb{E}[\sum_{i=1}^{m}I_{i}]=\sum_{i=1}^{m}\mathbb{E}[I_{i}]=\frac{m}{2}
 \]
 
-\subsubsection*{A Weak Lower Bound}
+\subsection*{A Weak Lower Bound}
 
 Let $X\in\{0,1,\dots,m\}$ be the number of bichromatic edges under a random 2-coloring of the vertices. We already have
 $\mathbb{E}[X]=\frac{m}{2}$. \\
@@ -2377,7 +2370,7 @@ p \ge \frac{1}{2(k+1)}=\frac{1}{m+1}.
 \Pr\!\left(X\ge \frac{m}{2}\right)\ge min(\frac{2}{m+2},\frac{1}{m+1}) = \frac{1}{m+1}.
 \]
 
-\subsubsection*{A Simple Randomised Algorithm}
+\subsection*{A Simple Randomised Algorithm}
 
 From the probabilistic analysis, a random coloring satisfies
 \[
@@ -2404,7 +2397,7 @@ Which goes to 0 as $m\to\infty$.
 
 While simple, this method does not exploit structure of intermediate solutions and relies purely on repeated random sampling rather than improvement steps.
 
-\section{Heuristic Algorithms}
+\chapter{Heuristic Algorithms}
 
 Many computational problems of practical interest have a statement like ``Given a graph find a set of vertices of size atmost x satisfying property P.'' \\
 Now one way to guarantee a solution is to find the minimum sized set of vertices satisfying P, but this is usually not doable in polynomial time. \\
@@ -2413,10 +2406,10 @@ Such algorithms are \emph{heuristic algorithms} -- algorithms designed to quickl
 even if they do not always provide provable optimality guarantees or even any guarantees at all. \\ 
 Inherently the analysis of heuristic algorithms involve probability and expectation, making them a natural application of the tools we have developed so far.
 
-\subsection{The Dominating Set Problem Revisited}
+\section{The Dominating Set Problem Revisited}
 
 Recall the dominating set problem: given a graph \(G=(V,E)\), find a smallest possible subset \(D\subseteq V\) such that every vertex in the graph is either contained in \(D\) or adjacent to some vertex in \(D\).
-\subsubsection*{A Greedy Heuristic}
+\subsection*{A Greedy Heuristic}
 
 A very natural approach is the following greedy algorithm:
 
@@ -2435,7 +2428,7 @@ More precisely:
 
 At every step we greedily maximise immediate progress.
 
-\subsubsection*{Analysing the Greedy Heuristic}
+\subsection*{Analysing the Greedy Heuristic}
 Let \(\mathrm{OPT}\) denote the size of a minimum dominating set.
 
 Suppose that at some stage of the algorithm there remain \(r\) undominated vertices.
@@ -2560,7 +2553,7 @@ Hence the greedy algorithm produces a dominating set of size at most
 }
 \]
 
-\subsection{Exam Scheduling}
+\section{Exam Scheduling}
 
 \textbf{Problem Statement:}
 We are given a set of exams and a set of students. Each student is enrolled in a subset of the exams. 
@@ -2571,7 +2564,7 @@ same time\footnote{Or you could just give them a Time Turner and hope for the be
 
 The goal is to find a largest possible subset of exams that can be scheduled simultaneously without any conflict.
 
-\subsubsection*{Reduction}
+\subsection*{Reduction}
 
 We model the problem using a graph \(G=(V,E)\) where:
 \begin{itemize}
@@ -2583,7 +2576,7 @@ In this formulation, a feasible schedule corresponds to a set of vertices with n
 
 Thus, the problem reduces to finding a maximum independent set in a graph.
 
-\subsubsection{Random Permutation}
+\subsection{Random Permutation}
 
 $V$ is the set of all vertices.
 Maintain a set - the independent set we are building ($S$).
@@ -2592,7 +2585,7 @@ Keep doing this until $V$ is empty. This guarantees forming a valid independent 
 
 Note that the order in which we pick vertices is a uniformly random permutation of the vertices.
 
-\subsubsection*{Probability a Vertex is Selected}
+\subsection*{Probability a Vertex is Selected}
 
 Fix a vertex \(v\). Consider the set consisting of \(v\) and its neighbours \(N(v)\). There are \(d(v)+1\) vertices in total.
 
@@ -2601,7 +2594,7 @@ Since all relative orderings are equally likely, the probability that \(v\) is t
 \Pr[v \in S] = \frac{1}{d(v)+1}
 \]
 
-\subsubsection*{Expected Size of the Independent Set}
+\subsection*{Expected Size of the Independent Set}
 
 Let \(I_v\) be the indicator random variable for the event \(v \in S\). Then:
 \[
@@ -2630,7 +2623,7 @@ where \(d\) is the average degree of the graph. Hence:
 \alpha(G) \ge \frac{n}{d+1}
 \]
 
-\subsubsection{Local Decision}
+\subsection{Local Decision}
 
 We now describe an alternative randomized construction that produces a large independent set via local random choices.
 
@@ -2649,7 +2642,7 @@ We construct a set \(S\) by including a vertex \(v\) if:
     \item for every neighbour \(u \in N(v)\), \(X_u = 0\).
 \end{itemize}
 
-\subsubsection*{Probability of Inclusion}
+\subsection*{Probability of Inclusion}
 
 Fix a vertex \(v\). The probability that \(v\) is included in \(S\) is:
 \[
@@ -2661,7 +2654,7 @@ Therefore:
 \mathbb{E}[|S|] = \sum_{v \in V} p(1-p)^{d(v)}
 \]
 
-\subsubsection*{Guarantee on Expected Size}
+\subsection*{Guarantee on Expected Size}
 
 We analyze the randomized construction where each vertex is selected independently with probability \(p\), and a vertex \(v\) is included in the independent set \(S\) if it is selected and none of its neighbors are selected. Then:
 \[
@@ -2709,12 +2702,12 @@ Using the standard bound \(\left(1-\frac{1}{d+1}\right)^d \ge e^{-d/(d+1)}\), we
 This is a slightly weaker bound than the previous method, but it has the advantage of being local and easily parallelizable, 
 as each vertex makes its decision independently based on local information. This is used in scheduling processes in a distributed system, where each process (vertex) 
 decides whether to execute based on its own state and the states of its neighbors.
-\subsection{Bipartite Subgraph Revisited}
+\section{Bipartite Subgraph Revisited}
 
 Recall the problem of finding a bipartition of the vertices that maximizes the number of bichromatic edges. 
 We showed that a random coloring achieves at least $m/2$ bichromatic edges in expectation, and with some probability. 
 Now we refine our approach by showing that we can always find a coloring with at least $m/2$ bichromatic edges via a self-correction procedure.
-\subsubsection*{Self-Correction}
+\subsection*{Self-Correction}
 
 Start with a random coloring of the vertices. If it has at least $m/2$ bichromatic edges, we are done. 
 
@@ -2762,11 +2755,11 @@ Hence the full procedure runs in atmost $O(mn+m)$\footnote{this can be improved 
 \appendix
 \addcontentsline{toc}{section}{Appendices}
 
-\section{Probability and Expectation}
+\chapter{Probability and Expectation}
 
 This appendix collects a small set of probabilistic results that are used throughout the book. The goal is not to develop probability theory, but to record a minimal toolkit for algorithmic analysis.
 
-\subsection{Linearity of Expectation}
+\section{Linearity of Expectation}
 \label{linearity_of_expectation}
 For any random variables $X_1,X_2,\dots,X_n$ (not necessarily independent),
 \[
@@ -2780,7 +2773,7 @@ In particular, for indicator variables $I_1,\dots,I_n$,
 \mathbb{E}\left[\sum_{i=1}^n I_i\right]=\sum_{i=1}^n \Pr(I_i=1).
 \]
 
-\subsection{Union Bound}
+\section{Union Bound}
 \label{union_bound}
 For any events $A_1,A_2,\dots,A_n$,
 \[
@@ -2789,7 +2782,7 @@ For any events $A_1,A_2,\dots,A_n$,
 
 This is often used to upper bound the probability that at least one “bad event” occurs.
 
-\subsection{Variance}
+\section{Variance}
 
 For a random variable $X$,
 \[
@@ -2819,7 +2812,7 @@ More generally, for any collection $X_1,\dots,X_n$,
 2\sum_{1\le i<j\le n}\mathrm{Cov}(X_i,X_j).
 \]
 
-\subsection{Indicator Variables}
+\section{Indicator Variables}
 \label{indicator_variables}
 For an event $A$, define the indicator random variable
 \[
@@ -2837,8 +2830,8 @@ Then:
 
 Indicator variables are commonly used to convert counting problems into sums of random variables.
 
-\section{Inequalities}
-\subsection{Exponential Inequality}
+\chapter{Inequalities}
+\section{Exponential Inequality}
 \label{exp_inequality}
 For any $x \in \mathbb{R}$,
 \[
@@ -2852,7 +2845,7 @@ Consequently, for $x \in [0,1]$ and integer $k\ge 0$,
 
 This is frequently used to simplify probability decay expressions.
 
-\subsection{Jensen’s Inequality}
+\section{Jensen’s Inequality}
 \label{jensen}
 For a convex function \(f\) and random variable \(X\),
 \[
@@ -2867,9 +2860,9 @@ f(\frac{1}{n}\sum_{i=1}^n x_i) \le \frac{1}{n}\sum_{i=1}^n f(x_i).
 
 For concave functions, the inequality is reversed.
 
-\section{Discrete Mathematics}
+\chapter{Discrete Mathematics}
 
-\subsection{Pigeonhole Principle}
+\section{Pigeonhole Principle}
 \label{pigeonhole_principle}
 
 Let \(a_1,a_2,\dots,a_n\) be non-negative real numbers and let
@@ -2882,11 +2875,11 @@ Then there exists some index \(i\) such that
 a_i \ge \frac{S}{n}.
 \]
 
-\subsubsection*{Interpretation}
+\subsection*{Interpretation}
 
 This simply states that at least one value is at least the average value.
 
-\subsubsection*{Proof by Contradiction form:}
+\subsection*{Proof by Contradiction form:}
 
 If every \(a_i < \frac{S}{n}\), then summing over all \(i\) gives
 \[
@@ -2894,7 +2887,7 @@ If every \(a_i < \frac{S}{n}\), then summing over all \(i\) gives
 \]
 which is a contradiction.
 
-\subsection{Basic Graph Definitions}
+\section{Basic Graph Definitions}
 
 A graph is an ordered pair
 \[
@@ -2902,7 +2895,7 @@ G=(V,E)
 \]
 where \(V\) is a set of vertices and \(E\subseteq \{\{u,v\}\mid u,v\in V,\ u\neq v\}\) is a set of edges.
 
-\subsubsection*{Degree}
+\subsection*{Degree}
 
 For a vertex \(v\in V\), the degree \(d(v)\) is the number of edges incident to \(v\).
 
@@ -2912,7 +2905,7 @@ d=\frac{1}{n}\sum_{v\in V} d(v)
 \]
 where \(n=|V|\).
 
-\subsubsection*{Bipartite Graph}
+\subsection*{Bipartite Graph}
 
 A graph \(G=(V,E)\) is bipartite if the vertex set \(V\) can be partitioned into two disjoint sets \(L\) and \(R\) such that:
 \[
@@ -2920,9 +2913,9 @@ V=L\cup R,\quad L\cap R=\emptyset
 \]
 and every edge connects a vertex in \(L\) to a vertex in \(R\). That is, there are no edges with both endpoints in the same set.
 
-\section{Linear Algebra}
+\chapter{Linear Algebra}
 
-\subsection{Kernel and Rank}
+\section{Kernel and Rank}
 
 For a matrix
 \[
@@ -2958,7 +2951,7 @@ M\in\mathbb{F}^{m\times n}
 
 
 
-\subsection{Special Cases}
+\section{Special Cases}
 
 For the zero matrix
 \[
