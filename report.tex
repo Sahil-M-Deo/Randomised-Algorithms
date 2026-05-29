@@ -4,7 +4,6 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{mathtools}
 
@@ -16,6 +15,9 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{bm}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning,arrows.meta}
 
 \hypersetup{
     colorlinks=true,
@@ -922,7 +924,876 @@ On the other hand, an optimal offline algorithm could have assigned the first 12
 After processing these 13 jobs, each machine has load 4. Thus the optimal makespan is 4,
  and the competitive ratio is $\frac{7}{4}$, which is indeed our bound of $2-\frac{1}{4}$.
 
+\section{Data Structures}
 
+\subsection{Skip Lists}
+
+\subsubsection*{Why not just use Arrays?}
+Suppose we store the following array in contiguous memory:
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
+
+% Original array
+\node (a1) at (0,0) {1};
+\node (a2) at (1,0) {2};
+\node (a3) at (2,0) {3};
+\node (a4) at (3,0) {4};
+\node (a5) at (4,0) {5};
+\node (dots) at (5,0) {$\cdots$};
+\node (a50) at (6,0) {n};
+\end{tikzpicture}
+\]
+
+Suppose we wish to insert the element \(67\) between \(3\) and \(4\).
+
+Since arrays occupy contiguous memory, every element beginning from \(4\) must be shifted one position to the right in order to create space for the new element.
+
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
+
+% Original array
+\node (a1) at (0,0) {1};
+\node (a2) at (1,0) {2};
+\node (a3) at (2,0) {3};
+\node (a4) at (3,0) {4};
+\node (a5) at (4,0) {5};
+\node (dots) at (5,0) {$\cdots$};
+\node (a50) at (6,0) {n};
+
+% Empty boxes
+\node (e1) at (7,0) {};
+\node (e2) at (8,0) {};
+
+% New element above
+\node[fill=green!20] (new) at (3,1.6) {67};
+
+% Down arrow
+\draw[->,thick] (new) -- (a4);
+
+% Shift arrows
+\draw[->,thick] ($(a4.east)+(-0.18,0)$) -- ($(a5.west)+(0.18,0)$);
+
+\draw[->,thick] ($(a5.east)+(-0.18,0)$) -- ($(dots.west)+(0.18,0)$);
+
+\draw[->,thick] ($(a50.east)+(-0.18,0)$) -- ($(e1.west)+(0.18,0)$);
+
+\end{tikzpicture}
+\]
+
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
+
+% Original array
+\node (a1) at (0,0) {1};
+\node (a2) at (1,0) {2};
+\node (a3) at (2,0) {3};
+\node [fill=green!20](a4) at (3,0) {67};
+\node (a5) at (4,0) {4};
+\node (a6) at (5,0) {5};
+\node (dots) at (6,0) {$\cdots$};
+\node (a50) at (7,0) {n};
+\node (e1) at (8,0) {};
+\end{tikzpicture}
+\]
+
+Insertion into an array requires shifting \(\Theta(n)\) elements in the worst as well as
+ average case, so a single insertion is \(\Theta(n)\) time complexity.
+
+\subsubsection*{How are Linked Lists any better?}
+
+let us briefly recall the linked list data structure.
+
+Unlike arrays, linked lists do not store elements contiguously in memory.
+Instead, each element stores:
+\begin{itemize}
+\item the value of the element, and
+\item a pointer to the next element.
+\end{itemize}
+
+A linked list containing the elements
+\[
+1,2,3,4,5,\cdots,n
+\]
+may be represented as:
+
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
+
+% Nodes
+\node (a1) at (0,0) {1};
+\node (a2) at (1.5,0) {2};
+\node (a3) at (3,0) {3};
+\node (a4) at (4.5,0) {4};
+\node (a5) at (6,0) {5};
+\node (dots) at (7.5,0) {$\cdots$};
+% Existing arrows
+\draw[->] (a1) -- (a2);
+\draw[->] (a2) -- (a3);
+\draw[->] (a3) -- (a4);
+\draw[->] (a4) -- (a5);
+\draw[->] (a5) -- (dots);
+\end{tikzpicture}
+\]
+
+To insert an element 67 between say 3 and 4, we simply create a new node containing 67 and link it between 3 and 4.
+
+\[
+\textbf{Step 1: Remove the old connection}
+\]
+
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
+
+% Nodes
+\node (a1) at (0,0) {1};
+\node (a2) at (1.5,0) {2};
+\node (a3) at (3,0) {3};
+\node (a4) at (4.5,0) {4};
+\node (a5) at (6,0) {5};
+\node (dots) at (7.5,0) {$\cdots$};
+% Hovering node
+\node[fill=green!20] (new) at (3.75,1.5) {67};
+
+% Existing arrows
+\draw[->] (a1) -- (a2);
+\draw[->] (a2) -- (a3);
+
+% Broken connection
+\draw[red,->] (a3) -- (a4);
+
+\draw[->] (a4) -- (a5);
+\draw[->] (a5) -- (dots);
+\end{tikzpicture}
+\]
+
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
+
+% Nodes
+\node (a1) at (0,0) {1};
+\node (a2) at (1.5,0) {2};
+\node (a3) at (3,0) {3};
+\node (a4) at (4.5,0) {4};
+\node (a5) at (6,0) {5};
+\node (dots) at (7.5,0) {$\cdots$};
+% Hovering node
+\node[fill=green!20] (new) at (3.75,1.5) {67};
+
+% Existing arrows
+\draw[->] (a1) -- (a2);
+\draw[->] (a2) -- (a3);
+
+\draw[->] (a4) -- (a5);
+\draw[->] (a5) -- (dots);
+\end{tikzpicture}
+\]
+
+\[
+\textbf{Step 2: Create new connections}
+\]
+
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
+
+% Nodes
+\node (a1) at (0,0) {1};
+\node (a2) at (1.5,0) {2};
+\node (a3) at (3,0) {3};
+\node (a4) at (4.5,0) {4};
+\node (a5) at (6,0) {5};
+\node (dots) at (7.5,0) {$\cdots$};
+% New node
+\node[fill=green!20] (new) at (3.75,1.5) {67};
+
+% Existing arrows
+\draw[->] (a1) -- (a2);
+\draw[->] (a2) -- (a3);
+\draw[->] (a4) -- (a5);
+\draw[->] (a5) -- (dots);
+% Curved insertion arrows
+\draw[->,thick,bend left=25] (a3) to (new);
+\draw[->,thick,bend left=25] (new) to (a4);
+
+\end{tikzpicture}
+\]
+
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
+
+% Nodes
+\node (a1) at (0,0) {1};
+\node (a2) at (1.5,0) {2};
+\node (a3) at (3,0) {3};
+\node [fill=green!20](a4) at (4.5,0) {67};
+\node (a5) at (6,0) {4};
+\node (dots) at (7.5,0) {$\cdots$};
+% Existing arrows
+\draw[->] (a1) -- (a2);
+\draw[->] (a2) -- (a3);
+\draw[->] (a3) -- (a4);
+\draw[->] (a4) -- (a5);
+\draw[->] (a5) -- (dots);
+\end{tikzpicture}
+\]
+
+\[
+\textbf{Done!}
+\]
+
+We used a constant number of pointer operations (3) to insert an element into the list. Thus insertion is \(\Theta(1)\) time complexity.
+\subsubsection*{Why Skip Lists?}
+
+Although insertion is \(\Theta(1)\) time complexity, searching for an element in linked 
+lists is \(\Theta(n)\) time complexity because we have to traverse the whole list. Even if the linked list is "sorted", 
+we can not binary search since that requires random access in constant time, which a linked list can not provide.
+
+So the idea of skip lists is to bypass that limitation by
+adding ``express lanes'' to a linked list.
+
+Instead of traversing every element one-by-one, we maintain additional higher-level lists that skip\footnote{Hence the name!} over many elements at once.
+
+Consider the following skip list:
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+% Level labels
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Nodes
+\node (a2) at (1,2) {1};
+\node (e2) at (5,2) {9};
+
+\node (a1) at (1,1) {1};
+\node (c1) at (3,1) {5};
+\node (e1) at (5,1) {9};
+
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node (c0) at (3,0) {5};
+\node (d0) at (4,0) {7};
+\node (e0) at (5,0) {9};
+
+% Horizontal arrows
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+% Vertical arrows
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+
+Higher levels contain fewer elements and allow us to jump across large portions of the list quickly.
+
+\subsubsection*{Searching in a Skip List}
+
+Suppose we wish to search for the element \(7\).
+
+We begin at the top left level and move right while the next element is \(\leq 7\).
+Once that element is strictly greater than \(7\), we move down to the next level.
+Repeat until we reach the bottom level.\\
+
+
+\noindent \textbf{Pseudocode:}
+\begin{verbatim}
+SEARCH(x):
+
+current = top-left node
+while current exists:
+
+    while current.right exists
+          and current.right.value <= x:
+        current = current.right
+
+    if current.value == x:
+        return FOUND
+
+    current = current.down
+
+return NOT FOUND
+\end{verbatim}
+
+\paragraph{Step 1: Start at top, check right}
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Level 2
+\node[draw,rectangle,fill=green!30] (a2) at (1,2) {1};
+\node[draw,rectangle,fill=red!30] (e2) at (5,2) {9};
+
+% Level 1
+\node (a1) at (1,1) {1};
+\node (c1) at (3,1) {5};
+\node (e1) at (5,1) {9};
+
+% Level 0
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node (c0) at (3,0) {5};
+\node (d0) at (4,0) {7};
+\node (e0) at (5,0) {9};
+
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+
+Since on the right we have an element strictly greater than \(7\), we intend to move down.
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Level 2
+\node[draw,rectangle,fill=green!30] (a2) at (1,2) {1};
+\node[draw,rectangle,fill=red!30] (e2) at (5,2) {9};
+
+% Level 1
+\node [draw,rectangle,fill=yellow!30] (a1) at (1,1) {1};
+\node (c1) at (3,1) {5};
+\node (e1) at (5,1) {9};
+
+% Level 0
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node (c0) at (3,0) {5};
+\node (d0) at (4,0) {7};
+\node (e0) at (5,0) {9};
+
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+\paragraph{Step 2: Moved down, now check right}
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Level 2
+\node (a2) at (1,2) {1};
+\node (e2) at (5,2) {9};
+
+% Level 1
+\node[draw,rectangle,fill=green!30] (a1) at (1,1) {1};
+\node[draw,rectangle,fill=yellow!40] (c1) at (3,1) {5};
+\node (e1) at (5,1) {9};
+
+% Level 0
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node (c0) at (3,0) {5};
+\node (d0) at (4,0) {7};
+\node (e0) at (5,0) {9};
+
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+
+Since \(5 \leq 7\), we intend to move right.
+\paragraph{Step 3: Moved right, check right}
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Level 2
+\node (a2) at (1,2) {1};
+\node (e2) at (5,2) {9};
+
+% Level 1
+\node (a1) at (1,1) {1};
+\node[draw,rectangle,fill=green!30] (c1) at (3,1) {5};
+\node[draw,rectangle,fill=red!30] (e1) at (5,1) {9};
+
+% Level 0
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node (c0) at (3,0) {5};
+\node(d0) at (4,0) {7};
+\node (e0) at (5,0) {9};
+
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+
+Since \(9 > 7\), we intend to move down.
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Level 2
+\node (a2) at (1,2) {1};
+\node (e2) at (5,2) {9};
+
+% Level 1
+\node (a1) at (1,1) {1};
+\node[draw,rectangle,fill=green!30] (c1) at (3,1) {5};
+\node[draw,rectangle,fill=red!30] (e1) at (5,1) {9};
+
+% Level 0
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node [draw,rectangle,fill=yellow!30](c0) at (3,0) {5};
+\node(d0) at (4,0) {7};
+\node (e0) at (5,0) {9};
+
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+\paragraph{Step 4: Moved down, check right}
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Level 2
+\node (a2) at (1,2) {1};
+\node (e2) at (5,2) {9};
+
+% Level 1
+\node (a1) at (1,1) {1};
+\node (c1) at (3,1) {5};
+\node (e1) at (5,1) {9};
+
+% Level 0
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node[draw,rectangle,fill=green!30] (c0) at (3,0) {5};
+\node[draw,rectangle,fill=yellow!40] (d0) at (4,0) {7};
+\node(e0) at (5,0) {9};
+
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+
+\paragraph{Step 5: Moved right, found the target!}
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Level 2
+\node (a2) at (1,2) {1};
+\node (e2) at (5,2) {9};
+
+% Level 1
+\node (a1) at (1,1) {1};
+\node (c1) at (3,1) {5};
+\node(e1) at (5,1) {9};
+
+% Level 0
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node (c0) at (3,0) {5};
+\node[draw,rectangle,fill=green!30] (d0) at (4,0) {7};
+\node(e0) at (5,0) {9};
+
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+
+We move right to \(7\) and locate the desired element.
+
+\subsubsection*{Why is the Expected Complexity $\Theta(\log n)$?}
+
+The logarithmic complexity of skip lists arises from the probabilistic structure of the levels.
+
+Recall that:
+\begin{itemize}
+\item every node appears in level \(0\),
+\item each node independently gets promoted to the next level with probability \(\frac12\).
+\end{itemize}
+
+Consequently:
+\[
+\Pr(\text{node reaches level }k)=\frac1{2^k}
+\]
+
+Thus, the expected number of nodes in level \(k\) is:
+
+\[
+\frac{n}{2^k}
+\]
+
+For example:
+
+\[
+\begin{array}{|c|c|}
+\hline
+\textbf{Level} & \textbf{Expected Number of Nodes} \\
+\hline
+0 & n \\
+\hline
+1 & \frac n2 \\
+\hline
+2 & \frac n4 \\
+\hline
+3 & \frac n8 \\
+\hline
+\vdots & \vdots \\
+\hline
+\end{array}
+\]
+
+Hence, the number of nodes decreases geometrically as we move upward.
+
+\paragraph{Height of the Skip List}
+
+The highest non-empty level is approximately the value \(h\) satisfying
+
+\[
+\frac{n}{2^h}\approx 1
+\]
+
+Solving:
+
+\[
+2^h\approx n
+\]
+
+Taking logarithms:
+
+\[
+h\approx \log_2 n
+\]
+
+Thus, the expected height of the skip list is:
+
+\[
+\mathcal{O}(\log n)
+\]
+
+\paragraph{Cost of Horizontal Movement}
+
+Now consider the search procedure.
+
+At each level:
+\begin{itemize}
+\item we move right several times,
+\item then move down one level.
+\end{itemize}
+
+A key probabilistic fact is that the expected number of right moves per level is bounded by a constant.
+
+Intuitively:
+\begin{itemize}
+\item only about half the nodes survive to the next level,
+\item so long runs of horizontal movement become increasingly unlikely,
+\item and we quickly descend toward the target.
+\end{itemize}
+
+More formally, because each node is promoted independently with probability \(\frac12\), the expected gap between consecutive nodes at level \(k\) is approximately \(2^k\).
+
+Thus, each higher level allows us to skip increasingly large portions of the list.
+
+\paragraph{Total Search Complexity}
+
+The search path therefore consists of:
+\begin{itemize}
+\item roughly \(\mathcal{O}(\log n)\) downward moves,
+\item and only \(\mathcal{O}(1)\) expected horizontal moves per level.
+\end{itemize}
+
+Hence:
+
+\[
+\text{Expected Search Cost}
+=
+\mathcal{O}(\log n)\times \mathcal{O}(1)
+=
+\mathcal{O}(\log n)
+\]
+
+\paragraph{Why is it randomised?}
+One may wonder why skip lists use randomization at all.
+Could we not deterministically place:
+\begin{itemize}
+\item every second element in level \(1\),
+\item every fourth element in level \(2\),
+\item every eighth element in level \(3\),
+\item and so on?
+\end{itemize}
+
+While this would indeed support logarithmic search complexity, insertions and deletions would become expensive.
+
+For example, inserting a new element near the beginning of the list changes which elements are the:
+\begin{itemize}
+\item second,
+\item fourth,
+\item eighth,
+\item etc.
+\end{itemize}
+
+elements of the list.
+
+Consequently, many levels may require large-scale rebuilding.
+
+Randomization avoids this problem by assigning heights independently to each node.
+Thus, updates are $\Theta(height)=\Theta(\log n)$ while the structure stays balanced in expectation.
+
+Thus, randomized skip lists achieve logarithmic expected search complexity without requiring complicated balancing operations such as rotations or restructuring.
 \section{Hashing}
 
 \subsection{What even is Hashing?}
@@ -1152,7 +2023,7 @@ for(int i=0;i<n;i++)
 }
 \end{verbatim}
 
-\subsubsection[Randomised Method]{Method 2: Hashing Based Verification of Rows and Columns}
+\subsubsection[Hashing Method]{Method 2: Hashing Based Verification of Rows and Columns}
 
 To obtain a more efficient solution, each row is hashed to a pair of values $(\text{sum}, \text{squaresum})$, where $\text{sum}$ and $\text{squaresum}$ denote the sum and sum of squares of elements in the row respectively. This representation is much easier to compare across rows.
 
