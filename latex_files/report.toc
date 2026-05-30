@@ -52,30 +52,33 @@
 \contentsline {chapter}{\numberline {6}The Probabilistic Method}{31}{chapter.6}%
 \contentsline {section}{\numberline {6.1}The Dominating Set Problem}{31}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Bipartite Subgraph}{33}{section.6.2}%
-\contentsline {chapter}{\numberline {7}Online Decision Algorithms}{35}{chapter.7}%
-\contentsline {section}{\numberline {7.1}The Dating Problem}{35}{section.7.1}%
+\contentsline {subsection}{\numberline {6.2.1}Expected Number of Bichromatic Edges}{33}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}A Simple Randomised Algorithm}{34}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}Derandomisation}{34}{subsection.6.2.3}%
+\contentsline {chapter}{\numberline {7}Online Decision Algorithms}{36}{chapter.7}%
+\contentsline {section}{\numberline {7.1}The Dating Problem}{36}{section.7.1}%
 \contentsline {section}{\numberline {7.2}The Parallel Processing Problem}{39}{section.7.2}%
-\contentsline {subsection}{\numberline {7.2.1}Greedy Algorithm}{39}{subsection.7.2.1}%
-\contentsline {subsection}{\numberline {7.2.2}Performance Analysis}{39}{subsection.7.2.2}%
-\contentsline {subsection}{\numberline {7.2.3}Tightness of the Bound}{40}{subsection.7.2.3}%
-\contentsline {chapter}{\numberline {8}Heuristic Algorithms}{41}{chapter.8}%
-\contentsline {section}{\numberline {8.1}The Dominating Set Problem Revisited}{41}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Exam Scheduling}{43}{section.8.2}%
-\contentsline {subsection}{\numberline {8.2.1}Random Permutation}{43}{subsection.8.2.1}%
-\contentsline {subsection}{\numberline {8.2.2}Local Decision}{44}{subsection.8.2.2}%
-\contentsline {section}{\numberline {8.3}Bipartite Subgraph Revisited}{46}{section.8.3}%
-\contentsline {section}{Appendices}{46}{section*.52}%
-\contentsline {chapter}{\numberline {A}Probability and Expectation}{47}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Linearity of Expectation}{47}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Union Bound}{47}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Variance}{47}{section.A.3}%
-\contentsline {section}{\numberline {A.4}Indicator Variables}{48}{section.A.4}%
-\contentsline {chapter}{\numberline {B}Inequalities}{49}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Exponential Inequality}{49}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Jensen’s Inequality}{49}{section.B.2}%
-\contentsline {chapter}{\numberline {C}Discrete Mathematics}{50}{appendix.C}%
-\contentsline {section}{\numberline {C.1}Pigeonhole Principle}{50}{section.C.1}%
-\contentsline {section}{\numberline {C.2}Basic Graph Definitions}{50}{section.C.2}%
-\contentsline {chapter}{\numberline {D}Linear Algebra}{52}{appendix.D}%
-\contentsline {section}{\numberline {D.1}Kernel and Rank}{52}{section.D.1}%
-\contentsline {section}{\numberline {D.2}Special Cases}{52}{section.D.2}%
+\contentsline {subsection}{\numberline {7.2.1}Greedy Algorithm}{40}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}Tightness of the Bound}{41}{subsection.7.2.2}%
+\contentsline {chapter}{\numberline {8}Heuristic Algorithms}{42}{chapter.8}%
+\contentsline {section}{\numberline {8.1}The Dominating Set Problem Revisited}{42}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Exam Scheduling}{44}{section.8.2}%
+\contentsline {subsection}{\numberline {8.2.1}Random Permutation}{44}{subsection.8.2.1}%
+\contentsline {subsection}{\numberline {8.2.2}Local Decision}{45}{subsection.8.2.2}%
+\contentsline {section}{\numberline {8.3}Bipartite Subgraph Revisited}{47}{section.8.3}%
+\contentsline {subsection}{\numberline {8.3.1}Self-Correction}{47}{subsection.8.3.1}%
+\contentsline {section}{Appendices}{47}{subsection.8.3.1}%
+\contentsline {chapter}{\numberline {A}Probability and Expectation}{48}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Linearity of Expectation}{48}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Union Bound}{48}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Variance}{48}{section.A.3}%
+\contentsline {section}{\numberline {A.4}Indicator Variables}{49}{section.A.4}%
+\contentsline {chapter}{\numberline {B}Inequalities}{50}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Exponential Inequality}{50}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Jensen’s Inequality}{50}{section.B.2}%
+\contentsline {chapter}{\numberline {C}Discrete Mathematics}{51}{appendix.C}%
+\contentsline {section}{\numberline {C.1}Pigeonhole Principle}{51}{section.C.1}%
+\contentsline {section}{\numberline {C.2}Basic Graph Definitions}{51}{section.C.2}%
+\contentsline {chapter}{\numberline {D}Linear Algebra}{53}{appendix.D}%
+\contentsline {section}{\numberline {D.1}Kernel and Rank}{53}{section.D.1}%
+\contentsline {section}{\numberline {D.2}Special Cases}{53}{section.D.2}%

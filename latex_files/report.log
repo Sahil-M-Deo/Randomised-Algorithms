@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  30 MAY 2026 18:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  31 MAY 2026 01:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -885,7 +885,7 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 
 pdfTeX warning: pdflatex (file ./Cover.pdf): PDF inclusion: found PDF version <
 1.6>, but at most version <1.5> allowed
-<Cover.pdf, id=262, 1057.9525pt x 1497.595pt>
+<Cover.pdf, id=273, 1057.9525pt x 1497.595pt>
 File: Cover.pdf Graphic file (type pdf)
 <use Cover.pdf>
 Package pdftex.def Info: Cover.pdf  used on input line 36.
@@ -898,7 +898,7 @@ pdfTeX warning: pdflatex (file ./Cover.pdf): PDF inclusion: found PDF version <
 
 pdfTeX warning: pdflatex (file ./Cover.pdf): PDF inclusion: found PDF version <
 1.6>, but at most version <1.5> allowed
-<Cover.pdf, id=264, page=1, 1057.9525pt x 1497.595pt>
+<Cover.pdf, id=275, page=1, 1057.9525pt x 1497.595pt>
 File: Cover.pdf Graphic file (type pdf)
 <use Cover.pdf, page 1>
 Package pdftex.def Info: Cover.pdf , page1 used on input line 36.
@@ -936,7 +936,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.55 ...Online Decision Algorithms}{35}{chapter.7}
+l.56 ...andomised Algorithm}{34}{subsection.6.2.2}
                                                   % [1
 
 {C:/Users/hp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}])
@@ -1152,78 +1152,168 @@ Underfull \hbox (badness 10000) in paragraph at lines 2506--2507
 
  []
 
-[33] [34]
+[33]
+Underfull \hbox (badness 10000) in paragraph at lines 2566--2571
+
+ []
+
+[34]
+Underfull \hbox (badness 10000) in paragraph at lines 2612--2613
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2615--2619
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2632--2634
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2636--2637
+
+ []
+
+[35]
 Chapter 7.
 
-Underfull \hbox (badness 10000) in paragraph at lines 2586--2588
+Underfull \hbox (badness 10000) in paragraph at lines 2678--2680
 
  []
 
-[35
+
+Underfull \hbox (badness 10000) in paragraph at lines 2695--2698
+
+ []
+
+[36
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 2624--2626
+Underfull \hbox (badness 10000) in paragraph at lines 2700--2702
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2628--2629
+Underfull \hbox (badness 10000) in paragraph at lines 2704--2705
 
  []
 
-[36] [37] [38] [39]
-Underfull \hbox (badness 10000) in paragraph at lines 2950--2953
+
+Underfull \hbox (badness 10000) in paragraph at lines 2707--2710
 
  []
 
-[40]
+
+Underfull \hbox (badness 10000) in paragraph at lines 2712--2718
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2720--2721
+
+ []
+
+[37]
+Underfull \hbox (badness 10000) in paragraph at lines 2821--2823
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2829--2831
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2838--2839
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2841--2842
+
+ []
+
+[38]
+Underfull \hbox (badness 10000) in paragraph at lines 2928--2930
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2931--2933
+
+ []
+
+[39]
+Underfull \hbox (badness 10000) in paragraph at lines 2964--2965
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2967--2969
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2970--2973
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2978--2982
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3006--3009
+
+ []
+
+[40] [41]
 Chapter 8.
-[41
+[42
 
-] [42] [43] [44] [45]
-Underfull \hbox (badness 10000) in paragraph at lines 3301--3303
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 3304--3305
+] [43] [44] [45] [46]
+Underfull \hbox (badness 10000) in paragraph at lines 3360--3362
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3318--3319
+Underfull \hbox (badness 10000) in paragraph at lines 3363--3364
 
  []
 
-[46]
+[47]
 Appendix A.
-[47
+[48
 
-] [48]
+] [49]
 Appendix B.
-[49
+[50
 
 ]
 Appendix C.
-[50
+[51
 
-] [51]
+] [52]
 Appendix D.
-[52
+[53
 
-] [53] (C:\Users\hp\OneDrive\Desktop\THE BOOK\latex_files\report.aux)
+] [54] (C:\Users\hp\OneDrive\Desktop\THE BOOK\latex_files\report.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: F980499B9C0CD2CBFDFAEA1D24183B40;10000.
+(rerunfilecheck)             Checksum: 00084C9E53C10FC9D105B57ECF11B62F;10584.
  ) 
 Here is how much of TeX's memory you used:
- 24711 strings out of 467691
- 452615 string characters out of 5416439
- 869156 words of memory out of 5000000
- 53099 multiletter control sequences out of 15000+600000
+ 24719 strings out of 467691
+ 452737 string characters out of 5416439
+ 869161 words of memory out of 5000000
+ 53101 multiletter control sequences out of 15000+600000
  660319 words of font info for 125 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,17n,94p,675b,856s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1246,29 +1336,31 @@ fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\hp\AppData\Local\MiKT
 eX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\hp\AppData\Local\M
 iKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk><C:/Users/hp/AppData/Local
 /Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/hp/AppData
-/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/hp/A
-ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/User
-s/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C
-:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.p
+/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/hp/Ap
+pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users
+/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:
+/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.p
 fb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
-mi8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/
-cm/cmmi9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsf
-onts/cm/cmmib10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/publ
-ic/amsfonts/cmextra/cmmib8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts
-/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/
-fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/hp/AppData/Local/Programs/MiK
-TeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/hp/AppData/Local/Programs
-/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/hp/AppData/Local/Prog
-rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/hp/AppData/Loca
-l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/hp/AppData
-/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/hp/Ap
-pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Users/
-hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb
->
+mi6.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/
+cm/cmmi8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsf
+onts/cm/cmmi9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public
+/amsfonts/cm/cmmib10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1
+/public/amsfonts/cmextra/cmmib8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/
+fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/hp/AppData/Local/Programs/Mi
+KTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/hp/AppData/Local/Program
+s/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/hp/AppData/Local/Pro
+grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/hp/AppData/Local
+/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/hp/AppData
+/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/hp/Ap
+pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/
+hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/U
+sers/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam1
+0.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/sy
+mbols/msbm10.pfb>
 Output written on "C:\Users\hp\OneDrive\Desktop\THE BOOK\latex_files\report.pdf
-" (54 pages, 689333 bytes).
+" (55 pages, 723072 bytes).
 PDF statistics:
- 1459 PDF objects out of 1728 (max. 8388607)
- 221 named destinations out of 1000 (max. 500000)
- 540 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1509 PDF objects out of 1728 (max. 8388607)
+ 227 named destinations out of 1000 (max. 500000)
+ 564 words of extra memory for PDF output out of 10000 (max. 10000000)
 
