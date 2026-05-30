@@ -1,4 +1,4 @@
-\documentclass[11pt]{book}
+\documentclass[11pt,openany]{book}
 
 \usepackage[a4paper,margin=1in]{geometry}
 
@@ -6,57 +6,67 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{mathtools}
-
 \usepackage{graphicx}
 \usepackage{xcolor}
+\usepackage{fancybox}
+\usepackage{fancyvrb}
+\usepackage{framed}
+\usepackage{eso-pic}
 \usepackage[colorlinks=true,linkcolor=black]{hyperref}
+\renewcommand{\sectionautorefname}{Appendix}
+
+\usepackage[bottom]{footmisc}
+\interfootnotelinepenalty=10000
 \usepackage{enumitem}
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{bm}
 \usepackage{tikz}
+
 \usetikzlibrary{calc}
 \usetikzlibrary{positioning,arrows.meta}
 
-
-\title{Randomised Algorithms}
-\author{Sahil Mukesh Deo}
-\date{\today}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{geometry}
 
 \begin{document}
-
-\maketitle
-
+\pagestyle{plain}
+\thispagestyle{empty}% no header/footer on cover
+\includepdf[pages=1,pagecommand={}]{Cover.pdf}% includes full-page cover
+\setcounter{page}{1}% (if you want to restart page numbering after cover)
 \tableofcontents
-\newpage
 
 \chapter{Introduction}
 
 \section{What even is a Randomised Algorithm?}
 
-A randomised algorithm is an algorithm that makes random choices during its execution. Unlike deterministic algorithms, whose behaviour is completely determined by the input, the behaviour of a randomised algorithm may vary between different executions on the same input.
+A randomised algorithm is an algorithm that makes random choices during its execution. 
+Unlike deterministic algorithms, 
+whose behaviour is completely determined by the input,
+ the behaviour of a randomised algorithm may vary between different executions on the same input.\\
 
-Typically, the algorithm uses a random number generator (rng for short) to decide between multiple possible actions. As a result, quantities such as running time\footnote{Such algorithms are called Las Vegas algorithms.}, memory usage, or even correctness\footnote{
-Such an algorithm is called a Monte Carlo algorithm. The fact that correctness itself may become probabilistic can initially seem undesirable, especially in critical systems where 
+
+\noindent Typically, the algorithm uses a random number generator (\texttt{rng}) to decide between multiple possible actions. 
+As a result, quantities such as running time\footnote{Such algorithms are called Las Vegas algorithms.}, 
+memory usage, or even correctness\footnote{
+Such an algorithm is called a Monte Carlo algorithm. The fact that correctness itself may become probabilistic can 
+initially seem undesirable, especially in critical systems where 
 absolute correctness is expected. However, in many practical situations, a sufficiently small error probability
 is considered acceptable. For example, if an algorithm can be shown to fail with probability at 
 most \(10^{-30}\), then the chance of failure may already be smaller than the probability of random hardware faults such as memory
 bit flips caused by cosmic radiation, which programmers typically ignore during ordinary software development.
-} can become random variables (though usually not all of them at the same time).
+} can become random variables (though usually not all of them at the same time).\\
 
 
-The performance of a randomised algorithm is therefore analysed using probability and expectation. 
+\noindent The performance of a randomised algorithm is therefore analysed using probability and expectation. 
 If $T_{run}$ denotes the runtime of the algorithm, we are usually interested in quantities 
-such as $T_{algo}=E[T_{run}]$ over all possible random choices made by the algorithm.
-\footnote{$T_{algo}$ can still be a random variable over the input - so this may \textbf{not} be 
+such as $T_{algo}=E[T_{run}]$ over all possible random choices made by the algorithm.\footnote{$T_{algo}$ can still be a random variable over the input - so this may \textbf{not} be 
 the same as average case performance of the algorithm $T_{avg}$, which is an expected value over all possible inputs.
 But for cleanliness of presentation, we will often ignore this distinction and use these terms interchangeably, more often taken to mean $T_{avg}$ than $T_{algo}$.}
 
 \vspace{0.6em}
 Randomised algorithms are often used for the following purposes:
-
-
-
 \begin{itemize}
     \item avoid adversarial worst case inputs (common in competitive programming)
     \item simplify algorithm design and implementation
@@ -65,7 +75,7 @@ Randomised algorithms are often used for the following purposes:
 
 \section{Implementation of Randomness in \texttt{C++}}
 
-Lets make things more concrete with some actual code and implementation details!
+Let us make things more concrete with some actual code and implementation details!
 Modern \texttt{C++} provides pseudo-random\footnote{Since computers are deterministic, they rely on parameters like atmospheric noise and temperature for randomness. The details are irrelevant for us... We will take pseudo random as true random for our purposes} number generators through the \texttt{<random>} library. A commonly used generator is \texttt{mt19937}, which is based on the Mersenne Twister algorithm.
 
 \begin{verbatim}
@@ -91,7 +101,7 @@ int y=uid(rng);
 .
 \end{verbatim}
 
-Each generation takes around constant time.
+\noindent Each generation takes around constant time.
 
 \subsection*{Generating Random Real Numbers}
 
@@ -107,7 +117,7 @@ double y=urd(rng);
 .
 \end{verbatim}
 
-This also takes constant time per generation.
+\noindent This also takes constant time per generation.
 
 \subsection*{Generating a Random Permutation}
 
@@ -117,7 +127,7 @@ A random permutation of an array (in-place modification) can be generated using 
 shuffle(a.begin(),a.end(),rng);
 \end{verbatim}
 
-Internally, this does something like:
+\noindent Internally, this does something like:
 
 \begin{verbatim}
 for(int i=n-1;i>0;i--)
@@ -127,7 +137,7 @@ for(int i=n-1;i>0;i--)
 }
 \end{verbatim}
 
-(Try to think why all permutations are equally likely with this method!)
+\noindent Deduce why all permutations are equally likely with this method!
 
 \subsection*{Implementing Random Decisions}
 
@@ -141,7 +151,7 @@ Sometimes, an algorithm must choose between multiple actions with specified prob
 \Pr(Z)=\frac{1}{5}
 \]
 
-One simple way to implement this is to generate a random integer uniformly from \(1\) to \(5\):
+\noindent One simple way to implement this is to generate a random integer uniformly from \(1\) to \(5\):
 
 \begin{verbatim}
 uniform_int_distribution<int>uid(1,5);
@@ -188,13 +198,9 @@ Worst case analysis is useful because it guarantees an upper bound on the runnin
 
 In average case analysis, we compute the expected number of operations assuming that all valid inputs are equally likely.
 
-For Bubble Sort, this corresponds to analysing the expected number of inversions in a random permutation of size \(n\). For every pair of indices \((i,j)\) with \(i<j\), the probability that the pair forms an inversion is
+For Bubble Sort, this corresponds to analysing the expected number of inversions in a random permutation of size \(n\). 
 
-\[
-\Pr\big((i,j)\text{ is an inversion}\big)=\frac{1}{2}
-\]
-
-\noindent Define the indicator\footnote{Refer Appendix \ref{indicator_variables}} variable $I_{ij}$ for each pair \((i,j)\) as follows:
+\noindent Define the indicator\footnote{Refer \autoref{indicator_variables}} variable $I_{ij}$ for each pair \((i,j)\) as follows:
 
 \[
 I_{ij}=
@@ -204,11 +210,20 @@ I_{ij}=
 \end{cases}
 \]
 
+For every pair of indices \((i,j)\) with \(i<j\), the probability that the pair forms an inversion is
+
+\[
+\Pr\big((i,j)\text{ is an inversion}\big)=\frac{1}{2} \implies \mathbb{E}[I_{ij}]
+=
+\frac{1}{2}
+\]
+
+The point of defining the indicator variable is to notice:
 \[
 N_{\mathrm{inv}}=\sum_{1\le i<j\le n}I_{ij}
 \]
 
-Using linearity of expectation\footnote{Refer Appendix \ref{linearity_of_expectation}}, 
+Using linearity of expectation\footnote{Refer \autoref{linearity_of_expectation}}, 
 \[
 \mathbb{E}[N_{\mathrm{inv}}]
 =
@@ -217,13 +232,6 @@ Using linearity of expectation\footnote{Refer Appendix \ref{linearity_of_expecta
 \sum_{1\le i<j\le n}\mathbb{E}[I_{ij}]
 \]
 
-\[
-\mathbb{E}[I_{ij}]
-=
-1\cdot\frac{1}{2}+0\cdot\frac{1}{2}
-=
-\frac{1}{2}
-\]
 
 \[
 \implies
@@ -233,60 +241,90 @@ Using linearity of expectation\footnote{Refer Appendix \ref{linearity_of_expecta
 =
 \frac{1}{2}\binom{n}{2}
 =
-\frac{n(n-1)}{4}
+\frac{n(n-1)}{4} \quad
+\left(\text{Using }\mathbb{E}[I_{ij}]
+=
+\frac{1}{2}\right)
 \]
 
-So notice that if we randomise the input sequence, $T_{algo}$ becomes equal to $T_{avg}$ thus improving performance by a factor\footnote{Randomising the input itself takes about n operations, so more rigorously we would say an asymptotic factor of 2. In most cases we will be able to neglect the time required to randomise the input.} of 2.
+
+So notice that if we randomise the input sequence, $T_{algo}$ becomes equal to $T_{avg}$ thus improving performance by a factor\footnote{Randomising the input itself takes about n operations, so more rigorously 
+we would say "an asymptotic factor of 2" rather than an exact factor of 2. 
+In most cases we will be able to neglect the time required to randomise the input.} of 2.
 \section{Time Complexity Analysis}
 
-We are sometimes interested in comparing runtimes like $T_{run}=n^2$ to $T_{run}=100nlogn$.
-To compare growth rates, we use asymptotic notation:
+We are sometimes interested in comparing runtimes like $T_{run}(n)=n^2$ to $T_{run}(n)=100n\log n$.
+To compare such functions of n, we use asymptotic notation:
 
 \[
-T(n)=\Theta(f(n))
+T_{run}(n)=\Theta(f(n))
 \]
 
-means that \(T(n)\) grows asymptotically at the same rate as \(f(n)\).
+which means that \(T_{run}\) grows asymptotically at the same rate as \(f(n)\).\\
 
-My favourite way to think about time complexity is as follows: we try to find the ``simplest'' function \(f(n)\) such that
+\noindent My favourite way to think about time complexity is as follows: we try to find the ``simplest'' function \(f(n)\) such that
 
 \[
-\lim_{n\to\infty}\frac{T(n)}{f(n)}=k,
+\lim_{n\to\infty}\frac{T_{run}(n)}{f(n)}=k,
 \qquad
 k\in\mathbb{R}_{>0}
 \]
 
-That is, \(T(n)\) and \(f(n)\) grow at the same asymptotic rate up to a positive constant factor.
-
-For example, Bubble Sort performs on the order of \(n^2\) operations in both the average and worst case, so its time complexity is
+\noindent That is, \(T_{run}(n)\) and \(f(n)\) grow at the same asymptotic rate up to a positive constant factor.
+\noindent For example, Bubble Sort performs on the order of \(n^2\) operations in both the average and worst case, so its time complexity is
 
 \[
-T(n)=\Theta(n^2)
+T_{run}(n)=\Theta(n^2)
 \]
 
-Asymptotic analysis allows us to compare algorithms by their rate of growth rather than implementation-dependent constants.
+\noindent Asymptotic analysis allows us to compare algorithms by their 
+limiting behaviour rather than implementation-dependent constants.\\
 
-This allows us to say that A: $T_{run}=n^2$ is worse than B: $T_{run}=100nlogn$ since A has $T(n)=\Theta(n^2)$ and B has $T(n)=\Theta(nlogn)$ even though for some small n the first one may
- well be better, but for small n the performance doesn't really matter anyway\dots
+
+\noindent This allows us to say that A: $T_{run}=n^2$ is worse than B: $T_{run}=100n\log n$ since A is $\Theta(n^2)$
+ and B is $\Theta(n\log n)$ even though for some small n the first one may
+ well be better, but for small n the performance doesn't really\footnote{Integer multiplication
+ is an interesting case. The classic method of multiplying digit by digit as taught in school is $\Theta(n^2)$
+ time, but there are more asymptotically efficient methods which can do it in $\Theta(n\log n)$ time. But 
+ for reasonably large integers also the constant factor is large enough that the school method is faster!}
+  matter anyway\dots
 
 \chapter{The Classics}
-\section{Quick Sort}
+\section{QuickSort}
 
-Quick Sort is one of the most important examples of a randomised algorithm in practice. The basic idea is very simple:
+In general, for an input array of size n -- to sort deterministically using only pairwise comparisons,
+it can be proved via a decision tree that we need at least $n\log_2 n$ operations. From a 
+time complexity point of view this is $\Theta(n\log n)$ time. \texttt{QuickSort} does not really improve upon that, but 
+in practice it is very quick with a small constant factor. The STL 
+library of \texttt{C++} uses \texttt{QuickSort} in its \texttt{std::sort()} function.\\
 
-\begin{enumerate}
-    \item Choose a pivot element.
-    \item Partition the array into:
-    \begin{itemize}
-        \item elements smaller than the pivot,
-        \item elements equal to the pivot,
-        \item elements greater than the pivot.
-    \end{itemize}
-    This takes n comparisions with our pivot 
-    \item Recursively sort the smaller and larger parts.
-\end{enumerate}
+\subsection{The Algorithm}
 
-A deterministic implementation may always choose the first or last element as pivot. Unfortunately, this can lead to very poor performance on adversarial inputs. For example, if the array is already sorted and we always choose the first element as pivot, the recursion becomes extremely unbalanced:
+Consider the following pseudocode for \texttt{QuickSort}:
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+QuickSort(A)
+{
+    choose an element p from A as the "pivot"
+    partition A into A<p, A=p, A>p
+    return {QuickSort(A<p) : (A=p) : QuickSort(A>p)}
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+\noindent Note that \texttt{A<p} is our notation for the elements of \texttt{A} that are strictly less than \texttt{p}.
+Similarly for \texttt{A>p} and \texttt{A=p}.\\
+
+
+\noindent A deterministic implementation may always choose the first or last element as pivot. 
+Unfortunately, this can lead to very poor performance on adversarial inputs. 
+For example, if the array is already sorted and we always choose the leftmost element as 
+pivot, the recursion becomes extremely unbalanced:
 
 \[
 (n-1)+(n-2)+\dots+1
@@ -294,27 +332,37 @@ A deterministic implementation may always choose the first or last element as pi
 \Theta(n^2)
 \]
 
-Thus deterministic Quick Sort has worst case complexity
+\noindent Thus \texttt{QuickSort} has worst case complexity
 
 \[
 T(n)=\Theta(n^2)
 \]
 
-The standard randomised version instead chooses the pivot uniformly at random.
+\noindent The standard randomised version instead chooses the pivot uniformly at random.
 
-\begin{verbatim}
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
 uniform_int_distribution<int>uid(0,a.size()-1);
 int pivot=uid(rng);
 swap(a[pivot],a[r]);
-\end{verbatim}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
 
-This tiny modification dramatically changes the behaviour of the algorithm. Intuitively, it becomes very unlikely that we repeatedly choose extremely bad pivots.
+\noindent This tiny modification dramatically changes the behaviour of the algorithm. Intuitively, it becomes very unlikely that we repeatedly choose extremely bad pivots.
 
-\subsection*{Runtime Analysis}
+\subsection{Expected Runtime}
 
-Let \(T(n)\) denote the expected runtime of randomised Quick Sort on an array of size \(n\) over all possible inputs.
+\subsubsection*{Recurrence Relation}
+Let \(T(n)\) denote the expected runtime of randomised \texttt{QuickSort} on 
+an array of size \(n\) over all possible inputs.\\
 
-Suppose the pivot finally ends up at position \(k\), where \(0\le k\le n-1\). Then the recursive subproblems have sizes \(k\) and \(n-1-k\). Since partitioning itself takes n operations, we obtain the recurrence
+
+\noindent Suppose the pivot finally ends up at position \(k\), where \(0\le k\le n-1\). Then the recursive subproblems have sizes \(k\) and \(n-1-k\). Since partitioning itself takes n operations, we obtain the recurrence
 
 \[
 T(n)
@@ -322,7 +370,7 @@ T(n)
 T(k)+T(n-1-k)+n
 \]
 
-Because the pivot is chosen uniformly at random, every value of \(k\) is equally likely. Taking expectation over all random choices made by the algorithm gives
+\noindent Because the pivot is chosen uniformly at random, every value of \(k\) is equally likely. Taking expectation over all random choices made by the algorithm gives
 
 \[
 T(n)
@@ -335,49 +383,36 @@ T(k)+T(n-1-k)
 \Big)
 \]
 
-By symmetry,
-
-\[
-\sum_{k=0}^{n-1}T(k)
-=
-\sum_{k=0}^{n-1}T(n-1-k)
-\]
-
-therefore
-
 \[
 T(n)
 =
 \Theta(n)
 +
 \frac{2}{n}\sum_{k=0}^{n-1}T(k)
+\quad
+(\text{Using } \sum_{k=0}^{n-1}T(k)
+=
+\sum_{k=0}^{n-1}T(n-1-k))
 \]
 
+\noindent Changing the variable from $T(n)$ to $S(n)$ gives,
 
 \[
-S(n)=\sum_{k=0}^{n}T(k)
-\]
-
-Then
-
-\[
-T(n)=S(n)-S(n-1)
-\]
-
-and the recurrence becomes
-
-\[
+\implies
 S(n)-S(n-1)
 =
 cn+\frac{2}{n}S(n-1)
+\quad (\text{Substituting } S(n)=\sum_{k=0}^{n}T(k))
 \]
 \[
+\implies
 S(n)
 =
 \left(1+\frac{2}{n}\right)S(n-1)+cn
 \]
 
 \[
+\implies
 \frac{S(n)}{(n+1)(n+2)}
 =
 \frac{S(n-1)}{n(n+1)}
@@ -385,27 +420,33 @@ S(n)
 \frac{cn}{(n+1)(n+2)}
 \]
 
+\[
+\implies
+\frac{S(n)}{(n+1)(n+2)}
+-
+\frac{S(n-1)}{n(n+1)}
+=
+\frac{cn}{(n+1)(n+2)}
+\]
+
+\vspace{0.3mm}
 Summing this recurrence telescopically gives
 
 \[
 \frac{S(n)}{(n+1)(n+2)}
 =
-\Theta\left(
-\sum_{k=1}^{n}\frac{1}{k}
-\right)
-=
 \Theta(\log n)
 \]
 
-Therefore,
 
 \[
+\implies
 S(n)=\Theta(n^2\log n)
 \]
 
-Finally,
 
 \[
+\implies
 T(n)
 =
 S(n)-S(n-1)
@@ -413,18 +454,15 @@ S(n)-S(n-1)
 \Theta(n\log n)
 \]
 
-Hence the expected runtime of randomised Quick Sort is
+Hence the expected runtime of randomised \texttt{QuickSort} is $
+T(n)=\Theta(n\log n)$\\
 
-\[
-T(n)=\Theta(n\log n)
-\]
+\subsubsection*{Indicator Variables}
 
-This analysis demonstrated a powerful technique to find the expected runtime - recursion on input size. It was a bit messy and lengthy, but sometimes yields results very quickly. 
+\noindent Observe that any pair of elements is compared at most once 
+during the entire execution of \texttt{QuickSort}.
 
- Another possible way is through indicator variables. Observe that any pair of elements is compared at most once during the entire execution of Quick Sort.
-
-Let
-
+\noindent Consider the indicator variable,
 \[
 I_{ij}=
 \begin{cases}
@@ -433,21 +471,19 @@ I_{ij}=
 \end{cases}
 \]
 
-Then the total number of comparisons is
+\noindent Then the total number of comparisons $C$ is given by
 
 \[
 C=\sum_{1\le i<j\le n}I_{ij}
 \]
 
-Two elements are compared only if one of them becomes the first pivot chosen among all elements lying between them in sorted order. It can be shown that
+Two elements are compared only if one of them becomes the first pivot chosen 
+among all elements lying between them in sorted order. Since all of them are equally likely, 
+we have a 2 out of \(j-i+1\) chance of this happening.
 
 \[
 \Pr(I_{ij}=1)=\frac{2}{j-i+1}
-\]
-
-Therefore,
-
-\[
+\implies
 \mathbb{E}[C]
 =
 \sum_{1\le i<j\le n}\frac{2}{j-i+1}
@@ -455,51 +491,235 @@ Therefore,
 \Theta(n\log n)
 \]
 
-Hence randomised Quick Sort has expected complexity
+\section{QuickSelect}
 
+\textbf{The Problem}: Find the \(k\)-th smallest element\footnote{This is commonly 
+referred to as the \(k\)-th order statistic of the array.} of an unsorted input array.\\
+
+\noindent An obvious method is to sort the array using Merge Sort\footnote{Merge Sort is a divide and conquer deterministic sort algorithm 
+which runs in $\Theta(n\log n)$ time.} or \texttt{QuickSort} and then access the \(k\)-th element in $\Theta(1)$.
+But since we only care about one element, it seems inefficient to sort the entire array. \\
+
+
+\noindent\textbf{The Solution}:\\
+
+\noindent We pick a pivot \(p\) and partition the array as before.
+Basis the size of the partitions we can figure out which partition the \(k\)-th element is in.
+If it is in the \texttt{A=p} partition, then we already have our answer!
+Else we recurse into that partition and continue this process until we find the \(k\)-th element.
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+QuickSelect(A,k)
+{
+	choose an element p from A as the "pivot"
+	partition A into A<p, A=p, A>p
+	if size(A<p) >= k
+		return QuickSelect(A<p,k)
+	else
+	{
+		if size(A<p)+size(A=p) >= k
+			return p
+		else
+			return QuickSelect(A>p,k-size(A<p)-size(A=p))
+	}
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+\noindent Intuitively, this is similar to \texttt{QuickSort}. However, unlike \texttt{QuickSort}, 
+we recurse into only one side -- each step discarding a significant 
+fraction\footnote{On an expected basis, of course} of 
+the array. This is a similar approach to Binary Search although not quite same since this does not assume a sorted array.
+
+\subsection{Expected Runtime}
+
+Let \(X_i\) denote the size of the search space after \(i\) recursive calls of 
+\texttt{QuickSelect}. $(X_0=n)$\\
+
+\noindent At each step, a pivot is chosen uniformly at random and the array is partitioned around it.
+Depending on the rank we are searching for, \texttt{QuickSelect} recurses into exactly one of the two partitions. 
+To obtain a worst-case bound, we imagine that the algorithm always recurses into the larger partition.\\
+
+
+\noindent If the current search space has size \(x\), and the pivot ends up at position \(k\), 
+then the larger partition has size $\max(k-1,x-k)$.\\
+
+\noindent Averaging over all pivot positions,
 \[
-T(n)=\Theta(n\log n)
+\mathbb E[X_{i+1}\mid X_i=x]
+=
+\frac1x
+\sum_{k=1}^{x}
+\max(k-1,x-k)
+\le
+\frac34(x-1)
+\le
+\frac34x
 \]
 
-\section{Quick Select}
-
-The Problem: find the \(k\)-th smallest element of an unsorted input array\\
-
-\noindent An obvious method is to sort the array using Merge Sort in $\Theta(n\log n)$ and just access the \(k\)-th element - this is overall $\Theta(n\log n)$ and is deterministic. Then how could randomness help?\\
-
-
-Quick Select is an algorithm used to find the \(k\)-th smallest element of an array.
-
-Similar to Quick Sort, the algorithm chooses a pivot and partitions the array into three categories by doing n-1 comparisons between the pivot and every other element as before:
-\begin{itemize}
-    \item elements smaller than the pivot,
-    \item elements equal to the pivot,
-    \item elements greater than the pivot.
-\end{itemize}
-
-However, unlike Quick Sort, we recurse into only \textbf{one} side:
-\begin{itemize}
-    \item if the pivot ends up at position \(k\), we are done,
-    \item if \(k\) lies to the left, recurse left,
-    \item otherwise recurse right.
-\end{itemize}
-
-Thus each step discards a significant fraction of the array. This is a similar approach to Binary Search.
-
-\subsection*{Expected Runtime}
-
-Suppose partitioning takes n time where array size is n. Let T(n) be the runtime. If
-the pivot is the $i$-th smallest element, then 
 \[
-T(n)=n+
-\]
-which is a geometric series:
-
-\[
-T(n)=\Theta(n)
+\implies
+\mathbb E[X_{i+1}\mid X_i]
+\le
+\frac34 X_i
 \]
 
-Thus randomised Quick Select runs in expected linear time.
+Taking expectations and applying the law of total expectation,
+
+\[
+\mathbb E[X_{i+1}]
+=
+\mathbb E\!\left[\mathbb E[X_{i+1}\mid X_i]\right]
+\le
+\frac34\mathbb E[X_i]
+\]
+
+\[
+\implies \frac{\mathbb E[X_{i+1}]}{\mathbb E[X_i]} \le \frac34
+\implies
+\frac{\mathbb E[X_i]}{\mathbb E[X_0]}
+\le
+\left(\frac34\right)^i
+\]
+\[
+\implies E[X_i] \le n (\frac{3}{4})^i \quad (\text{Using }\mathbb E[X_0]=X_0=n)
+\]
+
+\noindent Let $T$ be the random variable which denotes the number of recursive calls of \texttt{QuickSelect}. 
+It is the first $i$ such that $X_i \le 1$. \\
+
+
+\noindent Since the total runtime is proportional to the number of operations (taking 
+constant of proportionality as 1 for simplicity) which 
+are comparisons with the pivot in this case, we have 
+
+\[
+E[T_{run}] \le \sum_{i=1}^T n (\frac{3}{4})^i \le \sum_{i=1}^{\infty} n(\frac{3}{4})^i 
+\]
+\[
+\implies E[T_{run}] \le n \cdot \frac{\frac{3}{4}}{1-\frac{3}{4}} = 3n
+\]
+
+So the expected runtime is \(\Theta(n)\).
+\subsection{Expected Recursion Depth}
+
+Recall that $T$ is the first $i$ such that $X_i \le 1$.
+Since $X_i \le 1$ is equivalent to $i\ge T$, $i<T$ is equivalent to $X_i \ge 2$.
+\[
+\implies \Pr(i<T)
+=
+\Pr(X_i\ge2)
+\le
+\frac{\mathbb E[X_i]}{2}
+\quad(\text{Using Markov's inequality})
+\]
+
+\noindent Upper bounding $\mathbb E[X_i]$,
+\[
+\Pr(X_i\ge2)
+\le
+\frac{\mathbb E[X_i]}{2}
+\le
+\frac n2\left(\frac34\right)^i
+\]
+
+\noindent Using the tail-expectation identity,
+\[
+\mathbb E[T]
+=
+\sum_{i=0}^{\infty}\Pr(T>i),
+\]
+
+\[
+\implies
+\mathbb E[T]
+\le
+\sum_{i\ge0}
+\min\left(1,\frac n2\left(\frac34\right)^i\right) \quad (\text{Using the trivial } Pr(T>i) \le 1)
+\]
+
+\vspace{0.6em}
+We split the sum into two parts:
+
+\[
+\mathbb E[T] \le \sum_{i=0}^{m-1} 1 +
+\sum_{i=m}^{\infty} \frac{n}{2} \left( \frac{3}{4} \right)^i
+=m+ \sum_{i=m}^{\infty} \frac{n}{2} \left( \frac{3}{4} \right)^i
+\]
+\[
+\quad \left(\text{where } m= \left\lceil \log_{\frac{4}{3}} \left( \frac{n}{2} \right) \right\rceil\right)
+\]
+
+For the summation we can factor out the first term,
+
+\[
+\sum_{i=m}^{\infty} \frac{n}{2} \left( \frac{3}{4} \right)^i
+=
+\frac n2\left(\frac34\right)^m
+\sum_{j=m}^{\infty}
+\left(\frac34\right)^{j-m}
+\]
+
+\[
+\begin{aligned}
+\text{We have}\hspace{1em}
+\frac n2\left(\frac34\right)^m \le 1
+\text{ (By definition of }m)
+&
+\hspace{1em}\text{and }
+&
+\sum_{j=m}^{\infty}\left(\frac34\right)^{j-m}
+=
+\sum_{j=0}^{\infty}\left(\frac34\right)^{j}
+=
+\frac1{1-\frac34}
+=
+4
+\end{aligned}
+\]
+
+\[
+\implies
+\sum_{i=m}^{\infty}
+\frac n2\left(\frac34\right)^i
+\le
+4
+\]
+
+Combining the two bounds,
+
+\[
+\mathbb E[T]
+\le
+m+4
+=
+\left\lceil
+\log_{4/3}\!\left(\frac n2\right)
+\right\rceil
++4
+\]
+
+So we can conclude\footnote{Or can we? See Problems!} $\boxed{\mathbb E[T]=O(\log n)}$
+
+
+\section{Problems}
+
+\begin{enumerate}
+\item[\textbf{1}]
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item We concluded an upper bound for the recursion depth of \texttt{QuickSelect}. But to 
+justify the complexity as $\Theta(\log n)$, show that the recursion depth is lower
+bounded by $\Theta(\log n)$.
+
+\end{enumerate}
+
+\end{enumerate}
 
 \chapter{Hashing}
 
@@ -1325,6 +1545,59 @@ Since \(h_0 \approx \log_2 n\), we get:
 \boxed{\mathbb{E}[H]=\Theta(\log n)}
 \]
 
+\subsubsection*{Geometric Decline in Expectation}
+
+Recall that using the markov inequality, we proved that the height of the 
+recursion tree for \texttt{QuickSelect} is \(O(\log n)\). Using the same technique, 
+we can show:
+
+If a sequence of nonnegative random variables satisfies
+\[
+\frac{\mathbb E[X_{i+1}]}{\mathbb E[X_i]}
+\le p
+\qquad (0<p<1),
+\]
+and \(T\) denotes the first index for which \(X_T \le 1\), then
+\[
+\mathbb E[T]=\Theta(\log n),
+\]
+where \(n=\mathbb E[X_0]\).
+
+
+Let \(X_i\) denote the number of nodes present at level \(i\) of the skip list.
+
+Since every node is promoted independently with probability \(1/2\),
+\[
+\mathbb E[X_i]
+=
+n\left(\frac12\right)^i.
+\]
+
+Hence
+\[
+\frac{\mathbb E[X_{i+1}]}{\mathbb E[X_i]}
+=
+\frac12.
+\]
+
+Therefore the expected number of nodes decreases geometrically from one level to the next.
+
+The height of the skip list is precisely the highest level containing at least one node. Equivalently, if
+\[
+T=\min\{i:X_i \le 1\},
+\]
+then the height is T.
+
+Applying the geometric-decline theorem with \(p=\frac12\) gives
+\[
+\mathbb E[T]=\Theta(\log n).
+\]
+
+Consequently,
+\[
+\boxed{\mathbb E[H]=\Theta(\log n).}
+\]
+
 \subsection{Searching in a Skip List}
 
 Suppose we wish to search for the element \(7\).
@@ -2099,7 +2372,7 @@ When choosing vertices uniformly at random, the probability that a single chosen
 \left(1-\frac{d+1}{n}\right)^k
 \]
 
-Using the inequality\footnote{Refer Appendix \ref{exp_inequality}} $1-x\le e^{-x}$ for all $x\in\mathbb{R}$, we obtain:
+Using the inequality\footnote{Refer \autoref{exp_inequality}} $1-x\le e^{-x}$ for all $x\in\mathbb{R}$, we obtain:
 \[
 \Pr[v\text{ remains undominated}]
 \le
@@ -2110,7 +2383,7 @@ e^{-k(d+1)/n}
 
 The algorithm fails if at least one vertex remains undominated.
 
-Applying the union bound\footnote{Refer Appendix \ref{union_bound}}
+Applying the union bound\footnote{Refer \autoref{union_bound}}
 
 \[
 \Pr[\text{failure}]
@@ -2923,7 +3196,7 @@ Therefore, there exists an independent set of size at least:
 
 Denoting the maximum independent set size by \(\alpha(G)\), we have:
 \[\alpha(G) \ge \sum_{v \in V} \frac{1}{d(v)+1}\]
-Using the Jensen's\footnote{Refer Appendix \ref{jensen}} inequality on 1/(x+1), we have:
+Using the Jensen's\footnote{Refer \autoref{jensen}} inequality on 1/(x+1), we have:
 \[
 \sum_{v \in V} \frac{1}{d(v)+1} \ge \frac{n}{d+1}
 \]
