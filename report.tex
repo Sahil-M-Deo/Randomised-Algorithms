@@ -633,20 +633,22 @@ Since $X_i \le 1$ is equivalent to $i\ge T$, $i<T$ is equivalent to $X_i \ge 2$.
 \[
 \mathbb E[T]
 =
-\sum_{i=0}^{\infty}\Pr(T>i),
+\sum_{i=0}^{\infty}\Pr(T>i)
 \]
 
 \[
 \implies
 \mathbb E[T]
 \le
-\sum_{i\ge0}
+\sum_{i=0}^{\infty}
 \min\left(1,\frac n2\left(\frac34\right)^i\right) \quad (\text{Using the trivial } Pr(T>i) \le 1)
 \]
 
 \vspace{0.6em}
-We split the sum into two parts:
-
+\noindent \textbf{The Splitting\footnote{I feel this is useful and common enough to warrant a name!} Technique}
+We split the sum into two parts, and bound them or find 
+them separately, thus finding our overall bound. Here we split according to when 
+the min() changes from $1$ to $\frac n2\left(\frac34\right)^i$.\\
 \[
 \mathbb E[T] \le \sum_{i=0}^{m-1} 1 +
 \sum_{i=m}^{\infty} \frac{n}{2} \left( \frac{3}{4} \right)^i
@@ -655,8 +657,8 @@ We split the sum into two parts:
 \[
 \quad \left(\text{where } m= \left\lceil \log_{\frac{4}{3}} \left( \frac{n}{2} \right) \right\rceil\right)
 \]
-
-For the summation we can factor out the first term,
+\vspace{0.5em}
+\noindent For the summation we can factor out the first term,
 
 \[
 \sum_{i=m}^{\infty} \frac{n}{2} \left( \frac{3}{4} \right)^i
@@ -705,7 +707,7 @@ m+4
 +4
 \]
 
-So we can conclude\footnote{Or can we? See Problems!} $\boxed{\mathbb E[T]=O(\log n)}$
+So we can conclude\footnote{Or can we? See Problems!} $\boxed{\mathbb E[T]=\Theta(\log n)}$
 
 
 \section{Problems}
@@ -954,7 +956,7 @@ for(int i=0;i<n;i++)
 
 To obtain a more efficient solution, each row is hashed to a pair of values $(\text{sum}, \text{squaresum})$, where $\text{sum}$ and $\text{squaresum}$ denote the sum and sum of squares of elements in the row respectively. This representation is much easier to compare across rows.
 
-Assuming the hash is sufficiently collision-resistant, we compare the sets of row hashes for both matrices. This can be implemented efficiently using \texttt{unordered\_set} in \texttt{C++}, which provides expected $O(1)$ insertion and lookup time.
+Assuming the hash is sufficiently collision-resistant, we compare the sets of row hashes for both matrices. This can be implemented efficiently using \texttt{unordered\_set} in \texttt{C++}, which provides expected $\Theta(1)$ insertion and lookup time.
 
 For each row $i$, we compute:
 \[
@@ -1545,13 +1547,11 @@ Since \(h_0 \approx \log_2 n\), we get:
 \boxed{\mathbb{E}[H]=\Theta(\log n)}
 \]
 
-\subsubsection*{Geometric Decline in Expectation}
+\subsubsection*{Geometric Decline Theorem}
 
 Recall that using the markov inequality, we proved that the height of the 
-recursion tree for \texttt{QuickSelect} is \(O(\log n)\). Using the same technique, 
-we can show:
-
-If a sequence of nonnegative random variables satisfies
+recursion tree for \texttt{QuickSelect} is atmost \(\Theta(\log n)\). Using the same technique, 
+we can show that if a sequence of nonnegative random variables satisfies
 \[
 \frac{\mathbb E[X_{i+1}]}{\mathbb E[X_i]}
 \le p
@@ -1559,45 +1559,44 @@ If a sequence of nonnegative random variables satisfies
 \]
 and \(T\) denotes the first index for which \(X_T \le 1\), then
 \[
-\mathbb E[T]=\Theta(\log n),
+\mathbb E[T]<=\Theta(\log (X_0)),
 \]
-where \(n=\mathbb E[X_0]\).
 
+\vspace{1em}
 
-Let \(X_i\) denote the number of nodes present at level \(i\) of the skip list.
+\noindent \textbf{Applying the Theorem}\\
 
-Since every node is promoted independently with probability \(1/2\),
+\noindent Let \(X_i\) denote the number of nodes present at level \(i\) of the skip list. Since 
+every node is promoted independently with probability \(1/2\),
 \[
 \mathbb E[X_i]
 =
 n\left(\frac12\right)^i.
-\]
-
-Hence
-\[
+\implies
 \frac{\mathbb E[X_{i+1}]}{\mathbb E[X_i]}
 =
 \frac12.
 \]
 
-Therefore the expected number of nodes decreases geometrically from one level to the next.
-
-The height of the skip list is precisely the highest level containing at least one node. Equivalently, if
+The height of the skip list is precisely the highest level 
+containing at least one node. Equivalently, if
 \[
-T=\min\{i:X_i \le 1\},
+H=\min\{i:X_i \le 1\},
 \]
-then the height is T.
+then the height is H.
 
-Applying the geometric-decline theorem with \(p=\frac12\) gives
+Applying the Geometric-Decline theorem with \(p=\frac12\) gives
 \[
-\mathbb E[T]=\Theta(\log n).
-\]
-
-Consequently,
-\[
-\boxed{\mathbb E[H]=\Theta(\log n).}
+\mathbb E[H]<=\Theta(\log n).
 \]
 
+\noindent \textbf{Why did we do the first method at all?}\\
+
+In the second method we did not prove a lower bound! Although even in further 
+analyses we won't need the lower bound, it is good to have 
+established that it is exactly $\Theta(\log n)$.
+Also, we revised the "splitting" technique 
+for finding the complexity of an expression, which is a useful tool in general.
 \subsection{Searching in a Skip List}
 
 Suppose we wish to search for the element \(7\).
@@ -2043,9 +2042,9 @@ insertion and deletion operations -- so we turn to the hash table!
 
 \paragraph{Initialisation -- Empty Array}
 
-We begin with an empty array of size \(m\). The indices are shown above the buckets.
-Since this is a plain old normal array of size \(m\), we can access and modify
- any random element in constant time $\dots$
+We begin with an empty array of size \(m\). Since this is a plain old normal 
+array of size \(m\), we can access and modify 
+any random element in constant time $\dots$
 
 \begin{center}
 \begin{tikzpicture}
@@ -2058,17 +2057,8 @@ Since this is a plain old normal array of size \(m\), we can access and modify
 \end{tikzpicture}
 \end{center}
 
-We add an element \(x\) by computing:
-\[
-i = H(x).
-\]
-
-For example, suppose:
-\[
-H(6)=3.
-\]
-
-We place \(6\) at index \(3\).
+We add an element \(x\) by computing $i=\mathbf{H}(x)$. For example, 
+suppose $\mathbf{H}(6)=3$. So we place \(6\) at index \(3\).
 
 \paragraph{First insertion}
 
@@ -2109,13 +2099,8 @@ At this point, every index contains at most one element.
 
 \paragraph{First \emph{collision}}
 
-Now we attempt to insert \(7\). Suppose:
-\[
-H(7)=3.
-\]
-
+Now we attempt to insert \(7\). Suppose $\mathbf{H}(7)=3$.
 We try to place \(7\) at index \(3\), but we find \(6\) already present.
-
 So we extend that position into a linked list.
 
 \begin{center}
@@ -2182,33 +2167,47 @@ As more elements are inserted, collisions may occur at multiple indices, forming
 \end{tikzpicture}
 \end{center}
 
-Thus, each index stores a linked list of all elements mapping to it 
-under the hash function that have been inserted till now.
+Thus, each index i stores a linked list of all elements 
+inserted till now who hash to i.
 
-\subsection*{Operations}
+\subsection*{Supported Operations}
+\begin{center}
+\fbox{
+\begin{minipage}{0.9\linewidth}
+\begin{Verbatim}
+Insert(x)
+{
+    i = H(x)
+    traverse Linked List[i]
+	{
+	    if x not present:
+	        insert x at end
+	}
+}
 
-\paragraph{Insertion}
-To insert \(x\):
-\begin{itemize}
-\item compute \(i = H(x)\)
-\item traverse Linked List at index i
-\item insert \(x\) at the end if it is not already present
-\end{itemize}
+Search(x)
+{
+    i = H(x)
+    traverse Linked_List[i]
+	{
+		if x found
+			return true
+	}
+	return false
+}
 
-\paragraph{Search}
-To check membership of \(x\):
-\begin{itemize}
-\item compute \(i = H(x)\)
-\item traverse Linked List at index i and return true if found, else false
-\end{itemize}
+Delete(x)
+{
+    i = H(x)
+    traverse Linked_List[i]
+    if x found
+        remove x from Linked_List[i]
+}
 
-\paragraph{Deletion}
-To delete \(x\):
-\begin{itemize}
-\item compute \(i = H(x)\)
-\item traverse Linked List at index i
-\item remove \(x\) if found (in constant time as shown in the previous section on skip lists)
-\end{itemize}
+\end{Verbatim}
+\end{minipage}
+}
+\end{center}
 
 \subsection*{Complexity Analysis}
 
@@ -2236,7 +2235,7 @@ If \(m = \Theta(n)\), then:
 \[
 \frac{n}{m} = \Theta(1),
 \]
-so all operations take expected \(O(1)\) time.
+so all operations take expected \(\Theta(1)\) time.
 
 We maintain the condition that \(m = \Theta(n)\) by resizing and rehashing if \(n\) is too large.
 
@@ -3391,14 +3390,14 @@ while exists bad vertex v:
 \noindent\textbf{Complexity analysis:}
 Each flip increases $X$ by at least $1$, and $X \le m$, so there are at most $m$ flips.
 
-If we maintain for each vertex the counts of monochromatic and bichromatic incident edges, each flip can be updated in $O(\deg(v))$. To find a bad vertex we need atmost $O(n)$ time. 
+If we maintain for each vertex the counts of monochromatic and bichromatic incident edges, each flip can be updated in $\Theta(\deg(v))$. To find a bad vertex we need atmost $\Theta(n)$ time. 
 Over all flips, total time is atmost
 \[
-O\left(\sum_{v \text{ flipped}} \left(\deg(v) + n \right) \right) = O(mn+m).
+O\left(\sum_{v \text{ flipped}} \left(\deg(v) + n \right) \right) = \Theta(mn+m).
 \]
 
-Hence the full procedure runs in atmost \footnote{this can be improved to $O(m\log n)$ by using priority queues with lazy updates -- 
-its a fun competitive programming exercise, I encourage you to try it!}$O(mn+m)$ after initialization.
+Hence the full procedure runs in atmost \footnote{this can be improved to $\Theta(m\log n)$ by using priority queues with lazy updates -- 
+its a fun competitive programming exercise, I encourage you to try it!}$\Theta(mn+m)$ after initialization.
 
 
 \appendix
