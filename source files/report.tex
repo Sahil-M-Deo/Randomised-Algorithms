@@ -1,0 +1,23 @@
+\input{preamble}
+
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}% no header/footer on cover
+\includepdf[pages=1,pagecommand={}]{../Images/Cover.pdf}
+\setcounter{page}{1}% (if you want to restart page numbering after cover)
+\tableofcontents
+
+\include{ch1}
+\include{ch2}
+\include{ch3}
+\include{ch4}
+\include{ch5}
+\include{ch6}
+\include{ch7}
+\include{ch8}
+\include{ch9}
+
+\appendix
+\include{appendices}
+
+\end{document}

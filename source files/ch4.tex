@@ -1,0 +1,358 @@
+
+
+
+
+
+
+\chapter{Hashing}
+
+\section{What even is Hashing?}
+
+A recurring theme in randomized algorithms is the idea of replacing a large object by a much smaller \textit{fingerprint} or \textit{hash} which approximately preserves equality.
+
+Instead of comparing two complicated objects directly, we compare their hashes.
+If the hashes differ, the objects are certainly different.
+If the hashes are equal, the objects are \emph{probably} equal.
+
+The power of hashing comes from the fact that computing and comparing hashes is often significantly 
+faster than comparing the original objects themselves. It may also be seen as a form of compression 
+that preserves some information about the original object. In data structures like the \texttt{unordered set}, 
+hashing helps to achieve constant time complexity (on average) within finite memory constraints.
+
+Usually hashes are many-one functions, meaning that multiple different objects can have the same hash. 
+Two inputs having the same hash is called a \textit{collision}. The probability of collision depends on 
+the specific hash function used and the distribution of inputs. A good hash function should minimize the 
+probability of collisions for typical inputs.
+
+\section{Polynomial Multiplication}
+
+Suppose we are given two expressions:
+\[
+P(x)=\prod_{i=1}^k (a_i x+b_i), Q(x) = \sum_{j=0}^k c_j x^j
+\]
+
+We would like to verify whether
+\[
+P(x)\equiv Q(x)
+\]
+
+Naively expanding the product takes $\Theta(k^2)$ time, and then comparing the resulting 
+polynomials takes $\Theta(k)$ time, so the total verification time is $\Theta(k^2)$.
+
+A more efficient approach is to compute the hashes of the polynomials.
+Choose three random values
+\[
+r_1,r_2,r_3
+\]
+from the domain of the polynomial.
+
+Define the hash of a polynomial to be the tuple
+\[
+(P(r_1),P(r_2),P(r_3))
+\]
+
+Similarly compute
+\[
+(Q(r_1),Q(r_2),Q(r_3))
+\]
+
+If the hashes differ at any coordinate, then the polynomials are certainly different.
+
+If all three evaluations agree, then with high probability the polynomials are identical.\\
+
+The reason this works is that the nonzero polynomial $P(x)-Q(x)$ of degree at most $k$ can 
+have at most $k$ roots 
+in the domain from which we are choosing the random values.
+
+If we are choosing random 32-bit integers, then the probability of a false positive 
+(i.e. the polynomials are different but the hashes match) 
+is at most $\left(\frac{k}{2^{32}}\right)^3$ since we are checking three independent random values, 
+which is astronomically small for any reasonable $k$!\\
+
+\noindent Each evaluation of $P$ or $Q$ at a random point takes $\Theta(k)$ time, so 
+the total verification time is $\Theta(k)$. So we have achieved a significant improvement over 
+the naive\footnote{There exists deterministic techniques to get this down to $\Theta(k\log k)$ time, 
+but they have a large constant factor and also are very difficult to implement.} $\Theta(k^2)$ time.\\
+
+\noindent Note that choosing 3 random values has no particular significance - we could choose any small
+constant number of random values to achieve this - it is a tradeoff between time and correctness probability.
+
+\section{Matrix Multiplication}
+
+Suppose we are given matrices $A,B,C\in\mathbb{R}^{n\times n}$
+and wish to verify whether
+\[
+AB=C
+\]
+
+Computing the product explicitly requires matrix multiplication. Standard matrix multiplication takes $\Theta(n^3)$ time.\\
+time, while the fastest known algorithms run in roughly $\Theta(n^{2.37})$ time, though 
+they are highly complicated and rarely used in practice. \\
+
+
+\subsection{Freivalds' Algorithm}
+
+Choose a random vector $X\in\{0,1,\dots,p-1\}^n$, aka of form \[\begin{bmatrix}
+x_1\\
+x_2\\
+\vdots\\
+x_n
+\end{bmatrix}\]
+
+Instead of comparing the matrices themselves, we compute $ABX$ and $CX$. Since matrix-vector 
+multiplication takes only $\Theta(n^2)$ and we are doing 3 
+such multiplications -- $B\cdot X$, then $A\cdot(BX)$, and $C\cdot X$.
+Then we compare the two products entry by entry in $\Theta(n)$ time.
+So the overall procedure is $\Theta(n^2)$ time. \\
+
+\noindent The quantity \(MX\) may be viewed as a compact randomized hash of the matrix \(M\). If two matrices differ, 
+their hashes are unlikely to coincide for a random choice of \(X\).
+
+\noindent More generally, one may choose k independent random vectors
+\[
+X_1,X_2,\dots,X_k
+\]
+and define the hash of a matrix \(M\) as
+\[
+\textbf{H}(M)=(MX_1,MX_2,\dots,MX_k)
+\]
+
+Each additional random vector independently decreases the probability of error.
+Here k must be $\Theta(1)$ to preserve the overall $\Theta(n^2)$ time complexity.
+
+\subsection*{Error Probability Analysis}
+
+Let \(M=AB-C\). We want to bound the probability that \(MX=0\) when 
+\(M\) is nonzero. Choose a prime \(p\), and consider the finite field
+\[
+\mathbb Z_p=(\{0,1,2,\dots,p-1\},+_p,\times_p)
+\]
+
+\noindent To avoid making the entries of $M\equiv0\pmod{p}$ when it is 
+nonzero over \(\mathbb Z\) (and thus avoiding making it null in $\mathbb Z_p$), we use such a $p$
+which is strictly greater than every entry of $M$. We then choose the random 
+vector $X\in\mathbb Z_p^n$ uniformly at random.\\
+
+\noindent Notice that whenever \(MX=0\) over the integers, we also have \(MX=0\) over \(\mathbb Z_p\) 
+since $0 \equiv 0\pmod{p}$. So the set of false positives over \(\mathbb Z\) is a subset 
+of the set of false positives over \(\mathbb Z_p\). Thus the 
+probability of a false positive over \(\mathbb Z\) is 
+at most the probability of a false positive over \(\mathbb Z_p\).\\
+
+\noindent Now \(\mathbb (Z_p)^n\) is a vector space\footnote{It may be helpful to brush up on 
+the theory of vector spaces, but you may choose to not bother with the finer details 
+and take my word for it!} of dimension \(n\) over \(\mathbb Z_p\). If $M$ is not the null matrix, 
+the dimension of its nullspace\footnote{Refer \autoref{nullspace}} is at most \(n-1\).\\
+
+\noindent A \(d\)-dimensional vector space over \(\mathbb Z_p\) contains exactly \(p^d\) vectors. So
+\[
+|nullspace(M)| \le p^{n-1}
+\]
+\vspace{0.5em}
+\noindent Since \(X\) is chosen uniformly from \(\mathbb (Z_p)^n\), which contains \(p^n\) vectors,
+\[
+\Pr(MX=0 \mid \mathbb Z) \le \Pr(MX=0 \mid \mathbb Z_p)
+\le
+\frac{p^{n-1}}{p^n}
+=
+\frac1p
+\]
+
+A suitable choice is \hspace{0.2em} $p=2^{64}+13$ \hspace{0.2em}if we are working with 64-bit integers, 
+which gives an astronomically small error probability of about $5.4\times10^{-20}$.
+\section{A Matrix Problem}
+
+\textbf{Problem Statement\footnote{This question was taken from Codeforces. The editorial indicates that my hashing solution wasn't intended, but when has that ever stopped me?}:} Given two \(n\times m\) matrices \(A\) and \(B\), determine if they are equivalent under row and column permutations. That is, can we permute the rows and columns of \(A\) to obtain \(B\)?
+\\ Additional Constraints: A and B both satisfy -- the set of all entries is \{1,2, \dots, nm\}. \\
+
+\noindent \textbf{Reduction:} First we reduce the problem to a simpler one. If we consider R(M) to be the set of all $R_i$ where each $R_i$ is the set of values in the 
+$i$-th row of a matrix M, and similarly C(M) then the matrices A and B are equivalent under row and column permutations
+if and only if R(A) = R(B) and C(A) = C(B).
+
+\subsection*{Proof of Reduction}
+Clearly, if A and B are equivalent under row and column permutations, then R(A) = R(B) and C(A) = C(B) 
+since the row and column sets are preserved under these permutations. This proves that the set of all B such that R(B) = R(A) and C(B) = C(A)
+contains all matrices equivalent to A under row and column permutations (i.e. the set of all B such that 
+R(B) = R(A) and C(B) = C(A) is a superset of the set of all B equivalent to A under row and column permutations).
+
+Now notice that the number of row and column permutations on A are $n!\cdot m!$ (including the identity permutation). 
+Each of these permutations gives a different matrix since the entries are all distinct.
+Also it can be shown that the number of matrices with given R(M) and C(M) is also $n!\cdot m!$ (In fact while proving 
+this you will notice that the fact we are proving is quite intuitive)  
+
+Since the two sets have the same size and one contains the other, they must be equal. 
+Hence R(A) = R(B) and C(A) = C(B) implies that A and B are equivalent under row and column permutations.
+
+(Note that we assumed all entries are distinct in the above proof)\\
+
+This reduced problem can be solved by two approaches:
+\subsection[Deterministic Method]{Method 1: Set of Sets Approach (Row and Column sets)}
+
+Formally, let
+\[
+R_i = \{a_{i1}, a_{i2}, \dots, a_{im}\}
+\]
+be the representation of row \(i\). We compare:
+\[
+\{R_1, R_2, \dots, R_n\}_A = \{R_1, R_2, \dots, R_n\}_B
+\]
+and similarly for columns.
+
+This method is conceptually exact but computationally heavy due to the need to compare complex set-of-sets structures.
+Set structures can be implemented using balanced binary trees in $\Theta(n\log n)$ time - In \texttt{C++} we have the \texttt{set} data structure which is implemented as a balanced binary tree. 
+Comparing two sets of size \(m\) takes \(\Theta(m\log m)\) time, and we have to do this for \(n\) rows and \(n\) columns, leading to a total time complexity of \(\Theta(nm\log n\log m)\). \\
+
+\noindent \texttt{C++} implementation:
+\begin{verbatim}
+//Matrices are 0-indexed and stored in 2D vectors "first" and "second"
+set<set<int>>F;//set of sets for first matrix
+for(int i=0;i<n;i++)
+{
+    set<int>temp(first[i].begin(),first[i].end()); //set of ith row
+    F.insert(temp);
+}
+
+for(int i=0;i<n;i++)
+{
+    set<int>temp(second[i].begin(),second[i].end()); //set of ith row
+    if (!F.count(temp)) //early exit if this row doesn't exist in the first matrix
+    {
+        cout<<"NO\n";
+        return;
+    }
+}
+\end{verbatim}
+
+\subsection[Hashing Method]{Method 2: Hashing Based Verification of Rows and Columns}
+
+To obtain a more efficient solution, each row is hashed to a pair of values $(\text{sum}, \text{squaresum})$, where $\text{sum}$ and $\text{squaresum}$ denote the sum and sum of squares of elements in the row respectively. This representation is much easier to compare across rows.
+
+Assuming the hash is sufficiently collision-resistant, we compare the sets of row hashes for both matrices. This can be implemented efficiently using \texttt{unordered\_set} in \texttt{C++}, which provides expected $\Theta(1)$ insertion and lookup time.
+
+For each row $i$, we compute:
+\[
+h(R_i) = \left(\sum_{j=1}^{m} a_{ij}, \sum_{j=1}^{m} a_{ij}^2\right)
+\]
+
+We define a custom hash for a pair $(x,y)$ as:
+\[
+H(x,y) = x \cdot 2^{32} + y
+\]
+where $x$ and $y$ are the computed row statistics. This choice of pair hash is popular for 32 bit integers, as it combines the two values into a single 64-bit integer guaranteeing unique hashes.
+
+We insert the hashes of all rows of matrix \(A\) into an unordered set and then check if the hashes of rows of matrix \(B\) are present in this set. If any hash from \(B\) is not found in the set from \(A\), we can conclude that the matrices are not equivalent under row permutations.
+
+Similarly for columns, we compute the column hashes and compare them in the same manner.
+
+This method has an expected time complexity of \(\Theta(nm)\) due to the linear time required to compute the hashes and the expected constant time for hash set operations.\\
+
+This method involved hashing so the correctness of the algorithm is itself a random variable -- but given the constraint that
+the matrix entries are from \{1,2,\dots,nm\}, it seems highly unlikely that this will fail.
+In fact, it seems that this may be a unique hash in this case, but i am yet to find a proof for general (n,m).\\\\
+\noindent \texttt{C++} implementation:
+\begin{verbatim}
+auto pair_hash=[](int x,int y){
+    return ((x)<<32)+y;
+};
+
+unordered_set<long long>s;
+loop(i,n)
+{
+    long long v1=0,v2=0;
+    loop(j,m)
+    {
+        int x=first[i][j];
+        v1+=x;
+        v2+=x*x;
+    }
+    s.insert(pair_hash(v1,v2));
+}
+loop(i,n)
+{
+    long long v1=0,v2=0;
+    loop(j,m)
+    {
+        int x=second[i][j];
+        v1+=x;
+        v2+=x*x;
+    }
+    if(!s.count(pair_hash(v1,v2))) //early exit if this row doesn't exist in the first matrix
+    {
+        cout<<"NO\n";
+        return;
+    }          
+}
+\end{verbatim}
+
+\section{A Sliding Window Problem}
+
+\textbf{The Problem} Two integer arrays $x$ and $y$, each of size $n$, are given along with an integer $k$ $(1 \le k \le n)$. For every contiguous subarray (window) of size $k$, determine whether the corresponding windows in $x$ and $y$ contain the same multiset of elements at every position.
+
+More precisely, for every index (1-based) $i$ such that $1 \le i \le n-k+1$, we compare the multisets:
+\[
+\{x_i, x_{i+1}, \dots, x_{i+k-1}\} \quad \text{and} \quad \{y_i, y_{i+1}, \dots, y_{i+k-1}\}
+\]
+and check whether they are identical for all $i$.
+
+\subsection*{Rolling Hash Method}
+
+To obtain an efficient solution, we maintain two rolling hashes for each window:
+\[
+S = \sum a_i, \quad Q = \sum a_i^2
+\]
+
+These values can be updated in $\Theta(1)$ time when the window slides by removing the outgoing element and adding the incoming element.
+
+For each position $i$, we compute:
+\[
+(S_x(i), Q_x(i)) \quad \text{and} \quad (S_y(i), Q_y(i))
+\]
+and check whether:
+\[
+(S_x(i), Q_x(i)) = (S_y(i), Q_y(i))
+\]
+
+If the condition holds for all $i$, we conclude that every corresponding window has identical multiset structure.\\
+
+\noindent\textbf{C++ Implementation}
+
+\begin{verbatim}
+long long sumX=0,sumY=0;
+long long sumX2=0,sumY2=0;
+
+for(int i=0;i<k;i++)
+{
+    sumX+=x[i];
+    sumY+=y[i];
+    sumX2+=x[i]*x[i];
+    sumY2+=y[i]*y[i];
+}
+
+bool ok=1;
+for(int i=k;i<n;i++)
+{
+    if(!((sumX==sumY)&&(sumX2==sumY2)))
+    {
+        ok=0;
+        break;
+    }
+
+    sumX-=x[i-k];
+    sumX+=x[i];
+    sumX2-=x[i-k]*x[i-k];
+    sumX2+=x[i]*x[i];
+
+    sumY-=y[i-k];
+    sumY+=y[i];
+    sumY2-=y[i-k]*y[i-k];
+    sumY2+=y[i]*y[i];
+}
+cout<<(ok?"YES":"NO");
+\end{verbatim}
+
+This method is very easy to implement and runs in $\Theta(n)$ time, which is efficient for this problem. 
+What was especially nice about this method is that we can maintain the hash values in constant time as the window slides, 
+which is what I meant by using a \textbf{rolling hash}.
+However, it relies on the assumption that the hash values are unique for different multisets.
+We can improve this (if needed) by doing a second round of hashing with a different hash function like polynomial hashing. 
+

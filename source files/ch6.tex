@@ -1,0 +1,744 @@
+\chapter{Number-Theoretic Algorithms}
+
+\section{Introduction}
+
+Prime numbers have fascinated mathematicians for thousands of years. 
+They appear deceptively simple to define -- a prime is 
+a positive integer greater than one whose only divisors 
+are $1$ and itself. Yet many of the deepest questions in 
+mathematics revolve around the distribution and properties of primes.
+
+Beyond their theoretical significance, prime numbers occupy a central position in modern computing. 
+Public-key cryptographic systems such as \texttt{RSA} rely on arithmetic 
+involving very large primes, often hundreds or thousands of bits long. 
+As a result, computers routinely face questions such as
+
+\begin{itemize}
+\item Is a given integer prime?
+\item How can a large prime be generated efficiently?
+\item If an integer is composite, can its factors be found quickly?
+\end{itemize}
+
+At first glance, these problems appear daunting. Consider an 
+integer with several hundred decimal digits. Testing 
+divisibility by every smaller integer is clearly infeasible, 
+and even more sophisticated deterministic approaches 
+may require substantial computational effort.\\
+
+\noindent Surprisingly, randomness provides an elegant alternative. Instead of attempting to prove 
+directly that a number is prime, randomized algorithms often 
+search for evidence that it is composite. A carefully 
+chosen random experiment can reveal such evidence with high probability. 
+
+\section{The Fermat Test}
+
+The simplest algorithm to test the primality of an integer \(n\) is to check for 
+divisibility by every integer from \(2\) up to \(\sqrt{n}\).
+Assuming division can be performed in constant time, this algorithm 
+runs in \(\Theta(\sqrt{n})\) time. Any algorithm we come up with should be at least as efficient as this!\\
+
+
+\noindent The central result underlying our first algorithm is 
+Fermat's Little Theorem. Let the set of primes be denoted by \(\mathbb{P}\) and 
+the set \{0,1,\dots\} by \(\mathbb{N}\).
+
+\medskip
+
+\subsection{Fermat's Little Theorem}
+\[
+p \in \mathbb{P}, a \in \mathbb{N} \implies a^{p} \equiv a \hspace{-0.8em} \pmod{p}
+\]
+
+\medskip
+
+A useful equivalent form is obtained if $p \nmid a$, in which case we can divide both sides by \(a\) to get
+\[
+a^{p-1} \equiv 1 \hspace{-0.8em} \pmod p
+\]
+
+\medskip
+
+This observation immediately suggests a test for primality. Given an integer \(n\), 
+choose some value \(a\), compute \(a^{n-1}\bmod n\), and check whether the congruence holds. If the 
+congruence fails, then \(n\) cannot be prime.
+
+\subsection{The Algorithm}
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}[commandchars=+\[\]]
+
+exp(a, x, n) // computes a^x modulo n in O(log x)
+{
+    if x == 0
+        return 1
+    y = exp(a, x/2, n)
+    if x even
+        return (y*y) mod n
+    else
+        return (a*y*y) mod n
+}
+
+PrimalityTest(n) // for n>=4
+{
+    if(n even)
+        return "composite"
+    
+    choose a random a in {2, ..., n-2} 
+
+    /*We avoid a=1 and a=n-1 since they trivially satisfy 
+    the congruence even when n is composite */
+ 
+    if exp(a, n-1, n) != 1
+        return "composite"
+    else
+        return "probably prime"
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+Note the rather beautiful technique used in the function 
+\texttt{exp(a, x, n)}\footnote{This is sometimes called the binary exponentiation algorithm.}.
+Another way of looking at it is that we find the binary expansion of \(x\) and compute the 
+powers of \(a\) corresponding to the bits of \(x\) using repeated squaring.\\
+
+\subsection{Error Probability}
+
+The natural question is now obvious --
+\begin{quote}
+"How often can a composite number fool the test?"
+\end{quote}
+
+For many composite integers the probability is quite small. 
+Unfortunately, there exists a remarkable family of numbers 
+that pass Fermat's test for \emph{every} admissible choice of \(a\).
+
+These numbers are known as Carmichael numbers\footnote{The smallest Carmichael number is 561. It has been proven 
+that there are infinitely many Carmichael numbers.}, and they expose a fundamental weakness of the algorithm.
+
+Fermat's test merely checks whether the final result of $a^{p-1}$ equals \(1\). It ignores the sequence of 
+intermediate values that arise during repeated squaring. 
+
+\section{The Miller--Rabin Test}
+
+\subsection{A Key Property}
+
+Let \(p\) be an odd prime and let d such that
+\[
+p-1=2^s d, \qquad d \text{ is odd}
+\]
+
+\noindent Define the sequence $x_i=a^{2^{i}d}, i \in \mathbb{N}$. So 
+\[
+x_0=a^{d},
+\quad
+x_1=a^{2d},
+\quad
+x_2=a^{4d},
+\quad
+\ldots,
+\quad
+x_s=a^{2^s d}.
+\]
+
+\noindent By Fermat's Little Theorem, we have $x_s=a^{p-1}\equiv1\pmod p$.\\
+
+
+\noindent Clearly, each term is the square of the previous one modulo \(p\). That is,
+\[
+x_{i+1}
+\equiv
+x_i^2
+\pmod p
+\]
+
+\noindent A simple fact about prime moduli --
+\[
+p \in \mathbb{P},\hspace{0.2em} x \in \mathbb{N}, \hspace{0.2em}
+x^2
+\equiv
+1
+\hspace{-0.7em}
+\pmod p
+\implies
+x
+\equiv
+1
+\hspace{-0.7em}
+\pmod p
+\; \text{or} \;
+x
+\equiv
+-1
+\hspace{-0.7em}
+\pmod p.
+\]
+\vspace{1em}
+\noindent So either $x_0=1 \hspace{-0.3em} \pmod p$ or there is 
+some index \(i \ge 0\) such that $x_i=-1 \hspace{-0.3em} \pmod p$.
+
+\subsection{The Algorithm}
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+exp(a, x, n)
+{
+    if x == 0
+        return 1
+    y = exp(a, x/2, n)
+    if x even
+        return (y*y) mod n
+    else
+        return (a*y*y) mod n
+}
+
+isPrime(n) // for n>=4
+{
+    if(n even)
+        return "composite"
+
+    s=0
+    d=n-1
+    while d is even
+        increment s by 1, divide d by 2
+    
+    //here we have decomposed n-1 into 2^s and d, where d is odd
+
+    Choose a random a in {2, ..., n-2} 
+    x = exp(a, d, n)
+
+    if x == 1 or x == n-1
+        return "probably prime"
+
+    loop i=1 to s-1
+    {
+        x = (x*x) mod n
+        if x == n-1
+            return "probably prime"
+        if x == 1
+        {
+            return "composite" 
+            /*since hitting 1 mod n early means we have found a 
+            non-trivial square root of 1 mod n, so n is composite*/
+        }
+    }
+    return "composite"
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+
+\subsection{Error Probability}
+
+It can be shown that if \(n\) is composite, then the probability that the Miller--Rabin test 
+returns "probably prime" is at most \(1/4\).\\
+
+
+\noindent The proof\footnote{In case you are interested, see https://codeforces.com/blog/entry/98102} that the Miller--Rabin test has error probability at most \(1/4\) is 
+quite technical and relies on some non-trivial number theory and group theory. Let $T=\{2,\dots,n-2\}$ 
+, the set of all possible $a$'s. The key and final step is to show that one can partition T into 
+disjoint subsets of size at least 4 such that each subset contains at most one false positive. Thus, 
+
+\[
+|F|\le |T|/4
+\implies 
+\frac{|F|}{|T|} \le \frac{1}{4}
+\]
+
+\subsection{Performance}
+For large $n$, we can no longer say that arithmetic operations take constant time, and the time 
+complexity of the multiplications involved are $d^2$ where $d$ is the number of digits in $n$, which is 
+\(\Theta(\log n)\). Since there are \(\Theta(\log n)\) multiplications involved in binary exponentiation, 
+total time complexity is \(\Theta(\log^3 n)\).\\
+
+
+\noindent Repeating the test $k$ times will take $\Theta(k\log^3 n)$ time. A reasonable 
+choice of \(k\) (e.g., \(k=34\)) makes the error probability at most $10^{-20}$.
+
+\section{Pollard's Rho Algorithm}
+
+\textbf{The Problem --} Given a composite integer \(n\), find a non-trivial\footnote{In this case, 
+that would be a factor other than 1 and \(n\)} factor of \(n\). 
+
+\vspace{1em}
+\noindent \textbf{The Solution --} We can create a pseudo-random
+sequence of integers $x_0, x_1, \dots, x_i, \dots$ such that 
+$x_i \equiv x_{i-1}^2 + c \pmod n$ for some $c$.\\
+
+
+\noindent If at any point gcd(\(x_i-x_j,n\)) is not 1 or 
+\(n\), we can take that to be a 
+factor of \(n\) by definition\footnote{Conventionally, gcd(0,n) is taken to be n.} of the gcd! \\
+
+
+Why do we use the weird sequence \(x_i \equiv x_{i-1}^2 + c \pmod n\)? 
+Why not generate a sequence of random integers and do the same thing?
+The reason behind using a deterministic sequence is that in this iterative process, we can use 
+Floyd's cycle-finding algorithm to detect collision which takes time 
+linear in the cycle size. In the other case, we would have to store and check with all previous 
+values of $x_j$ for every new $x_i$ generated. That is quadratic in the length of the cycle!
+Secondly, Choosing $x_0$ and $c$ randomly acts as a seed for the pseudo-random process. The sequence is thus
+overall truly random for our analysis purposes yet compatible with Floyd's algorithm.
+
+\subsection{Floyd's Cycle-Detection Algorithm}
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+FloydCycleDetection(f,x)
+{
+    tortoise = f(x)
+    hare = f(f(x))
+
+    while tortoise != hare:
+    {
+        tortoise = f(tortoise)
+        hare = f(f(hare))
+    }
+
+    return 
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+\subsubsection*{Example}
+We can represent the sequence with a directed graph as follows -- there is an edge between each $x$ and $f(x)$ or 
+equivalently each $x_i$ and $x_{i+1}$. The starting node 
+is $x_0$ where both the hare and tortoise start. It can be proven that 
+Floyd's algorithm works with some effort, but the point of this example is to give a 
+visual intuition rather than write a rigorous proof. Also, I like colorful graphs!
+
+The shape of the graph is deliberately chosen to be like the greek letter $\rho$, which is 
+where the name \texttt{Pollard's Rho} comes from. It is the general shape of the 
+sequence which the algorithm considers, because the output space of $f(x)$ is finite.
+\begin{center}
+\begin{tikzpicture}[
+    every node/.style={circle,draw,minimum size=8mm},
+    >=stealth
+]
+
+% Legend
+\node[circle,draw,fill=TortoiseColor!50,minimum size=5mm] at (5,6.5) {};
+\node[draw=none,anchor=west] at (5.4,6.5) {Tortoise};
+
+\node[circle,draw,fill=HareColor!50,minimum size=5mm] at (5,5.7) {};
+\node[draw=none,anchor=west] at (5.4,5.7) {Hare};
+
+\node[circle,draw,fill=MeetColor!50,minimum size=5mm] at (5,4.9) {};
+\node[draw=none,anchor=west] at (5.4,4.9) {Both};
+
+\node[fill=MeetColor!50] (1) at (-1,1) {1};
+\node (2) at (0,2.5) {2};
+\node (3) at (0,4) {3};
+\node (4) at (0,5.5) {4};
+
+\node (5) at (1.5,4.5) {5};
+\node (6) at (3,5.5) {6};
+\node (7) at (1.5,6.5) {7};
+
+\draw[->] (1)--(2);
+\draw[->] (2)--(3);
+\draw[->] (3)--(4);
+\draw[->] (4)--(5);
+\draw[->] (5)--(6);
+\draw[->] (6)--(7);
+\draw[->] (7)--(4);
+
+\end{tikzpicture}
+\end {center}
+
+\begin{center}
+\begin{tikzpicture}[
+    every node/.style={circle,draw,minimum size=8mm},
+    >=stealth
+]
+
+% Legend
+\node[circle,draw,fill=TortoiseColor!50,minimum size=5mm] at (5,6.5) {};
+\node[draw=none,anchor=west] at (5.4,6.5) {Tortoise};
+
+\node[circle,draw,fill=HareColor!50,minimum size=5mm] at (5,5.7) {};
+\node[draw=none,anchor=west] at (5.4,5.7) {Hare};
+
+\node[circle,draw,fill=MeetColor!50,minimum size=5mm] at (5,4.9) {};
+\node[draw=none,anchor=west] at (5.4,4.9) {Both};
+
+\node (1) at (-1,1) {1};
+\node [fill=TortoiseColor!50](2) at (0,2.5) {2};
+\node [fill=HareColor!50](3) at (0,4) {3};
+\node (4) at (0,5.5) {4};
+
+\node (5) at (1.5,4.5) {5};
+\node (6) at (3,5.5) {6};
+\node (7) at (1.5,6.5) {7};
+
+\draw[->] (1)--(2);
+\draw[->] (2)--(3);
+\draw[->] (3)--(4);
+\draw[->] (4)--(5);
+\draw[->] (5)--(6);
+\draw[->] (6)--(7);
+\draw[->] (7)--(4);
+
+\end{tikzpicture}
+\end {center}
+
+\begin{center}
+\begin{tikzpicture}[
+    every node/.style={circle,draw,minimum size=8mm},
+    >=stealth
+]
+
+% Legend
+\node[circle,draw,fill=TortoiseColor!50,minimum size=5mm] at (5,6.5) {};
+\node[draw=none,anchor=west] at (5.4,6.5) {Tortoise};
+
+\node[circle,draw,fill=HareColor!50,minimum size=5mm] at (5,5.7) {};
+\node[draw=none,anchor=west] at (5.4,5.7) {Hare};
+
+\node[circle,draw,fill=MeetColor!50,minimum size=5mm] at (5,4.9) {};
+\node[draw=none,anchor=west] at (5.4,4.9) {Both};
+
+\node (1) at (-1,1) {1};
+\node (2) at (0,2.5) {2};
+\node [fill=TortoiseColor!50](3) at (0,4) {3};
+\node (4) at (0,5.5) {4};
+
+\node [fill=HareColor!50](5) at (1.5,4.5) {5};
+\node (6) at (3,5.5) {6};
+\node (7) at (1.5,6.5) {7};
+
+\draw[->] (1)--(2);
+\draw[->] (2)--(3);
+\draw[->] (3)--(4);
+\draw[->] (4)--(5);
+\draw[->] (5)--(6);
+\draw[->] (6)--(7);
+\draw[->] (7)--(4);
+
+\end{tikzpicture}
+\end {center}
+
+\begin{center}
+\begin{tikzpicture}[
+    every node/.style={circle,draw,minimum size=8mm},
+    >=stealth
+]
+
+% Legend
+\node[circle,draw,fill=TortoiseColor!50,minimum size=5mm] at (5,6.5) {};
+\node[draw=none,anchor=west] at (5.4,6.5) {Tortoise};
+
+\node[circle,draw,fill=HareColor!50,minimum size=5mm] at (5,5.7) {};
+\node[draw=none,anchor=west] at (5.4,5.7) {Hare};
+
+\node[circle,draw,fill=MeetColor!50,minimum size=5mm] at (5,4.9) {};
+\node[draw=none,anchor=west] at (5.4,4.9) {Both};
+
+\node (1) at (-1,1) {1};
+\node (2) at (0,2.5) {2};
+\node (3) at (0,4) {3};
+\node [fill=TortoiseColor!50](4) at (0,5.5) {4};
+
+\node (5) at (1.5,4.5) {5};
+\node (6) at (3,5.5) {6};
+\node [fill=HareColor!50](7) at (1.5,6.5) {7};
+
+\draw[->] (1)--(2);
+\draw[->] (2)--(3);
+\draw[->] (3)--(4);
+\draw[->] (4)--(5);
+\draw[->] (5)--(6);
+\draw[->] (6)--(7);
+\draw[->] (7)--(4);
+
+\end{tikzpicture}
+\end {center}
+
+\begin{center}
+\begin{tikzpicture}[
+    every node/.style={circle,draw,minimum size=8mm},
+    >=stealth
+]
+
+% Legend
+\node[circle,draw,fill=TortoiseColor!50,minimum size=5mm] at (5,6.5) {};
+\node[draw=none,anchor=west] at (5.4,6.5) {Tortoise};
+
+\node[circle,draw,fill=HareColor!50,minimum size=5mm] at (5,5.7) {};
+\node[draw=none,anchor=west] at (5.4,5.7) {Hare};
+
+\node[circle,draw,fill=MeetColor!50,minimum size=5mm] at (5,4.9) {};
+\node[draw=none,anchor=west] at (5.4,4.9) {Both};
+
+\node (1) at (-1,1) {1};
+\node (2) at (0,2.5) {2};
+\node (3) at (0,4) {3};
+\node (4) at (0,5.5) {4};
+
+\node [fill=MeetColor!50](5) at (1.5,4.5) {5};
+\node (6) at (3,5.5) {6};
+\node (7) at (1.5,6.5) {7};
+
+\draw[->] (1)--(2);
+\draw[->] (2)--(3);
+\draw[->] (3)--(4);
+\draw[->] (4)--(5);
+\draw[->] (5)--(6);
+\draw[->] (6)--(7);
+\draw[->] (7)--(4);
+
+\end{tikzpicture}
+\end {center}
+
+And thus when both coincide, we can report we have found the cycle! Try this on a 
+cycle with odd number of nodes to really convince yourself that it works. 
+
+\subsection{The Algorithm}
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+f(t)
+{
+    return (t*t + c) mod n
+}
+
+PollardRho(n)
+{
+    if n is even:
+        return 2
+
+    choose random c in [1, n-1]
+    choose random x in [0, n-1]
+
+    y = x
+    d = 1
+
+    while d == 1:
+    {
+        x = f(x)
+        y = f(f(y))
+
+        d = gcd(|x - y|, n)
+    }
+
+    if d == n:
+        restart algorithm with new x, c
+
+    return d
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+
+\subsection{Expected Running Time Analysis}
+
+\subsubsection{Collision Model}
+
+Our sequence $x_0,x_1,x_2,\dots$ is generated by iterating a polynomial function modulo \(n\).
+Since are choice of $x_0$ and $c$ is random,the sequence can be treated as independent samples from a 
+uniform distribution over \(\{0,1,\dots,n-1\}\), until repetition occurs. And we are looking for a 
+hidden number $p$, the modulo over which the sequence repeats. Since $p$ divides \(n\), the sequence 
+when taken modulo p will thus act like independent samples from a uniform distribution over \(\{0,1,\dots,p-1\}\).\\
+
+\noindent Equivalently it can be said that the distribution Uniform(0,n-1) modulo p is equivalent to the
+distribution Uniform(0,p-1).\\
+
+\noindent This naturally leads us to the birthday paradox\footnote{The probability that in a group of 23 people we find two with 
+the same birthday is approximately 1/2. This is of course, not a true \emph{paradox} but simply a 
+surprising result from an intuition standpoint.} model, where we are 
+interested in the expected time until a collision occurs in a sequence of random samples from a finite set.
+
+Suppose we define the collision time \(T\) as the smallest 
+index such that a repetition occurs, 
+\[
+\iff T = \min\{j \mid x_i = x_j \text{ for some } i<j\}
+\]
+
+\subsubsection{Probability of No Collision}
+
+Let \(P_k\) denote the probability that the first \(k\) samples are all distinct. 
+This is equivalent to \(Pr(T > k)\). Then using the fact that the samples 
+are uniform and independent, we can express \(P_k\) as
+
+\[
+P_k
+= Pr(T > k) =
+\prod_{i=0}^{k-1}\left(1-\frac{i}{p}\right)
+\]
+
+
+\subsubsection{Expected Collision Time}
+
+The expected collision time can be expressed as
+
+\[
+\mathbb{E}[T]
+=
+\sum_{k=0}^{\infty}\Pr(T>k)
+=
+\sum_{k=0}^{\infty} P_k
+=
+1+\left(1-\frac1p\right)+\sum_{k=2}^{\infty}P_k
+=
+2-\frac1p + \sum_{k=2}^{\infty}P_k
+\]
+
+\vspace{1em}
+We will use $2-\frac1p \le 2$ and the inequality \(1-x\le e^{-x}\) to bound this.
+\[
+P_k
+=
+\prod_{i=0}^{k-1}\left(1-\frac{i}{p}\right)
+\le
+\prod_{i=0}^{k-1}e^{-i/p}
+=
+e^{-\sum_{i=0}^{k-1} i/p}
+=
+e^{-k(k-1)/(2p)}
+\]
+
+
+\[
+\implies
+\mathbb{E}[T]
+\le
+2
++
+\sum_{k=2}^{\infty}
+e^{-k(k-1)/(2p)}
+\]
+
+\vspace{1em}
+For \(k\ge2\),
+\[
+k(k-1)\ge \frac{k^2}{2}
+\implies 
+\frac{k(k-1)}{2p}
+\ge
+\frac{k^2}{4p}
+\implies
+e^{-k(k-1)/(2p)}
+\le
+e^{-k^2/(4p)}
+\]
+
+\[
+\implies
+\mathbb{E}[T]
+\le 
+2
++
+\sum_{k=2}^{\infty}
+e^{-k^2/(4p)}
+\]
+
+\vspace{1em}
+Since the function $f(x)=e^{-x^2/(4p)}$ is monotonically decreasing on \([0,\infty)\), 
+we can compare the sum with an integral!
+\[
+\sum_{k=2}^{\infty}
+e^{-k^2/(4p)}
+\le
+\int_0^{\infty}
+e^{-x^2/(4p)}\,dx.
+\]
+
+Using the substitution
+
+\[
+x=2\sqrt{p}\,t,
+\qquad
+dx=2\sqrt{p}\,dt,
+\]
+
+
+\[
+\implies
+\int_0^{\infty}
+e^{-x^2/(4p)}\,dx
+=
+2\sqrt{p}
+\int_0^{\infty}
+e^{-t^2}\,dt
+=
+2\sqrt{p}\cdot \frac{\sqrt{\pi}}{2}
+=
+\sqrt{\pi p}.
+\]
+
+
+
+\[
+\implies
+\mathbb{E}[T]
+\le
+2+\sqrt{\pi p}
+\]
+
+
+So the expected collision time is at most \(\Theta(\sqrt{p})\).
+
+\subsubsection{Collision Detection?}
+
+Once a collision occurs modulo \(p\), say
+
+\[
+x_i \equiv x_j \hspace{-0.7em}\pmod p,
+\quad i \ne j,
+\]
+
+we know $p$ must divide \(x_i-x_j\). But how do we check that if we don't know $p$?
+Knowing we want to find a $p$ which divides \(x_i-x_j\) and $n$, the logical step 
+is to find the gcd(\(x_i-x_j,n\)), because if that is 1 then p is 
+definitely\footnote{This is concluded using the lemma all common divisors of a and b divide the gcd(a,b)} 1.
+And as soon as gcd(\(x_i-x_j,n\)) becomes not 1 (and not n), we can take that as the divisor. We know all p for 
+which the collision happened are definitely\footnote{By definition of the gcd, it must be the \emph{greatest} common divisor!} smaller than this number so we could not have done better!
+
+Due to Floyd's cycle detection algorithm, we don't need to keep track of all pairs 
+of indices \(i,j\). We can simply keep track of the pairs \((x_i,x_{2i})\) 
+for \(i=1,2,\dots\) and check for collisions between these pairs. This is 
+what the algorithm does by maintaining two pointers \(x\) and \(y\) that move at different speeds.\\
+
+
+\subsubsection{Cost per Iteration}
+Each step of the algorithm performs a constant number of 
+modular multiplications and one greatest common divisor computation. Using the Euclidean algorithm,
+
+\[
+\gcd(a,b)
+\]
+
+can be computed in at most \(\Theta(\log max(a,b)))\) time.
+
+Hence each iteration costs at most \(\Theta(\log n)\) time since 
+n is the largest number we are working with for all the involved operations.
+
+
+\subsubsection{Total Expected Complexity}
+Since a collision modulo the smallest prime factor \(p\) occurs after 
+\(\Theta(\sqrt{p})\) steps, the expected running time is
+
+\[
+\Theta(\sqrt{p}\log n).
+\]
+
+If \(p\) is the smallest prime divisor of \(n\), 
+this dominates the runtime. In the worst case where 
+\(p \approx n^{1/2}\), we obtain the heuristic bound $\Theta(n^{1/4}\log n)$.
+

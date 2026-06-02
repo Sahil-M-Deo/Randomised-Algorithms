@@ -1,0 +1,115 @@
+
+\chapter{Algorithmic Performance} 
+
+For algorithms whose performance\footnote{
+Although this section focuses primarily on running time, the same methods of analysis can also be applied to other resources such as memory usage.
+} depends on the input size or other input parameters, we usually estimate the number of elementary operations performed as a function of the input size \(n\) or the maximum value of input $A_{max}$, usually denoted by $A$. This gives a mathematical way to compare algorithms independent of hardware or implementation details.
+\\\\
+A classical example is Bubble Sort. The algorithm repeatedly traverses the array, comparing adjacent elements and swapping them whenever they are in the wrong order. After each pass, the largest remaining element moves to its correct position near the end of the array.
+\\\\
+With some thought it can be proved that the total number of swaps performed by Bubble Sort is exactly equal to the number of inversions $N_{inv}$ in the input array. (An inversion is a pair of indices \((i,j)\) such that \(i<j\) but \(a_i>a_j\).) By taking swaps to be one operation taking constant time, we can estimate runtime of Bubble sort to be $T_{run}\propto N_{inv}$
+
+\section{Worst Case Analysis}
+
+In worst case analysis, we determine the maximum possible number of operations over all valid inputs of size \(n\). For Bubble Sort, the worst case occurs when the array is sorted in reverse order, where every pair is inverted. 
+
+\[N_{inv,max}=\binom{n}{2}=
+\frac{n(n-1)}{2}
+\]
+
+Worst case analysis is useful because it guarantees an upper bound on the running time regardless of the input provided.
+
+\section{Average Case Analysis} 
+
+In average case analysis, we compute the expected number of operations assuming that all valid inputs are equally likely.
+
+For Bubble Sort, this corresponds to analysing the expected number of inversions in a random permutation of size \(n\). 
+
+\noindent Define the indicator\footnote{Refer \autoref{indicator_variables}} variable $I_{ij}$ for each pair \((i,j)\) as follows:
+
+\[
+I_{ij}=
+\begin{cases}
+1,&\text{if }(i,j)\text{ is an inversion}\\
+0,&\text{otherwise}
+\end{cases}
+\]
+
+For every pair of indices \((i,j)\) with \(i<j\), the probability that the pair forms an inversion is
+
+\[
+\Pr\big((i,j)\text{ is an inversion}\big)=\frac{1}{2} \implies \mathbb{E}[I_{ij}]
+=
+\frac{1}{2}
+\]
+
+The point of defining the indicator variable is to notice:
+\[
+N_{\mathrm{inv}}=\sum_{1\le i<j\le n}I_{ij}
+\]
+
+Using linearity of expectation\footnote{Refer \autoref{linearity_of_expectation}}, 
+\[
+\mathbb{E}[N_{\mathrm{inv}}]
+=
+\mathbb{E}\left[\sum_{1\le i<j\le n}I_{ij}\right]
+=
+\sum_{1\le i<j\le n}\mathbb{E}[I_{ij}]
+\]
+
+
+\[
+\implies
+\mathbb{E}[N_{\mathrm{inv}}]
+=
+\sum_{1\le i<j\le n}\frac{1}{2}
+=
+\frac{1}{2}\binom{n}{2}
+=
+\frac{n(n-1)}{4} \quad
+\left(\text{Using }\mathbb{E}[I_{ij}]
+=
+\frac{1}{2}\right)
+\]
+
+
+So notice that if we randomise the input sequence, $T_{algo}$ becomes equal to $T_{avg}$ thus improving performance by a factor\footnote{Randomising the input itself takes about n operations, so more rigorously 
+we would say "an asymptotic factor of 2" rather than an exact factor of 2. 
+In most cases we will be able to neglect the time required to randomise the input.} of 2.
+\section{Time Complexity Analysis}
+
+We are sometimes interested in comparing runtimes like $T_{run}(n)=n^2$ to $T_{run}(n)=100n\log n$.
+To compare such functions of n, we use asymptotic notation:
+
+\[
+T_{run}(n)=\Theta(f(n))
+\]
+
+which means that \(T_{run}\) grows asymptotically at the same rate as \(f(n)\).\\
+
+\noindent My favourite way to think about time complexity is as follows: we try to find the ``simplest'' function \(f(n)\) such that
+
+\[
+\lim_{n\to\infty}\frac{T_{run}(n)}{f(n)}=k,
+\qquad
+k\in\mathbb{R}_{>0}
+\]
+
+\noindent That is, \(T_{run}(n)\) and \(f(n)\) grow at the same asymptotic rate up to a positive constant factor.
+\noindent For example, Bubble Sort performs on the order of \(n^2\) operations in both the average and worst case, so its time complexity is
+
+\[
+T_{run}(n)=\Theta(n^2)
+\]
+
+\noindent Asymptotic analysis allows us to compare algorithms by their 
+limiting behaviour rather than implementation-dependent constants.\\
+
+
+\noindent This allows us to say that A: $T_{run}=n^2$ is worse than B: $T_{run}=100n\log n$ since A is $\Theta(n^2)$
+ and B is $\Theta(n\log n)$ even though for some small n the first one may
+ well be better, but for small n the performance doesn't really\footnote{Integer multiplication
+ is an interesting case. The classic method of multiplying digit by digit as taught in school is $\Theta(n^2)$
+ time, but there are more asymptotically efficient methods which can do it in $\Theta(n\log n)$ time. But 
+ for reasonably large integers also the constant factor is large enough that the school method is faster!}
+  matter anyway\dots

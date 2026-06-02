@@ -1,0 +1,107 @@
+\contentsline {chapter}{\numberline {1}Introduction}{4}{chapter.1}%
+\contentsline {section}{\numberline {1.1}What even is a Randomised Algorithm?}{4}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Implementation of Randomness in \texttt {C++}}{4}{section.1.2}%
+\contentsline {chapter}{\numberline {2}Algorithmic Performance}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Worst Case Analysis}{7}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Average Case Analysis}{7}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Time Complexity Analysis}{8}{section.2.3}%
+\contentsline {chapter}{\numberline {3}The Classics}{10}{chapter.3}%
+\contentsline {section}{\numberline {3.1}QuickSort}{10}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}A Simple Algorithm}{10}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Expected Runtime}{11}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}QuickSelect}{12}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Expected Runtime}{13}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Expected Recursion Depth}{14}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Problems}{14}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Hashing}{15}{chapter.4}%
+\contentsline {section}{\numberline {4.1}What even is Hashing?}{15}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Polynomial Multiplication}{15}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Matrix Multiplication}{16}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Freivalds' Algorithm}{16}{subsection.4.3.1}%
+\contentsline {section}{\numberline {4.4}A Matrix Problem}{17}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Deterministic Method}{18}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Hashing Method}{18}{subsection.4.4.2}%
+\contentsline {section}{\numberline {4.5}A Sliding Window Problem}{20}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Data Structures}{22}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Skip Lists}{22}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Expected Structure of a Skip List}{24}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Expected Height of Skip List}{24}{subsection.5.1.2}%
+\contentsline {paragraph}{Step 1: Split the expectation}{24}{section*.14}%
+\contentsline {paragraph}{Step 2: Bounding \(S_1\)}{24}{section*.15}%
+\contentsline {paragraph}{Step 3: Bounding \(S_2\)}{25}{section*.16}%
+\contentsline {paragraph}{Step 4: Combining bounds}{25}{section*.17}%
+\contentsline {subsection}{\numberline {5.1.3}Searching in a Skip List}{26}{subsection.5.1.3}%
+\contentsline {paragraph}{Step 1: Start at top, check right}{26}{section*.19}%
+\contentsline {paragraph}{Step 2: Moved down, now check right}{26}{section*.20}%
+\contentsline {paragraph}{Step 3: Moved right, check right}{27}{section*.21}%
+\contentsline {paragraph}{Step 4: Moved down, check right}{27}{section*.22}%
+\contentsline {paragraph}{Step 5: Moved right, found the target!}{27}{section*.23}%
+\contentsline {subsection}{\numberline {5.1.4}Randomised, But Why?}{27}{subsection.5.1.4}%
+\contentsline {subsection}{\numberline {5.1.5}Insertions}{28}{subsection.5.1.5}%
+\contentsline {section}{\numberline {5.2}The Hash Table}{28}{section.5.2}%
+\contentsline {paragraph}{Initialisation -- Empty Array}{28}{section*.24}%
+\contentsline {paragraph}{First insertion}{28}{section*.25}%
+\contentsline {paragraph}{More insertions}{29}{section*.26}%
+\contentsline {paragraph}{First \emph {collision}}{29}{section*.27}%
+\contentsline {paragraph}{More collisions}{29}{section*.28}%
+\contentsline {section}{\numberline {5.3}Problems}{31}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Number-Theoretic Algorithms}{32}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Introduction}{32}{section.6.1}%
+\contentsline {section}{\numberline {6.2}The Fermat Test}{32}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Fermat's Little Theorem}{32}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}The Algorithm}{33}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}Error Probability}{33}{subsection.6.2.3}%
+\contentsline {section}{\numberline {6.3}The Miller--Rabin Test}{34}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}A Key Property}{34}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}The Algorithm}{35}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}Error Probability}{35}{subsection.6.3.3}%
+\contentsline {subsection}{\numberline {6.3.4}Performance}{36}{subsection.6.3.4}%
+\contentsline {section}{\numberline {6.4}Pollard's Rho Algorithm}{36}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Floyd's Cycle-Detection Algorithm}{37}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}The Algorithm}{39}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Expected Running Time Analysis}{40}{subsection.6.4.3}%
+\contentsline {subsubsection}{Collision Model}{40}{section*.32}%
+\contentsline {subsubsection}{Probability of No Collision}{40}{section*.33}%
+\contentsline {subsubsection}{Expected Collision Time}{40}{section*.34}%
+\contentsline {subsubsection}{Collision Detection?}{41}{section*.35}%
+\contentsline {subsubsection}{Cost per Iteration}{41}{section*.36}%
+\contentsline {subsubsection}{Total Expected Complexity}{41}{section*.37}%
+\contentsline {chapter}{\numberline {7}The Probabilistic Method}{42}{chapter.7}%
+\contentsline {section}{\numberline {7.1}The Dominating Set Problem}{42}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Bipartite Subgraph}{44}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}Expected Number of Bichromatic Edges}{44}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}A Simple Randomised Algorithm}{45}{subsection.7.2.2}%
+\contentsline {subsection}{\numberline {7.2.3}Derandomisation}{45}{subsection.7.2.3}%
+\contentsline {chapter}{\numberline {8}Online Decision Algorithms}{47}{chapter.8}%
+\contentsline {section}{\numberline {8.1}The Dating Problem}{47}{section.8.1}%
+\contentsline {section}{\numberline {8.2}The Parallel Processing Problem}{50}{section.8.2}%
+\contentsline {subsection}{\numberline {8.2.1}Greedy Algorithm}{51}{subsection.8.2.1}%
+\contentsline {subsection}{\numberline {8.2.2}Tightness of the Bound}{52}{subsection.8.2.2}%
+\contentsline {chapter}{\numberline {9}Heuristic Algorithms}{53}{chapter.9}%
+\contentsline {section}{\numberline {9.1}The Dominating Set Problem Revisited}{53}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Exam Scheduling}{55}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}Random Permutation}{55}{subsection.9.2.1}%
+\contentsline {subsection}{\numberline {9.2.2}Local Decision}{56}{subsection.9.2.2}%
+\contentsline {section}{\numberline {9.3}Bipartite Subgraph Revisited}{58}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}Self-Correction}{58}{subsection.9.3.1}%
+\contentsline {chapter}{Appendices}{59}{section*.56}%
+\contentsline {chapter}{\numberline {A}Probability and Expectation}{60}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Linearity of Expectation}{60}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Union Bound}{60}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Independence of Expectation}{60}{section.A.3}%
+\contentsline {section}{\numberline {A.4}Variance}{60}{section.A.4}%
+\contentsline {section}{\numberline {A.5}Indicator Variables}{61}{section.A.5}%
+\contentsline {chapter}{\numberline {B}Inequalities}{62}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Exponential Inequality}{62}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Jensen’s Inequality}{62}{section.B.2}%
+\contentsline {chapter}{\numberline {C}Discrete Mathematics}{63}{appendix.C}%
+\contentsline {section}{\numberline {C.1}Pigeonhole Principle}{63}{section.C.1}%
+\contentsline {section}{\numberline {C.2}Definitions}{63}{section.C.2}%
+\contentsline {chapter}{\numberline {D}Linear Algebra}{65}{appendix.D}%
+\contentsline {section}{\numberline {D.1}Vector Spaces}{65}{section.D.1}%
+\contentsline {section}{\numberline {D.2}Subspaces}{65}{section.D.2}%
+\contentsline {section}{\numberline {D.3}Dimension of a Subspace}{65}{section.D.3}%
+\contentsline {section}{\numberline {D.4}The Nullspace}{66}{section.D.4}%
+\contentsline {section}{\numberline {D.5}Nullity and Rank}{66}{section.D.5}%
+\contentsline {section}{\numberline {D.6}The Rank--Nullity Theorem}{66}{section.D.6}%
+\contentsline {paragraph}{Theorem (Rank--Nullity).}{66}{section*.61}%

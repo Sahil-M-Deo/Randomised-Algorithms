@@ -1,11 +1,13 @@
 PDF=report
-OUTDIR=latex_files
+SRCDIR=source files
+OUTDIR=../compiler_files
 
 all:
-	mkdir -p $(OUTDIR)
-	pdflatex -output-directory=$(OUTDIR) $(PDF).tex
-	pdflatex -output-directory=$(OUTDIR) $(PDF).tex
-	mv $(OUTDIR)/$(PDF).pdf .
+	mkdir -p "$(OUTDIR)"
+	cd "$(SRCDIR)" && pdflatex -shell-escape -output-directory="$(OUTDIR)" $(PDF).tex
+	cd "$(SRCDIR)" && pdflatex -shell-escape -output-directory="$(OUTDIR)" $(PDF).tex
+	mv compiler_files/$(PDF).pdf .
 
 clean:
-	rm -rf $(OUTDIR)/*.aux $(OUTDIR)/*.log $(OUTDIR)/*.toc $(OUTDIR)/*.out $(OUTDIR)/*.fls $(OUTDIR)/*.fdb_latexmk $(PDF).pdf
+	rm -f report.pdf
+	rm -f compiler_files/*

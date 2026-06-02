@@ -1,0 +1,382 @@
+
+\chapter{Online Decision Algorithms}
+
+\section*{What is an Online Algorithm?}
+
+An online algorithm is an algorithm that processes its input piece-by-piece in a serial fashion,
+ without having the entire input available from the start. In some problems, this doesn't matter -- 
+ the obvious solution is online since it requires a single pass over the array only. But in some problems, 
+ the online requirement makes the problem much harder and forces us to make decisions without knowing the future.
+
+Online decision algorithms have randomness involved in their analysis for non-adversarial\footnote{They 
+are often called oblivious adversaries} inputs. 
+Further, the goal of the algorithm usually is not deterministic optimality, but rather to maximise the probability of 
+success or to achieve a good competitive ratio\footnote{Competitive ratio is a measure of how well an online algorithm 
+performs compared to an optimal offline algorithm that has access to the entire input from the start. The term n-competitive 
+is used when an algorithm achieves at least $\frac{1}{n}$ times the "performance" of an optimal offline algorithm.}.
+
+\section{The Dating Problem}
+
+\textbf{The Problem}
+Consider the problem
+of finding the best partner. Assume that the number of people you will eventually date is fixed, i.e. some known value \(n\). The people appear in a uniformly random order. After dating a person, you must immediately decide whether to commit to them forever or reject them permanently and continue searching. Figure out a strategy that maximises the probability of ending up with the best partner.\footnote{This is a different problem from maximising the expected ``value'' of your partner. Here the objective is specifically to maximise the probability of selecting the single best partner among all \(n\) people.}
+
+We assume that while dating person \(i\), we only know how they compare relative to the people we have already dated. 
+So we could sort the partners till now in a total order if needed.\\
+
+
+\noindent\textbf{Solution:}
+\noindent Most course materials, internet reels or shorts I have encountered this problem in 
+directly jump to the strategy of:
+\begin{quote}
+``Reject the first \(r\) people, then accept the first person afterwards who is better than everyone seen so far.''
+\end{quote}
+
+\noindent However, they often omit the proof of why an optimal strategy must necessarily have this threshold form. We first prove this fact.
+
+\subsection*{Optimality Proof}
+
+Suppose we are currently considering the \(k\)-th person.
+
+If the current person is \emph{not} the best among the first \(k\) people seen so far, then accepting them can never succeed:
+This is because there already exists an earlier person who is strictly better, and that earlier person has already been rejected.
+Hence an optimal strategy should only ever consider accepting people who are the best seen so far.\\
+
+
+Now suppose the current person \emph{is} the best among the first \(k\) people seen so far. 
+Let $\bm{q_k}$ be the optimal probability of eventually selecting the globally best person if we reject the $k$-th person and continue optimally afterwards.\\
+
+
+\textbf{Q] If we instead accept the current person immediately, what is the probability of success?}\\
+
+
+A] Since the ordering of the \(n\) people is uniformly random, each of the first \(k\) positions is equally likely to contain the globally best person. 
+Conditioned on the fact that the current person is the best among the first \(k\), the probability that they are actually 
+the globally best person equals $\frac{k}{n}$.\\
+
+\vspace{0.4em}
+\noindent Therefore, accepting gives success probability \(\frac{k}{n}\), rejecting gives success probability \(q_k\).
+The optimal decision is to accept iff $\frac{k}{n} \ge q_k$\footnote{This is a 
+common theme in online algorithms - the optimal decision at each step 
+is determined by comparing the expected "value" of actions and choosing 
+the one with maximum value. Here our "value" is the success probability. In 
+game theory this is called "utility" instead.}. \\
+
+
+\noindent Now observe that \(\frac{k}{n}\) is \textbf{increasing} with \(k\). \\
+
+\noindent On the other hand, \(q_k\) is \textbf{decreasing} with \(k\). To see this, notice that from time \(k\), one valid strategy is:
+\begin{quote}
+``Reject one more person no matter what, and then behave optimally from time \(k+1\) onwards.''
+\end{quote}
+
+This strategy achieves success probability exactly \(q_{k+1}\). Since \(q_k\) is the \emph{optimal} achievable success probability starting from time \(k\), we must have:
+\[
+\mathbf{q_k \ge q_{k+1}}
+\]
+
+Since \(\frac{k}{n}\) is increasing and \(q_k\) is decreasing, the optimal decision changes at most once from rejecting to accepting as \(k\) increases.
+Therefore there exists some threshold \(0 \le r \le n\) such that:
+\begin{itemize}
+    \item for \(k \le r\), rejecting is optimal,
+    \item for \(k > r\), accepting the first ``best-so-far'' person is optimal.
+\end{itemize}
+
+\noindent Hence every optimal strategy must be a threshold strategy.
+Note that $r=0$ corresponds to accepting the first person, and $r=n$ corresponds to rejecting everyone and ending up with no partner. 
+Both of these are valid threshold strategies, though they are not very good ones\footnote{Though it may be argued that having no partner is the best choice - 
+this is beyond the scope of this text and is left as an exercise for the reader.}.
+
+\subsection*{Finding the Optimal Threshold}
+
+We now analyse the threshold strategy:
+\begin{quote}
+``Reject the first \(r\) people, then accept the first person afterwards who is better than everyone seen so far.''
+\end{quote}
+
+\noindent Suppose the globally best person appears at position \(k\). For our strategy to succeed:
+\begin{enumerate}
+    \item We must have \(k > r\)
+    \item Among the first \(k-1\) people, the best person must appear within the first \(r\) positions.
+\end{enumerate}
+
+\noindent The first condition ensures that we do not automatically reject the best person.
+The second condition ensures that no earlier candidate after position \(r\) triggers acceptance before the globally best person appears.
+
+\vspace{0.4em}
+\[
+\Pr[\text{best person appears at position }k] = \frac{1}{n}
+\]
+\vspace{0.2em}
+Further, among the first \(k-1\) people, each position is equally likely to contain their maximum. 
+\vspace{0.2em}
+\[
+\implies
+\Pr[\text{maximum among first }k-1\text{ lies in first }r]
+=
+\frac{r}{k-1}
+\]
+
+\[
+\implies
+\Pr[\text{success}]
+=
+\sum_{k=r+1}^{n}
+\frac{1}{n}\cdot\frac{r}{k-1}
+=
+\frac{r}{n}
+\sum_{k=r}^{n-1}\frac{1}{k}
+=
+\frac{r}{n} \left(H(n-1)-H(r-1)\right)
+\]
+\vspace{0.2em}
+\noindent Using the approximation $H(x) \approx \ln(x)$,
+\[
+\frac{r}{n} \left(H(n-1)-H(r-1)\right)
+\approx
+\frac{r}{n} \ln\left(\frac{n-1}{r-1}\right) 
+\approx
+\frac{r}{n} \ln\left(\frac{n}{r}\right)
+\]
+
+\[
+x=\frac{r}{n} 
+\implies
+P(x)=x\ln\left(\frac{1}{x}\right)
+\]
+
+\[
+\implies
+P'(x)=\ln\left(\frac{1}{x}\right)-1
+\]
+
+\[
+P'(x_o)=0
+\implies
+\ln\left(\frac{1}{x_o}\right)=1
+\implies
+x_o=\frac{1}{e}
+\]
+\vspace{0.4em}
+\noindent Since $\frac{r_o}{n}=\frac{1}{e} \implies r_o=\frac{n}{e}$, the optimal strategy is --
+\begin{quote}
+``Reject approximately the first \(\frac{n}{e}\) people, then accept the first person 
+afterwards who is better than everyone seen so far.''
+\end{quote}
+
+\noindent The corresponding success probability is $\frac{1}{e}\ln e = \frac{1}{e}$ which is 
+approximately \(\mathbf{36.8\%}\). Not bad at all!\\
+
+
+\noindent Strictly speaking, we should also verify that this critical point indeed corresponds to a 
+maximum rather than a minimum. One way is via the second derivative test --
+\[
+P''(x)=-\frac{1}{x}<0\text{,} \hspace{0.5em} \forall \hspace{0.3em} x \in \mathbb R^{>0}
+\]
+so \(P(x)\) is concave and hence the critical point is necessarily a global maximum.\\
+
+
+\noindent Alternatively, we can avoid calculus entirely by inspecting the behaviour near the boundaries. 
+\[
+\because P(x)=x\ln\left(\frac1x\right)
+\]
+
+As $x \to 0,P(x) \to 0$ since \(x\) decays faster than \(\ln(1/x)\) grows. \\
+
+
+\noindent Similarly, as $x \to 1,P(x) \to 0$ because $\ln(1)=0$.\\
+
+
+\noindent Since \(P(x)\) is positive for \(0<x<1\), rises away from \(0\), and eventually 
+falls back to \(0\), the unique critical point at
+\[
+x=\frac1e
+\]
+must correspond to the global maximum.
+
+\subsection*{Behaviour for Small \(n\)}
+
+We used some limiting n approximations in finding the optimal threshold (I hope you noticed!).
+In case you were not planning on dating a tending-to-infinite number of people, you might be interested in the optimal strategy for small values of \(n\).
+For finite \(n\), the exact success probability for threshold \(r\) is:
+\[
+\max_{0\le r\le n} \left(\frac{r}{n}\sum_{k=r}^{n-1}\frac1k\right)
+\]
+
+Computationally we can now easily find max for each \(n\):
+\[
+\begin{array}{c|cccccc}
+n & 2 & 3 & 4 & 5 & 6 & 7\\
+\hline
+n/e
+& 0.74
+& 1.10
+& 1.47
+& 1.84
+& 2.21
+& 2.58
+\\
+\hline
+\operatorname{round}(n/e)
+& 1
+& 1
+& 1
+& 2
+& 2
+& 3
+\\
+\hline
+\text{Actual optimal }r
+& \mathbf{1}
+& \mathbf{1}
+& \mathbf{1}
+& \mathbf{2}
+& \mathbf{2}
+& \mathbf{3}
+\end{array}
+\]
+
+\vspace{1em}
+
+The corresponding optimal success probabilities are:
+
+\[
+\begin{array}{c|cccccc}
+n & 2 & 3 & 4 & 5 & 6 & 7\\
+\hline
+\Pr[\text{success}]
+&
+\mathbf{0.500}
+&
+\mathbf{0.500}
+&
+\mathbf{0.458}
+&
+\mathbf{0.433}
+&
+\mathbf{0.428}
+&
+\mathbf{0.414}
+\end{array}
+\]
+
+We observe that the optimal threshold follows the value suggested by
+$\frac{n}{e}$ even for relatively small values of \(n\), and it will get closer and closer as \(n\) increases. 
+The success probability is already around \(41.4\%\) for \(n=7\), and it will approach the limiting value of \(\frac{1}{e}\approx 36.8\%\) as \(n\) grows.
+
+\vspace{1em}
+\section{The Parallel Processing Problem}
+
+Consider a setting with $m$ identical machines processing incoming tasks. The tasks arrive 
+one after another, and the arrival times are sufficiently close that 
+we may assume they arrive within negligible time of each other.
+
+Each incoming task must immediately be assigned to one of the $m$ machines. Once a decision is made, 
+it cannot be reversed. Thus, the algorithm has no knowledge of future tasks while making its decision.\\
+
+\noindent The tasks assigned to a machine are processed sequentially and hence form a queue at that machine.
+Suppose the incoming tasks have processing times $T_1,T_2,\dots,T_n$ where $n$ itself is not known in advance.\\
+
+
+\noindent The objective is to minimize the \textit{makespan}, i.e. the finishing time of the busiest machine:
+\[
+C_{\max}=\max_{1\le i\le m} T_i
+\]
+where $T_i$ denotes the total processing time assigned to machine $i$. 
+This is a natural objective since the overall processing time
+ is determined by the machine that finishes last\footnote{This 
+ concept is similar to the Rate Determining Step (RDS) in the field of Chemical Kinetics}.
+
+\subsection{Greedy Algorithm}
+
+A natural strategy is the following greedy algorithm.
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+Assign(Task T)
+{
+    find machine with min load
+    assign T to this machine
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+\subsubsection*{Performance Analysis}
+
+Interestingly, we do not actually have a polynomial time algorithm to find the optimal \emph{offline} solution to this problem.\\
+
+
+\noindent We will therefore use lower bounds on $OPT$ (the optimal offline makespan) to derive an upper 
+bound on the competitive ratio of the greedy algorithm.\\
+
+\noindent Let $ALG$ denote the makespan produced by the greedy algorithm. Consider the task that 
+finishes last in the greedy schedule. This may or may not be the last \emph{assigned} task. Let its 
+processing time be $\mathbf{p}$.\\
+
+\noindent Immediately before assigning this job, suppose the minimum machine load was $L$.
+By our hypothesis that this machine will be the one that finishes last, the greedy makespan is 
+\[
+ALG=L+p
+\]
+\vspace{0.5em}
+Hence the total load already assigned before this final job was at least $\mathbf{mL}$.
+Including the final job, the total processing load is therefore at least $\mathbf{mL+p}$.\\
+
+
+\noindent By Pigeonhole Principle, at least one machine must have load at least the average load, so --
+\[
+OPT\ge \frac{mL+p}{m} = L+\frac{p}{m}
+\]
+
+Since any valid schedule must process the job of size $p$,
+\[
+OPT\ge p \implies OPT(1-\frac{1}{m})\ge p\left(1-\frac{1}{m}\right)
+\]
+
+Adding the two inequalities gives:
+\[
+OPT(2-\frac{1}{m})\ge L+p = ALG
+\implies
+\boxed{\frac{ALG}{OPT}\le 2-\frac1m}
+\]
+\vspace{0.5em}
+Therefore the greedy algorithm is $\left(2-\frac1m\right)$-competitive, sometimes written as $2$-competitive 
+since the difference is negligible for large $m$.
+
+\subsection{Tightness of the Bound}
+
+The previous analysis showed that the greedy algorithm is $\left(2-\frac1m\right)$-competitive.
+ We now construct an example showing that the analysis cannot,
+ in general, be improved beyond a factor of $\left(2-\frac1m\right)$. \\
+
+Consider $m=4$ machines and the following sequence of incoming jobs:
+\[
+1,1,1,\dots,1 \text{ (12 times)},4
+\]
+
+The greedy algorithm will assign the first 12 jobs as follows:
+\[
+\begin{array}{c|cccc}
+\text{Machine }i & 1 & 2 & 3 & 4\\
+\hline
+\text{Jobs assigned} & 1,1,1 & 1,1,1 & 1,1,1 & 1,1,1
+\end{array}
+\]
+
+After processing these 12 jobs, each machine has load 3. The last job of size 4 will be assigned to any machine (say machine 1), resulting in a final makespan of 7.
+On the other hand, an optimal offline algorithm could have assigned the first 12 jobs as follows:
+\[
+\begin{array}{c|cccc}
+\text{Machine }i & 1 & 2 & 3 & 4\\
+\hline
+\text{Jobs assigned} & 1,1,1,1 & 1,1,1,1 & 1,1,1,1 & 4
+\end{array}
+\]
+
+After processing these 13 jobs, each machine has load 4. Thus the optimal makespan is 4,
+ and the competitive ratio is $\frac{7}{4}$, which is indeed our bound of $2-\frac{1}{4}$.
+

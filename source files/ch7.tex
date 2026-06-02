@@ -1,0 +1,342 @@
+
+
+
+\chapter{The Probabilistic Method}
+\section{The Dominating Set Problem}
+
+\textbf{The Problem}
+Given a graph:
+\[
+G=(V,E)
+\]
+find a smallest possible subset:
+\[
+D\subseteq V
+\]
+such that every vertex in the graph is either:
+\begin{itemize}
+    \item contained in \(D\), or
+    \item adjacent to some vertex in \(D\).
+\end{itemize}
+
+Such a set is called a \emph{dominating set}.
+
+Intuitively, we may think of the vertices in \(D\) as ``control centers'' or ``facilities'' such that every location in the graph is either itself a facility or directly connected to one.
+
+Unfortunately, finding the minimum dominating set is NP-hard, so we want to find a polynomial time algorithm that gives us a 
+reasonably small\footnote{We care more about the asymptotic behaviour of the size of set produced by the algorithm and less about which polynomial time complexity the algorithm has.} dominating set.
+\subsection*{A Randomised Solution}
+
+Suppose the graph has minimum degree \(d\). We now consider the following extremely simple randomised strategy:
+
+\begin{quote}
+Choose \(k\) vertices randomly out of the n vertices (uniformly among the $\binom{n}{k}$ possible choices).
+If the chosen set forms a dominating set, output it. Otherwise, try again!
+\end{quote}
+At first glance, this algorithm seems dumb. 
+However, it turns out that if we choose \(k\) large enough, the probability of failure becomes small.
+The key question thus becomes:
+\begin{quote}
+What is the probability of failure as a function of \(k\), \(n\), and \(d\)?
+\end{quote}
+We now analyse this probability.
+
+\subsection*{Probability That a Vertex Remains Undominated}
+
+Fix a vertex $v\in V$. Since the graph has minimum degree \(d\), $N[v]$ contains 
+at least $d+1$ vertices. For \(v\) to remain undominated, none of the selected \(k\) 
+vertices may lie inside $N[v]$
+
+When choosing vertices uniformly at random, the probability that a single chosen vertex does \emph{not} belong to \(N[v]\) is at most:
+\[
+1-\frac{d+1}{n}
+\]
+
+\[
+\implies
+\Pr[v\text{ remains undominated}]
+\le
+\left(1-\frac{d+1}{n}\right)^k
+\]
+
+Using the inequality\footnote{Refer \autoref{exp_inequality}} $1-x\le e^{-x}$ for all $x\in\mathbb{R}$, we obtain:
+\[
+\Pr[v\text{ remains undominated}]
+\le
+e^{-k(d+1)/n}
+\]
+
+\subsection*{Bounding the Failure Probability}
+
+The algorithm fails if at least one vertex remains undominated.
+
+Applying the union bound\footnote{Refer \autoref{union_bound}}
+
+\[
+\Pr[\text{failure}]
+\le
+n\cdot e^{-k(d+1)/n}
+\]
+
+We would like this probability to be strictly less than \(1\). Therefore we require:
+\[
+n e^{-k(d+1)/n}<1
+\]
+
+\[
+\implies
+\ln n-\frac{k(d+1)}{n}<0
+\]
+
+\[
+\implies
+k>\frac{n\ln n}{d+1}
+\]
+
+Thus, choosing:
+\[
+k=\frac{cn\ln n}{d+1}
+\]
+for any constant $c>1$ gives 
+$
+\Pr[\text{failure}]
+\le
+n^{1-c}
+$ which tends to \(0\) as \(n\to\infty\).
+
+\subsection*{What Does This Actually Mean?}
+
+The important point is not merely that the algorithm succeeds with high probability.
+
+Rather, we have shown something stronger --
+
+\begin{quote}
+There exists a dominating set\footnote{
+This method has a limitation - if $d<c\ln n$, 
+then the size of the dominating set produced by the algorithm is basically the whole set of vertices, making it useless.} of size roughly:
+\[
+\frac{n\log n}{d}
+\]
+\end{quote}
+
+Indeed, if no such dominating set existed, our algorithm could never possibly succeed.
+
+Thus a simple probabilistic argument simultaneously:
+\begin{itemize}
+    \item proves the existence of a reasonably small dominating set,
+    \item and gives a randomised algorithm capable of finding one.
+\end{itemize}
+
+\subsection*{Amplifying the Success Probability}
+
+Even if a single run fails, we may simply repeat the algorithm independently.
+
+If the failure probability of one run is $\bm{p}=\frac{1}{n^{c-1}}$, 
+then after $\bm{t}$ independent repetitions, the probability that \emph{every} run fails equals $\bm{p^t}$
+which decreases exponentially fast. \\
+
+So the tradeoff is choosing a larger $c$ has a smaller expected number of repetitions ($\frac{n^{c-1}}{n^{c-1}-1}$)\footnote{Since the probability of failure is $p=(n^{c-1}-1)/n^{c-1}$ and this is a bernoulli trial, the expected number of trials for success is 1/p } but a larger dominating set,
+while choosing a smaller $c$ has a larger expected number of repetitions but a smaller dominating set.
+
+\section{Bipartite Subgraph}
+
+\textbf{Problem statement.}
+Given an undirected graph $G=(V,E)$ with $|E|=m$, we wish to find a bipartition of $V$ that maximizes the number of edges between vertices of different partitions.
+Equivalently, we want a 2-coloring of the vertices that maximizes the number of bichromatic edges. We aim to show that we can always guarantee at least $m/2$ edges in the cut.
+
+\subsection{Expected Number of Bichromatic Edges}
+Let X be the number of bichromatic edges under a random 2-coloring of the vertices. 
+Each edge has a probability $\frac{1}{2}$ of being bichromatic, so define the indicator variable $I_{i}$ as 1
+ when the edge numbered $i$ is bichromatic and 0 otherwise. We can conclude that for a random vertex 2-coloring, 
+ Pr($I_{i}=1$)=$\frac{1}{2}$ and Pr($I_{i}=0$)=$\frac{1}{2}$, so $\mathbb{E}[I_{i}]=\frac{1}{2}$.
+Since $X=\sum_{i=1}^{m}I_{i}$, we have:
+\[
+\mathbb{E}[X]=\mathbb{E}[\sum_{i=1}^{m}I_{i}]=\sum_{i=1}^{m}\mathbb{E}[I_{i}]=\frac{m}{2}
+\]
+
+\subsection*{A Weak Lower Bound}
+
+Let $X\in\{0,1,\dots,m\}$ be the number of bichromatic edges under a random 2-coloring of the vertices. We already have
+$\mathbb{E}[X]=\frac{m}{2}$. \\
+
+\noindent We derive a crude lower bound on $\Pr\!\left(X\ge \frac{m}{2}\right)$.
+
+\medskip
+\noindent\textbf{Case 1: $m=2k$ (even).}\\
+
+\noindent Let $p=\Pr(X\ge k)$. The maximum value of $E(X)$ under these constraints would be achieved 
+when we push all mass in $\{0,1,\dots,k-1\}$ to $k-1$, and all mass in $\{k,\dots,2k\}$ to $2k$. Then
+\[
+\mathbb{E}[X]\le (1-p)(k-1)+p(2k).
+\]
+
+Using $\mathbb{E}[X]=k$,
+\[
+k \le (1-p)(k-1)+2kp
+\]
+\[
+k \le k-1+p(k+1)
+\]
+\[
+1 \le p(k+1)
+\]
+\[
+p \ge \frac{1}{k+1}=\frac{2}{m+2}.
+\]
+
+\[
+\implies
+\Pr\!\left(X\ge \frac{m}{2}\right)\ge \frac{2}{m+2}.
+\]
+
+\medskip
+\noindent\textbf{Case 2: $m=2k+1$ (odd).}\\
+
+\noindent Let $p=\Pr(X\ge k+1)$. The maximum value of $E(X)$ under these constraints would be achieved when
+all mass in $\{0,1,\dots,k\}$ is pushed to $k$, and all mass in $\{k+1,\dots,2k+1\}$ is pushed to $2k+1$. 
+Then
+\[
+\mathbb{E}[X]\le (1-p)k+p(2k+1).
+\]
+
+Using $\mathbb{E}[X]=k+\tfrac{1}{2}$,
+\[
+k+\frac{1}{2} \le k+p(k+1)
+\]
+\[
+\frac{1}{2} \le p(k+1)
+\]
+\[
+p \ge \frac{1}{2(k+1)}=\frac{1}{m+1}.
+\]
+
+\[
+\implies
+\Pr\!\left(X\ge \frac{m}{2}\right)\ge \frac{1}{m+1}.
+\]
+
+\medskip
+\textbf{Conclusion --}
+\[
+\Pr\!\left(X\ge \frac{m}{2}\right)\ge min(\frac{2}{m+2},\frac{1}{m+1}) = \frac{1}{m+1}.
+\]
+
+\subsection{A Simple Randomised Algorithm}
+
+From the probabilistic analysis, a random coloring satisfies
+\[
+\Pr\left(X \ge \frac{m}{2}\right) \ge \frac{1}{m+1}.
+\]
+
+Therefore, if we repeatedly sample random colorings independently, 
+the probability that none of $T$ trials succeeds is at most
+\[
+(1-\frac{1}{m+1})^T.
+\]
+
+\noindent Choosing $T=(m+1)\ln(m+1)$ gives
+\[
+(1-\frac{1}{m+1})^T
+\le
+e^{-\frac{T}{m+1}}
+=
+e^{-\ln(m+1)}
+=
+\frac{1}{m+1}
+\]
+Which goes to 0 as $m\to\infty$.
+
+While simple, this method does not exploit structure of intermediate solutions and relies purely on repeated random sampling rather than improvement steps.
+
+\subsection{Derandomisation}
+
+Instead of making random choices, we assign vertices one by one 
+smartly, trying to maximise the number of bichromatic edges.
+Suppose some vertices have already been assigned and the remaining vertices are
+still unassigned. Let X be the random variable denoting the number of bichromatic edges.
+Let L and R be the bipartitions.\\
+
+
+Denote the expected value of X given the first \(i\) assignments by:
+\[
+\mathbb E[X \mid i]
+\]
+
+
+For the $i+1$-th assignment of vertex \(v\), we have two choices:
+\begin{itemize}
+\item place \(v\) in \(L\),
+\item place \(v\) in \(R\).
+\end{itemize}
+
+The current conditional expectation is the average of the expectations obtained
+from these two choices. Therefore, at least one choice must yield a conditional
+expectation that is at least as large as the current one.
+
+\[
+\max \left( \mathbb E[X \mid \text{i, v in L}], \mathbb E[X \mid \text{i, v in R}] \right) >= \frac{1}{2} \left(\mathbb E[X \mid \text{i, v in L}] + \mathbb E[X \mid \text{i, v in R}] \right) = \mathbb E[X \mid i]
+\]
+
+
+We simply assign the next vertex such that it would add the most 
+bichromatic edges in this step -- that choice yields a better expectation for the future.
+\vspace{0.5em}
+
+\[
+\text{Since I have ensured that }\mathbb E[X \mid i+1] \ge \mathbb E[X \mid i]
+\]
+
+\[
+\implies \mathbb E[X \mid \text{n assignments}] \ge \mathbb E[X \mid \text{0 assignments}]
+\]
+
+\[
+\implies X_{final} \ge \frac{m}{2}
+\]
+
+\vspace{0.5em}
+
+\noindent\textbf{Why did that work?}\\
+
+
+\noindent Initially $\mathbb E[X]=\frac{m}{2}$. At every step we choose an 
+assignment that does not decrease the conditional
+expectation\footnote{This is by no means a proof for optimality -- it does not 
+maximise the number of bichromatic edges.}. Hence the conditional expectation never drops below \(m/2\)!\\
+
+
+\noindent After all vertices have been assigned, no randomness remains. The conditional
+expectation is then equal\footnote{If you are feeling tricked somehow, 
+I relate fully! But it is true, we designed this deterministic algorithm and simultaneously proved that 
+it produces at least \(m/2\) crossing edges using conditional expectation!} to the 
+actual number of crossing edges produced by the algorithm.
+
+\[
+\implies
+X_{final} \ge \frac{m}{2}.
+\]
+
+\noindent Thus we obtain a deterministic algorithm that always constructs a bipartite
+subgraph containing at least half of the edges.\\
+
+
+\noindent\textbf{Why does this not work everytime?}\\
+
+
+\noindent The properties of this particular problem we needed for this to work were -- 
+
+\noindent \begin{enumerate}
+\item $E[X \mid 1] = m/2$, regardless of which assignment that was -- symmetry between the left and right sides.
+\item It was obvious which assignment would maximise $E[X \mid i+1]$ given $E[X \mid i]$.
+\end{enumerate}
+
+\noindent Both these properties do not hold, for example, in the Dominating Set problem. Depending 
+on your first choice (to put in the dominating set or dominated set), you might get a 
+very good dominating set in expectation or a very bad one. An extreme counter example is a star shaped\footnote{A star shaped graph is a graph with 
+one central node and \(n-1\) nodes connected to it and only it.} 
+graph, where if you put the central node in dominated set you will get a dominating set of size \(n-1\), 
+but if you put it in dominating set you will get a dominating set of size 1. 
+The second property also fails because in further choices it is not 
+clear how to choose which set to put the node in, since we have no idea how to 
+determine any expectation of this problem.
+

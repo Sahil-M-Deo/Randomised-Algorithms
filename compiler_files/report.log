@@ -1,11 +1,12 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  31 MAY 2026 13:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  2 JUN 2026 23:48
 entering extended mode
- restricted \write18 enabled.
+ \write18 enabled.
  %&-line parsing enabled.
 **./report.tex
 (report.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
+(preamble.tex
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/base\book.cls
 Document Class: book 2025/01/22 v1.4n Standard LaTeX document class
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/base\bk11.clo
@@ -382,80 +383,23 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip62
 )
-(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/footmisc\footmisc.sty
-Package: footmisc 2025/05/09 v7.0b a miscellany of footnote facilities
-\FN@temptoken=\toks36
-\footnotemargin=\dimen191
-Package footmisc Info: Declaring symbol style bringhurst on input line 549.
-Package footmisc Info: Declaring symbol style chicago on input line 557.
-Package footmisc Info: Declaring symbol style wiley on input line 566.
-Package footmisc Info: Declaring symbol style lamport-robust on input line 577.
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/pgfplots\pgfplots.sty
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots\pgfplots.revisi
+on.tex)
+Package: pgfplots 2021/05/15 v1.18.1 Data Visualization (1.18.1)
 
-Package footmisc Info: Declaring symbol style lamport* on input line 597.
-Package footmisc Info: Declaring symbol style lamport*-robust on input line 618
-.
-)
-(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/enumitem\enumitem.sty
-Package: enumitem 2025/02/06 v3.11 Customized lists
-\labelindent=\skip63
-\enit@outerparindent=\dimen192
-\enit@toks=\toks37
-\enit@inbox=\box59
-\enit@count@id=\count318
-\enitdp@description=\count319
-)
-(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
-Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen193
-\lightrulewidth=\dimen194
-\cmidrulewidth=\dimen195
-\belowrulesep=\dimen196
-\belowbottomsep=\dimen197
-\aboverulesep=\dimen198
-\abovetopsep=\dimen199
-\cmidrulesep=\dimen256
-\cmidrulekern=\dimen257
-\defaultaddspace=\dimen258
-\@cmidla=\count320
-\@cmidlb=\count321
-\@aboverulesep=\dimen259
-\@belowrulesep=\dimen260
-\@thisruleclass=\count322
-\@lastruleclass=\count323
-\@thisrulewidth=\dimen261
-)
-(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
-Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
-\col@sep=\dimen262
-\ar@mcellbox=\box60
-\extrarowheight=\dimen263
-\NC@list=\toks38
-\extratabsurround=\skip64
-\backup@length=\skip65
-\ar@cellbox=\box61
-)
-(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/tools\bm.sty
-Package: bm 2025/10/21 v1.2g Bold Symbol Support (DPC/FMi)
-\symboldoperators=\mathgroup6
-\symboldletters=\mathgroup7
-\symboldsymbols=\mathgroup8
-Package bm Info: No bold for \OMX/cmex/m/n, using \pmb.
-Package bm Info: No bold for \U/msa/m/n, using \pmb.
-Package bm Info: No bold for \U/msb/m/n, using \pmb.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 149.
-)
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/pgf/frontendlayer\tikz.sty
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgf.sty
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfrcs.sty
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil-co
 mmon.tex
-\pgfutil@everybye=\toks39
-\pgfutil@tempdima=\dimen264
-\pgfutil@tempdimb=\dimen265
+\pgfutil@everybye=\toks36
+\pgfutil@tempdima=\dimen191
+\pgfutil@tempdimb=\dimen192
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfutil-la
 tex.def
-\pgfutil@abb=\box62
+\pgfutil@abb=\box59
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfrcs.cod
 e.tex
@@ -474,33 +418,33 @@ Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
 
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeys.co
 de.tex
-\pgfkeys@pathtoks=\toks40
-\pgfkeys@temptoks=\toks41
+\pgfkeys@pathtoks=\toks37
+\pgfkeys@temptoks=\toks38
 
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfkeyslib
 raryfiltered.code.tex
-\pgfkeys@tmptoks=\toks42
+\pgfkeys@tmptoks=\toks39
 ))
-\pgf@x=\dimen266
-\pgf@y=\dimen267
-\pgf@xa=\dimen268
-\pgf@ya=\dimen269
-\pgf@xb=\dimen270
-\pgf@yb=\dimen271
-\pgf@xc=\dimen272
-\pgf@yc=\dimen273
-\pgf@xd=\dimen274
-\pgf@yd=\dimen275
+\pgf@x=\dimen193
+\pgf@y=\dimen194
+\pgf@xa=\dimen195
+\pgf@ya=\dimen196
+\pgf@xb=\dimen197
+\pgf@yb=\dimen198
+\pgf@xc=\dimen199
+\pgf@yc=\dimen256
+\pgf@xd=\dimen257
+\pgf@yd=\dimen258
 \w@pgf@writea=\write5
 \r@pgf@reada=\read4
-\c@pgf@counta=\count324
-\c@pgf@countb=\count325
-\c@pgf@countc=\count326
-\c@pgf@countd=\count327
-\t@pgf@toka=\toks43
-\t@pgf@tokb=\toks44
-\t@pgf@tokc=\toks45
-\pgf@sys@id@count=\count328
+\c@pgf@counta=\count318
+\c@pgf@countb=\count319
+\c@pgf@countc=\count320
+\c@pgf@countd=\count321
+\t@pgf@toka=\toks40
+\t@pgf@tokb=\toks41
+\t@pgf@tokc=\toks42
+\pgf@sys@id@count=\count322
 
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgf.cfg
 File: pgf.cfg 2025-08-29 v3.1.11a (3.1.11a)
@@ -518,8 +462,8 @@ File: pgfsys-common-pdf.def 2025-08-29 v3.1.11a (3.1.11a)
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsysso
 ftpath.code.tex
 File: pgfsyssoftpath.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfsyssoftpath@smallbuffer@items=\count329
-\pgfsyssoftpath@bigbuffer@items=\count330
+\pgfsyssoftpath@smallbuffer@items=\count323
+\pgfsyssoftpath@bigbuffer@items=\count324
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsyspr
 otocol.code.tex
@@ -535,12 +479,12 @@ x
 e.tex)
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathparser.c
 ode.tex
-\pgfmath@dimen=\dimen276
-\pgfmath@count=\count331
-\pgfmath@box=\box63
-\pgfmath@toks=\toks46
-\pgfmath@stack@operand=\toks47
-\pgfmath@stack@operation=\toks48
+\pgfmath@dimen=\dimen259
+\pgfmath@count=\count325
+\pgfmath@box=\box60
+\pgfmath@toks=\toks43
+\pgfmath@stack@operand=\toks44
+\pgfmath@stack@operation=\toks45
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfunction
 s.code.tex)
@@ -564,59 +508,59 @@ s.integerarithmetics.code.tex)
 e.tex)
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfloat.co
 de.tex
-\c@pgfmathroundto@lastzeros=\count332
+\c@pgfmathroundto@lastzeros=\count326
 ))
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfint.code.tex
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepo
 ints.code.tex
 File: pgfcorepoints.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@picminx=\dimen277
-\pgf@picmaxx=\dimen278
-\pgf@picminy=\dimen279
-\pgf@picmaxy=\dimen280
-\pgf@pathminx=\dimen281
-\pgf@pathmaxx=\dimen282
-\pgf@pathminy=\dimen283
-\pgf@pathmaxy=\dimen284
-\pgf@xx=\dimen285
-\pgf@xy=\dimen286
-\pgf@yx=\dimen287
-\pgf@yy=\dimen288
-\pgf@zx=\dimen289
-\pgf@zy=\dimen290
+\pgf@picminx=\dimen260
+\pgf@picmaxx=\dimen261
+\pgf@picminy=\dimen262
+\pgf@picmaxy=\dimen263
+\pgf@pathminx=\dimen264
+\pgf@pathmaxx=\dimen265
+\pgf@pathminy=\dimen266
+\pgf@pathmaxy=\dimen267
+\pgf@xx=\dimen268
+\pgf@xy=\dimen269
+\pgf@yx=\dimen270
+\pgf@yy=\dimen271
+\pgf@zx=\dimen272
+\pgf@zy=\dimen273
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepa
 thconstruct.code.tex
 File: pgfcorepathconstruct.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@path@lastx=\dimen291
-\pgf@path@lasty=\dimen292
+\pgf@path@lastx=\dimen274
+\pgf@path@lasty=\dimen275
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepa
 thusage.code.tex
 File: pgfcorepathusage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@shorten@end@additional=\dimen293
-\pgf@shorten@start@additional=\dimen294
+\pgf@shorten@end@additional=\dimen276
+\pgf@shorten@start@additional=\dimen277
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoresc
 opes.code.tex
 File: pgfcorescopes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfpic=\box64
-\pgf@hbox=\box65
-\pgf@layerbox@main=\box66
-\pgf@picture@serial@count=\count333
+\pgfpic=\box61
+\pgf@hbox=\box62
+\pgf@layerbox@main=\box63
+\pgf@picture@serial@count=\count327
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoregr
 aphicstate.code.tex
 File: pgfcoregraphicstate.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgflinewidth=\dimen295
+\pgflinewidth=\dimen278
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoretr
 ansformations.code.tex
 File: pgfcoretransformations.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@pt@x=\dimen296
-\pgf@pt@y=\dimen297
-\pgf@pt@temp=\dimen298
+\pgf@pt@x=\dimen279
+\pgf@pt@y=\dimen280
+\pgf@pt@temp=\dimen281
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorequ
 ick.code.tex
@@ -633,14 +577,14 @@ File: pgfcorepathprocessing.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorear
 rows.code.tex
 File: pgfcorearrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfarrowsep=\dimen299
+\pgfarrowsep=\dimen282
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoresh
 ade.code.tex
 File: pgfcoreshade.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@max=\dimen300
-\pgf@sys@shading@range@num=\count334
-\pgf@shadingcount=\count335
+\pgf@max=\dimen283
+\pgf@sys@shading@range@num=\count328
+\pgf@shadingcount=\count329
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreim
 age.code.tex
@@ -649,7 +593,7 @@ File: pgfcoreimage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreex
 ternal.code.tex
 File: pgfcoreexternal.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfexternal@startupbox=\box67
+\pgfexternal@startupbox=\box64
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcorela
 yers.code.tex
@@ -670,7 +614,7 @@ File: pgfcorerdf.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodulesha
 pes.code.tex
 File: pgfmoduleshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfnodeparttextbox=\box68
+\pgfnodeparttextbox=\box65
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmoduleplo
 t.code.tex
@@ -679,8 +623,8 @@ File: pgfmoduleplot.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfcomp-
 version-0-65.sty
 Package: pgfcomp-version-0-65 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@nodesepstart=\dimen301
-\pgf@nodesepend=\dimen302
+\pgf@nodesepstart=\dimen284
+\pgf@nodesepend=\dimen285
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfcomp-
 version-1-18.sty
@@ -696,10 +640,10 @@ x))
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgffor.cod
 e.tex
 Package: pgffor 2025-08-29 v3.1.11a (3.1.11a)
-\pgffor@iter=\dimen303
-\pgffor@skip=\dimen304
-\pgffor@stack=\toks49
-\pgffor@toks=\toks50
+\pgffor@iter=\dimen286
+\pgffor@skip=\dimen287
+\pgffor@stack=\toks46
+\pgffor@toks=\toks47
 ))
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz\t
 ikz.code.tex
@@ -708,39 +652,223 @@ Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibrary
 plothandlers.code.tex
 File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgf@plot@mark@count=\count336
-\pgfplotmarksize=\dimen305
+\pgf@plot@mark@count=\count330
+\pgfplotmarksize=\dimen288
 )
-\tikz@lastx=\dimen306
-\tikz@lasty=\dimen307
-\tikz@lastxsaved=\dimen308
-\tikz@lastysaved=\dimen309
-\tikz@lastmovetox=\dimen310
-\tikz@lastmovetoy=\dimen311
-\tikzleveldistance=\dimen312
-\tikzsiblingdistance=\dimen313
-\tikz@figbox=\box69
-\tikz@figbox@bg=\box70
-\tikz@tempbox=\box71
-\tikz@tempbox@bg=\box72
-\tikztreelevel=\count337
-\tikznumberofchildren=\count338
-\tikznumberofcurrentchild=\count339
-\tikz@fig@count=\count340
+\tikz@lastx=\dimen289
+\tikz@lasty=\dimen290
+\tikz@lastxsaved=\dimen291
+\tikz@lastysaved=\dimen292
+\tikz@lastmovetox=\dimen293
+\tikz@lastmovetoy=\dimen294
+\tikzleveldistance=\dimen295
+\tikzsiblingdistance=\dimen296
+\tikz@figbox=\box66
+\tikz@figbox@bg=\box67
+\tikz@tempbox=\box68
+\tikz@tempbox@bg=\box69
+\tikztreelevel=\count331
+\tikznumberofchildren=\count332
+\tikznumberofcurrentchild=\count333
+\tikz@fig@count=\count334
 
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodulemat
 rix.code.tex
 File: pgfmodulematrix.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfmatrixcurrentrow=\count341
-\pgfmatrixcurrentcolumn=\count342
-\pgf@matrix@numberofcolumns=\count343
+\pgfmatrixcurrentrow=\count335
+\pgfmatrixcurrentcolumn=\count336
+\pgf@matrix@numberofcolumns=\count337
 )
-\tikz@expandcount=\count344
+\tikz@expandcount=\count338
 
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/l
 ibraries\tikzlibrarytopaths.code.tex
 File: tikzlibrarytopaths.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )))
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots\pgfplots.code.t
+ex
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots\pgfplotscore.co
+de.tex
+\t@pgfplots@toka=\toks48
+\t@pgfplots@tokb=\toks49
+\t@pgfplots@tokc=\toks50
+\pgfplots@tmpa=\dimen297
+\c@pgfplots@coordindex=\count339
+\c@pgfplots@scanlineindex=\count340
+
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/sys\pgfplotssys
+generic.code.tex))
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/libs\pgfplotsli
+brary.code.tex)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/oldpgfcompatib\
+pgfplotsoldpgfsupp_loader.code.tex
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibrary
+fpu.code.tex)
+Package pgfplots: loading complementary utilities for your pgf version...
+\t@pgf@toka=\toks51
+\t@pgf@tokb=\toks52
+\t@pgf@tokc=\toks53
+
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/oldpgfcompatib\
+pgfplotsoldpgfsupp_pgfutil-common-lists.tex))
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/util\pgfplotsut
+il.code.tex
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/liststructure\p
+gfplotsliststructure.code.tex)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/liststructure\p
+gfplotsliststructureext.code.tex)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/liststructure\p
+gfplotsarray.code.tex
+\c@pgfplotsarray@tmp=\count341
+)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/liststructure\p
+gfplotsmatrix.code.tex)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/numtable\pgfplo
+tstableshared.code.tex
+\c@pgfplotstable@counta=\count342
+\t@pgfplotstable@a=\toks54
+)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/liststructure\p
+gfplotsdeque.code.tex)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/util\pgfplotsbi
+nary.code.tex
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/util\pgfplotsbi
+nary.data.code.tex))
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/util\pgfplotsut
+il.verb.code.tex)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/libs\pgflibrary
+pgfplots.surfshading.code.tex
+\c@pgfplotslibrarysurf@no=\count343
+
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/sys\pgflibraryp
+gfplots.surfshading.pgfsys-pdftex.def)))
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/util\pgfplotsco
+lormap.code.tex
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/util\pgfplotsco
+lor.code.tex))
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots\pgfplotsstacked
+plots.code.tex)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots\pgfplotsplothan
+dlers.code.tex
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots\pgfplotsmeshplo
+thandler.code.tex
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots\pgfplotsmeshplo
+timage.code.tex)))
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots\pgfplots.scalin
+g.code.tex)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots\pgfplotscoordpr
+ocessing.code.tex)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots\pgfplots.errorb
+ars.code.tex)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots\pgfplots.marker
+s.code.tex)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots\pgfplotsticks.c
+ode.tex)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots\pgfplots.paths.
+code.tex)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/l
+ibraries\tikzlibrarydecorations.code.tex
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmoduledec
+orations.code.tex
+\pgfdecoratedcompleteddistance=\dimen298
+\pgfdecoratedremainingdistance=\dimen299
+\pgfdecoratedinputsegmentcompleteddistance=\dimen300
+\pgfdecoratedinputsegmentremainingdistance=\dimen301
+\pgf@decorate@distancetomove=\dimen302
+\pgf@decorate@repeatstate=\count344
+\pgfdecorationsegmentamplitude=\dimen303
+\pgfdecorationsegmentlength=\dimen304
+)
+\tikz@lib@dec@box=\box70
+)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/l
+ibraries\tikzlibrarydecorations.pathmorphing.code.tex
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries/decoration
+s\pgflibrarydecorations.pathmorphing.code.tex))
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/l
+ibraries\tikzlibrarydecorations.pathreplacing.code.tex
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries/decoration
+s\pgflibrarydecorations.pathreplacing.code.tex))
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgfplots/libs\tikzlibrar
+ypgfplots.contourlua.code.tex)
+\pgfplots@numplots=\count345
+\pgfplots@xmin@reg=\dimen305
+\pgfplots@xmax@reg=\dimen306
+\pgfplots@ymin@reg=\dimen307
+\pgfplots@ymax@reg=\dimen308
+\pgfplots@zmin@reg=\dimen309
+\pgfplots@zmax@reg=\dimen310
+)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/l
+ibraries\tikzlibraryplotmarks.code.tex
+File: tikzlibraryplotmarks.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibrary
+plotmarks.code.tex
+File: pgflibraryplotmarks.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/footmisc\footmisc.sty
+Package: footmisc 2025/05/09 v7.0b a miscellany of footnote facilities
+\FN@temptoken=\toks55
+\footnotemargin=\dimen311
+Package footmisc Info: Declaring symbol style bringhurst on input line 549.
+Package footmisc Info: Declaring symbol style chicago on input line 557.
+Package footmisc Info: Declaring symbol style wiley on input line 566.
+Package footmisc Info: Declaring symbol style lamport-robust on input line 577.
+
+Package footmisc Info: Declaring symbol style lamport* on input line 597.
+Package footmisc Info: Declaring symbol style lamport*-robust on input line 618
+.
+)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/enumitem\enumitem.sty
+Package: enumitem 2025/02/06 v3.11 Customized lists
+\labelindent=\skip63
+\enit@outerparindent=\dimen312
+\enit@toks=\toks56
+\enit@inbox=\box71
+\enit@count@id=\count346
+\enitdp@description=\count347
+)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen313
+\lightrulewidth=\dimen314
+\cmidrulewidth=\dimen315
+\belowrulesep=\dimen316
+\belowbottomsep=\dimen317
+\aboverulesep=\dimen318
+\abovetopsep=\dimen319
+\cmidrulesep=\dimen320
+\cmidrulekern=\dimen321
+\defaultaddspace=\dimen322
+\@cmidla=\count348
+\@cmidlb=\count349
+\@aboverulesep=\dimen323
+\@belowrulesep=\dimen324
+\@thisruleclass=\count350
+\@lastruleclass=\count351
+\@thisrulewidth=\dimen325
+)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
+Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
+\col@sep=\dimen326
+\ar@mcellbox=\box72
+\extrarowheight=\dimen327
+\NC@list=\toks57
+\extratabsurround=\skip64
+\backup@length=\skip65
+\ar@cellbox=\box73
+)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/tools\bm.sty
+Package: bm 2025/10/21 v1.2g Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup6
+\symboldletters=\mathgroup7
+\symboldsymbols=\mathgroup8
+Package bm Info: No bold for \OMX/cmex/m/n, using \pmb.
+Package bm Info: No bold for \U/msa/m/n, using \pmb.
+Package bm Info: No bold for \U/msb/m/n, using \pmb.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 149.
+)
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/l
 ibraries\tikzlibrarycalc.code.tex
 File: tikzlibrarycalc.code.tex 2025-08-29 v3.1.11a (3.1.11a)
@@ -752,10 +880,10 @@ File: tikzlibrarypositioning.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibrary
 arrows.meta.code.tex
 File: pgflibraryarrows.meta.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfarrowinset=\dimen314
-\pgfarrowlength=\dimen315
-\pgfarrowwidth=\dimen316
-\pgfarrowlinewidth=\dimen317
+\pgfarrowinset=\dimen328
+\pgfarrowlength=\dimen329
+\pgfarrowwidth=\dimen330
+\pgfarrowlinewidth=\dimen331
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/pdfpages\pdfpages.sty
 Package: pdfpages 2026/03/30 v0.6h Insert pages of external PDF documents (AM)
@@ -763,47 +891,57 @@ Package: pdfpages 2026/03/30 v0.6h Insert pages of external PDF documents (AM)
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/base\ifthen.sty
 Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
 )
-\AM@pagewidth=\dimen318
-\AM@pageheight=\dimen319
-\AM@fboxrule=\dimen320
+\AM@pagewidth=\dimen332
+\AM@pageheight=\dimen333
+\AM@fboxrule=\dimen334
 
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/pdfpages\pppdftex.def
 File: pppdftex.def 2026/03/30 v0.6h Pdfpages driver for pdfTeX (AM)
 )
-\pdfpages@includegraphics@status=\count345
-\AM@pagebox=\box73
-\AM@global@opts=\toks51
-\AM@pagecnt=\count346
-\AM@toc@title=\toks52
-\AM@lof@heading=\toks53
-\c@AM@survey=\count347
-\AM@templatesizebox=\box74
-)
+\pdfpages@includegraphics@status=\count352
+\AM@pagebox=\box74
+\AM@global@opts=\toks58
+\AM@pagecnt=\count353
+\AM@toc@title=\toks59
+\AM@lof@heading=\toks60
+\c@AM@survey=\count354
+\AM@templatesizebox=\box75
+))
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex
 .def
 File: l3backend-pdftex.def 2026-02-18 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count348
-) (C:\Users\hp\OneDrive\Desktop\THE BOOK\latex_files\report.aux)
+\l__color_backend_stack_int=\count355
+) (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.aux
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch1.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch2.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch3.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch4.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch5.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch6.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch7.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch8.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch9.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\appendices.aux))
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 33.
-LaTeX Font Info:    ... okay on input line 33.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -841,17 +979,17 @@ LaTeX Font Info:    ... okay on input line 33.
 
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count349
-\scratchdimen=\dimen321
-\scratchbox=\box75
-\nofMPsegments=\count350
-\nofMParguments=\count351
-\everyMPshowfont=\toks54
-\MPscratchCnt=\count352
-\MPscratchDim=\dimen322
-\MPnumerator=\count353
-\makeMPintoPDFobject=\count354
-\everyMPtoPDFconversion=\toks55
+\scratchcounter=\count356
+\scratchdimen=\dimen335
+\scratchbox=\box76
+\nofMPsegments=\count357
+\nofMParguments=\count358
+\everyMPshowfont=\toks61
+\MPscratchCnt=\count359
+\MPscratchDim=\dimen336
+\MPnumerator=\count360
+\makeMPintoPDFobject=\count361
+\everyMPtoPDFconversion=\toks62
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base
 .sty
@@ -862,12 +1000,15 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring ON on input line 33.
- (C:\Users\hp\OneDrive\Desktop\THE BOOK\latex_files\report.out)
-(C:\Users\hp\OneDrive\Desktop\THE BOOK\latex_files\report.out)
+Package hyperref Info: Link coloring ON on input line 3.
+ (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.out)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.out)
 \@outlinefile=\write6
 \openout6 = `report.out'.
 
+
+Package pgfplots notification 'compat/show suggested version=true': document ha
+s been generated with the most recent feature set (\pgfplotsset{compat=1.18}).
 
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/pdflscape\pdflscape.sty
 Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
@@ -883,47 +1024,49 @@ Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 ))
 
-pdfTeX warning: pdflatex (file ./Cover.pdf): PDF inclusion: found PDF version <
-1.6>, but at most version <1.5> allowed
-<Cover.pdf, id=273, 520.38416pt x 737.81647pt>
-File: Cover.pdf Graphic file (type pdf)
-<use Cover.pdf>
-Package pdftex.def Info: Cover.pdf  used on input line 36.
-(pdftex.def)             Requested size: 520.38287pt x 737.81465pt.
+pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
+DF version <1.7>, but at most version <1.5> allowed
+<../Images/Cover.pdf, id=350, 595.09828pt x 842.39719pt>
+File: ../Images/Cover.pdf Graphic file (type pdf)
+<use ../Images/Cover.pdf>
+Package pdftex.def Info: ../Images/Cover.pdf  used on input line 6.
+(pdftex.def)             Requested size: 595.09682pt x 842.39513pt.
 
 
-pdfTeX warning: pdflatex (file ./Cover.pdf): PDF inclusion: found PDF version <
-1.6>, but at most version <1.5> allowed
+pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
+DF version <1.7>, but at most version <1.5> allowed
 
 
-pdfTeX warning: pdflatex (file ./Cover.pdf): PDF inclusion: found PDF version <
-1.6>, but at most version <1.5> allowed
-<Cover.pdf, id=275, page=1, 520.38416pt x 737.81647pt>
-File: Cover.pdf Graphic file (type pdf)
-<use Cover.pdf, page 1>
-Package pdftex.def Info: Cover.pdf , page1 used on input line 36.
-(pdftex.def)             Requested size: 520.38287pt x 737.81465pt.
-File: Cover.pdf Graphic file (type pdf)
-<use Cover.pdf, page 1>
-Package pdftex.def Info: Cover.pdf , page1 used on input line 36.
-(pdftex.def)             Requested size: 596.66641pt x 845.97177pt.
-File: Cover.pdf Graphic file (type pdf)
-<use Cover.pdf, page 1>
-Package pdftex.def Info: Cover.pdf , page1 used on input line 36.
-(pdftex.def)             Requested size: 596.66641pt x 845.97177pt.
-File: Cover.pdf Graphic file (type pdf)
-<use Cover.pdf, page 1>
-Package pdftex.def Info: Cover.pdf , page1 used on input line 36.
-(pdftex.def)             Requested size: 596.66641pt x 845.97177pt.
-File: Cover.pdf Graphic file (type pdf)
-<use Cover.pdf, page 1>
-Package pdftex.def Info: Cover.pdf , page1 used on input line 36.
-(pdftex.def)             Requested size: 596.66641pt x 845.97177pt.
+pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
+DF version <1.7>, but at most version <1.5> allowed
+<../Images/Cover.pdf, id=352, page=1, 595.09828pt x 842.39719pt>
+File: ../Images/Cover.pdf Graphic file (type pdf)
+<use ../Images/Cover.pdf, page 1>
+Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
+(pdftex.def)             Requested size: 595.09682pt x 842.39513pt.
+File: ../Images/Cover.pdf Graphic file (type pdf)
+<use ../Images/Cover.pdf, page 1>
+Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
+(pdftex.def)             Requested size: 597.24887pt x 845.4415pt.
+File: ../Images/Cover.pdf Graphic file (type pdf)
+<use ../Images/Cover.pdf, page 1>
+Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
+(pdftex.def)             Requested size: 597.24887pt x 845.4415pt.
+File: ../Images/Cover.pdf Graphic file (type pdf)
+<use ../Images/Cover.pdf, page 1>
+Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
+(pdftex.def)             Requested size: 597.24887pt x 845.4415pt.
+File: ../Images/Cover.pdf Graphic file (type pdf)
+<use ../Images/Cover.pdf, page 1>
+Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
+(pdftex.def)             Requested size: 597.24887pt x 845.4415pt.
 [1
 
 
- <./Cover.pdf>] (C:\Users\hp\OneDrive\Desktop\THE BOOK\latex_files\report.toc
+ <../Images/Cover.pdf>]
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.toc
 LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
+
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
@@ -936,48 +1079,550 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.56 ...andomised Algorithm}{34}{subsection.6.2.2}
+l.53 ...3}Error Probability}{33}{subsection.6.2.3}
                                                   % [1
 
-{C:/Users/hp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}])
+{C:/Users/hp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2])
 \tf@toc=\write7
 \openout7 = `report.toc'.
 
- [2]
+ [3]
+\openout2 = `ch1.aux'.
+
+ (ch1.tex
 Chapter 1.
 
-Underfull \hbox (badness 10000) in paragraph at lines 44--48
+Underfull \hbox (badness 10000) in paragraph at lines 5--9
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 50--60
+Underfull \hbox (badness 10000) in paragraph at lines 11--21
 
  []
 
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 76.
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 37.
 
-Overfull \hbox (61.94386pt too wide) in paragraph at lines 84--84
+Overfull \hbox (61.94386pt too wide) in paragraph at lines 45--45
 []\T1/cmtt/m/n/10.95 mt19937 rng(chrono::steady_clock::now().time_since_epoch()
 .count()); //using time as a seed[] 
  []
 
-[3
+[4
 
-] [4] [5]
+
+] [5]) [6]
+\openout2 = `ch2.aux'.
+
+ (ch2.tex
 Chapter 2.
 
-Underfull \hbox (badness 10000) in paragraph at lines 179--186
+Underfull \hbox (badness 10000) in paragraph at lines 4--11
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 179--186
+Underfull \hbox (badness 10000) in paragraph at lines 4--11
 
  []
 
-[6
+[7
+
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 88--89
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--107
+
+ []
+
+) [8] [9]
+\openout2 = `ch3.aux'.
+
+ (ch3.tex
+Chapter 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 4--9
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 29--31
+
+ []
+
+[10
+
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 70--72
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 166--168
+
+ []
+
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 205--207
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 208--211
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 213--214
+
+ []
+
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 251--253
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 254--257
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 259--261
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 303--305
+
+ []
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 357--361
+
+ []
+
+) [14]
+\openout2 = `ch4.aux'.
+
+ (ch4.tex
+Chapter 4.
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--62
+
+ []
+
+[15
+
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 67--71
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--76
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 88--91
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 102--107
+
+ []
+
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 131--135
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 136--141
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 142--146
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 165--167
+
+ []
+
+[17]
+Underfull \hbox (badness 10000) in paragraph at lines 186--187
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 201--204
+
+ []
+
+
+Overfull \hbox (11.01852pt too wide) in paragraph at lines 224--224
+[]    \T1/cmtt/m/n/10.95 if (!F.count(temp)) //early exit if this row doesn't e
+xist in the first matrix[] 
+ []
+
+[18]
+Underfull \hbox (badness 10000) in paragraph at lines 247--248
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 249--253
+
+ []
+
+
+Overfull \hbox (73.2606pt too wide) in paragraph at lines 285--285
+[]    \T1/cmtt/m/n/10.95 if(!s.count(pair_hash(v1,v2))) //early exit if this ro
+w doesn't exist in the first matrix[] 
+ []
+
+[19]
+Underfull \hbox (badness 10000) in paragraph at lines 315--316
+
+ []
+
+[20]) [21]
+\openout2 = `ch5.aux'.
+
+ (ch5.tex
+Chapter 5.
+
+Underfull \hbox (badness 10000) in paragraph at lines 102--104
+
+ []
+
+[22
+
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 276--279
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 281--284
+
+ []
+
+[23] [24]
+Underfull \hbox (badness 10000) in paragraph at lines 469--470
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 495--496
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 506--509
+
+ []
+
+[25] [26] [27] [28]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [29]
+[30]) [31]
+\openout2 = `ch6.aux'.
+
+ (ch6.tex
+Chapter 6.
+
+Underfull \hbox (badness 10000) in paragraph at lines 22--27
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--39
+
+ []
+
+[32
+
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 103--107
+
+ []
+
+[33]
+Underfull \hbox (badness 10000) in paragraph at lines 147--148
+
+ []
+
+[34]
+Underfull \hbox (badness 10000) in paragraph at lines 241--243
+
+ []
+
+[35]
+Underfull \hbox (badness 10000) in paragraph at lines 257--261
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 272--275
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 277--280
+
+ []
+
+[36]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [37]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [38]
+Underfull \hbox (badness 10000) in paragraph at lines 553--558
+
+ []
+
+[39]
+Underfull \hbox (badness 10000) in paragraph at lines 559--561
+
+ []
+
+[40]
+Underfull \hbox (badness 10000) in paragraph at lines 713--717
+
+ []
+
+) [41]
+\openout2 = `ch7.aux'.
+
+ (ch7.tex
+Chapter 7.
+[42
+
+
+
+
+] [43]
+Underfull \hbox (badness 10000) in paragraph at lines 134--137
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 159--161
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 165--166
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 193--194
+
+ []
+
+[44]
+Underfull \hbox (badness 10000) in paragraph at lines 253--258
+
+ []
+
+[45]
+Underfull \hbox (badness 10000) in paragraph at lines 299--300
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 302--306
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 319--321
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 323--324
+
+ []
+
+) [46]
+\openout2 = `ch8.aux'.
+
+ (ch8.tex
+Chapter 8.
+
+Underfull \hbox (badness 10000) in paragraph at lines 24--26
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 41--44
+
+ []
+
+[47
+
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 46--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 50--51
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--56
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 58--64
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 66--67
+
+ []
+
+[48]
+Underfull \hbox (badness 10000) in paragraph at lines 167--169
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 175--177
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 184--185
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 187--188
+
+ []
+
+[49]
+Underfull \hbox (badness 10000) in paragraph at lines 274--276
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 277--279
+
+ []
+
+[50]
+Underfull \hbox (badness 10000) in paragraph at lines 310--311
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 313--315
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 316--319
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 324--328
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 352--355
+
+ []
+
+[51]) [52]
+\openout2 = `ch9.aux'.
+
+ (ch9.tex
+Chapter 9.
+[53
+
+
+
+
+] [54] [55] [56] [57]
+Underfull \hbox (badness 10000) in paragraph at lines 325--327
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 328--329
+
+ []
+
+) [58]
+\openout2 = `appendices.aux'.
+
+ (appendices.tex [59
+
+
+
+
+]
+Appendix A.
+[60
+
+
+] [61]
+Appendix B.
+[62
+
+]
+Appendix C.
+
+Underfull \hbox (badness 10000) in paragraph at lines 173--175
+
+ []
+
+[63
+
+] [64]
+Appendix D.
+[65
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 263--264
@@ -985,397 +1630,82 @@ Underfull \hbox (badness 10000) in paragraph at lines 263--264
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 280--282
+Underfull \hbox (badness 10000) in paragraph at lines 266--267
 
  []
 
-[7] [8]
-Chapter 3.
-
-Underfull \hbox (badness 10000) in paragraph at lines 295--300
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 320--322
-
- []
-
-[9
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 361--363
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 457--459
-
- []
-
-[10]
-Underfull \hbox (badness 10000) in paragraph at lines 496--498
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 499--502
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 504--505
-
- []
-
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 542--544
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 545--548
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 550--552
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 594--596
-
- []
-
-[12]
-Underfull \hbox (badness 10000) in paragraph at lines 648--652
-
- []
-
-[13]
-Chapter 4.
-
-Underfull \hbox (badness 10000) in paragraph at lines 780--781
-
- []
-
-[14
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 816--818
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 827--828
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 829--833
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 834--835
-
- []
-
-[15]
-Underfull \hbox (badness 10000) in paragraph at lines 894--896
-
- []
-
-[16]
-Underfull \hbox (badness 10000) in paragraph at lines 915--916
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 930--933
-
- []
-
-
-Overfull \hbox (11.01852pt too wide) in paragraph at lines 953--953
-[]    \T1/cmtt/m/n/10.95 if (!F.count(temp)) //early exit if this row doesn't e
-xist in the first matrix[] 
- []
-
-[17]
-Underfull \hbox (badness 10000) in paragraph at lines 976--977
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 978--982
-
- []
-
-[18]
-Overfull \hbox (73.2606pt too wide) in paragraph at lines 1014--1014
-[]    \T1/cmtt/m/n/10.95 if(!s.count(pair_hash(v1,v2))) //early exit if this ro
-w doesn't exist in the first matrix[] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1044--1045
-
- []
-
-[19] [20]
-Chapter 5.
-[21
-
-] [22] [23]
-Underfull \hbox (badness 10000) in paragraph at lines 1567--1568
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1593--1594
-
- []
-
-[24]
-Underfull \hbox (badness 10000) in paragraph at lines 1604--1607
-
- []
-
-[25] [26] [27] [28] [29] [30]
-Chapter 6.
-[31
-
-] [32]
-Underfull \hbox (badness 10000) in paragraph at lines 2432--2435
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2457--2459
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2463--2464
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2491--2492
-
- []
-
-[33]
-Underfull \hbox (badness 10000) in paragraph at lines 2551--2556
-
- []
-
-[34]
-Underfull \hbox (badness 10000) in paragraph at lines 2597--2598
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2600--2604
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2617--2619
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2621--2622
-
- []
-
-[35]
-Chapter 7.
-
-Underfull \hbox (badness 10000) in paragraph at lines 2663--2665
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2680--2683
-
- []
-
-[36
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 2685--2687
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2689--2690
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2692--2695
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2697--2703
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2705--2706
-
- []
-
-[37]
-Underfull \hbox (badness 10000) in paragraph at lines 2806--2808
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2814--2816
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2823--2824
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2826--2827
-
- []
-
-[38]
-Underfull \hbox (badness 10000) in paragraph at lines 2913--2915
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2916--2918
-
- []
-
-[39]
-Underfull \hbox (badness 10000) in paragraph at lines 2949--2950
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2952--2954
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2955--2958
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2963--2967
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2991--2994
-
- []
-
-[40] [41]
-Chapter 8.
-[42
-
-] [43] [44] [45] [46]
-Underfull \hbox (badness 10000) in paragraph at lines 3345--3347
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 3348--3349
-
- []
-
-[47]
-Appendix A.
-[48
-
-] [49]
-Appendix B.
-[50
-
-]
-Appendix C.
-[51
-
-] [52]
-Appendix D.
-[53
-
-] [54] (C:\Users\hp\OneDrive\Desktop\THE BOOK\latex_files\report.aux)
+) [66] (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.aux
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch1.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch2.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch3.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch4.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch5.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch6.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch7.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch8.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch9.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\appendices.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 00084C9E53C10FC9D105B57ECF11B62F;10584.
+(rerunfilecheck)             Checksum: 0EE3EBC983AF8B6B66BBEC09CCD31A44;13428.
  ) 
 Here is how much of TeX's memory you used:
- 24720 strings out of 467691
- 452749 string characters out of 5416439
- 869162 words of memory out of 5000000
- 53101 multiletter control sequences out of 15000+600000
- 660319 words of font info for 125 fonts, out of 8000000 for 9000
+ 35522 strings out of 467691
+ 814407 string characters out of 5416439
+ 1386237 words of memory out of 5000000
+ 63642 multiletter control sequences out of 15000+600000
+ 661005 words of font info for 126 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,17n,94p,675b,856s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbi109
-5.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt
-0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\e
-crm1000.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
-0\ecti1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dp
-i600\ecbx1200.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
-/dpi600\ecbx0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen
-/ec/dpi600\ecrm0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
-pen/ec/dpi600\ecrm0600.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jk
-nappen/ec/dpi600\ectt1440.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour
-/jknappen/ec/dpi600\tcrm1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljf
-our/jknappen/ec/dpi600\ecrm0800.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/
-ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/
-pk/ljfour/jknappen/ec/dpi600\ecbx2074.pk> <C:\Users\hp\AppData\Local\MiKTeX\fon
-ts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\
-fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\hp\AppData\Local\MiKT
-eX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\hp\AppData\Local\M
-iKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk><C:/Users/hp/AppData/Local
-/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/hp/AppData
-/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/hp/Ap
-pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users
-/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:
-/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.p
+ 104i,17n,111p,746b,2175s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti090
+0.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbi
+1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\e
+ctt0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
+0\ecrm1000.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dp
+i600\ecti1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
+/dpi600\ecbx1200.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen
+/ec/dpi600\ecbx0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
+pen/ec/dpi600\ecrm0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jk
+nappen/ec/dpi600\ecrm0600.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour
+/jknappen/ec/dpi600\ectt1440.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljf
+our/jknappen/ec/dpi600\tcrm1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/
+ljfour/jknappen/ec/dpi600\ecrm0800.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/
+pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\hp\AppData\Local\MiKTeX\fon
+ts/pk/ljfour/jknappen/ec/dpi600\ecbx2074.pk> <C:\Users\hp\AppData\Local\MiKTeX\
+fonts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\hp\AppData\Local\MiKT
+eX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\hp\AppData\Local\M
+iKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\hp\AppData\Loca
+l\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk><C:/Users/hp/AppData/Lo
+cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/hp/AppD
+ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/hp
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Us
+ers/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cmextra/cmex8.
+pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/c
+mmi10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
+s/cm/cmmi12.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
+msfonts/cm/cmmi6.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/pub
+lic/amsfonts/cm/cmmi8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type
+1/public/amsfonts/cm/cmmi9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts
+/type1/public/amsfonts/cm/cmmib10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTe
+X/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><C:/Users/hp/AppData/Local/Pro
+grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/hp/AppData/Loca
+l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/hp/AppData/
+Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/hp/AppD
+ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/hp/
+AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Use
+rs/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C
+:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.p
 fb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
-mi6.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/
-cm/cmmi8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsf
-onts/cm/cmmi9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public
-/amsfonts/cm/cmmib10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1
-/public/amsfonts/cmextra/cmmib8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/
-fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/hp/AppData/Local/Programs/Mi
-KTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/hp/AppData/Local/Program
-s/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/hp/AppData/Local/Pro
-grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/hp/AppData/Local
-/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/hp/AppData
-/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/hp/Ap
-pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/
-hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/U
-sers/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam1
-0.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/sy
-mbols/msbm10.pfb>
-Output written on "C:\Users\hp\OneDrive\Desktop\THE BOOK\latex_files\report.pdf
-" (55 pages, 708886 bytes).
+sy9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/
+symbols/msam10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/publi
+c/amsfonts/symbols/msbm10.pfb>
+Output written on "C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.
+pdf" (67 pages, 2133512 bytes).
 PDF statistics:
- 1513 PDF objects out of 1728 (max. 8388607)
- 228 named destinations out of 1000 (max. 500000)
- 564 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1740 PDF objects out of 2073 (max. 8388607)
+ 279 named destinations out of 1000 (max. 500000)
+ 716 words of extra memory for PDF output out of 10000 (max. 10000000)
 
