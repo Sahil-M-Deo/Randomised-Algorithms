@@ -47,22 +47,9 @@ pivot, the recursion becomes extremely unbalanced:
 T(n)=\Theta(n^2)
 \]
 
-\noindent The standard randomised version instead chooses the pivot uniformly at random.
-
-\begin{center}
-\begin{minipage}{0.9\linewidth}
-\begin{framed}
-\begin{Verbatim}
-uniform_int_distribution<int>uid(0,a.size()-1);
-int pivot=uid(rng);
-swap(a[pivot],a[r]);
-\end{Verbatim}
-\vspace{-4mm}
-\end{framed}
-\end{minipage}
-\end{center}
-
-\noindent This tiny modification dramatically changes the behaviour of the algorithm. Intuitively, it becomes very unlikely that we repeatedly choose extremely bad pivots.
+\noindent The standard randomised version instead chooses the pivot uniformly at random. This tiny 
+modification dramatically changes the behaviour of the algorithm. 
+Intuitively, it becomes very unlikely that we repeatedly choose extremely bad pivots.
 
 \subsection{Expected Runtime}
 
@@ -93,9 +80,10 @@ T(k)+T(n-1-k)
 \]
 
 \[
+\implies
 T(n)
 =
-\Theta(n)
+n
 +
 \frac{2}{n}\sum_{k=0}^{n-1}T(k)
 \quad
@@ -164,12 +152,12 @@ S(n)-S(n-1)
 \]
 
 Hence the expected runtime of randomised \texttt{QuickSort} is $
-T(n)=\Theta(n\log n)$\\
+Theta(n\log n)$\\
 
 \subsubsection*{Indicator Variables}
 
-\noindent Observe that any pair of elements is compared at most once 
-during the entire execution of \texttt{QuickSort}.
+\noindent Here we explore an alternative method to arrive at the expected runtime of \texttt{QuickSort}. Observe 
+that any pair of elements is compared at most once during the entire execution of \texttt{QuickSort}.
 
 \noindent Consider the indicator variable,
 \[
@@ -195,6 +183,8 @@ we have a 2 out of \(j-i+1\) chance of this happening.
 \implies
 \mathbb{E}[C]
 =
+\mathbb{E}[\sum_{1\le i<j\le n}I_{ij}]
+=
 \sum_{1\le i<j\le n}\frac{2}{j-i+1}
 =
 \Theta(n\log n)
@@ -205,7 +195,8 @@ we have a 2 out of \(j-i+1\) chance of this happening.
 \textbf{The Problem}: Find the \(k\)-th smallest element\footnote{This is commonly 
 referred to as the \(k\)-th order statistic of the array.} of an unsorted input array.\\
 
-\noindent An obvious method is to sort the array using Merge Sort\footnote{Merge Sort is a divide and conquer deterministic sort algorithm 
+\noindent An obvious method is to sort the array using \texttt{MergeSort}\footnote{\texttt{MergeSort} is a 
+divide and conquer deterministic sort algorithm 
 which runs in $\Theta(n\log n)$ time.} or \texttt{QuickSort} and then access the \(k\)-th element in $\Theta(1)$.
 But since we only care about one element, it seems inefficient to sort the entire array. \\
 
@@ -242,9 +233,9 @@ QuickSelect(A,k)
 \end{center}
 
 \noindent Intuitively, this is similar to \texttt{QuickSort}. However, unlike \texttt{QuickSort}, 
-we recurse into only one side -- each step discarding a significant 
-fraction\footnote{On an expected basis, of course} of 
-the array. This is a similar approach to Binary Search although not quite same since this does not assume a sorted array.
+we recurse into only one side -- each step discarding a significant\footnote{On an expected basis.}
+fraction of the array. This is a similar approach 
+to Binary Search although not quite same since this does not assume a sorted array.
 
 \subsection{Expected Runtime}
 
@@ -315,7 +306,7 @@ E[T_{run}] \le \sum_{i=1}^T n (\frac{3}{4})^i \le \sum_{i=1}^{\infty} n(\frac{3}
 \implies E[T_{run}] \le n \cdot \frac{\frac{3}{4}}{1-\frac{3}{4}} = 3n
 \]
 
-So the expected runtime is \(\Theta(n)\).
+So the expected runtime is \(\Theta(n)\)
 \subsection{Expected Recursion Depth}
 
 Recall that $T$ is the first $i$ such that $X_i \le 1$.
@@ -427,7 +418,9 @@ So we can conclude\footnote{Or can we? See Problems!} $\boxed{\mathbb E[T]=\Thet
 \item We concluded an upper bound for the recursion depth of \texttt{QuickSelect}. But to 
 justify the complexity as $\Theta(\log n)$, show that the recursion depth is lower
 bounded by $\Theta(\log n)$.
-
+\item For a general series of random variables $X_0=n, X_1, X_2, \ldots$ and T being the first 
+$i$ such that $X_i \le 1$, given $\frac{E[X_{i+1}]}{E[X_{i}]} \le p$ 
+with $p<1$, show that E[$T$] is $\Theta(\log n)$.
 \end{enumerate}
 
 \end{enumerate}

@@ -15,7 +15,7 @@
 
 \section{Linearity of Expectation}
 \label{linearity_of_expectation}
-For any random variables $X_1,X_2,\dots,X_n$ (not necessarily independent),
+\noindent For any random variables $X_1,X_2,\dots,X_n$ (not necessarily independent),
 \[
 \mathbb{E}\left[\sum_{i=1}^n X_i\right]=\sum_{i=1}^n \mathbb{E}[X_i].
 \]
@@ -28,7 +28,7 @@ For any events $A_1,A_2,\dots,A_n$,
 \Pr\left(\bigcup_{i=1}^n A_i\right)\le \sum_{i=1}^n \Pr(A_i).
 \]
 
-This is often used to upper bound the probability that at least one “bad event” occurs.
+\noindent This is often used to upper bound the probability that at least one “bad event” occurs.
 
 \section{Independence of Expectation}
 \label{independence_of_expectation}
@@ -39,7 +39,7 @@ If $X$ and $Y$ are independent random variables, then
 
 \section{Variance}
 
-For a random variable $X$, define the variance of $X$ as
+\noindent For a random variable $X$, define the variance of $X$ as
 \[
 \mathrm{Var}(X)=\mathbb{E}[X^2]-\left(\mathbb{E}[X]\right)^2
 \]
@@ -68,7 +68,7 @@ For a random variable $X$, define the variance of $X$ as
 
 \section{Indicator Variables}
 \label{indicator_variables}
-For an event $A$, define the indicator random variable
+\noindent For an event $A$, define the indicator random variable
 \[
 I_A=
 \begin{cases}
@@ -81,8 +81,6 @@ I_A=
 \implies
 \mathbb{E}[I_A]=\Pr(A)
 \]
-
-\noindent Indicator variables are commonly used to convert counting problems into sums of random variables.
 
 \chapter{Inequalities}
 \section{Exponential Inequality}
@@ -114,7 +112,7 @@ coordinates {(0,1)};
 \end{axis}
 \end{tikzpicture}
 \end{center}
-
+\vspace{-1em}
 \[
 1-x \le e^{-x} \hspace{0.5em} \forall \hspace{0.3em} x  \in \mathbb{R}
 \implies
@@ -124,7 +122,7 @@ coordinates {(0,1)};
 
 \section{Jensen’s Inequality}
 \label{jensen}
-For a convex function \(f\) and random variable \(X\),
+For a concave-up function \(f\) and random variable \(X\),
 \[
 f(\mathbb{E}[X]) \le \mathbb{E}[f(X)]
 \]
@@ -132,9 +130,156 @@ f(\mathbb{E}[X]) \le \mathbb{E}[f(X)]
 \noindent Another form of Jensen’s inequality is for a convex function \(f\) and real numbers \(x_1, x_2, \dots, x_n\), 
 \[
 f(\frac{1}{n}\sum_{i=1}^n x_i) \le \frac{1}{n}\sum_{i=1}^n f(x_i)
+\iff
+f(x_{avg}) \le y_{avg}
 \]
 
-\noindent For concave functions, the inequality is reversed.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xmin=1,xmax=9,
+    ymin=0,ymax=13,
+    axis lines=middle,
+    xlabel={$x$},
+    ylabel={$y$},
+    samples=200
+]
+
+\addplot[red,thick,domain=1:9] {exp(x-5)+3};
+
+% endpoints
+\addplot[only marks,mark=*,mark size=2pt]
+coordinates {
+(3,{exp(-2)+3})
+(7,{exp(2)+3})
+};
+
+% chord
+\addplot[blue,dashed]
+coordinates {
+(3,{exp(-2)+3})
+(7,{exp(2)+3})
+};
+
+% midpoint on curve
+\addplot[only marks,mark=*,mark size=2pt]
+coordinates {(5,{exp(0)+3})};
+
+\node[below right,font=\small] at (axis cs:5,4)
+{$(x_{\mathrm{avg}},f(x_{\mathrm{avg}}))$};
+
+% midpoint of chord
+\pgfmathsetmacro{\yavg}{(exp(-2)+exp(2))/2}
+
+\addplot[only marks,mark=*,mark size=2pt]
+coordinates {(5,\yavg+3)};
+
+\node[above left,font=\small] at (axis cs:5,\yavg+3)
+{$(x_{\mathrm{avg}},y_{\mathrm{avg}})$};
+
+% vertical segment showing the gap
+\draw[dotted]
+(axis cs:5,4)
+--
+(axis cs:5,\yavg+3);
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\noindent For concave-down functions, the inequality is reversed, i.e. \(f(x_{avg}) \ge y_{avg}\).
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xmin=1,xmax=9,
+    ymin=0,ymax=13,
+    axis lines=middle,
+    xlabel={$x$},
+    ylabel={$y$},
+    samples=200
+]
+
+\addplot[red,thick,domain=1:9] {10-exp(x-5)};
+
+% endpoints
+\addplot[only marks,mark=*,mark size=2pt]
+coordinates {
+(3,{10-exp(-2)})
+(7,{10-exp(2)})
+};
+
+% chord
+\addplot[blue,dashed]
+coordinates {
+(3,{10-exp(-2)})
+(7,{10-exp(2)})
+};
+
+% midpoint on curve
+\addplot[only marks,mark=*,mark size=2pt]
+coordinates {(5,{10-exp(0)})};
+
+\node[above right,font=\small] at (axis cs:5,9)
+{$(x_{\mathrm{avg}},f(x_{\mathrm{avg}}))$};
+
+% midpoint of chord
+\pgfmathsetmacro{\yavg}{(10-exp(-2)+10-exp(2))/2}
+
+\addplot[only marks,mark=*,mark size=2pt]
+coordinates {(5,\yavg)};
+
+\node[below left,font=\small] at (axis cs:5,\yavg)
+{$(x_{\mathrm{avg}},y_{\mathrm{avg}})$};
+
+% vertical segment showing the gap
+\draw[dotted]
+(axis cs:5,\yavg)
+--
+(axis cs:5,9);
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\section{Markov's Inequality}
+\label{markov_inequality}
+
+\noindent Let \(X\) be a non-negative random variable and let \(a>0\). Then
+
+\[
+\Pr(X\ge a)
+\le
+\frac{\mathbb E[X]}{a}
+\]
+\subsection*{Proof}
+
+\noindent Define the indicator variable $I$ as 
+\[
+I=
+\begin{cases}
+1 & \text{if } X\ge a,\\
+0 & \text{otherwise}.
+\end{cases}
+\]
+
+\noindent Then \(X\ge aI\) follows by definition! Taking expectations,
+
+\[
+\mathbb E[X]
+\ge
+a\,\mathbb E[I]
+=
+a\,\Pr(X\ge a)
+\implies
+\Pr(X\ge a)
+\le
+\frac{\mathbb E[X]}{a}
+\]
+
+\vspace{0.5em}
+\noindent An equivalent and useful form is \(Pr(X\ge c\,\mathbb E[X])\le \frac{1}{c}\)
+
 
 \chapter{Discrete Mathematics}
 
@@ -143,15 +288,8 @@ f(\frac{1}{n}\sum_{i=1}^n x_i) \le \frac{1}{n}\sum_{i=1}^n f(x_i)
 
 Let \(a_1,a_2,\dots,a_n\) be non-negative real numbers and let
 \[
-S=\sum_{i=1}^{n}a_i.
+S=\sum_{i=1}^{n}a_i,\hspace{0.5em} \text{then there \emph{exists} an $i$ such that }a_i \ge \frac{S}{n}
 \]
-
-\noindent Then there exists some index \(i\) such that
-\[
-a_i \ge \frac{S}{n}.
-\]
-
-\subsection*{Interpretation}
 
 This simply states that at least one value is at least the average value.
 
@@ -159,15 +297,15 @@ This simply states that at least one value is at least the average value.
 
 If every \(a_i < \frac{S}{n}\), then summing over all \(i\) gives
 \[
-\sum_{i=1}^{n} a_i < S,
+\sum_{i=1}^{n} a_i < S
 \]
 which is a contradiction.
 
-\section{Definitions}
+\section{Graph Theory}
 
 A graph $G$ is an ordered pair $(V,E)$ where \(V\) is a set of vertices 
 and \(E\subseteq \{\{u,v\}\mid u,v\in V,\ u\neq v\}\) is a set of edges.
-
+$|E|$ is usually denoted by \(m\) and $|V|$ is usually denoted by \(n\).
 \subsection*{Degree}
 
 For a vertex \(v\in V\), the degree \(d(v)\) is the number of edges which have \(v\) as an endpoint. 
@@ -176,16 +314,20 @@ Equivalently, \(d(v)\) is the number of neighbours of \(v\).\\
 \noindent Given n is the number of vertices, the average degree 
 of a graph is
 \[
-d=\frac{1}{n}\sum_{v\in V} d(v)
+d=\frac{1}{n}\left(\sum_{v\in V} d(v)\right)=\frac{2m}{n}
 \]
 
 \subsection*{Bipartite Graph}
 
-A graph \(G=(V,E)\) is bipartite if the vertex set \(V\) can be partitioned into two disjoint sets \(L\) and \(R\) such that:
+A graph \(G=(V,E)\) is bipartite if the vertex set \(V\) can be partitioned into two disjoint sets \(L\) and \(R\) such that
 \[
 V=L\cup R,\quad L\cap R=\emptyset
 \]
 and every edge connects a vertex in \(L\) to a vertex in \(R\). That is, there are no edges with both endpoints in the same set.
+
+\subsection*{Subgraph}
+A subgraph of a graph $(V,E)$ is a pair of sets $(V',E')$ where \(V'\subseteq V\) and \(E'\subseteq E\) with the 
+additional condition that the subgraph must be a valid graph!
 
 \chapter{Linear Algebra}
 

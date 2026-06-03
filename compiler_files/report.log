@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  3 JUN 2026 15:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  4 JUN 2026 00:04
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1026,11 +1026,11 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 
 pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
 DF version <1.7>, but at most version <1.5> allowed
-<../Images/Cover.pdf, id=350, 595.09828pt x 842.39719pt>
+<../Images/Cover.pdf, id=358, 597.23125pt x 845.1575pt>
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf>
 Package pdftex.def Info: ../Images/Cover.pdf  used on input line 6.
-(pdftex.def)             Requested size: 595.09682pt x 842.39513pt.
+(pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 
 
 pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
@@ -1039,27 +1039,27 @@ DF version <1.7>, but at most version <1.5> allowed
 
 pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
 DF version <1.7>, but at most version <1.5> allowed
-<../Images/Cover.pdf, id=352, page=1, 595.09828pt x 842.39719pt>
+<../Images/Cover.pdf, id=360, page=1, 597.23125pt x 845.1575pt>
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
 Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
-(pdftex.def)             Requested size: 595.09682pt x 842.39513pt.
+(pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
 Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
-(pdftex.def)             Requested size: 597.24887pt x 845.4415pt.
+(pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
 Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
-(pdftex.def)             Requested size: 597.24887pt x 845.4415pt.
+(pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
 Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
-(pdftex.def)             Requested size: 597.24887pt x 845.4415pt.
+(pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
 Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
-(pdftex.def)             Requested size: 597.24887pt x 845.4415pt.
+(pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 [1
 
 
@@ -1079,7 +1079,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.53 ...3}Error Probability}{33}{subsection.6.2.3}
+l.53 ...6.2.2}The Algorithm}{34}{subsection.6.2.2}
                                                   % [1
 
 {C:/Users/hp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2])
@@ -1157,62 +1157,62 @@ Underfull \hbox (badness 10000) in paragraph at lines 29--31
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 57--59
+
+ []
+
 [10
 
 
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 70--72
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 166--168
+Underfull \hbox (badness 10000) in paragraph at lines 154--156
 
  []
 
 [11]
-Underfull \hbox (badness 10000) in paragraph at lines 205--207
+Underfull \hbox (badness 10000) in paragraph at lines 195--197
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 208--211
+Underfull \hbox (badness 10000) in paragraph at lines 198--202
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--214
+Underfull \hbox (badness 10000) in paragraph at lines 204--205
 
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 251--253
+Underfull \hbox (badness 10000) in paragraph at lines 242--244
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 254--257
+Underfull \hbox (badness 10000) in paragraph at lines 245--248
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 259--261
+Underfull \hbox (badness 10000) in paragraph at lines 250--252
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 303--305
+Underfull \hbox (badness 10000) in paragraph at lines 294--296
 
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 357--361
+Underfull \hbox (badness 10000) in paragraph at lines 348--352
 
  []
 
-) [14]
+) [14] [15]
 \openout2 = `ch4.aux'.
 
  (ch4.tex
@@ -1222,7 +1222,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 61--62
 
  []
 
-[15
+[16
 
 
 
@@ -1247,7 +1247,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 102--107
 
  []
 
-[16]
+[17]
 Underfull \hbox (badness 10000) in paragraph at lines 131--135
 
  []
@@ -1267,7 +1267,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 165--167
 
  []
 
-[17]
+[18]
 Underfull \hbox (badness 10000) in paragraph at lines 186--187
 
  []
@@ -1283,7 +1283,7 @@ Overfull \hbox (11.01852pt too wide) in paragraph at lines 224--224
 xist in the first matrix[] 
  []
 
-[18]
+[19]
 Underfull \hbox (badness 10000) in paragraph at lines 247--248
 
  []
@@ -1299,12 +1299,12 @@ Overfull \hbox (73.2606pt too wide) in paragraph at lines 285--285
 w doesn't exist in the first matrix[] 
  []
 
-[19]
+[20]
 Underfull \hbox (badness 10000) in paragraph at lines 315--316
 
  []
 
-[20]) [21]
+[21]) [22]
 \openout2 = `ch5.aux'.
 
  (ch5.tex
@@ -1314,7 +1314,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 102--104
 
  []
 
-[22
+[23
 
 
 
@@ -1329,7 +1329,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 281--284
 
  []
 
-[23] [24]
+[24] [25]
 Underfull \hbox (badness 10000) in paragraph at lines 469--470
 
  []
@@ -1344,11 +1344,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 506--509
 
  []
 
-[25] [26] [27] [28]
+[26] [27] [28] [29]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [29]
-[30]) [31]
+ [30]
+[31]) [32]
 \openout2 = `ch6.aux'.
 
  (ch6.tex
@@ -1368,7 +1368,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 40--43
 
  []
 
-[32
+[33
 
 
 
@@ -1378,17 +1378,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 107--111
 
  []
 
-[33]
+[34]
 Underfull \hbox (badness 10000) in paragraph at lines 151--152
 
  []
 
-[34]
+[35]
 Underfull \hbox (badness 10000) in paragraph at lines 246--248
 
  []
 
-[35]
+[36]
 Underfull \hbox (badness 10000) in paragraph at lines 262--265
 
  []
@@ -1403,23 +1403,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 281--284
 
  []
 
-[36]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [37]
+[37]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [38]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [39]
 Underfull \hbox (badness 10000) in paragraph at lines 558--563
 
  []
 
-[39]
+[40]
 Underfull \hbox (badness 10000) in paragraph at lines 564--566
 
  []
 
-[40]
+[41]
 Underfull \hbox (badness 10000) in paragraph at lines 712--716
 
  []
@@ -1429,22 +1429,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 728--731
 
  []
 
-[41]
+[42]
 Underfull \hbox (badness 10000) in paragraph at lines 765--769
 
  []
 
-) [42]
+) [43]
 \openout2 = `ch7.aux'.
 
  (ch7.tex
 Chapter 7.
-[43
+[44
 
 
 
 
-] [44]
+] [45]
 Underfull \hbox (badness 10000) in paragraph at lines 134--137
 
  []
@@ -1464,12 +1464,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 193--194
 
  []
 
-[45]
+[46]
 Underfull \hbox (badness 10000) in paragraph at lines 253--258
 
  []
 
-[46]
+[47]
 Underfull \hbox (badness 10000) in paragraph at lines 299--300
 
  []
@@ -1489,7 +1489,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 323--324
 
  []
 
-) [47]
+) [48]
 \openout2 = `ch8.aux'.
 
  (ch8.tex
@@ -1504,7 +1504,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 41--44
 
  []
 
-[48
+[49
 
 
 
@@ -1534,7 +1534,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 66--67
 
  []
 
-[49]
+[50]
 Underfull \hbox (badness 10000) in paragraph at lines 167--169
 
  []
@@ -1554,7 +1554,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 187--188
 
  []
 
-[50]
+[51]
 Underfull \hbox (badness 10000) in paragraph at lines 274--276
 
  []
@@ -1564,7 +1564,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 277--279
 
  []
 
-[51]
+[52]
 Underfull \hbox (badness 10000) in paragraph at lines 310--311
 
  []
@@ -1589,17 +1589,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 352--355
 
  []
 
-[52]) [53]
+[53]) [54]
 \openout2 = `ch9.aux'.
 
  (ch9.tex
 Chapter 9.
-[54
+[55
 
 
 
 
-] [55] [56] [57] [58]
+] [56] [57] [58] [59]
 Underfull \hbox (badness 10000) in paragraph at lines 325--327
 
  []
@@ -1609,47 +1609,51 @@ Underfull \hbox (badness 10000) in paragraph at lines 328--329
 
  []
 
-) [59]
+) [60]
 \openout2 = `appendices.aux'.
 
- (appendices.tex [60
+ (appendices.tex [61
 
 
 
 
 ]
 Appendix A.
-[61
+[62
 
 
-] [62]
+] [63]
 Appendix B.
-[63
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [64
 
 ]
+[65]
 Appendix C.
 
-Underfull \hbox (badness 10000) in paragraph at lines 173--175
+Underfull \hbox (badness 10000) in paragraph at lines 311--313
 
  []
 
-[64
-
-] [65]
-Appendix D.
 [66
 
+] [67]
+Appendix D.
+[68
+
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 263--264
+Underfull \hbox (badness 10000) in paragraph at lines 405--406
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 266--267
+Underfull \hbox (badness 10000) in paragraph at lines 408--409
 
  []
 
-) [67] (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.aux
+) [69] (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.aux
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch1.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch2.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch3.aux)
@@ -1665,22 +1669,22 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 0F8C78FC9EB0D564BEAAFC100529A113;13324.
+(rerunfilecheck)             Checksum: 694D2E5F9D325C7BFE3550707FFBDC96;13581.
  ) 
 Here is how much of TeX's memory you used:
- 35524 strings out of 467691
- 814425 string characters out of 5416439
- 1386237 words of memory out of 5000000
- 63642 multiletter control sequences out of 15000+600000
- 661005 words of font info for 126 fonts, out of 8000000 for 9000
+ 35610 strings out of 467691
+ 816083 string characters out of 5416439
+ 1387282 words of memory out of 5000000
+ 63716 multiletter control sequences out of 15000+600000
+ 662378 words of font info for 128 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  104i,17n,111p,746b,2175s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti090
 0.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbi
 1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\e
-ctt0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
-0\ecrm1000.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dp
-i600\ecti1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
+crm1000.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
+0\ecti1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dp
+i600\ectt0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
 /dpi600\ecbx1200.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen
 /ec/dpi600\ecbx0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
 pen/ec/dpi600\ecrm0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jk
@@ -1708,19 +1712,20 @@ lic/amsfonts/cm/cmmi8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type
 X/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><C:/Users/hp/AppData/Local/Pro
 grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/hp/AppData/Loca
 l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/hp/AppData/
-Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/hp/AppD
-ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/hp/
-AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Use
-rs/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C
-:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.p
-fb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
-sy9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/
-symbols/msam10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/publi
-c/amsfonts/symbols/msbm10.pfb>
+Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/hp/AppD
+ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/hp/
+AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users
+/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:
+/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pf
+b><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cms
+y8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
+m/cmsy9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
+nts/symbols/msam10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/p
+ublic/amsfonts/symbols/msbm10.pfb>
 Output written on "C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.
-pdf" (68 pages, 2136152 bytes).
+pdf" (70 pages, 854477 bytes).
 PDF statistics:
- 1745 PDF objects out of 2073 (max. 8388607)
- 281 named destinations out of 1000 (max. 500000)
- 716 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1780 PDF objects out of 2073 (max. 8388607)
+ 291 named destinations out of 1000 (max. 500000)
+ 732 words of extra memory for PDF output out of 10000 (max. 10000000)
 

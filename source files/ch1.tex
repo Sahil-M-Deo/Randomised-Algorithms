@@ -134,3 +134,35 @@ else
 \end{verbatim}
 
 thus implementing the required probabilities.
+
+\section{Problems}
+
+\begin{enumerate}
+
+\item[\textbf{1}]
+The following procedure is applied on an array \(a\) of \(n\) integers --
+\begin{verbatim}
+for(int i=n-1;i>0;i--)
+{
+    int j=random integer from [0,i];
+    swap(a[i],a[j]);
+}
+\end{verbatim}
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item Show that this indeed generates a permuation.
+\item Show that every permutation is equally likely to be generated.
+\end{enumerate}
+
+\item[\textbf{2}]
+Suppose you have access only to a function \texttt{bool coin()} which returns \(0\) or \(1\) 
+with equal probability.
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item Design a procedure to do action A with probability $\frac{k}{2^m}$ and 
+action B with probability $1-\frac{k}{2^m}$.
+\item Show that we can not have a procedure do action A with probability $\frac{1}{\pi}$ and action B with
+probability $1-\frac{1}{\pi}$ using only finite number of calls to \texttt{coin()}.
+\end{enumerate}
+
+\end{enumerate}

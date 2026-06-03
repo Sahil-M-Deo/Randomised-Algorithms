@@ -113,3 +113,65 @@ limiting behaviour rather than implementation-dependent constants.\\
  time, but there are more asymptotically efficient methods which can do it in $\Theta(n\log n)$ time. But 
  for reasonably large integers also the constant factor is large enough that the school method is faster!}
   matter anyway\dots
+
+\section{Problems}
+
+\begin{enumerate}
+
+\item[\textbf{1}]
+A vector in \texttt{C++} is an array with variable size. Once the memory 
+allocated to the vector is exceeded, it is reallocated more memory somewhere else. 
+The designers of the vector class must choose a sequence of sizes \(s_0=0 < s_1 < s_2 < \ldots\) 
+such that when the size of the vector becomes any $s_i$, we reallocate and assign memory of size 
+\(s_{i+1}\) to the vector.\\
+
+
+\noindent Assume each \texttt{push\_back()} operation is one operation if space is available and \(s_i+1\) otherwise.
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item If $s_i=i$, show that the time complexity is $\Theta(n^2).
+\item 
+\item[\textbf{3}]
+Suppose a permutation of \(1,2,\dots,n\) is chosen uniformly at random.
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item Let \(M\) be the number of indices \(i\) such that
+\[
+a_i>\max(a_1,a_2,\dots,a_{i-1}).
+\]
+Compute \(\mathbb E[M]\).
+
+\item Consider the algorithm
+
+\begin{verbatim}
+mx=-INF;
+
+for(int i=1;i<=n;i++)
+{
+    if(a[i]>mx)
+    {
+        mx=a[i];
+        // expensive operation
+    }
+}
+\end{verbatim}
+
+If the expensive operation takes constant time, determine the expected number of times it is executed.
+\end{enumerate}
+
+\item[\textbf{4}]
+Consider the recursive function
+
+\begin{verbatim}
+f(n)
+{
+    if(n<=1)return;
+
+    f(n/2);
+    f(n/3);
+}
+\end{verbatim}
+
+Let \(T(n)\) denote the total number of calls to \texttt{f}. Determine the asymptotic complexity of \(T(n)\).
+
+\end{enumerate}
