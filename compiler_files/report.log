@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  2 JUN 2026 23:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  3 JUN 2026 15:24
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1359,7 +1359,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 22--27
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--39
+Underfull \hbox (badness 10000) in paragraph at lines 28--32
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 40--43
 
  []
 
@@ -1369,32 +1374,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 35--39
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 103--107
+Underfull \hbox (badness 10000) in paragraph at lines 107--111
 
  []
 
 [33]
-Underfull \hbox (badness 10000) in paragraph at lines 147--148
+Underfull \hbox (badness 10000) in paragraph at lines 151--152
 
  []
 
 [34]
-Underfull \hbox (badness 10000) in paragraph at lines 241--243
+Underfull \hbox (badness 10000) in paragraph at lines 246--248
 
  []
 
 [35]
-Underfull \hbox (badness 10000) in paragraph at lines 257--261
+Underfull \hbox (badness 10000) in paragraph at lines 262--265
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--275
+Underfull \hbox (badness 10000) in paragraph at lines 276--279
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 277--280
+Underfull \hbox (badness 10000) in paragraph at lines 281--284
 
  []
 
@@ -1405,31 +1410,41 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [38]
-Underfull \hbox (badness 10000) in paragraph at lines 553--558
+Underfull \hbox (badness 10000) in paragraph at lines 558--563
 
  []
 
 [39]
-Underfull \hbox (badness 10000) in paragraph at lines 559--561
+Underfull \hbox (badness 10000) in paragraph at lines 564--566
 
  []
 
 [40]
-Underfull \hbox (badness 10000) in paragraph at lines 713--717
+Underfull \hbox (badness 10000) in paragraph at lines 712--716
 
  []
 
-) [41]
+
+Underfull \hbox (badness 10000) in paragraph at lines 728--731
+
+ []
+
+[41]
+Underfull \hbox (badness 10000) in paragraph at lines 765--769
+
+ []
+
+) [42]
 \openout2 = `ch7.aux'.
 
  (ch7.tex
 Chapter 7.
-[42
+[43
 
 
 
 
-] [43]
+] [44]
 Underfull \hbox (badness 10000) in paragraph at lines 134--137
 
  []
@@ -1449,12 +1464,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 193--194
 
  []
 
-[44]
+[45]
 Underfull \hbox (badness 10000) in paragraph at lines 253--258
 
  []
 
-[45]
+[46]
 Underfull \hbox (badness 10000) in paragraph at lines 299--300
 
  []
@@ -1474,7 +1489,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 323--324
 
  []
 
-) [46]
+) [47]
 \openout2 = `ch8.aux'.
 
  (ch8.tex
@@ -1489,7 +1504,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 41--44
 
  []
 
-[47
+[48
 
 
 
@@ -1519,7 +1534,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 66--67
 
  []
 
-[48]
+[49]
 Underfull \hbox (badness 10000) in paragraph at lines 167--169
 
  []
@@ -1539,7 +1554,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 187--188
 
  []
 
-[49]
+[50]
 Underfull \hbox (badness 10000) in paragraph at lines 274--276
 
  []
@@ -1549,7 +1564,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 277--279
 
  []
 
-[50]
+[51]
 Underfull \hbox (badness 10000) in paragraph at lines 310--311
 
  []
@@ -1574,17 +1589,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 352--355
 
  []
 
-[51]) [52]
+[52]) [53]
 \openout2 = `ch9.aux'.
 
  (ch9.tex
 Chapter 9.
-[53
+[54
 
 
 
 
-] [54] [55] [56] [57]
+] [55] [56] [57] [58]
 Underfull \hbox (badness 10000) in paragraph at lines 325--327
 
  []
@@ -1594,22 +1609,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 328--329
 
  []
 
-) [58]
+) [59]
 \openout2 = `appendices.aux'.
 
- (appendices.tex [59
+ (appendices.tex [60
 
 
 
 
 ]
 Appendix A.
-[60
+[61
 
 
-] [61]
+] [62]
 Appendix B.
-[62
+[63
 
 ]
 Appendix C.
@@ -1618,11 +1633,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 173--175
 
  []
 
-[63
+[64
 
-] [64]
+] [65]
 Appendix D.
-[65
+[66
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 263--264
@@ -1634,7 +1649,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 266--267
 
  []
 
-) [66] (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.aux
+) [67] (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.aux
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch1.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch2.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch3.aux)
@@ -1650,11 +1665,11 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 0EE3EBC983AF8B6B66BBEC09CCD31A44;13428.
+(rerunfilecheck)             Checksum: 0F8C78FC9EB0D564BEAAFC100529A113;13324.
  ) 
 Here is how much of TeX's memory you used:
- 35522 strings out of 467691
- 814407 string characters out of 5416439
+ 35524 strings out of 467691
+ 814425 string characters out of 5416439
  1386237 words of memory out of 5000000
  63642 multiletter control sequences out of 15000+600000
  661005 words of font info for 126 fonts, out of 8000000 for 9000
@@ -1703,9 +1718,9 @@ sy9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/
 symbols/msam10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/publi
 c/amsfonts/symbols/msbm10.pfb>
 Output written on "C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.
-pdf" (67 pages, 2133512 bytes).
+pdf" (68 pages, 2136152 bytes).
 PDF statistics:
- 1740 PDF objects out of 2073 (max. 8388607)
- 279 named destinations out of 1000 (max. 500000)
+ 1745 PDF objects out of 2073 (max. 8388607)
+ 281 named destinations out of 1000 (max. 500000)
  716 words of extra memory for PDF output out of 10000 (max. 10000000)
 

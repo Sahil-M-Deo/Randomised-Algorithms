@@ -2,7 +2,7 @@
 
 \section{Introduction}
 
-Prime numbers have fascinated mathematicians for thousands of years. 
+Prime numbers have fascinated mathematicians for many years. 
 They appear deceptively simple to define -- a prime is 
 a positive integer greater than one whose only divisors 
 are $1$ and itself. Yet many of the deepest questions in 
@@ -28,14 +28,18 @@ may require substantial computational effort.\\
 \noindent Surprisingly, randomness provides an elegant alternative. Instead of attempting to prove 
 directly that a number is prime, randomized algorithms often 
 search for evidence that it is composite. A carefully 
-chosen random experiment can reveal such evidence with high probability. 
+chosen random experiment can reveal such evidence with high probability. \\
 
+
+\noindent In this chapter, we will not be treating multiplication and 
+division as constant time operations. Since these algorithms frequently work with numbers 
+of the order $10^100$ or even larger, we will assume that multiplication and division are 
+$\Theta(\log^2 n)$ time, since a number $n$ has $\Theta(\log n)$ digits.
 \section{The Fermat Test}
 
 The simplest algorithm to test the primality of an integer \(n\) is to check for 
-divisibility by every integer from \(2\) up to \(\sqrt{n}\).
-Assuming division can be performed in constant time, this algorithm 
-runs in \(\Theta(\sqrt{n})\) time. Any algorithm we come up with should be at least as efficient as this!\\
+divisibility by every integer from \(2\) up to \(\sqrt{n}\). Using the fact that divison takes $\Theta(\log^2 n)$, the whole algorithm
+runs in \(\Theta(\sqrt{n}\log^2 n)\) time. Any algorithm we come up with should be at least as efficient as this!\\
 
 
 \noindent The central result underlying our first algorithm is 
@@ -100,14 +104,14 @@ PrimalityTest(n) // for n>=4
 \end{framed}
 \end{minipage}
 \end{center}
-Note the rather beautiful technique used in the function 
-\texttt{exp(a, x, n)}\footnote{This is sometimes called the binary exponentiation algorithm.}.
+Note the rather beautiful technique used in the function\footnote{This is sometimes called the binary exponentiation algorithm.}
+\texttt{exp(a, x, n)}.
 Another way of looking at it is that we find the binary expansion of \(x\) and compute the 
 powers of \(a\) corresponding to the bits of \(x\) using repeated squaring.\\
 
 \subsection{Error Probability}
 
-The natural question is now obvious --
+The natural question is --
 \begin{quote}
 "How often can a composite number fool the test?"
 \end{quote}
@@ -116,11 +120,8 @@ For many composite integers the probability is quite small.
 Unfortunately, there exists a remarkable family of numbers 
 that pass Fermat's test for \emph{every} admissible choice of \(a\).
 
-These numbers are known as Carmichael numbers\footnote{The smallest Carmichael number is 561. It has been proven 
-that there are infinitely many Carmichael numbers.}, and they expose a fundamental weakness of the algorithm.
-
-Fermat's test merely checks whether the final result of $a^{p-1}$ equals \(1\). It ignores the sequence of 
-intermediate values that arise during repeated squaring. 
+These numbers are known as Carmichael\footnote{The smallest Carmichael number is 561. It has been proven 
+that there are infinitely many Carmichael numbers.} numbers, and they expose a fundamental weakness of the algorithm.
 
 \section{The Miller--Rabin Test}
 
@@ -128,11 +129,13 @@ intermediate values that arise during repeated squaring.
 
 Let \(p\) be an odd prime and let d such that
 \[
-p-1=2^s d, \qquad d \text{ is odd}
+p-1=2^s d, \hspace{1.5em} d \text{ is odd}
 \]
 
-\noindent Define the sequence $x_i=a^{2^{i}d}, i \in \mathbb{N}$. So 
 \[
+\text{Define }
+x_i=a^{2^{i}d} \hspace{-0.7em} \pmod{p}, i \in \mathbb{N}
+\iff
 x_0=a^{d},
 \quad
 x_1=a^{2d},
@@ -141,9 +144,10 @@ x_2=a^{4d},
 \quad
 \ldots,
 \quad
-x_s=a^{2^s d}.
+x_s=a^{2^s d}
 \]
 
+\vspace{1em}
 \noindent By Fermat's Little Theorem, we have $x_s=a^{p-1}\equiv1\pmod p$.\\
 
 
@@ -152,6 +156,7 @@ x_s=a^{2^s d}.
 x_{i+1}
 \equiv
 x_i^2
+\hspace{-0.7em}
 \pmod p
 \]
 
@@ -254,10 +259,9 @@ disjoint subsets of size at least 4 such that each subset contains at most one f
 \]
 
 \subsection{Performance}
-For large $n$, we can no longer say that arithmetic operations take constant time, and the time 
-complexity of the multiplications involved are $d^2$ where $d$ is the number of digits in $n$, which is 
-\(\Theta(\log n)\). Since there are \(\Theta(\log n)\) multiplications involved in binary exponentiation, 
-total time complexity is \(\Theta(\log^3 n)\).\\
+Since there are \(\Theta(\log n)\) multiplications involved in binary exponentiation, 
+and each multiplication takes \(\Theta(\log^2 n)\) time, the overall total time complexity 
+is \(\Theta(\log^3 n)\).\\
 
 
 \noindent Repeating the test $k$ times will take $\Theta(k\log^3 n)$ time. A reasonable 
@@ -285,8 +289,8 @@ The reason behind using a deterministic sequence is that in this iterative proce
 Floyd's cycle-finding algorithm to detect collision which takes time 
 linear in the cycle size. In the other case, we would have to store and check with all previous 
 values of $x_j$ for every new $x_i$ generated. That is quadratic in the length of the cycle!
-Secondly, Choosing $x_0$ and $c$ randomly acts as a seed for the pseudo-random process. The sequence is thus
-overall truly random for our analysis purposes yet compatible with Floyd's algorithm.
+Secondly, choosing $x_0$ and $c$ randomly acts as a seed for the pseudo-random process. The sequence is thus
+overall truly random for our analysis purposes yet is compatible with Floyd's algorithm.
 
 \subsection{Floyd's Cycle-Detection Algorithm}
 \begin{center}
@@ -321,7 +325,8 @@ visual intuition rather than write a rigorous proof. Also, I like colorful graph
 
 The shape of the graph is deliberately chosen to be like the greek letter $\rho$, which is 
 where the name \texttt{Pollard's Rho} comes from. It is the general shape of the 
-sequence which the algorithm considers, because the output space of $f(x)$ is finite.
+sequence which the algorithm considers, because the output space of $f(x)$ is finite so it must 
+go into a cycle by pigeonhole principle.
 \begin{center}
 \begin{tikzpicture}[
     every node/.style={circle,draw,minimum size=8mm},
@@ -503,7 +508,7 @@ sequence which the algorithm considers, because the output space of $f(x)$ is fi
 \end {center}
 
 And thus when both coincide, we can report we have found the cycle! Try this on a 
-cycle with odd number of nodes to really convince yourself that it works. 
+cycle with a different (perhaps odd) number of nodes to really convince yourself that it works. 
 
 \subsection{The Algorithm}
 \begin{center}
@@ -546,12 +551,12 @@ PollardRho(n)
 \end{center}
 
 
-\subsection{Expected Running Time Analysis}
+\subsection{Performance}
 
 \subsubsection{Collision Model}
 
 Our sequence $x_0,x_1,x_2,\dots$ is generated by iterating a polynomial function modulo \(n\).
-Since are choice of $x_0$ and $c$ is random,the sequence can be treated as independent samples from a 
+Since our choice of $x_0$ and $c$ is random,the sequence can be treated as independent samples from a 
 uniform distribution over \(\{0,1,\dots,n-1\}\), until repetition occurs. And we are looking for a 
 hidden number $p$, the modulo over which the sequence repeats. Since $p$ divides \(n\), the sequence 
 when taken modulo p will thus act like independent samples from a uniform distribution over \(\{0,1,\dots,p-1\}\).\\
@@ -564,33 +569,33 @@ the same birthday is approximately 1/2. This is of course, not a true \emph{para
 surprising result from an intuition standpoint.} model, where we are 
 interested in the expected time until a collision occurs in a sequence of random samples from a finite set.
 
-Suppose we define the collision time \(T\) as the smallest 
+Suppose we define the collision step \(S\) as the smallest 
 index such that a repetition occurs, 
 \[
-\iff T = \min\{j \mid x_i = x_j \text{ for some } i<j\}
+\iff S = \min\{j \mid x_i = x_j \text{ for some } i<j\}
 \]
 
 \subsubsection{Probability of No Collision}
 
 Let \(P_k\) denote the probability that the first \(k\) samples are all distinct. 
-This is equivalent to \(Pr(T > k)\). Then using the fact that the samples 
+This is equivalent to \(Pr(S > k)\). Then using the fact that the samples 
 are uniform and independent, we can express \(P_k\) as
 
 \[
 P_k
-= Pr(T > k) =
+= Pr(S > k) =
 \prod_{i=0}^{k-1}\left(1-\frac{i}{p}\right)
 \]
 
 
-\subsubsection{Expected Collision Time}
+\subsubsection{Expected Collision Step}
 
 The expected collision time can be expressed as
 
 \[
-\mathbb{E}[T]
+\mathbb{E}[S]
 =
-\sum_{k=0}^{\infty}\Pr(T>k)
+\sum_{k=0}^{\infty}Pr(S>k)
 =
 \sum_{k=0}^{\infty} P_k
 =
@@ -640,7 +645,7 @@ e^{-k^2/(4p)}
 
 \[
 \implies
-\mathbb{E}[T]
+\mathbb{E}[S]
 \le 
 2
 +
@@ -659,13 +664,7 @@ e^{-k^2/(4p)}
 e^{-x^2/(4p)}\,dx.
 \]
 
-Using the substitution
-
-\[
-x=2\sqrt{p}\,t,
-\qquad
-dx=2\sqrt{p}\,dt,
-\]
+Using the substitution $x=2\sqrt{p}\,t,\; dx=2\sqrt{p}\,dt,$
 
 
 \[
@@ -686,15 +685,15 @@ e^{-t^2}\,dt
 
 \[
 \implies
-\mathbb{E}[T]
+\mathbb{E}[S]
 \le
 2+\sqrt{\pi p}
+\implies
+\mathbb{E}[S]\le \Theta(\sqrt{p})
 \]
 
 
-So the expected collision time is at most \(\Theta(\sqrt{p})\).
-
-\subsubsection{Collision Detection?}
+\subsubsection{Collision Detection}
 
 Once a collision occurs modulo \(p\), say
 
@@ -706,7 +705,7 @@ x_i \equiv x_j \hspace{-0.7em}\pmod p,
 we know $p$ must divide \(x_i-x_j\). But how do we check that if we don't know $p$?
 Knowing we want to find a $p$ which divides \(x_i-x_j\) and $n$, the logical step 
 is to find the gcd(\(x_i-x_j,n\)), because if that is 1 then p is 
-definitely\footnote{This is concluded using the lemma all common divisors of a and b divide the gcd(a,b)} 1.
+definitely\footnote{This is concluded using the lemma -- all common divisors of a and b divide the gcd(a,b)} 1.
 And as soon as gcd(\(x_i-x_j,n\)) becomes not 1 (and not n), we can take that as the divisor. We know all p for 
 which the collision happened are definitely\footnote{By definition of the gcd, it must be the \emph{greatest} common divisor!} smaller than this number so we could not have done better!
 
@@ -716,29 +715,57 @@ for \(i=1,2,\dots\) and check for collisions between these pairs. This is
 what the algorithm does by maintaining two pointers \(x\) and \(y\) that move at different speeds.\\
 
 
-\subsubsection{Cost per Iteration}
+\subsubsection{Cost Per Step}
 Each step of the algorithm performs a constant number of 
-modular multiplications and one greatest common divisor computation. Using the Euclidean algorithm,
+modular multiplications and one greatest common divisor computation. Using the Euclidean 
+algorithm, $\gcd(a,b)$ can be computed in at most \(\Theta(\log^3 max(a,b)))\) time.
 
-\[
-\gcd(a,b)
-\]
-
-can be computed in at most \(\Theta(\log max(a,b)))\) time.
-
-Hence each iteration costs at most \(\Theta(\log n)\) time since 
+Hence each iteration costs at most \(\Theta(\log^3 n)\) time since 
 n is the largest number we are working with for all the involved operations.
 
-
 \subsubsection{Total Expected Complexity}
-Since a collision modulo the smallest prime factor \(p\) occurs after 
-\(\Theta(\sqrt{p})\) steps, the expected running time is
 
+Since cost per step is at most \(\Theta(\log^3 n)\), and the expected number 
+of steps is at most \(\Theta(\sqrt p)\), the total expected complexity is 
+at most \(\Theta(\sqrt p \log^3 n)\) for a particular prime $p$.\\
+
+
+\noindent Let \(n=\prod_{i=1}^k p_i^{e_i}\) where \(p_1<p_2<\cdots<p_k\) are the 
+prime factors of \(n\). Let \(T_i\) denote 
+the random time until a collision occurs modulo \(p_i\), and let \(T\) be the 
+running time of \texttt{Pollard's Rho}, i.e.
 \[
-\Theta(\sqrt{p}\log n).
+T=\min_{1\le i\le k} T_i
 \]
 
-If \(p\) is the smallest prime divisor of \(n\), 
-this dominates the runtime. In the worst case where 
-\(p \approx n^{1/2}\), we obtain the heuristic bound $\Theta(n^{1/4}\log n)$.
+Since \(T\le T_i\) for every \(i\), taking expectations gives
+\[
+\mathbb E[T]\le \mathbb E[T_i]\quad \forall i \in \{1,2,\dots,k\}
+\implies
+\mathbb E[T]\le \min_{1 \le i \le k} \mathbb E[T_i]
+\]
 
+\[
+\implies
+\mathbb E[T]\le \Theta(\sqrt{p_1}\log^3 n), \hspace{1em}\text{where \(p_1\) is the smallest prime factor of }n
+\]
+
+\vspace{0.7em}
+
+
+\[
+p_1<=\sqrt n \implies \mathbb E[T]\le \Theta(\sqrt p_1 \log^3 n) \le \Theta(n^{\frac{1}{4}}\log^3 n)
+\]
+
+\subsection*{What did we achieve?}
+
+We can find a factor of \(n\) in expected time \(\Theta(n^{\frac{1}{4}}\log^3 n)\), a vast 
+improvement over the naive \(\Theta(n^{\frac{1}{2}}\log^2 n)\) method.
+
+To factorise a large number n fully, we can use the Pollard-Rho algorithm now! Since every 
+factor we find is at least 2, after dividing n by 2 and repeating the factor-finding process, 
+the overall procedure terminates in at most \(\Theta(\log_2 n)\) steps. Thus we can factorise a 
+number n (no matter how large), in expected time at most \(\Theta(n^{\frac{1}{4}} \log^4 n)\).\\
+
+\noindent Note that we have used a lot of worst case upper bounds in the analysis. The average 
+performance in practice is much better than the complexity suggests! 
