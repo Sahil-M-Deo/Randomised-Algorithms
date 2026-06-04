@@ -270,7 +270,7 @@ then the larger partition has size $\max(k-1,x-k)$.\\
 \frac34 X_i
 \]
 
-Taking expectations and applying the law of total expectation,
+Taking expectations and applying the law\footnote{See \autoref{total_expectation}.} of total expectation,
 
 \[
 \mathbb E[X_{i+1}]
@@ -419,8 +419,32 @@ So we can conclude\footnote{Or can we? See Problems!} $\boxed{\mathbb E[T]=\Thet
 justify the complexity as $\Theta(\log n)$, show that the recursion depth is lower
 bounded by $\Theta(\log n)$.
 \item For a general series of random variables $X_0=n, X_1, X_2, \ldots$ and T being the first 
-$i$ such that $X_i \le 1$, given $\frac{E[X_{i+1}]}{E[X_{i}]} \le p$ 
-with $p<1$, show that E[$T$] is $\Theta(\log n)$.
+$i$ such that $X_i \le 1$, given $\frac{\mathbb E[X_{i+1}]}{\mathbb E[X_{i}]} \le p$ 
+with $p<1$, show that $\mathbb E[T]$ is at most $\Theta(\log n)$
+\end{enumerate}
+
+\item[\textbf{2}]
+Let $C_n$ be the number of comparisons made by \texttt{QuickSort} on an array of size \(n\). 
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+
+\item By grouping together all pairs with the same value of \(j-i\),
+show that
+\[
+\mathbb E[C_n]=\sum\limits_{1 \le i < j \le n} \frac{2}{j-i+1}
+\implies
+\mathbb E[C_n]
+=
+2\sum_{k=1}^{n-1}
+\frac{n-k}{k+1}
+\]
+
+\item Let $H_n=\sum_{i=1}^{n}\frac1i$ be the \(n\)-th harmonic number. Show that
+\[
+\mathbb E[C_n]
+=
+2(n+1)H_n-4n
+\]
 \end{enumerate}
 
 \end{enumerate}

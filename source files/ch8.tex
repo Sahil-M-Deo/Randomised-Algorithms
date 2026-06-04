@@ -1,5 +1,5 @@
 
-\chapter{Online Decision Algorithms}
+\chapter{Online Algorithms}
 
 \section*{What is an Online Algorithm?}
 
@@ -17,17 +17,24 @@ is used when an algorithm achieves at least $\frac{1}{n}$ times the "performance
 
 \section{The Dating Problem}
 
-\textbf{The Problem}
-Consider the problem
-of finding the best partner. Assume that the number of people you will eventually date is fixed, i.e. some known value \(n\). The people appear in a uniformly random order. After dating a person, you must immediately decide whether to commit to them forever or reject them permanently and continue searching. Figure out a strategy that maximises the probability of ending up with the best partner.\footnote{This is a different problem from maximising the expected ``value'' of your partner. Here the objective is specifically to maximise the probability of selecting the single best partner among all \(n\) people.}
+\textbf{The Problem}\\
 
-We assume that while dating person \(i\), we only know how they compare relative to the people we have already dated. 
-So we could sort the partners till now in a total order if needed.\\
+Consider the problem of finding the best partner. Assume that 
+the number of people you will eventually date is fixed, i.e. some known value \(n\). After 
+dating a person, you must immediately decide whether to commit to them forever or reject 
+them permanently and continue searching. Figure out a strategy that maximises the 
+probability of ending up with the best partner.\footnote{This is a different 
+problem from maximising the expected ``value'' of your partner. Here the objective 
+is specifically to maximise the probability of selecting the single best partner 
+among all \(n\) people.} We assume that while dating person \(i\), we only know how 
+they compare relative to the people we have already dated. So we could sort the 
+partners till now in a total order if needed.\\
 
 
-\noindent\textbf{Solution:}
-\noindent Most course materials, internet reels or shorts I have encountered this problem in 
-directly jump to the strategy of:
+\noindent\textbf{The Solution}\\
+
+\noindent Most course materials, internet reels I have encountered this problem in 
+directly jump to the strategy
 \begin{quote}
 ``Reject the first \(r\) people, then accept the first person afterwards who is better than everyone seen so far.''
 \end{quote}
@@ -70,13 +77,14 @@ game theory this is called "utility" instead.}. \\
 ``Reject one more person no matter what, and then behave optimally from time \(k+1\) onwards.''
 \end{quote}
 
-This strategy achieves success probability exactly \(q_{k+1}\). Since \(q_k\) is the \emph{optimal} achievable success probability starting from time \(k\), we must have:
+This strategy achieves success probability exactly \(q_{k+1}\). Since \(q_k\) is the \emph{optimal} achievable success probability starting 
+from time \(k\), we must have
 \[
 \mathbf{q_k \ge q_{k+1}}
 \]
 
 Since \(\frac{k}{n}\) is increasing and \(q_k\) is decreasing, the optimal decision changes at most once from rejecting to accepting as \(k\) increases.
-Therefore there exists some threshold \(0 \le r \le n\) such that:
+Therefore there exists some threshold \(0 \le r \le n\) such that
 \begin{itemize}
     \item for \(k \le r\), rejecting is optimal,
     \item for \(k > r\), accepting the first ``best-so-far'' person is optimal.
@@ -89,12 +97,12 @@ this is beyond the scope of this text and is left as an exercise for the reader.
 
 \subsection*{Finding the Optimal Threshold}
 
-We now analyse the threshold strategy:
+We now analyse the threshold strategy --
 \begin{quote}
 ``Reject the first \(r\) people, then accept the first person afterwards who is better than everyone seen so far.''
 \end{quote}
 
-\noindent Suppose the globally best person appears at position \(k\). For our strategy to succeed:
+\noindent Suppose the globally best person appears at position \(k\). For our strategy to succeed,
 \begin{enumerate}
     \item We must have \(k > r\)
     \item Among the first \(k-1\) people, the best person must appear within the first \(r\) positions.
@@ -188,22 +196,18 @@ As $x \to 0,P(x) \to 0$ since \(x\) decays faster than \(\ln(1/x)\) grows. \\
 
 
 \noindent Since \(P(x)\) is positive for \(0<x<1\), rises away from \(0\), and eventually 
-falls back to \(0\), the unique critical point at
-\[
-x=\frac1e
-\]
-must correspond to the global maximum.
+falls back to \(0\), the unique critical point at $x=\frac1e$ must correspond to the global maximum.
 
 \subsection*{Behaviour for Small \(n\)}
 
 We used some limiting n approximations in finding the optimal threshold (I hope you noticed!).
 In case you were not planning on dating a tending-to-infinite number of people, you might be interested in the optimal strategy for small values of \(n\).
-For finite \(n\), the exact success probability for threshold \(r\) is:
+For finite \(n\), the exact success probability for threshold \(r\) is
 \[
 \max_{0\le r\le n} \left(\frac{r}{n}\sum_{k=r}^{n-1}\frac1k\right)
 \]
 
-Computationally we can now easily find max for each \(n\):
+Computationally we can now easily find max for each \(n\)
 \[
 \begin{array}{c|cccccc}
 n & 2 & 3 & 4 & 5 & 6 & 7\\
@@ -238,8 +242,7 @@ n/e
 
 \vspace{1em}
 
-The corresponding optimal success probabilities are:
-
+The corresponding optimal success probabilities are
 \[
 \begin{array}{c|cccccc}
 n & 2 & 3 & 4 & 5 & 6 & 7\\
@@ -278,17 +281,14 @@ it cannot be reversed. Thus, the algorithm has no knowledge of future tasks whil
 Suppose the incoming tasks have processing times $T_1,T_2,\dots,T_n$ where $n$ itself is not known in advance.\\
 
 
-\noindent The objective is to minimize the \textit{makespan}, i.e. the finishing time of the busiest machine:
-\[
-C_{\max}=\max_{1\le i\le m} T_i
-\]
-where $T_i$ denotes the total processing time assigned to machine $i$. 
-This is a natural objective since the overall processing time
- is determined by the machine that finishes last\footnote{This 
- concept is similar to the Rate Determining Step (RDS) in the field of Chemical Kinetics}.
+\noindent The objective is to minimize the \textit{makespan}, the finishing time of the 
+busiest machine, equivalently $\max_{1\le i\le m} T_i$ where $T_i$ denotes the total 
+processing time assigned to machine $i$. This is a natural objective since the overall processing 
+time is determined by the machine that finishes last\footnote{This concept 
+is similar to the Rate Determining Step (RDS) in the field of Chemical Kinetics}.
+
 
 \subsection{Greedy Algorithm}
-
 A natural strategy is the following greedy algorithm.
 \begin{center}
 \begin{minipage}{0.9\linewidth}

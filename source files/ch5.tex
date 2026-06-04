@@ -337,26 +337,14 @@ every node/.style={font=\small}
 
 \noindent Higher levels contain fewer elements and allow us to jump across large portions of the list quickly.
 
-\subsection{Expected Structure of a Skip List}
+\subsection{The Structure}
 
-The logarithmic complexity of skip lists arises from the probabilistic structure of the levels.
+The presence of an element in a level is determined by a random choice. An element occurs 
+in level $i$ with probability $2^{-i}$. This means every element must occur in level 0.\\
 
-Recall that:
-\begin{itemize}
-\item every node appears in level \(0\),
-\item each node independently gets promoted to the next level with probability \(\frac12\).
-\end{itemize}
 
-Consequently:
-\[
-\Pr(\text{node reaches level }k)=\frac1{2^k}
-\]
-
-Thus, the expected number of nodes in level \(k\) is:
-
-\[
-\frac{n}{2^k}
-\]
+\noindent Consequently, $\Pr(\text{node reaches level }k)=\frac1{2^k}$. Thus, the expected 
+number of nodes in level \(k\) is $\frac{n}{2^k}$.
 
 \[
 \begin{array}{|c|c|}
@@ -376,17 +364,17 @@ Thus, the expected number of nodes in level \(k\) is:
 \end{array}
 \]
 
-\subsection[Expected Height of Skip List]{Expected Height}
+\subsection{Expected Height}
 
 Let \(H\) be the height of a skip list with \(n\) independent nodes, where each node is promoted to the next level with probability \(1/2\). Then:
 \[
-\Pr(H\ge h)=1-(1-2^{-h})^n.
+\Pr(H\ge h)=1-(1-2^{-h})^n
 \]
 
-We use the tail-sum formula:
+We use the tail-sum formula
 \[
 \mathbb{E}[H]=\sum_{h=1}^{\infty}\Pr(H\ge h)
-=\sum_{h=1}^{\infty}\left(1-(1-2^{-h})^n\right).
+=\sum_{h=1}^{\infty}\left(1-(1-2^{-h})^n\right)
 \]
 
 
@@ -398,7 +386,7 @@ Let $h_o=\lfloor \log_2 n \rfloor$
 \mathbb{E}[H]
 =\sum_{h\le h_0}\Pr(H\ge h)
 +\sum_{h>h_0}\Pr(H\ge h)
-=:S_1+S_2.
+=S_1+S_2
 \]
 
 
@@ -407,15 +395,15 @@ Let $h_o=\lfloor \log_2 n \rfloor$
 \[
 \text{Let } Pr(H\ge h)=f(h)=1-(1-2^{-h})^{n}
 \implies 
-f(h_{o}) \le f(h) \le f(0) \forall 0 \le h \le h_o
+f(h_{o}) \le f(h) \le f(0) \; \forall \; 0 \le h \le h_o
 \]
 
 \[
 \implies 
-\sum_1^{h_o}f(h_{o}) \le \sum_1^{h_o}f(h) \le \sum_1^{h_o}f(0)
+\sum_{h=1}^{h_o}f(h_{o}) \le \sum_{h=1}^{h_o}f(h) \le \sum_{h=1}^{h_o}f(0)
 \]
 
-Since $f(0)=1$, and $f(h_o) \approx 1-(1-\frac{1}{n})^n \approx 1-\frac{1}{e}$ we get:
+Since $f(0)=1$, and $f(h_o) \ge 1-(1-\frac{1}{n})^n \ge 1-\frac{1}{e}$ we get:
 
 \[
 h_o(1-\frac{1}{e})\le S_1 \le h_o
@@ -423,45 +411,33 @@ h_o(1-\frac{1}{e})\le S_1 \le h_o
 
 \paragraph{Step 3: Bounding \(S_2\)}
 
+
 Since $(1-x)^{n} \ge 1-nx$,
 \[
-1-(1-2^{-h})^n \le n \cdot 2^{-h}.
-\]
-
-\[
+1-(1-2^{-h})^n \le n \cdot 2^{-h}
 \implies
-\sum_{h>h_0}n \cdot 2^{-h} \ge S_2.
+\sum_{h>h_0}n \cdot 2^{-h} \ge S_2
 \]
 
-Since LHS of that inequality evaluates to $\approx 2$
-\[
-\implies S_2 \le 3
-\]
-
+Since LHS of that inequality evaluates to $\approx 2$, we can guarantee $S_2 \le 3$
 \paragraph{Step 4: Combining bounds}
 
 \[
 (1-e^{-1})h_0 + 3\le \mathbb{E}[H] \le h_0 + 3
 \]
 
-Since \(h_0 \approx \log_2 n\), we get:
-\[
-\boxed{\mathbb{E}[H]=\Theta(\log n)}
-\]
+Since \(h_0 \approx \log_2 n\), we get $\mathbb{E}[H]=\Theta(\log n)$
 
 \subsubsection*{Geometric Decline Theorem}
 
 Recall that using the markov inequality, we proved that the height of the 
-recursion tree for \texttt{QuickSelect} is atmost \(\Theta(\log n)\). Using the same technique, 
-we can show that if a sequence of nonnegative random variables satisfies
+recursion tree for \texttt{QuickSelect} is at most \(\Theta(\log n)\) \\
+
+\noindent Using the same technique, we can show that if a 
+sequence of nonnegative random variables satisfies $\frac{\mathbb E[X_{i+1}]}{\mathbb E[X_i]} \le p 
+\; (0<p<1)$ and \(T\) denotes the first index for which \(X_T \le 1\), then
 \[
-\frac{\mathbb E[X_{i+1}]}{\mathbb E[X_i]}
-\le p
-\qquad (0<p<1),
-\]
-and \(T\) denotes the first index for which \(X_T \le 1\), then
-\[
-\mathbb E[T]<=\Theta(\log (X_0)),
+\mathbb E[T] \le \Theta(\log (X_0))
 \]
 
 \vspace{1em}
@@ -473,23 +449,19 @@ every node is promoted independently with probability \(1/2\),
 \[
 \mathbb E[X_i]
 =
-n\left(\frac12\right)^i.
+n\left(\frac12\right)^i
 \implies
 \frac{\mathbb E[X_{i+1}]}{\mathbb E[X_i]}
 =
-\frac12.
+\frac12
 \]
 
 The height of the skip list is precisely the highest level 
-containing at least one node. Equivalently, if
-\[
-H=\min\{i:X_i \le 1\},
-\]
-then the height is H.
+containing at least one node. Equivalently, if $H=\min\{i:X_i \le 1\}$ then the height is H.
 
 Applying the Geometric-Decline theorem with \(p=\frac12\) gives
 \[
-\mathbb E[H]<=\Theta(\log n).
+\mathbb E[H] \le \Theta(\log n)
 \]
 
 \noindent \textbf{Why did we do the first method at all?}\\
@@ -499,7 +471,7 @@ analyses we won't need the lower bound, it is good to have
 established that it is exactly $\Theta(\log n)$.
 Also, we revised the "splitting" technique 
 for finding the complexity of an expression, which is a useful tool in general.
-\subsection{Searching in a Skip List}
+\subsection{Search}
 
 Suppose we wish to search for the element \(7\).
 
@@ -507,25 +479,32 @@ We begin at the top left level and move right while the next element is \(\leq 7
 Once that element is strictly greater than \(7\), we move down to the next level.
 Repeat until we reach the bottom level.\\
 
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+contains(x)
+{
+	current = top-left node
+	while current exists
+	{
 
-\noindent \textbf{Pseudocode:}
-\begin{verbatim}
-SEARCH(x):
+	    while current.right exists and is <= x
+	        current = current.right
 
-current = top-left node
-while current exists:
+	    if current.value == x
+	        return FOUND
 
-    while current.right exists
-          and current.right.value <= x:
-        current = current.right
-
-    if current.value == x:
-        return FOUND
-
-    current = current.down
-
-return NOT FOUND
-\end{verbatim}
+	    current = current.down
+	}
+	
+	return NOT FOUND
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
 
 \paragraph{Step 1: Start at top, check right}
 
@@ -886,9 +865,9 @@ every node/.style={font=\small}
 We move right to \(7\) and locate the desired element.
 
 
-\subsection{Randomised, But Why?}
+\subsection{Insertion}
 One may wonder why skip lists use randomization at all.
-Could we not deterministically place:
+Could we not deterministically place
 \begin{itemize}
 \item every second element in level \(1\),
 \item every fourth element in level \(2\),
@@ -896,27 +875,16 @@ Could we not deterministically place:
 \item and so on?
 \end{itemize}
 
-While this would indeed support logarithmic search complexity, insertions and deletions would become expensive.
+While this would indeed support logarithmic search complexity, insertions and 
+deletions would become expensive. For example, inserting a new element near the 
+beginning of the list changes which elements are the second, fourth, eighth, $\dots$ elements of the list.\\
 
-For example, inserting a new element near the beginning of the list changes which 
-elements are the second, fourth, eighth, $\dots$ elements of the list.
-
-Consequently, many levels may require rebuilding.
-
-Randomization avoids this problem by assigning heights independently to each node.
-Thus, updates are $\Theta(height)=\Theta(\log n)$ while the structure stays balanced in expectation.
-
-Thus, randomized skip lists achieve logarithmic expected search \emph{and} insert complexity 
-without requiring complicated balancing operations such as 
-rotations\footnote{Structures such as balanced binary trees require 
-balancing operations e.g. in the implementation of \texttt{set} in \texttt{C++ STL library}}!
-
-\subsection{Insertions}
+\noindent Consequently, many levels may require rebuilding. Randomization avoids 
+this problem by assigning heights independently to each node. Thus, updates are 
+$\Theta(height)=\Theta(\log n)$ while the structure stays balanced in expectation.
 
 The insertion operation in a skip list closely mirrors the search procedure. 
-In fact, insertion is essentially a search followed by a series of pointer modifications.
-
-To insert a key \(x\), we first perform the standard search starting 
+In fact, insertion is essentially a search followed by a series of pointer modifications. To insert a value \(x\), we first perform the standard search starting 
 from the topmost level. At each level, we move right until we either find \(x\) or encounter 
 the first node with a key greater than \(x\) (or reach the end of the list).
 
@@ -935,18 +903,16 @@ maintaining alignment with the structure discovered during the search phase.
 Thus, the update process reuses the search path and only modifies pointers locally 
 along that path. This is what ensures that skip list insertion remains logarithmic in expected time.
 
-
-
-\section[The Hash Table]{The Hash Table/Unordered Set}
+\section{The Hash Table}
 
 The need arose for a data structure to store a set of elements with efficient search, 
 insertion and deletion operations -- so we turn to the hash table!
 
-\paragraph{Initialisation -- Empty Array}
+\subsection{The Structure}
 
 We begin with an empty array of size \(m\). Since this is a plain old normal 
 array of size \(m\), we can access and modify 
-any random element in constant time $\dots$
+any random element in constant time$\dots$
 
 \begin{center}
 \begin{tikzpicture}
@@ -959,8 +925,30 @@ any random element in constant time $\dots$
 \end{tikzpicture}
 \end{center}
 
+\subsection{Insertion}
 We add an element \(x\) by computing $i=\mathbf{H}(x)$. For example, 
 suppose $\mathbf{H}(6)=3$. So we place \(6\) at index \(3\).
+
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+Insert(x)
+{
+    i = H(x)
+    traverse Linked_List[i]
+    {
+        if x present
+            return
+    }
+    add x to end of Linked_List[i]
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
 
 \paragraph{First insertion}
 
@@ -1070,23 +1058,17 @@ As more elements are inserted, collisions may occur at multiple indices, forming
 \end{center}
 
 Thus, each index i stores a linked list of all elements 
-inserted till now who hash to i.
+inserted till now who hash to i. Let the total number of elements 
+inserted be \(n\) and the number of indices be \(m\). Since on average 
+each index has $\frac{n}{m}$ elements, the expected time of insertion 
+is $\Theta(1+\frac{n}{m})$.
 
-\subsection*{Supported Operations}
+\subsection{Search}
 
 \begin{center}
 \begin{minipage}{0.9\linewidth}
+\begin{framed}
 \begin{Verbatim}
-Insert(x)
-{
-    i = H(x)
-    traverse Linked_List[i]
-    {
-        if x present
-            return
-    }
-    add x to end of Linked_List[i]
-}
 Search(x)
 {
     i = H(x)
@@ -1097,6 +1079,21 @@ Search(x)
     }
     return false
 }
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+Since the expected number of elements per index is $\frac{n}{m}$, the 
+expected time of search is $\Theta(\frac{n}{2m})$ since on average half the 
+linked list is searched in a linear traversal.
+
+\subsection{Deletion}
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
 Delete(x)
 {
     i = H(x)
@@ -1104,40 +1101,141 @@ Delete(x)
     if x found
         remove x from Linked_List[i]
 }
-
 \end{Verbatim}
+\vspace{-4mm}
+\end{framed}
 \end{minipage}
 \end{center}
 
-\subsection*{Complexity Analysis}
+The expected time of deletion is $\Theta(\frac{n}{2m})$ since on 
+average half the linked list is searched in a linear traversal.
+\section{Bloom Filters}
 
-Let:
-\begin{itemize}
-\item \(n\) be the number of elements stored
-\item \(m\) be the number of indices in the array
-\end{itemize}
+Suppose we wish to store a set of elements and support the operations 
+\texttt{insert(x)} and \texttt{contains(x)}.
+A straightforward solution is to store all inserted elements in an \texttt{unordered\_set}.
+This gives expected $\Theta(1)$ insertion and lookup time, but requires memory proportional 
+to the number of stored elements. When the number of elements becomes 
+extremely large, memory itself may become the primary constraint. Bloom filters can achieve this tradeoff.
 
-For a uniform hash function, the next element could go uniformly randomly at any of the \(m\) indices.
-The expected length of the linked list (and thus the time required to do any operation) is:
+\subsection{The Structure}
+
+Instead of storing the elements themselves, we store only a hash of the set. We begin with 
+a bit array of size $m$ initialised to all zeros.
+
+\begin{center}
+\begin{tikzpicture}
+\foreach \i in {0,...,7}{
+\draw (\i,0) rectangle (\i+1,1);
+\node at (\i+0.5,1.4){\i};
+\node at (\i+0.5,0.5){0};
+}
+
+\node at (8.5,0.5){$\dots$};
+\end{tikzpicture}
+\end{center}
+
+We then choose $k$ hash functions
 \[
-\frac{\sum_{i=1}^m L_{i}}{m} = \frac{n}{m}.
+\left(H_1,H_2,\ldots,H_k\right)
+\]
+each mapping elements to the set of indices $\{0,1,\ldots,m-1\}$.
+
+\subsection{Insertion}
+
+To insert an element $x$, we compute
+\[
+\left(H_1(x),H_2(x),\ldots,H_k(x)\right)
 \]
 
+and set all corresponding bits to $1$. For example, if $k=3$ and the hash functions are $H_1(x)=3,\; H_2(x)=7,\; H_3(x)=10$
+then we set positions $3,7,$ and $10$ of the bit array to $1$. If while inserting we see that a bit is already $1$, then we do nothing.\\
 
-Therefore:
-\begin{itemize}
-\item Search takes expected time \(O\!\left(\frac{n}{m}\right)\)
-\item Insertion takes expected time \(O\!\left(\frac{n}{m}\right)\)
-\item Deletion takes expected time \(O\!\left(\frac{n}{m}\right)\)
-\end{itemize}
 
-If \(m = \Theta(n)\), then:
+\noindent This operation is $\Theta(k)$ time.
+\subsection{Search}
+
+To determine whether an element $x$ is present, we again compute
 \[
-\frac{n}{m} = \Theta(1),
+\left(H_1(x),H_2(x),\ldots,H_k(x)\right)
 \]
-so all operations take expected \(\Theta(1)\) time.
+and inspect the corresponding bits.
+\begin{itemize}
+\item If at least one of these bits is $0$, then $x$ was certainly never inserted.
+\item If all of these bits are $1$, then we report that $x$ is present.
+\end{itemize}
+The second conclusion is of course subject to false positives! It is possible that the required bits 
+were set earlier by completely different elements.\\
 
-We maintain the condition that \(m = \Theta(n)\) by resizing and rehashing if \(n\) is too large.
+
+\noindent This operation is $\Theta(k)$ time.
+\subsection{Utility of Bloom Filters}
+
+The most important property of Bloom filters is that false negatives are impossible. If the filter 
+reports that an element is absent, then that element was definitely never inserted. The only possible 
+error is reporting that an element is present when it is actually absent.\\
+
+
+Interestingly, Bloom filters (as the name suggests) are used as a filter. This means that incoming 
+queries will go through the bloom filter -- if the element is absent, we can trust the result. Otherwise we can 
+perform a more expensive lookup in the database. So it is useful to reduce the time taken to process a 
+membership query.\\
+
+
+\noindent It can be shown\footnote{See Problems!} that the error probability of a Bloom filter with 
+optimal k is approximately $2^{-\frac{m\ln 2}{n}}$. For this to be small, we need $m$ to be large and $n$ to be small. But one might question, wasn't the 
+whole point of the bloom filter to reduce the memory usage?\\
+
+\noindent Let me clarify this with a practical example -- lets say we have a database of URLs. 
+Each URL takes 100 bytes to store. Now let us say we have $10^9$ URLs -- and the deterministic \texttt{set} structure 
+has a constant factor of about 10 per node in memory. So overall that would require $10^{12}$ bytes of memory which is about 1 TB.
+In comparison, a Bloom filter of size $m=10\cdot n = 10^{10}$ bits would require only about 12.5 GB of memory.\\
+
+\section{Cuckoo Hashing}
+Recall that in ordinary hash tables, collisions are handled using linked lists. Cuckoo hashing takes a 
+different approach. Instead of allowing multiple elements to occupy the same location, 
+each element is given multiple possible locations and is stored in exactly one of
+them.
+
+\subsection{The Structure}
+
+We maintain an array of size $m$ together with two hash functions $(H_1,H_2)$.
+
+\begin{center}
+\begin{tikzpicture}
+\foreach \i in {0,...,7}{
+\draw (\i,0) rectangle (\i+1,1);
+\node at (\i+0.5,1.4){\i};
+}
+
+\node at (8.5,0.5){$\dots$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Insertion}
+Suppose we wish to insert an element $x$. Choose either of the hash functions $H_1$ or $H_2$ at random. 
+Let this chosen hash be applied to $x$ to obtain an index $H(x)$. If the array is empty at that index, 
+we are done. Otherwise, let the occupant be $y$. We evict\footnote{This behaviour resembles the cuckoo 
+bird which lays its eggs in another bird's nest and kicks out the occupying eggs. Hence the name \dots} $y$ 
+and place $x$ in its position. The displaced element $y$ must now be 
+moved to its other possible location. If that position is occupied, 
+another element is evicted, and the process continues.\\
+
+\noindent We repeat this process until we either find an empty slot or find a 
+cycle. 
+
+\subsubsection*{Cycles and Rehashing}
+In case we enter a cycle and insertion cannot be completed, choose new hash functions and 
+rebuild the table from scratch. 
+
+Note that overall, as long as we keep $n/m$ low, it can be shown that the expected time to 
+insert an element is \(\Theta(1)\) time similar to hash tables.
+\subsection{Search}
+
+To determine whether an element $x$ is present, we simply check the 
+two possible locations $H_1(x)$ and  $H_2(x)$. If $x$ is found at either location, 
+we report that it is present. Thus every lookup requires at most two array accesses, 
+giving $\Theta(1)$ search time.
 
 \section{Problems}
 
@@ -1205,9 +1303,13 @@ every node/.style={font=\small}
 \end{enumerate}
 
 \item[\textbf{2}]
+Consider n,m,k to be number of inserted elements, the size of bit array and the 
+number of hash functions respectively in a Bloom filter. Assume the hash functions are independent.
+
 \begin{enumerate}[label=\textbf{(\alph*)}]
-\item For hashes of form $H(x)=(ax+b)\bmod c$, why is it preferred to have c as a prime number? \textit{Hint: Think of 
-the arithmetic progression (a very common occurence in data) with common difference d -- 
-what happens when d is not coprime with c?}
+\item Show that the probability of a particular bit in the array being set is $\left(1-\left(1-\frac{1}{m}\right)^{kn}\right)$ 
+and thus the probability of a false positive is $\left(1-\left(1-\frac{1}{m}\right)^{kn}\right)^k$
+\item Using suitable large m, n approximations, show that the optimal number of hash functions is $k=\frac{m}{n}\ln 2$
+\item Put the above results together to show that the probability of a false positive is approximately $2^{-\frac{m\ln 2}{n}}$.
 \end{enumerate}
 \end{enumerate}

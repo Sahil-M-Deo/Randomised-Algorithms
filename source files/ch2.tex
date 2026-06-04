@@ -119,59 +119,57 @@ limiting behaviour rather than implementation-dependent constants.\\
 \begin{enumerate}
 
 \item[\textbf{1}]
-A vector in \texttt{C++} is an array with variable size. Once the memory 
-allocated to the vector is exceeded, it is reallocated more memory somewhere else. 
-The designers of the vector class must choose a sequence of sizes \(s_0=0 < s_1 < s_2 < \ldots\) 
-such that when the size of the vector becomes any $s_i$, we reallocate and assign memory of size 
-\(s_{i+1}\) to the vector.\\
+A \texttt{vector} in \texttt{C++} is an array with variable size. Once the memory 
+allocated to the \texttt{vector} is exceeded, it is reallocated more memory somewhere else. 
+The designers of the \texttt{vector class} must choose a sequence of sizes \(s_0=0 < s_1 < s_2 < \ldots\) 
+such that when the size of the \texttt{vector} becomes any $s_i$, we reallocate and assign memory of size 
+\(s_{i+1}\) to the \texttt{vector}.\\
 
 
-\noindent Assume each \texttt{push\_back()} operation is one operation if space is available and \(s_i+1\) otherwise.
-
-\begin{enumerate}[label=\textbf{(\alph*)}]
-\item If $s_i=i$, show that the time complexity is $\Theta(n^2).
-\item 
-\item[\textbf{3}]
-Suppose a permutation of \(1,2,\dots,n\) is chosen uniformly at random.
+\noindent Thus each \texttt{push\_back()} operation is one operation if space is available and \(s_i+1\) otherwise. 
+For the average case analysis take all sizes of vectors between $0$ and $n-1$ (both inclusive) to be equally likely.
 
 \begin{enumerate}[label=\textbf{(\alph*)}]
-\item Let \(M\) be the number of indices \(i\) such that
-\[
-a_i>\max(a_1,a_2,\dots,a_{i-1}).
-\]
-Compute \(\mathbb E[M]\).
-
-\item Consider the algorithm
-
-\begin{verbatim}
-mx=-INF;
-
-for(int i=1;i<=n;i++)
-{
-    if(a[i]>mx)
-    {
-        mx=a[i];
-        // expensive operation
-    }
-}
-\end{verbatim}
-
-If the expensive operation takes constant time, determine the expected number of times it is executed.
+\item If $s_i=i$, show that the time complexity for the average \texttt{push\_back()} is $\Theta(n)$.
+\item Show that in general the time complexity for the average \texttt{push\_back()}is $\Theta \left( 1+\frac{\left(\sum\limits_{s_i<n}s_i\right)}{n} \right)$. 
+\item Knowing the previous result, come up with a simple series of \(s_i\) that would 
+give a time complexity of $\Theta(1)$ for the average \texttt{push\_back()}.
 \end{enumerate}
 
-\item[\textbf{4}]
-Consider the recursive function
 
-\begin{verbatim}
-f(n)
+\item[\textbf{2}]
+Consider the algorithm
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+f(n) 
 {
-    if(n<=1)return;
-
-    f(n/2);
-    f(n/3);
+    count = 0
+    while(n>1)
+    {
+        if(n even)
+            n = n/2
+        else //n is odd
+            n = n-1
+        count = count + 1
+    }
+    return count
 }
-\end{verbatim}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
 
-Let \(T(n)\) denote the total number of calls to \texttt{f}. Determine the asymptotic complexity of \(T(n)\).
+Here \(f(n)\) counts the number of iterations required to reduce the number \(n\) to 1. We can think of $f(n)$ as a measure 
+of the time taken by the algorithm (one iteration being one operation). Now consider $x \in \{2^{k+1}-1 : k \in \mathbb{N}\}$ and $n$ be the input constrained to be between $1$ and $x$.
+Find the asymptotic\footnote{We have seen this ratio being 2 in the case of Bubble Sort.} ratio of worst case time and average case time of the algorithm with respect to n. Equivalently, find  
+\[
+\lim_{x \to \infty}
+\frac{\max_{1 \le n \le x} f(n)}
+{\left( \frac{1}{x} \sum_{n=1}^{x} f(n) \right)}
+\]
 
 \end{enumerate}
