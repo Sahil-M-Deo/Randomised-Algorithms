@@ -17,15 +17,35 @@
 \label{linearity_of_expectation}
 \noindent For any random variables $X_1,X_2,\dots,X_n$ (not necessarily independent),
 \[
-\mathbb{E}\left[\sum_{i=1}^n X_i\right]=\sum_{i=1}^n \mathbb{E}[X_i].
+\mathbb{E}\left[\sum_{i=1}^n X_i\right]=\sum_{i=1}^n \mathbb{E}[X_i]
 \]
 
 \noindent\textbf{This holds regardless of dependence between variables.}
+
+
+\section{Tail Sum Formula}
+\label{tail_sum}
+Let \(X\) be a nonnegative integer-valued random variable. Then
+\[
+\mathbb{E}[X]
+=
+\sum_{k=1}^{\infty}\Pr(X\ge k)
+=
+\sum_{k=0}^{\infty}\Pr(X > k)
+\]
+
+\noindent For a nonnegative continuous random variable \(X\),
+\[
+\mathbb{E}[X]
+=
+\int_0^\infty \Pr(X\ge t)\,dt
+\]
+
 \section{Union Bound}
 \label{union_bound}
 For any events $A_1,A_2,\dots,A_n$,
 \[
-\Pr\left(\bigcup_{i=1}^n A_i\right)\le \sum_{i=1}^n \Pr(A_i).
+\Pr\left(\bigcup_{i=1}^n A_i\right)\le \sum_{i=1}^n \Pr(A_i)
 \]
 
 \noindent This is often used to upper bound the probability that at least one “bad event” occurs.
@@ -63,7 +83,7 @@ If $X$ and $Y$ are independent random variables, then
 =
 \sum_{i=1}^n \mathrm{Var}(X_i)
 +
-2\sum_{1\le i<j\le n}\mathrm{Cov}(X_i,X_j).
+2\sum_{1\le i<j\le n}\mathrm{Cov}(X_i,X_j)
 \]
 
 \section{Indicator Variables}

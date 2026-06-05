@@ -1,11 +1,10 @@
 \chapter{Introduction}
 
-\section{What even is a Randomised Algorithm?}
+\section{What is a Randomised Algorithm?}
 
 A randomised algorithm is an algorithm that makes random choices during its execution. 
-Unlike deterministic algorithms, 
-whose behaviour is completely determined by the input,
- the behaviour of a randomised algorithm may vary between different executions on the same input.\\
+Unlike deterministic algorithms, whose behaviour is completely determined by the input, 
+the behaviour of a randomised algorithm may vary between different executions on the same input.\\
 
 
 \noindent Typically, the algorithm uses a random number generator (\texttt{rng}) to decide between multiple possible actions. 
@@ -22,9 +21,11 @@ bit flips caused by cosmic radiation, which programmers typically ignore during 
 
 \noindent The performance of a randomised algorithm is therefore analysed using probability and expectation. 
 If $T_{run}$ denotes the runtime of the algorithm, we are usually interested in quantities 
-such as $T_{algo}=E[T_{run}]$ over all possible random choices made by the algorithm.\footnote{$T_{algo}$ can still be a random variable over the input - so this may \textbf{not} be 
-the same as average case performance of the algorithm $T_{avg}$, which is an expected value over all possible inputs.
-But for cleanliness of presentation, we will often ignore this distinction and use these terms interchangeably, more often taken to mean $T_{avg}$ than $T_{algo}$.}
+such as $T_{algo}=E[T_{run}]$ over all possible random choices made by the algorithm.\footnote{$T_{algo}$ can still be a 
+random variable over the input - so this may \textbf{not} be the same as average case performance 
+of the algorithm $T_{avg}$, which is an expected value over all possible inputs.
+But for cleanliness of presentation, we will often ignore this distinction and use these terms 
+interchangeably or simply use the variable $T$ to mean either of them, depending on context.}
 
 \vspace{0.6em}
 Randomised algorithms are often used for the following purposes:
@@ -135,6 +136,8 @@ else
 
 thus implementing the required probabilities.
 
+
+\clearpage
 \section{Problems}
 
 \begin{enumerate}
@@ -156,13 +159,16 @@ for(int i=n-1;i>0;i--)
 
 \item[\textbf{2}]
 Suppose you have access only to a function \texttt{bool coin()} which returns \(0\) or \(1\) 
-with equal probability.
+with equal probability. Let the phrase "generate a probability $p$" mean designing a function 
+which returns $1$ with probability $p$ and $0$ with probability $1-p$.
 
 \begin{enumerate}[label=\textbf{(\alph*)}]
-\item Design a procedure to do action A with probability $\frac{k}{2^m}$ and 
-action B with probability $1-\frac{k}{2^m}$.
-\item Show that we can not have a procedure do action A with probability $\frac{1}{\pi}$ and action B with
-probability $1-\frac{1}{\pi}$ using only finite number of calls to \texttt{coin()}.
+\item Design a procedure to generate a probability $\frac{k}{2^m}$ using only finite number of calls to \texttt{coin()}.
+\item Design a procedure to generate any rational probability $\frac{p}{q}$ with \textbf{expected} 
+finite number of calls to \texttt{coin()}\\
+\textit{Hint: Think of the binary representation of a number.}
+\item Generalise the above ideas to generate any real probability $p$ with \textbf{expected} 
+finite number of calls to \texttt{coin()}.
 \end{enumerate}
 
 \end{enumerate}

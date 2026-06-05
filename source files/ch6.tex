@@ -769,3 +769,36 @@ number n (no matter how large), in expected time at most \(\Theta(n^{\frac{1}{4}
 
 \noindent Note that we have used a lot of worst case upper bounds in the analysis. The average 
 performance in practice is much better than the complexity suggests! 
+
+
+\clearpage
+\section{Problems}
+\begin{enumerate}
+\item[\textbf{1}]
+During RSA encryption, one computes a secret integer \(x=\phi(n)\).
+A valid public exponent \(e\) must satisfy
+\[
+\gcd(e,x)=1.
+\]
+
+Since we do not want to reveal \(x\) to the public, we can not take \(e\) to be something 
+deterministic like $x-1$ because an adversary can crack our encryption if he gets to know the algorithm.
+One possible strategy is to repeatedly choose \(e\) uniformly at random from
+\(\{1,2,\dots,x\}\) until a suitable value is found.
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item Let
+\[
+x=\prod_{i=1}^{k} p_i^{e_i}
+\]
+be the prime factorization of \(x\). Show that the probability that a randomly
+chosen \(e\in\{1,2,\dots,x\}\) satisfies \(\gcd(e,x)=1\) is
+\[
+\frac{\varphi(x)}{x} = \prod_{i=1}^{k}\left(1-\frac{1}{p_i}\right).
+\]
+
+\item Show that if x can be any number from $1$ to $n$ where $n$ is very large,
+the probability of the randomly chosen e being correct tends to $\frac{6}{\pi^2}$ as n becomes larger.\\
+\textit{Hint: Use $\sum_{n=1}^{\infty} \frac{1}{n^2}= \frac{\pi^2}{6}$}
+\end{enumerate}
+\end{enumerate}
