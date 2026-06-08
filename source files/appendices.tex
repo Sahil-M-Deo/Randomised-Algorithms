@@ -160,7 +160,6 @@ coordinates {(0,1)};
 (1-x)^k \le e^{-kx} \hspace{0.5em} \forall \hspace{0.3em} k \in \mathbb{N}, x \in \mathbb{R}
 \]
 
-
 \section{Jensen’s Inequality}
 \label{jensen}
 For a concave-up function \(f\) and random variable \(X\),
@@ -322,6 +321,280 @@ a\,\Pr(X\ge a)
 \noindent An equivalent and useful form is \(Pr(X\ge c\,\mathbb E[X])\le \frac{1}{c}\)
 
 
+
+
+\chapter{Convergence and Limit Theorems}
+It is quite difficult to properly grasp what these theorems say if you do not know the 
+precise definitions of the terms used to state them. That is why I decided to be more 
+elaborate in this appendix because there a lot of common misconceptions which I struggled 
+to get clarity on until I took a rigorous and exhaustive approach.
+
+
+\section{Identical and Independently Distributed Random Variables}
+This is also denoted by i.i.d. for short. If it is stated that $X_1,X_2,\ldots$ are i.i.d, then 
+they are independent and have the same probability distribution. They are essentially copies of each other, 
+but the value of one does not affect the others. 
+
+\section{Almost Surely}
+When we say an event occurs ``almost surely'' we mean that it is true with probability one. The phrase 
+``almost surely'' can be used within a sentence like "X is almost surely equal to Y" which means 
+"X is equal to Y" almost surely. We can also say that an event being almost sure is equivalent to the 
+event having ``almost every'' outcome in its set.\\
+
+
+\noindent This does not necessarily mean that every outcome is part of the event, it just means 
+the "measure" of the set of outcomes in the event is equal to the total measure of the 
+sample space. We will not be rigorously defining measure here but let me demonstrate via an example.\\
+
+
+\noindent A random real number chosen from $[0,1]$ is almost surely not $\frac{1}{2}$. This is because the 
+measure of the set $[0,1]-\{\frac{1}{2}\}$ is equal to the measure of the sample space. 
+
+\section{Almost Never}
+When we say an event occurs ``almost never'' we mean that it is true with probability zero. Again, 
+this does not mean that the event has no outcomes in its set, but rather that the measure of that set is 
+zero as compared to the measure of the sample space. The complementary event of an almost never event is an 
+almost sure event.
+
+The example we used earlier can be restated as "a random real number chosen from $[0,1]$ is 
+almost never $\frac{1}{2}$".
+
+\section{$\lim\limits_{n\to\infty}X_n=Y$}
+The event $\lim\limits_{n\to\infty}X_n=Y$ is defined (where all $X_n$ and $Y$ are random variables) as 
+the set of all outcomes $\omega$ such that $\lim\limits_{n\to\infty} X_n(\omega)=Y(\omega)$. Since 
+the sequence $X_n(\omega)$ is a real number sequence, the usual definition of limit applies.\\
+
+
+\noindent In case $Y$ is a constant $a$ then it is the set of all outcomes $\omega$ 
+such that $\lim\limits_{n\to\infty} X_n(\omega)=a$. I personally do not like this notation since 
+we are trying to define the notion of convergence and hence limits for random variables and in the definition 
+we are using the notation $\lim\limits_{n\to\infty} X_n$ which makes it seem circular when it really is not. The 
+notation means to talk about the limit of sequences of real numbers and not a sequence of random variables.
+
+\section{Convergence in Probability}
+
+A sequence of random variables \(X_n\) "converges in probability" to a constant \(a\) if 
+for every $\varepsilon>0$, the probability of $X_n$ deviating from $a$ by more than $\varepsilon$ tends to zero. 
+
+\[
+X_n \xrightarrow{\mathrm{P}} a \iff \lim_{n\to\infty} \Pr(|X_n-a|>\varepsilon)=0 \;\; \forall \; \varepsilon>0
+\]
+
+Note that we can \textbf{not} in general, swap the limit and the probability. 
+
+\section{The Weak Law of Large Numbers}
+
+Let $X_1,X_2,\ldots,X_n$ be i.i.d random variables with $\mathbb E[X_i]=\mu$ and finite variance $\sigma^2$.
+Define the random variable $Z_n$ to be average of the random variables $X_1,X_2,\ldots,X_n$.
+
+\[
+Z_n = \frac{X_1+X_2+\cdots+X_n}{n}
+\]
+
+\noindent The Weak Law of Large Numbers states that $Z_n$ converges in probability to $\mu$.
+
+\[
+n \to \infty \implies Z_n
+\xrightarrow{P}
+\mu
+\]
+
+\subsection*{Proof}
+For independent random variables, the variance of their sum is the sum of the variances.
+\[
+\operatorname{Var}(X_1+\cdots+X_n)
+=
+n\sigma^2
+\]
+
+\noindent Dividing by \(n^2\) yields the variance of the average --
+\[
+\operatorname{Var}(Z_n)
+=
+\frac{\sigma^2}{n}
+\]
+
+\noindent Applying Chebyshev's inequality (only valid if the variance is finite) gives us the 
+probability of a deviation of the average from its expected value --
+\[
+\Pr(|\overline Z_n-\mu|>\varepsilon)
+\le
+\frac{\sigma^2}{n\varepsilon^2}
+\implies \lim\limits_{n\to\infty}\Pr(|Z_n-\mu|>\varepsilon) \le \lim\limits_{n\to\infty}\frac{\sigma^2}{n\varepsilon^2}=0
+\]
+
+So the probability that $Z_n$ deviates from $\mu$ by more than $\varepsilon$ tends to zero 
+for all $\varepsilon > 0$
+\[
+\lim\limits_{n\to\infty}\Pr(|Z_n-\mu|>\varepsilon)=0
+\]
+
+This is equivalent to $Z_n$ converging in probability to $\mu$, hence 
+the Weak Law of Large Numbers is proved.
+
+
+\section{Almost Sure Convergence}
+A sequence of random variables \(X_n\) "almost surely converges" to a constant \(a\) if 
+$\lim\limits_{n\to\infty}X_n=a$ almost surely. This means for almost every 
+outcome $\omega$, $\lim\limits_{n\to\infty}X_n(\omega)=a$. 
+
+\[
+X_n\xrightarrow{\mathrm{a.s.}}a \iff
+\Pr\!\left(
+\lim\limits_{n\to\infty}X_n=a
+\right)=1
+\]
+
+\section{$A_n$ infinitely often}
+Let $A_1,A_2,A_3,\ldots$ be a sequence of events. Then the event "$A_n$ infinitely often" 
+or "$A_n$ i.o." is defined as there are infinite $n \in {1,2,3,\ldots}$ such that $A_n$ occurs.
+Thus the event "$A_n$ i.o." occurs iff for all N, at least one of the 
+events $A_N, A_{N+1}, A_{N+2}, \ldots$ occur.
+
+\[
+A_n \ \mathrm{i.o.} \;
+=
+\bigcap_{N=1}^{\infty}
+\bigcup_{n = N}^{\infty}A_n
+\]
+
+
+\section{The Borel--Cantelli Lemmas}
+
+The \textbf{first} Borel--Cantelli lemma states that if the sum of $Pr(A_n)$ is finite, then $A_n$ i.o. almost never.
+
+\[
+\sum_{n=1}^{\infty}\Pr(A_n)<\infty
+\implies
+\Pr(A_n\ \mathrm{i.o.})=0
+\]
+
+
+\noindent The \textbf{second} Borel--Cantelli lemma states that if all $A_n$ are independent and 
+the sum of $Pr(A_n)$ diverges, then $A_n$ i.o. almost surely.
+\[
+\text{All $A_n$ independent and }
+\sum_{n=1}^{\infty}\Pr(A_n)=\infty
+\implies
+\Pr(A_n\ \mathrm{i.o.})=1
+\]
+
+\section*{Example}
+\noindent It is not yet intuitively obvious what is the difference between almost sure convergence and 
+convergence in probability. Consider the sequence of independent random variables $X_1,X_2,\ldots$ such that 
+\[
+X_n 
+= 
+\begin{cases}
+1 & \text{with probability }\frac{1}{n}\\
+0 & \text{otherwise}
+\end{cases}
+\]
+
+Let us consider the convergence in probability of $X_n$ to 0. For $\varepsilon \ge 1$, 
+$Pr(|X_n-0|>\varepsilon)=0$ since $X_n$ is at most 1 thus $|X_n-0|\le 1$. For $\varepsilon < 1$, 
+$Pr(|X_n-0|>\varepsilon)=\frac{1}{n}$. In both cases, as $n \to \infty$, $Pr(|X_n-0|>\varepsilon)\to 0$.
+Hence $X_n$ converges in probability to 0.\\
+
+
+\noindent Now consider the almost sure convergence to 0 -- the probability that the event $(X_n \neq 0)$ 
+occurs is $\frac{1}{n}$ for all $n$. Applying the second Borel--Cantelli lemma 
+on the event $(X_n \neq 0)$ we get $Pr(X_n \neq 0 \;\; \mathrm{i.o.})=1$.
+
+\[
+\sum_{n=1}^{\infty}\frac{1}{n}=\infty \implies Pr(X_n \neq 0 \;\; \mathrm{i.o.})=1
+\] 
+
+
+\noindent Thus the sequence $X_n(\omega)$ almost surely has infinitely many $n$ where $X_n(\omega)\neq 0$. 
+From the concept of limits of real number sequences, a sequence of $0$'s and $1$'s has infinitely many $1$'s 
+iff it can not converge to $0$. Since it almost surely has infinitely many $1$'s, it almost 
+never converges to $0$.\\
+
+
+\noindent So this properly disproves the almost sure convergence of the sequence $X_n$ to 0. In fact, it is almost 
+never convergent to 0, yet it is convergent in probability to 0. Hence the two notions are not the same.\\
+
+
+\noindent With some thought, it can be shown that almost sure convergence implies 
+convergence in probability, but as we saw, not necessarily the other way around.
+\section{The Strong Law of Large Numbers}
+
+Let $X_1,X_2,\ldots,X_n$ be i.i.d random variables with $\mathbb E[X_i]=\mu$ and finite variance $\sigma^2$.
+Define the random variable $Z_n$ to be average of the random variables $X_1,X_2,\ldots,X_n$.\\
+
+\[
+Z_n = \frac{X_1+X_2+\cdots+X_n}{n}
+\]
+
+\noindent The Strong Law of Large Numbers states that $Z_n$ converges almost surely to $\mu$.
+\[
+X_n\xrightarrow{\mathrm{a.s.}}\mu
+\]
+I feel there is not much utility at this point in stating the proof. We should focus on 
+understanding the result with an application!
+
+
+\section*{Application}
+
+
+If I want to find the expected value of a random variable $X$ and the only thing 
+I can do is sample the variable $X$ $\dots$ then I can approximate the expected value really well 
+by averaging over all the samples. This is because sampling a random variable $X$ is equivalent to 
+creating a random variable $X_1$ and then evaluating it at a random outcome $\omega$. 
+Sampling it $n$ times is equivalent to creating $n$ i.i.d. random variables $X_1,X_2,\ldots,X_n$ and 
+then evaluating them at a random outcome $\omega$.\\
+
+
+\noindent Taking the average on the n samples would mean evaluating the average random variable $Z_n$ at $\omega$ --
+\[
+Z_n(\omega)=\frac{X_1(\omega)+X_2(\omega)+\cdots+X_n(\omega)}{n}
+\]
+
+Assuming n really is very large, we can use the Strong Law of Large Numbers to state that $Z_n$
+converges almost surely to the expected value of $X_1$. This is equivalent to saying for almost every 
+outcome $\omega$, $Z_n(\omega)$ converges to $\mathbb E[X_1]$. In practice for well-behaved 
+random variables this does work quite well if the variance is not too large. It is usually used in 
+physics for experimental data.\\
+
+
+\noindent If we want more guarantees about the distribution of the average $Z_n$, we can use the 
+Central Limit Theorem.
+
+\section{Convergence in Distribution}
+
+Let \(X_n\) be a sequence of random variables with 
+distribution functions \(F_n(x)=\Pr(X_n\le x)\). We say that \(X_n\) converges 
+in distribution to a random variable \(X\), written as
+\[
+X_n \xrightarrow{d} X,
+\]
+if the distribution functions satisfy
+\[
+F_n(x)\to F(x)
+\]
+
+This is the weakest form of convergence. Convergence in probability implies convergence in distribution.
+
+\section{The Central Limit Theorem}
+
+If \(X_1,X_2,\dots\) are i.i.d. with expected value \(\mu\) and finite variance \(\sigma^2\) and $Z_n$ be their average, 
+then
+\[
+\frac{\sqrt{n}}{\sigma} \left(Z_n-\mu\right) \xrightarrow{d} \mathcal{N}(0,1)
+\]
+
+This means that the distribution of the "normalized" average approaches the standard normal distribution 
+as \(n\to\infty\), even though the average itself approaches \(\mu\). Here the normalisation factor is 
+$\frac{\sqrt{n}}{\sigma}$. Interestingly, the Central Limit Theorem 
+is enough to prove the Weak Law of Large Numbers.\\
+
+
+\noindent What can we conclude from the Central Limit Theorem? We can say that the average 
+of a large number of samples have fluctuations from the mean of order $\frac{\sigma}{\sqrt{n}}$. 
+In other words the error in the average is $\Theta(\frac{1}{\sqrt{n}})$. Since we know the approximate 
+distribution of the average, we can find things like the value of the probability of it deviating 
+from the expected value by some $\varepsilon$ instead of using weak general upper bounds like Chebyshev.
 \chapter{Discrete Mathematics}
 
 \section{Pigeonhole Principle}

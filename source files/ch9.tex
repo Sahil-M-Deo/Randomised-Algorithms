@@ -9,7 +9,7 @@ even if they do not always provide provable optimality guarantees or even any gu
 Inherently the analysis of heuristic algorithms involve probability and expectation, making them a natural application of the tools we have developed so far.
 
 Notice that the greedy algorithm we saw in the previous chapter was a heuristic algorithm as well!
-\section{The Dominating Set Problem Revisited}
+\section{Dominating Set Revisited}
 
 Recall the dominating set problem: given a graph \(G=(V,E)\), find a smallest possible subset \(D\subseteq V\) such that every vertex in the graph is either contained in \(D\) or adjacent to some vertex in \(D\).
 \subsection*{A Greedy Heuristic}
@@ -156,7 +156,7 @@ Hence the greedy algorithm produces a dominating set of size at most
 }
 \]
 
-\section{Exam Scheduling}
+\section{Independent Set}
 
 \textbf{The Problem}
 We are given a set of exams and a set of students. Each student is enrolled in a subset of the exams. 
@@ -179,7 +179,6 @@ We model the problem using a graph \(G=(V,E)\) where:
 \end{itemize}
 
 In this formulation, a feasible schedule corresponds to a set of vertices with no edges between them. Such a set is called an \emph{independent set}.
-
 Thus, the problem reduces to finding a maximum independent set in a graph.
 
 \subsection{Random Permutation}

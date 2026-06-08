@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  5 JUN 2026 21:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  9 JUN 2026 04:08
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1026,7 +1026,7 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 
 pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
 DF version <1.7>, but at most version <1.5> allowed
-<../Images/Cover.pdf, id=434, 597.23125pt x 845.1575pt>
+<../Images/Cover.pdf, id=490, 597.23125pt x 845.1575pt>
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf>
 Package pdftex.def Info: ../Images/Cover.pdf  used on input line 6.
@@ -1039,7 +1039,7 @@ DF version <1.7>, but at most version <1.5> allowed
 
 pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
 DF version <1.7>, but at most version <1.5> allowed
-<../Images/Cover.pdf, id=436, page=1, 597.23125pt x 845.1575pt>
+<../Images/Cover.pdf, id=492, page=1, 597.23125pt x 845.1575pt>
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
 Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
@@ -1680,37 +1680,82 @@ Underfull \hbox (badness 10000) in paragraph at lines 352--355
 
  []
 
-[59]) [60]
+[59]
+Underfull \hbox (badness 10000) in paragraph at lines 407--413
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 427--429
+
+ []
+
+[60]
+Underfull \hbox (badness 10000) in paragraph at lines 440--442
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 475--480
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 490--493
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 501--503
+
+ []
+
+[61]
+Underfull \hbox (badness 10000) in paragraph at lines 511--515
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 517--519
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 521--525
+
+ []
+
+) [62]
 \openout2 = `ch9.aux'.
 
  (ch9.tex
 Chapter 9.
-[61
+[63
 
 
 
 
-] [62] [63] [64] [65]
-Underfull \hbox (badness 10000) in paragraph at lines 325--327
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 328--329
+] [64] [65] [66] [67]
+Underfull \hbox (badness 10000) in paragraph at lines 324--326
 
  []
 
-) [66]
+
+Underfull \hbox (badness 10000) in paragraph at lines 327--328
+
+ []
+
+) [68]
 \openout2 = `appendices.aux'.
 
- (appendices.tex [67
+ (appendices.tex [69
 
 
 
 
 ]
 Appendix A.
-[68
+[70
 
 
 ]
@@ -1718,38 +1763,137 @@ Underfull \hbox (badness 10000) in paragraph at lines 112--117
 
  []
 
-[69]
+[71]
 Appendix B.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [70
+ [72
 
 ]
-[71]
+[73]
 Appendix C.
 
-Underfull \hbox (badness 10000) in paragraph at lines 352--354
+Underfull \hbox (badness 10000) in paragraph at lines 339--343
 
  []
 
-[72
 
-] [73]
-Appendix D.
+Underfull \hbox (badness 10000) in paragraph at lines 345--348
+
+ []
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 362.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\lim' on input line 362.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\limits' on input line 362.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 362.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\to' on input line 362.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\infty' on input line 362.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 362.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 362.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 363--366
+
+ []
+
 [74
 
+] [75]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 448.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 448.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 448.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 494--498
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 509--513
+
+ []
+
+[76]
+Underfull \hbox (badness 10000) in paragraph at lines 515--517
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 523--525
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 541--547
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 554--559
+
+ []
+
+[77]
+Underfull \hbox (badness 10000) in paragraph at lines 587--591
+
+ []
+
+[78]
+Appendix D.
+
+Underfull \hbox (badness 10000) in paragraph at lines 625--627
+
+ []
+
+[79
+
+] [80]
+Appendix E.
+[81
+
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 446--447
+Underfull \hbox (badness 10000) in paragraph at lines 719--720
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 449--450
+Underfull \hbox (badness 10000) in paragraph at lines 722--723
 
  []
 
-) [75] (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.aux
+) [82] (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.aux
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch1.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch2.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch3.aux)
@@ -1765,14 +1909,14 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 6FCAE3DC4396561CC4AF8E659BD561C4;15455.
+(rerunfilecheck)             Checksum: 3B15464669076BA8272EF55C938BFB73;17670.
  ) 
 Here is how much of TeX's memory you used:
- 35670 strings out of 467691
- 816884 string characters out of 5416439
- 1387435 words of memory out of 5000000
- 63739 multiletter control sequences out of 15000+600000
- 662378 words of font info for 128 fonts, out of 8000000 for 9000
+ 35728 strings out of 467691
+ 817577 string characters out of 5416439
+ 1386441 words of memory out of 5000000
+ 63762 multiletter control sequences out of 15000+600000
+ 664843 words of font info for 137 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  104i,17n,111p,746b,2175s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti090
@@ -1807,21 +1951,22 @@ lic/amsfonts/cm/cmmi8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type
 /type1/public/amsfonts/cm/cmmib10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTe
 X/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><C:/Users/hp/AppData/Local/Pro
 grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/hp/AppData/Loca
-l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/hp/AppData/
-Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/hp/AppD
-ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/hp/
-AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users
-/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:
-/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pf
+l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/hp/AppData
+/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/hp/App
+Data/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/hp
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/User
+s/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/
+Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pf
 b><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cms
-y8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
-m/cmsy9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
-nts/symbols/msam10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/p
-ublic/amsfonts/symbols/msbm10.pfb>
+y6.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
+m/cmsy8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
+nts/cm/cmsy9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/
+amsfonts/symbols/msam10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/ty
+pe1/public/amsfonts/symbols/msbm10.pfb>
 Output written on "C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.
-pdf" (76 pages, 889432 bytes).
+pdf" (83 pages, 948497 bytes).
 PDF statistics:
- 1921 PDF objects out of 2073 (max. 8388607)
- 328 named destinations out of 1000 (max. 500000)
- 884 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2067 PDF objects out of 2073 (max. 8388607)
+ 363 named destinations out of 1000 (max. 500000)
+ 996 words of extra memory for PDF output out of 10000 (max. 10000000)
 

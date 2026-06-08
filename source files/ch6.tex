@@ -35,7 +35,7 @@ chosen random experiment can reveal such evidence with high probability. \\
 division as constant time operations. Since these algorithms frequently work with numbers 
 of the order $10^100$ or even larger, we will assume that multiplication and division are 
 $\Theta(\log^2 n)$ time, since a number $n$ has $\Theta(\log n)$ digits.
-\section{The Fermat Test}
+\section{Fermat Test}
 
 The simplest algorithm to test the primality of an integer \(n\) is to check for 
 divisibility by every integer from \(2\) up to \(\sqrt{n}\). Using the fact that divison takes $\Theta(\log^2 n)$, the whole algorithm
@@ -123,7 +123,7 @@ that pass Fermat's test for \emph{every} admissible choice of \(a\).
 These numbers are known as Carmichael\footnote{The smallest Carmichael number is 561. It has been proven 
 that there are infinitely many Carmichael numbers.} numbers, and they expose a fundamental weakness of the algorithm.
 
-\section{The Miller--Rabin Test}
+\section{Miller--Rabin Test}
 
 \subsection{A Key Property}
 
