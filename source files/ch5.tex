@@ -485,20 +485,20 @@ Repeat until we reach the bottom level.\\
 \begin{Verbatim}
 contains(x)
 {
-	current = top-left node
-	while current exists
-	{
+    current = top-left node
+    while current exists
+    {
 
-	    while current.right exists and is <= x
-	        current = current.right
+        while current.right exists and is <= x
+            current = current.right
 
-	    if current.value == x
-	        return FOUND
+        if current.value == x
+            return FOUND
 
-	    current = current.down
-	}
-	
-	return NOT FOUND
+        current = current.down
+    }
+    
+    return NOT FOUND
 }
 \end{Verbatim}
 \vspace{-4mm}
@@ -902,6 +902,796 @@ maintaining alignment with the structure discovered during the search phase.
 
 Thus, the update process reuses the search path and only modifies pointers locally 
 along that path. This is what ensures that skip list insertion remains logarithmic in expected time.
+
+
+
+
+
+
+
+
+\section{Treaps}
+
+Treaps are randomized balanced binary search trees. They combine two ideas:
+
+\begin{enumerate}
+\item The \emph{binary search tree} property, which allows efficient searching.
+\item The \emph{heap} property, which is used to maintain balance.
+\end{enumerate}
+
+In a simple binary search tree, the insertion order matters. Certain orders can make the height $\Theta(n)$ 
+while others can make it $\Theta(\log n)$. But if we average over all insertion orders, the height 
+is $\Theta(\log n)$. So it seems to avoid adversarial inputs we should randomise the insertion order 
+and the tree will be balanced in expectation! But the whole point of the data structure 
+is we can insert elements at any time so we can not really manipulate the input order.\\
+
+
+This brings us to the idea of assigning each element an index (called a priority) just before insertion and 
+then whenever an element is inserted using the standard binary search tree way, we 
+modify the existing tree to pretend as if it was inserted in increasing order of the 
+priorities. To achieve this, we define an operation called \emph{rotation}.\\
+
+
+A \emph{rotation} preserves the binary search property while ``changing'' the order of insertion. Thus we ensure a random insertion order 
+and the treap remains balanced in expectation. This is a relatively simple implementation as compared to 
+Red-Black Trees which stay balanced using rotations as well as recolorings.
+
+\subsection{Binary Trees}
+A binary tree is a rooted tree in which every node has at most two children, 
+called the left child and the right child. For implementation purposes, the \texttt{struct Node} has 
+three pieces of data -- its own value, the pointer to its left child, and the pointer to its right child. 
+If the child does not exist, the pointer is set to \texttt{nullptr}. We may show an empty node if there 
+is no child for clarity in some figures.
+
+\begin{tikzpicture}[
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
+]
+\node {A}
+child {
+    node {B}
+    child {node {D}}
+    child {node {E}}
+}
+child {
+    node {C}
+    child {node {F}}
+    child {node {G}}
+};
+\end{tikzpicture}
+
+The topmost node is called the \textbf{root}. A node with no children is called a \textbf{leaf}. 
+Every node together with all of its descendants forms a \textbf{subtree}.
+
+\subsection{Tree Traversal}
+A traversal specifies the order in which nodes are visited. The most important traversal for 
+our purposes is the \textbf{In-Order Traversal}.
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+IOT(x)
+{
+    if (x is null)
+        return
+
+    IOT(x.left)
+    print(x.value)
+    IOT(x.right)
+}
+
+IOT(root) \\starting the recursive traversal from the root
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+\vspace{2em}
+\subsubsection*{Example}
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
+]
+\node {4}
+child {
+    node {2}
+    child {node {1}}
+    child {node {3}}
+}
+child {
+    node {6}
+    child {node {5}}
+    child {node {7}}
+};
+\end{tikzpicture}
+\end{center}
+
+Convince yourself that the output will be \texttt{1 2 3 4 5 6 7}. In-Order Traversal is most commonly seen in 
+\texttt{Depth-First Search}, popularly known as \texttt{DFS}. 
+
+\subsection{Binary Search Trees}
+
+The value stored at each node is referred to as its \textbf{key}. A binary search tree (BST) is a 
+binary tree in which every non-leaf node satisfies
+\begin{itemize}
+\item all keys in the left subtree are smaller than the node's key,
+\item all keys in the right subtree are larger than the node's key.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
+]
+\node {8}
+child {
+    node {5}
+    child {node {2}}
+    child {node {6}}
+}
+child {
+    node {11}
+    child {node {10}}
+    child {node {15}}
+};
+\end{tikzpicture}
+\end{center}
+
+With some thought it can be proved that an In-Order Traversal of a BST lists all keys in sorted order.
+
+\subsubsection*{Search}
+Searching for a key proceeds exactly as in binary search. At each node we 
+compare the desired key with the current key and move either left or right. 
+If the tree is balanced, the tree is the same as the recursion tree of a normal binary search 
+on a sorted array $\dots$ \\
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+Search(key,node)
+{
+    if (node is null)
+        return false
+
+    if(key < node.value)
+        return Search(key,node.left)
+    if(node.value == key)
+        return true
+    if(key > node.value)
+        return Search(key,node.right)
+}
+
+Search(x,root) \\Search the key x, starting from the root
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+Let us say we are searching for $6$ in the tree we saw earlier. 
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
+]
+\node (1)[fill=green]{8}
+child{
+    node (2){5}
+    child {
+        node (4){2}
+    }
+    child {
+        node (5){6}
+    }
+}
+child {
+    node (3){11}
+    child {node (6){10}}
+    child {node (7){15}}
+};
+
+\end{tikzpicture}
+\end{center}
+
+
+Since $8$ is greater than $6$, we move left.\\
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
+]
+\node (1){8}
+child{
+    node (2)[fill=green]{5}
+    child {
+        node (4){2}
+    }
+    child {
+        node (5){6}
+    }
+}
+child {
+    node (3){11}
+    child {node (6){10}}
+    child {node (7){15}}
+};
+
+\draw[white,very thick,->] (1) -- (2);
+\draw[black,very thick,->] (1) -- (2);
+\end{tikzpicture}
+\end{center}
+
+
+Since $5$ is less than $6$, we move right.\\
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
+]
+\node (1){8}
+child{
+    node (2){5}
+    child {
+        node (4){2}
+    }
+    child {
+        node (5)[fill=green]{6}
+    }
+}
+child {
+    node (3){11}
+    child {node (6){10}}
+    child {node (7){15}}
+};
+
+\draw[white,very thick,->] (1) -- (2);
+\draw[black,very thick,->] (1) -- (2);
+\draw[white,very thick,->] (2) -- (5);
+\draw[black,very thick,->] (2) -- (5);
+\end{tikzpicture}
+\end{center}
+
+We found it! If we had instead been looking for $7$, we would have taken the same path and ended 
+up at the right child of leaf $6$ (which is of course, an empty node) so we would have concluded that $7$ is not 
+in the tree. 
+
+\subsubsection*{Insertion}
+Insertion is similar to binary search. At each node we compare the key to be inserted with the 
+current key and move either left or right. If we find the key in the tree, we do nothing. If we reach an empty 
+node we insert the key there.
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+Insert(key,node)
+{
+    if (node is null)
+    {
+        node = new Node(value=key, left=null, right=null)
+        return
+    }
+
+    if(key < node.value)
+        Insert(key,node.left)
+
+    if(node.value == key)
+        return
+
+    if(key > node.value)
+        Insert(key,node.right)
+}
+
+Insert(x,root) \\Insert the key x, recurse starting from the root
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+
+Let us say we want to insert $7$ in the tree we saw earlier. \\
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw,minimum size=8mm}
+]
+\node (1)[fill=green]{8}
+child{
+    node (2){5}
+    child {
+        node (4){2}
+        child { node (8){} }
+        child { node (9){} }
+    }
+    child {
+        node (5){6}
+        child { node (10){} }
+        child { node (11){} }
+    }
+}
+child {
+    node (3){11}
+    child {
+        node (6){10}
+        child { node (12){} }
+        child { node (13){} }
+    }
+    child {
+        node (7){15}
+        child { node (14){} }
+        child { node (15){} }
+    }
+};
+\end{tikzpicture}
+\end{center}
+
+
+Since $8$ is greater than $7$, we move left.\\
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw,minimum size=8mm}
+]
+\node (1){8}
+child{
+    node [fill=green](2){5}
+    child {
+        node (4){2}
+        child { node (8){} }
+        child { node (9){} }
+    }
+    child {
+        node (5){6}
+        child { node (10){} }
+        child { node (11){} }
+    }
+}
+child {
+    node (3){11}
+    child {
+        node (6){10}
+        child { node (12){} }
+        child { node (13){} }
+    }
+    child {
+        node (7){15}
+        child { node (14){} }
+        child { node (15){} }
+    }
+};
+\draw[white,very thick,->] (1) -- (2); 
+\draw[black,very thick,->] (1) -- (2); 
+\end{tikzpicture}
+\end{center}
+
+Since $5$ is less than $7$, we move right.\\
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw,minimum size=8mm}
+]
+\node (1){8}
+child{
+    node (2){5}
+    child {
+        node (4){2}
+        child { node (8){} }
+        child { node (9){} }
+    }
+    child {
+        node [fill=green](5){6}
+        child { node (10){} }
+        child { node (11){} }
+    }
+}
+child {
+    node (3){11}
+    child {
+        node (6){10}
+        child { node (12){} }
+        child { node (13){} }
+    }
+    child {
+        node (7){15}
+        child { node (14){} }
+        child { node (15){} }
+    }
+};
+\draw[white,very thick,->] (1) -- (2); 
+\draw[black,very thick,->] (1) -- (2); 
+\draw[white,very thick,->] (2) -- (5); 
+\draw[black,very thick,->] (2) -- (5); 
+\end{tikzpicture}
+\end{center}
+
+Since $6$ is less than $7$, we move right.\\
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw,minimum size=8mm}
+]
+\node (1){8}
+child{
+    node (2){5}
+    child {
+        node (4){2}
+        child { node (8){} }
+        child { node (9){} }
+    }
+    child {
+        node (5){6}
+        child { node (10){} }
+        child { node (11)[fill=red]{} }
+    }
+}
+child {
+    node (3){11}
+    child {
+        node (6){10}
+        child { node (12){} }
+        child { node (13){} }
+    }
+    child {
+        node (7){15}
+        child { node (14){} }
+        child { node (15){} }
+    }
+};
+\draw[white,very thick,->] (1) -- (2); 
+\draw[black,very thick,->] (1) -- (2); 
+\draw[white,very thick,->] (2) -- (5); 
+\draw[black,very thick,->] (2) -- (5); 
+\draw[white,very thick,->] (5) -- (11);
+\draw[black,very thick,->] (5) -- (11);
+\end{tikzpicture}
+\end{center}
+
+Since the node is empty, we create a new node and put $7$ in it.\\
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw,minimum size=8mm}
+]
+\node (1){8}
+child{
+    node (2){5}
+    child {
+        node (4){2}
+        child { node (8){} }
+        child { node (9){} }
+    }
+    child {
+        node (5){6}
+        child { node (10){} }
+        child { node (11)[fill=green]{7} }
+    }
+}
+child {
+    node (3){11}
+    child {
+        node (6){10}
+        child { node (12){} }
+        child { node (13){} }
+    }
+    child {
+        node (7){15}
+        child { node (14){} }
+        child { node (15){} }
+    }
+};
+\draw[white,very thick,->] (1) -- (2); 
+\draw[black,very thick,->] (1) -- (2); 
+\draw[white,very thick,->] (2) -- (5); 
+\draw[black,very thick,->] (2) -- (5); 
+\draw[white,very thick,->] (5) -- (11);
+\draw[black,very thick,->] (5) -- (11);
+\end{tikzpicture}
+\end{center}
+
+
+\subsection{Balancing}
+
+The efficiency of a BST depends on its height. If the tree has height \(h\), 
+then search, insertion and deletion requires worst-case \(\Theta(h)\) time. 
+Ideally we would like $h=\Theta(\log n)$ where \(n\) is the number of stored keys. Unfortunately, a 
+BST can become highly unbalanced. For example, inserting the keys $1, 2, 3, 4, \dots n$ in this order 
+produces a tree with height \(n\). 
+
+
+\begin{center}
+\begin{tikzpicture}[
+level distance=12mm,
+every node/.style={circle,draw,minimum size=8mm}
+]
+\node {1}
+child[missing]
+child {
+    node {2}
+    child[missing]
+    child {
+        node {3}
+        child[missing]
+        child {
+            node {4}
+            child[missing]
+            child {node {5}}
+        }
+    }
+};
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\vspace{-0.3em}
+\textbf{Example with $\mathbf{n=5}$}
+\end{center}
+\vspace{1em}
+
+This tree is essentially a linked list. Its height is \(n\) and consequently all operations 
+require \(\Theta(n)\) time. To avoid this degeneration we need a 
+mechanism for changing the shape of a tree while preserving the BST property.
+
+\subsection{Rotations}
+These are operations that transform a tree into another tree with the same inorder traversal. 
+
+\subsubsection*{Left Rotation}
+\vspace{1em}
+\begin{center}
+\begin{tikzpicture}[
+every node/.style={
+    circle,
+    draw,
+    minimum size=7mm,
+    inner sep=0pt
+},
+level distance=12mm,
+sibling distance=18mm
+]
+
+%---------------- Original ----------------
+\begin{scope}
+\node (x) at (0,0) {5};
+\node (y) at (2,-1.2) {8};
+\node (a) at (1,-2.4) {6};
+\node (b) at (3,-2.4) {11};
+
+\draw (x)--(y);
+\draw (y)--(a);
+\draw (y)--(b);
+
+\node[draw=none] at (1,-3.5) {Before};
+\end{scope}
+
+%---------------- Intermediate ----------------
+\begin{scope}[xshift=6cm]
+\node (x) at (0,0) {5};
+\node (y) at (2.3,-0.2) {8};
+\node (a) at (1,-2.4) {6};
+\node (b) at (3,-1.6) {11};
+
+\draw[dashed,thick] (x)--(a);
+\draw (x)--(y);
+\draw[dashed,thick] (y)--(a);
+\draw (y)--(b);
+
+\node[draw=none] at (1,-3.5) {Rotation};
+\end{scope}
+
+%---------------- Final ----------------
+\begin{scope}[xshift=13cm]
+\node (y) at (0.6,0) {8};
+\node (x) at (-1.2,-1.2) {5};
+\node (a) at (0,-2.4) {6};
+\node (b) at (2.4,-1.2) {11};
+
+\draw (y)--(x);
+\draw (y)--(b);
+\draw (x)--(a);
+
+\node[draw=none] at (0,-3.5) {After};
+\end{scope}
+
+\draw[->,thick] (3.5,-1) -- (4.8,-1);
+\draw[->,thick] (9.5,-1) -- (10.8,-1);
+
+\end{tikzpicture}
+\end{center}
+
+\subsubsection*{Right Rotation}
+\vspace{1em}
+\begin{center}
+\begin{tikzpicture}[
+every node/.style={
+    circle,
+    draw,
+    minimum size=7mm,
+    inner sep=0pt
+},
+level distance=12mm,
+sibling distance=18mm
+]
+
+%---------------- Original ----------------
+\begin{scope}
+\node (y) at (0.6,0) {8};
+\node (x) at (-1.2,-1.2) {5};
+\node (a) at (0,-2.4) {6};
+\node (b) at (2.4,-1.2) {11};
+
+\draw (y)--(x);
+\draw (y)--(b);
+\draw (x)--(a);
+
+\node[draw=none] at (0,-3.5) {Before};
+\end{scope}
+
+\draw[->,thick] (3.5,-1) -- (4.8,-1);
+\draw[->,thick] (9.5,-1) -- (10.8,-1);
+
+%---------------- Intermediate ----------------
+\begin{scope}[xshift=6cm]
+\node (x) at (0,0) {5};
+\node (y) at (2.3,-0.2) {8};
+\node (a) at (1,-2.4) {6};
+\node (b) at (3,-1.6) {11};
+
+\draw[dashed,thick] (x)--(a);
+\draw (x)--(y);
+\draw[dashed,thick] (y)--(a);
+\draw (y)--(b);
+
+\node[draw=none] at (1,-3.5) {Rotation};
+\end{scope}
+
+%---------------- Final ----------------
+\begin{scope}[xshift=13cm]
+\node (x) at (0,0) {5};
+\node (y) at (2,-1.2) {8};
+\node (a) at (1,-2.4) {6};
+\node (b) at (3,-2.4) {11};
+
+\draw (x)--(y);
+\draw (y)--(a);
+\draw (y)--(b);
+
+\node[draw=none] at (1,-3.5) {After};
+\end{scope}
+
+\end{tikzpicture}
+\end{center}
+
+\subsection{Treaps}
+
+A treap augments every key with a randomly generated priority.
+
+Each node stores
+
+\[
+(\text{key},\text{priority}).
+\]
+
+A treap simultaneously satisfies:
+
+\begin{enumerate}
+\item The BST property with respect to keys.
+\item The heap property with respect to priorities.
+\end{enumerate}
+
+For example,
+
+\begin{center}
+\begin{tikzpicture}[
+every node/.style={draw,rounded corners}
+]
+\node {$8,100$}
+child {
+    node {$4,80$}
+    child {node {$2,30$}}
+    child {node {$6,60$}}
+}
+child {
+    node {$12,70$}
+    child {node {$10,50$}}
+    child {node {$14,20$}}
+};
+\end{tikzpicture}
+\end{center}
+
+The keys satisfy the BST ordering, while every parent has a larger priority than its children.
+
+The priorities are chosen independently at random when nodes are inserted.
+
+Because the priorities are random, the resulting tree shape behaves like a random BST and is therefore unlikely to become highly unbalanced.
+
+\subsection{Insertion}
+
+To insert a new key:
+
+\begin{enumerate}
+\item Insert it as in a standard BST.
+\item Assign a random priority.
+\item While the heap property is violated, perform rotations to move the new node upward.
+\end{enumerate}
+
+Thus insertion uses rotations to restore the heap property while preserving the BST property.
+
+\subsection{Deletion}
+
+To delete a node:
+
+\begin{enumerate}
+\item Repeatedly rotate the node downward until it becomes a leaf.
+\item Remove the leaf.
+\end{enumerate}
+
+Again, rotations preserve the BST structure throughout the process.
+
+\subsection{Performance}
+
+The priorities induce a random ordering on the nodes.
+
+Consequently, a treap has the same distribution as a random binary search tree.
+
+A classical result states that the expected height of a treap containing \(n\) keys is
+
+\[
+\Theta(\log n).
+\]
+
+Therefore,
+
+\[
+\begin{aligned}
+\text{Search} &= \Theta(\log n),\\
+\text{Insertion} &= \Theta(\log n),\\
+\text{Deletion} &= \Theta(\log n),
+\end{aligned}
+\]
+
+in expectation.
+
+Treaps thus provide a remarkably simple randomized alternative to 
+deterministic balanced trees such as AVL trees and red-black trees.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \section{Hash Tables}
 
