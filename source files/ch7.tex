@@ -1,6 +1,3 @@
-
-
-
 \chapter{Probabilistic Method}
 \section{Dominating Set}
 
@@ -320,7 +317,7 @@ X_{final} \ge \frac{m}{2}.
 subgraph containing at least half of the edges.\\
 
 
-\noindent\textbf{Why does this not work everytime?}\\
+\noindent\textbf{Why does this not work for all problems?}\\
 
 
 \noindent The properties of this particular problem we needed for this to work were -- 
@@ -337,6 +334,151 @@ one central node and \(n-1\) nodes connected to it and only it.}
 graph, where if you put the central node in dominated set you will get a dominating set of size \(n-1\), 
 but if you put it in dominating set you will get a dominating set of size 1. 
 The second property also fails because in further choices it is not 
-clear how to choose which set to put the node in, since we have no idea how to 
-determine any expectation of this problem.
+clear how to choose which set to put the node in to maximise the conditional expectation.
+
+
+\section{Array Construction}
+
+\subsection*{The Problem}
+
+In this problem, we must construct an array of $4n$ integers in which each of the values
+$1,2,\dots,n$ appears exactly four times, subject to the following condition --
+for a value $x$, let $p_{x,1}<p_{x,2}<p_{x,3}<p_{x,4}$ be the positions of its
+four occurrences. Then for every $x$ the three consecutive gaps
+\[
+  g_1 = p_{x,2}-p_{x,1},\qquad
+  g_2 = p_{x,3}-p_{x,2},\qquad
+  g_3 = p_{x,4}-p_{x,3}
+\]
+must be pairwise distinct. For instance, with $n=3$ the array
+$[1,1,2,1,2,3,1,3,2,2,3,3]$ works because the gaps are $(1,2,3)$ for $1$, $(2,4,1)$ for $2$
+and $(2,3,1)$ for $3$, each consisting of three different numbers.
+
+\subsection*{The Solution}
+Consider the naive randomised algorithm of simply generating a random array of $4n$ integers which have 4 of each 
+of $\{1,2,3,\dots,n\}$. We can then check if the condition holds for each of the $n$ values and if not, 
+generate again. This is a simple Las Vegas algorithm but as we will see, pretty effective 
+in generating the required construction quickly.
+
+\subsection*{Success Probability}
+Let the four positions of $x$, in increasing order, be
+$a_1<a_2<a_3<a_4$, and define the gaps
+\[
+  g_1=a_2-a_1,\qquad g_2=a_3-a_2,\qquad g_3=a_4-a_3,
+\]
+each a positive integer, with span $s=g_1+g_2+g_3=a_4-a_1$. Once the gaps are 
+fixed, the subset is determined by the starting position $a_1$ alone, which
+must satisfy $a_1\ge 1$ and $a_1+s=a_4\le N$.\\
+
+\noindent There are therefore exactly
+$N-s$ admissible subsets for each tuple of gaps with $s\le N-1$. Also note that the probability of 
+two gaps being equal is the same regardless of which pair of gaps we are referring to (by symmetry).
+
+\[
+  \Pr(g_1=g_2)=\Pr(g_2=g_3)=\Pr(g_1=g_3)
+\]
+
+\subsubsection*{Two Equal Gaps}
+When $g_1=g_2=g$ and $g_3=h$, $s=2g+h$. So the number of such subsets are $N-(2g+h)$. Double 
+summation over all possible $g$ and $h$ will yield all valid subsets and thus the exact probability.
+
+\[
+  \Pr(g_1=g_2)
+  =
+  \frac{1}{\binom{4n}{4}}\sum_{g=1}^{2n-1}\left(\sum_{h=1}^{4n-2g-1}\bigl(4n-2g-h\bigr)\right)
+  =
+  \frac{1}{\binom{4n}{4}}\sum_{g=1}^{2n-1}\binom{4n-2g}{2}
+  =
+  \frac{n(2n-1)(8n-5)}{3\cdot\binom{4n}{4}}
+\]
+
+\vspace{1em}
+\[
+\implies
+\Pr(g_1=g_2)
+=
+\frac{n(2n-1)(8n-5)}{n(2n-1)(4n-1)(4n-3)}
+=
+\frac{8n-5}{(4n-1)(4n-3)}
+\approx 
+\frac{1}{2n} + \Theta(\frac{1}{n^2})
+\]
+
+\subsubsection*{All Equal Gaps}
+Here $g_1=g_2=g_3=g$, so $s=3g$ and the number of subsets is $4n-3g$.\\
+
+\noindent The summation over g will go from 1 to $G=\bigl\lfloor\tfrac{4n-1}{3}\bigr\rfloor$.
+
+\[
+  \sum_{g=1}^{G}(4n-3g)
+  =4nG-\frac{3G(G+1)}{2}
+  =\frac{G\,(8n-3G-3)}{2}
+\]
+
+\[
+\implies
+  \Pr(g_1=g_2=g_3)
+  =\frac{G\,(8n-3G-3)}{2\binom{4n}{4}}
+  =\frac{3\,G\,(8n-3G-3)}{(2n)(2n-1)(4n-1)(4n-3)}
+\]
+
+\vspace{1em}
+\noindent Taking large n approximations and $G \approx \frac{4n}{3}$ gives
+
+\[
+\Pr(g_1=g_2=g_3) \approx \frac{4n\,(8n-4n)}{(2n)(2n)(4n)(4n)} \approx \frac{1}{4n^2}
+\]
+
+\subsubsection*{Inclusion-Exclusion}
+
+\[
+  \Pr(\text{bad value})=\Pr((g_1=g_2) \;\cup\; (g_2=g_3) \;\cup\; (g_1=g_3)) 
+\]
+
+\[
+  =
+  \Pr(g_1=g_2)+\Pr(g_2=g_3)+\Pr(g_1=g_3)-3\cdot\Pr(g_1=g_2=g_3)+\Pr(g_1=g_2=g_3)
+\]
+
+\[
+  =
+  3\Pr(g_1=g_2)-2\cdot\Pr(g_1=g_2=g_3)
+  \approx
+  3 \cdot (\frac{1}{2n}) - 2 \cdot (\frac{1}{4n^2}) + \Theta(\frac{1}{n^2})
+  \approx 
+  \frac{3}{2n}
+\]
+
+
+\[
+	\implies
+	\Pr[\text{bad value}] \approx \frac{3}{2n}
+\]
+
+\subsubsection*{Overall Success Probability}
+The arrangement fails exactly when the gaps of at least one value is bad. The union bound gives 
+$n \cdot \frac{3}{2n} = \frac{3}{2}$ as the upper bound on overall failure which is useless. 
+To find anything useful, we need to know something about how they are dependent on each other. We will skip 
+the exact analysis of this interdependence and notice that the placement of one value affects the gaps of 
+other value by at most 4. Since this won't affect most arrangements, they are almost\footnote{Yes, this is an 
+approximation but the graph of empirical data should convince you how good it is.} independent.
+
+\[
+  \Pr[\text{success}] \approx (1-\Pr(\text{bad value}))^n \approx \left(1-\frac{3}{2n}\right)^{n}
+\]
+
+\begin{figure}[ht]
+  \captionsetup{labelformat=empty}
+  \centering
+  \includegraphics[width=0.78\linewidth]{../Images/randcheck_failprob.pdf}
+  \caption{Interestingly, the method used to generate this graph is also a randomised algorithm -- the method of sampling. 
+We used the idea of law of large numbers by saying that the number of failures divided by total number of 
+runs (10000) should be a good approximation to the failure probability. Of course, 10000 was chosen 
+because it was large as compared to the $n$ under consideration.}
+  \label{fig:randcheck}
+\end{figure}
+
+Since each run takes $\Theta(n)$ time (generation and verification), the overall runtime 
+is also expected $\Theta(n)$ using Wald's equation\footnote{Refer \autoref{wald_eq}} since we have 
+expected number of runs to be $1/\Pr[\text{success}]$ which is constant hence $\Theta(1)$.
 
