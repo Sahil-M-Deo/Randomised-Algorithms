@@ -1344,7 +1344,7 @@ child{
     child {
         node (5){6}
         child { node (10){} }
-        child { node (11)[fill=red]{} }
+        child { node (11)[fill=red!65]{} }
     }
 }
 child {
@@ -1458,7 +1458,10 @@ require \(\Theta(n)\) time. To avoid this degeneration we need a
 mechanism for changing the shape of a tree while preserving the BST property.
 
 \subsection{Rotations}
-These are operations that transform a tree into another tree with the same inorder traversal. 
+These are operations that transform a tree into another tree with the same inorder traversal. From an 
+undirected graph perspective the only change that occurs is one edge is deleted and one is added. But from 
+a rooted tree perspective 2 father-child relationships are changed. There are two types of rotations (left 
+and right) which are inverse of each other.
 
 \subsubsection*{Left Rotation}
 \vspace{1em}
@@ -1495,12 +1498,12 @@ sibling distance=18mm
 \node (a) at (1,-2.4) {6};
 \node (b) at (3,-1.6) {11};
 
-\draw[dashed,thick] (x)--(a);
+\draw[dashed,thick,blue!80!black] (x)--(a);
 \draw (x)--(y);
-\draw[dashed,thick] (y)--(a);
+\draw[dashed,thick,red!90!black] (y)--(a);
 \draw (y)--(b);
 
-\node[draw=none] at (1,-3.5) {Rotation};
+\node[draw=none] at (1,-3.5) {Intermediate};
 \end{scope}
 
 %---------------- Final ----------------
@@ -1561,12 +1564,12 @@ sibling distance=18mm
 \node (a) at (1,-2.4) {6};
 \node (b) at (3,-1.6) {11};
 
-\draw[dashed,thick] (x)--(a);
+\draw[dashed,thick,red!90!black] (x)--(a);
 \draw (x)--(y);
-\draw[dashed,thick] (y)--(a);
+\draw[dashed,thick,blue!80!black] (y)--(a);
 \draw (y)--(b);
 
-\node[draw=none] at (1,-3.5) {Rotation};
+\node[draw=none] at (1,-3.5) {Intermediate};
 \end{scope}
 
 %---------------- Final ----------------
@@ -1586,112 +1589,735 @@ sibling distance=18mm
 \end{tikzpicture}
 \end{center}
 
-\subsection{Treaps}
+\subsection{Min-Heaps}
 
-A treap augments every key with a randomly generated priority.
-
-Each node stores
-
-\[
-(\text{key},\text{priority}).
-\]
-
-A treap simultaneously satisfies:
+A min-heap is a binary tree that satisfies two important properties:
 
 \begin{enumerate}
-\item The BST property with respect to keys.
-\item The heap property with respect to priorities.
-\end{enumerate}
-
-For example,
+\item \textbf{Complete}: Every level is completely filled except possibly the last 
+level, which is filled from left to right. 
 
 \begin{center}
 \begin{tikzpicture}[
-every node/.style={draw,rounded corners}
+minimum size=8mm,
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
 ]
-\node {$8,100$}
+\node {A}
 child {
-    node {$4,80$}
-    child {node {$2,30$}}
-    child {node {$6,60$}}
+node {B}
+child {node {D}}
+child {node {E}}
 }
 child {
-    node {$12,70$}
-    child {node {$10,50$}}
-    child {node {$14,20$}}
+node {C}
+child {node {F}}
+child {node {}}
 };
 \end{tikzpicture}
 \end{center}
 
-The keys satisfy the BST ordering, while every parent has a larger priority than its children.
+The above figure shows a complete binary tree.
 
-The priorities are chosen independently at random when nodes are inserted.
+\item \textbf{Min-Heap Property}:
+\begin{itemize}
+\item In a \textbf{Min-Heap}, every node is less than or equal to its children.
 
-Because the priorities are random, the resulting tree shape behaves like a random BST and is therefore unlikely to become highly unbalanced.
+\begin{center}
+\begin{tikzpicture}[
+minimum size=8mm,
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
+]
+\node {5}
+child{
+	node{10}
+	child {
+		node {20}
+	}
+	child {
+		node {30}
+	}
+}
+child {
+	node {15}
+	child {
+		node {25}
+	}
+	child {
+		node {}
+	}
+};
+\end{tikzpicture}
+\end{center}
 
-\subsection{Insertion}
+The above figure shows a min-heap. It can be easily proved that the root has the smallest value in a 
+min-heap. 
 
-To insert a new key:
-
-\begin{enumerate}
-\item Insert it as in a standard BST.
-\item Assign a random priority.
-\item While the heap property is violated, perform rotations to move the new node upward.
+\end{itemize}
 \end{enumerate}
 
-Thus insertion uses rotations to restore the heap property while preserving the BST property.
+A min-heap can support the \texttt{push} and \texttt{pop} operations.
 
-\subsection{Deletion}
+\subsubsection*{Popping}
+The \texttt{pop()} function returns the root of the heap and removes it from the heap. To maintain the heap, 
+we must then move some values up the tree. Logically, the smaller child should be moved up to the root. 
+This creates a vacancy in the subtree in which the child was pushed up. That subtree now behaves like a 
+smaller version of the original problem -- a heap from which the root was removed. So we can recursively 
+push the smaller child up until we hit empty node.
 
-To delete a node:
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+pop(root)
+{
+	ans=root.value
+	root.value=null
+	if(root.left < root.right)
+		root.value=pop(root.leftChild)
+	else
+		pop(root.rightChild)
+	return ans
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
 
+\subsubsection*{Pushing}
+
+The \texttt{push()} function adds a new value to the heap by putting the new value at the 
+bottom of the tree and then pushing it up until heap property is restored. 
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+push(x)
+{
+	curr=bottomLeftMostNode
+	curr.value=x
+
+	while(curr.value<curr.parent.value)
+	{
+		swap(curr.value,curr.parent.value)
+		curr=curr.parent
+	}
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+Let us insert $7$ into the following min-heap.
+
+\begin{center}
+\begin{tikzpicture}[
+minimum size=8mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw}
+]
+\node{5}
+child{
+	node{10}
+	child{ 
+		node{20}
+		child{node{40}}
+		child{node{}}
+	}
+	child {
+		node{30}
+		child{node{}}
+		child{node{}}
+	}
+}
+child {
+	node {15}
+	child {
+		node{25}
+		child{node{}}
+		child{node{}}
+	}
+	child {
+		node{50}
+		child{node{}}
+		child{node{}}
+	}
+};
+\end{tikzpicture}
+\end{center}
+
+
+Insert 7 in bottom left most node. We detect the violation $20>7$.
+\begin{center}
+\begin{tikzpicture}[
+minimum size=8mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw}
+]
+\node{5}
+child{
+	node{10}
+	child{ 
+		node[fill=red!65](1){20}
+		child{node{40}}
+		child{node[fill=red!65](2){7}}
+	}
+	child {
+		node{30}
+		child{node{}}
+		child{node{}}
+	}
+}
+child {
+	node {15}
+	child {
+		node{25}
+		child{node{}}
+		child{node{}}
+	}
+	child {
+		node{50}
+		child{node{}}
+		child{node{}}
+	}
+};
+\end{tikzpicture}
+\end{center}
+
+
+We swap them to solve the violation.
+\begin{center}
+\begin{tikzpicture}[
+minimum size=8mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw}
+]
+\node{5}
+child{
+	node{10}
+	child{ 
+		node(1){7}
+		child{node{40}}
+		child{node(2){20}}
+	}
+	child {
+		node{30}
+		child{node{}}
+		child{node{}}
+	}
+}
+child {
+	node {15}
+	child {
+		node{25}
+		child{node{}}
+		child{node{}}
+	}
+	child {
+		node{50}
+		child{node{}}
+		child{node{}}
+	}
+};
+\draw[<->,very thick] (1)--(2);
+\end{tikzpicture}
+\end{center}
+
+
+
+We detect the violation $10>7$.
+\begin{center}
+\begin{tikzpicture}[
+minimum size=8mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw}
+]
+\node{5}
+child{
+	node[fill=red!65]{10}
+	child{ 
+		node(1)[fill=red!65]{7}
+		child{node{40}}
+		child{node(2){20}}
+	}
+	child {
+		node{30}
+		child{node{}}
+		child{node{}}
+	}
+}
+child {
+	node {15}
+	child {
+		node{25}
+		child{node{}}
+		child{node{}}
+	}
+	child {
+		node{50}
+		child{node{}}
+		child{node{}}
+	}
+};
+\draw[<->,very thick] (1)--(2);
+\end{tikzpicture}
+\end{center}
+
+
+We swap them to solve the violation.
+\begin{center}
+\begin{tikzpicture}[
+minimum size=8mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw}
+]
+\node{5}
+child{
+	node(3){7}
+	child{ 
+		node(1){10}
+		child{node{40}}
+		child{node(2){20}}
+	}
+	child {
+		node{30}
+		child{node{}}
+		child{node{}}
+	}
+}
+child {
+	node {15}
+	child {
+		node{25}
+		child{node{}}
+		child{node{}}
+	}
+	child {
+		node{50}
+		child{node{}}
+		child{node{}}
+	}
+};
+\draw[<->,very thick] (1)--(2);
+\draw[<->,very thick] (3)--(1);
+\end{tikzpicture}
+\end{center}
+
+
+It can be proved that when there is no more violation involving the inserted value, there is no more 
+violation in the tree. Thus the heap property is restored.
+
+
+\subsection{Treaps}
+
+Each node stores a key and along with it a random priority. 
+
+\[
+\texttt{Node.value=(key,priority)}
+\]
+
+
+A treap simultaneously satisfies:
 \begin{enumerate}
-\item Repeatedly rotate the node downward until it becomes a leaf.
-\item Remove the leaf.
+\item The \textbf{BST property} with respect to keys.
+\item The \textbf{min-heap property} with respect to priorities.
 \end{enumerate}
 
-Again, rotations preserve the BST structure throughout the process.
 
-\subsection{Performance}
+\begin{center}
+\begin{tikzpicture}[
+minimum size=5mm,
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={draw,rounded corners}
+]
+\node {$8,7$}
+child {
+    node {$4,15$}
+    child {node {$3,30$}}
+    child {node {$6,60$}}
+}
+child {
+    node {$12,30$}
+    child {node {$10,50$}}
+    child {node {$14,70$}}
+};
+\end{tikzpicture}
+\end{center}
 
-The priorities induce a random ordering on the nodes.
+The above figure shows a treap.
 
-Consequently, a treap has the same distribution as a random binary search tree.
+\subsubsection*{Insertion}
 
-A classical result states that the expected height of a treap containing \(n\) keys is
+Insertion in a treap proceeds in two phases. First, we insert the new key exactly as in a 
+binary search tree. Then, if the heap property is violated, we restore it using rotations. Consider the 
+following treap, where each node stores a pair $(\text{key},\text{priority})$ and priorities 
+satisfy the min-heap property.
+
+\begin{center}
+\begin{tikzpicture}[
+minimum size=5mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={draw,rounded corners}
+]
+\node {$8,7$}
+child {
+    node {$4,15$}
+    child {
+		node {$3,30$}
+		child{node{}}
+		child{node{}}
+	}
+    child {
+		node {$6,60$}
+		child{node{}}
+		child{node{}}
+	}
+}
+child {
+    node {$12,30$}
+    child {
+		node {$10,50$}
+		child{node{}}
+		child{node{}}
+	}
+    child {
+		node {$14,70$}
+		child{node{}}
+		child{node{}}
+	}
+};
+\end{tikzpicture}
+\end{center}
+
+Suppose we wish to insert the node $(5,10)$.
+
+\paragraph{Step 1: BST Insertion}
+
+Ignoring priorities, we first insert the key according to the BST property -- the new node 
+becomes the left child of $(6,60)$.
+
+\begin{center}
+\begin{tikzpicture}[
+minimum size=5mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={draw,rounded corners}
+]
+\node (1){$8,7$}
+child {
+    node (2){$4,15$}
+    child {
+		node {$3,30$}
+		child{node{}}
+		child{node{}}
+	}
+    child {
+		node (3){$6,60$}
+		child{node(4){5,10}}
+		child{node{}}
+	}
+}
+child {
+    node {$12,30$}
+    child {
+		node {$10,50$}
+		child{node{}}
+		child{node{}}
+	}
+    child {
+		node {$14,70$}
+		child{node{}}
+		child{node{}}
+	}
+};
+
+\draw[->,very thick] (1)--(2);
+\draw[->,very thick] (2)--(3);
+\draw[->,very thick] (3)--(4);
+\end{tikzpicture}
+\end{center}
+
+The BST property holds, but the min-heap property is violated since $10<60$.
+
+\begin{center}
+\begin{tikzpicture}[
+minimum size=5mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={draw,rounded corners}
+]
+\node (1){$8,7$}
+child {
+    node (2){$4,15$}
+    child {
+		node {$3,30$}
+		child{node{}}
+		child{node{}}
+	}
+    child {
+		node [fill=red!73](3){$6,60$}
+		child{node(4)[fill=red!73]{5,10}}
+		child{node{}}
+	}
+}
+child {
+    node {$12,30$}
+    child {
+		node {$10,50$}
+		child{node{}}
+		child{node{}}
+	}
+    child {
+		node {$14,70$}
+		child{node{}}
+		child{node{}}
+	}
+};
+
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Step 2: Rotation at $(6,60)$}
+
+Strictly speaking rotation involves three nodes, so we imagine the right child of $(5,10)$ which is an empty 
+node. We now perform a right rotation at $(6,60)$.
+
+\usetikzlibrary{fit}
+
+\begin{center}
+\begin{tikzpicture}[minimum size=5mm, every node/.style={draw,rounded corners}]
+
+\begin{scope}
+\coordinate (a1) at (-1,1);
+\coordinate (a2) at (0.2,0.1);
+\node (b) at (1,-0.5) {$6,60$};
+\node (c) at (-0.5,-2) {$5,10$};
+\node (d) at (0.2,-3.2) {};
+\node[
+    draw,
+    dotted,
+    rounded corners,
+    fit=(b)(c)(d),
+    inner sep=8pt
+] {};
+\draw (a1)--(a2);
+\draw (b)--(c);
+\draw (c)--(d);
+\end{scope}
+
+\begin{scope}[xshift=8cm]
+\coordinate (a1) at (-1,1);
+\coordinate (a2) at (0.2,0.1);
+\node (b) at (1,-0.5) {$5,10$};
+\node (c) at (2.5,-2) {$6,60$};
+\node (d) at (1.8,-3.2) {};
+\draw (a1)--(a2);
+\draw (b)--(c);
+\draw (c)--(d);
+\node[
+    draw,
+    dotted,
+    rounded corners,
+    fit=(b)(c)(d),
+    inner sep=8pt
+] {};
+
+\end{scope}
+
+\draw[->,thick] (3,-1.5)--(7,-1.5);
+
+
+\end{tikzpicture}
+\end{center}
+
+The treap now becomes
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={draw,rounded corners}
+]
+\node {$8,7$}
+child {
+    node {$4,15$}
+    child {node {$3,30$}}
+    child {
+        node {$5,10$}
+        child[missing]
+        child {node {$6,60$}}
+    }
+}
+child {
+    node {$12,30$}
+    child {node {$10,50$}}
+    child {node {$14,70$}}
+};
+\end{tikzpicture}
+\end{center}
+
+The heap property is still violated since
 
 \[
-\Theta(\log n).
+10 < 15.
 \]
 
-Therefore,
+\paragraph{Step 3: Rotation at $(4,15)$}
+
+We imagine the left child of $(5,10)$ (which is an empty node) for the purposes of the rotation.
+
+\begin{center}
+\begin{tikzpicture}[minimum size=5mm, every node/.style={draw,rounded corners}]
+
+\begin{scope}
+\coordinate (a1) at (-1,1);
+\coordinate (a2) at (0.2,0.1);
+\node (b) at (1,-0.5) {$4,15$};
+\node (c) at (2.5,-2) {$5,10$};
+\node (d) at (-0.6,-2) {$3,30$};
+\node (e) at (4,-3.2) {$6,60$};
+\node (f) at (1.3,-3.2) {};
+
+\draw (a1)--(a2);
+\draw (b)--(c);
+\draw (b)--(d);
+\draw (c)--(e);
+\draw (c)--(f);
+
+\node[
+    draw,
+    dotted,
+    rounded corners,
+    fit=(b)(c)(f),
+    inner sep=8pt
+] {};
+
+\end{scope}
+
+\begin{scope}[xshift=12cm]
+\coordinate (a1) at (-1,1);
+\coordinate (a2) at (0.2,0.1);
+
+\node (b) at (1,-0.5) {$5,10$};
+\node (c) at (-0.2,-2) {$4,15$};
+\node (d) at (-1.7,-3.2) {$3,30$};
+\node (e) at (2.5,-2) {$6,60$};
+\node (f) at (0.9,-3.2) {};
+
+\draw (a1)--(a2);
+\draw (b)--(c);
+\draw (c)--(d);
+\draw (b)--(e);
+\draw (c)--(f);
+\node[
+    draw,
+    dotted,
+    rounded corners,
+    fit=(b)(c)(f),
+    inner sep=8pt
+] {};
+
+\end{scope}
+
+\draw[->,thick] (5,-1.5)--(8,-1.5);
+
+\end{tikzpicture}
+\end{center}
+
+The treap now becomes
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={draw,rounded corners}
+]
+\node {$8,7$}
+child {
+    node {$5,10$}
+    child {
+        node {$4,15$}
+        child {node {$3,30$}}
+        child[missing]
+    }
+    child {
+        node {$6,60$}
+    }
+}
+child {
+    node {$12,30$}
+    child {node {$10,50$}}
+    child {node {$14,70$}}
+};
+\end{tikzpicture}
+\end{center}
+
+The heap property is now satisfied at every node:
 
 \[
-\begin{aligned}
-\text{Search} &= \Theta(\log n),\\
-\text{Insertion} &= \Theta(\log n),\\
-\text{Deletion} &= \Theta(\log n),
-\end{aligned}
+7 < 10,\qquad
+10 < 15,\qquad
+10 < 60,\qquad
+30 < 50,\qquad
+30 < 70.
 \]
 
-in expectation.
+The BST property is also preserved because rotations never change the
+in-order ordering of keys.
 
-Treaps thus provide a remarkably simple randomized alternative to 
-deterministic balanced trees such as AVL trees and red-black trees.
+\paragraph{Final Treap}
 
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={draw,rounded corners}
+]
+\node {$8,7$}
+child {
+    node {$5,10$}
+    child {
+        node {$4,15$}
+        child {node {$3,30$}}
+        child[missing]
+    }
+    child {
+        node {$6,60$}
+    }
+}
+child {
+    node {$12,30$}
+    child {node {$10,50$}}
+    child {node {$14,70$}}
+};
+\end{tikzpicture}
+\end{center}
 
-
-
-
-
-
-
-
-
-
-
-
-
+Hence the insertion of $(5,10)$ is complete.
 
 \section{Hash Tables}
 
@@ -2019,7 +2645,7 @@ In case we enter a cycle and insertion cannot be completed, choose new hash func
 rebuild the table from scratch. 
 
 Note that overall, as long as we keep $n/m$ low, it can be shown that the expected time to 
-insert an element is \(\Theta(1)\) time similar to hash tables.
+insert an element is \(\Theta(1)\) average time similar to hash tables.
 \subsection{Search}
 
 To determine whether an element $x$ is present, we simply check the 
