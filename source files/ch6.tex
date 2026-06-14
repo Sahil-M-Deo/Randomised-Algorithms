@@ -1,314 +1,1686 @@
-\chapter{Number-Theoretic Algorithms}
+\chapter{Data Structures}
 
-\section{Introduction}
+\section{Skip Lists}
 
-Prime numbers have fascinated mathematicians for many years. 
-They appear deceptively simple to define -- a prime is 
-a positive integer greater than one whose only divisors 
-are $1$ and itself. Yet many of the deepest questions in 
-mathematics revolve around the distribution and properties of primes.
+\subsection*{Why not just use Arrays?}
+Suppose we store the following array in contiguous memory:
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
 
-Beyond their theoretical significance, prime numbers occupy a central position in modern computing. 
-Public-key cryptographic systems such as \texttt{RSA} rely on arithmetic 
-involving very large primes, often hundreds or thousands of bits long. 
-As a result, computers routinely face questions such as
+% Original array
+\node (a1) at (0,0) {1};
+\node (a2) at (1,0) {2};
+\node (a3) at (2,0) {3};
+\node (a4) at (3,0) {4};
+\node (a5) at (4,0) {5};
+\node (dots) at (5,0) {$\cdots$};
+\node (a50) at (6,0) {n};
+\end{tikzpicture}
+\]
 
+Suppose we wish to insert the element \(67\) between \(3\) and \(4\).
+
+Since arrays occupy contiguous memory, every element beginning from \(4\) must be shifted one position to the right in order to create space for the new element.
+
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
+
+% Original array
+\node (a1) at (0,0) {1};
+\node (a2) at (1,0) {2};
+\node (a3) at (2,0) {3};
+\node (a4) at (3,0) {4};
+\node (a5) at (4,0) {5};
+\node (dots) at (5,0) {$\cdots$};
+\node (a50) at (6,0) {n};
+
+% Empty boxes
+\node (e1) at (7,0) {};
+\node (e2) at (8,0) {};
+
+% New element above
+\node[fill=green!20] (new) at (3,1.6) {67};
+
+% Down arrow
+\draw[->,thick] (new) -- (a4);
+
+% Shift arrows
+\draw[->,thick] ($(a4.east)+(-0.18,0)$) -- ($(a5.west)+(0.18,0)$);
+
+\draw[->,thick] ($(a5.east)+(-0.18,0)$) -- ($(dots.west)+(0.18,0)$);
+
+\draw[->,thick] ($(a50.east)+(-0.18,0)$) -- ($(e1.west)+(0.18,0)$);
+
+\end{tikzpicture}
+\]
+
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
+
+% Original array
+\node (a1) at (0,0) {1};
+\node (a2) at (1,0) {2};
+\node (a3) at (2,0) {3};
+\node [fill=green!20](a4) at (3,0) {67};
+\node (a5) at (4,0) {4};
+\node (a6) at (5,0) {5};
+\node (dots) at (6,0) {$\cdots$};
+\node (a50) at (7,0) {n};
+\node (e1) at (8,0) {};
+\end{tikzpicture}
+\]
+
+Insertion into an array requires shifting \(\Theta(n)\) elements in the worst as well as
+ average case, so a single insertion is \(\Theta(n)\) time complexity.
+
+\subsection*{How are Linked Lists any better?}
+
+Unlike arrays, linked lists do not store elements contiguously in memory.
+Instead, each element stores \texttt{\{Value,Next\}}, where \texttt{Next} is a pointer to the next element.\\
+
+\noindent So a linked list containing the elements
+$1,2,3,4,5,\dots,n$
+may be represented as
+
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
+
+% Nodes
+\node (a1) at (0,0) {1};
+\node (a2) at (1.5,0) {2};
+\node (a3) at (3,0) {3};
+\node (a4) at (4.5,0) {4};
+\node (a5) at (6,0) {5};
+\node (dots) at (7.5,0) {$\cdots$};
+% Existing arrows
+\draw[->] (a1) -- (a2);
+\draw[->] (a2) -- (a3);
+\draw[->] (a3) -- (a4);
+\draw[->] (a4) -- (a5);
+\draw[->] (a5) -- (dots);
+\end{tikzpicture}
+\]
+
+\noindent To insert an element 67 between say 3 and 4, we simply create a new node containing 67 and link it between 3 and 4.
+
+\[
+\textbf{Step 1: Remove the old connection}
+\]
+
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
+
+% Nodes
+\node (a1) at (0,0) {1};
+\node (a2) at (1.5,0) {2};
+\node (a3) at (3,0) {3};
+\node (a4) at (4.5,0) {4};
+\node (a5) at (6,0) {5};
+\node (dots) at (7.5,0) {$\cdots$};
+% Hovering node
+\node[fill=green!20] (new) at (3.75,1.5) {67};
+
+% Existing arrows
+\draw[->] (a1) -- (a2);
+\draw[->] (a2) -- (a3);
+
+% Broken connection
+\draw[red,->] (a3) -- (a4);
+
+\draw[->] (a4) -- (a5);
+\draw[->] (a5) -- (dots);
+\end{tikzpicture}
+\]
+
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
+
+% Nodes
+\node (a1) at (0,0) {1};
+\node (a2) at (1.5,0) {2};
+\node (a3) at (3,0) {3};
+\node (a4) at (4.5,0) {4};
+\node (a5) at (6,0) {5};
+\node (dots) at (7.5,0) {$\cdots$};
+% Hovering node
+\node[fill=green!20] (new) at (3.75,1.5) {67};
+
+% Existing arrows
+\draw[->] (a1) -- (a2);
+\draw[->] (a2) -- (a3);
+
+\draw[->] (a4) -- (a5);
+\draw[->] (a5) -- (dots);
+\end{tikzpicture}
+\]
+
+\[
+\textbf{Step 2: Create new connections}
+\]
+
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
+
+% Nodes
+\node (a1) at (0,0) {1};
+\node (a2) at (1.5,0) {2};
+\node (a3) at (3,0) {3};
+\node (a4) at (4.5,0) {4};
+\node (a5) at (6,0) {5};
+\node (dots) at (7.5,0) {$\cdots$};
+% New node
+\node[fill=green!20] (new) at (3.75,1.5) {67};
+
+% Existing arrows
+\draw[->] (a1) -- (a2);
+\draw[->] (a2) -- (a3);
+\draw[->] (a4) -- (a5);
+\draw[->] (a5) -- (dots);
+% Curved insertion arrows
+\draw[->,thick,bend left=25] (a3) to (new);
+\draw[->,thick,bend left=25] (new) to (a4);
+
+\end{tikzpicture}
+\]
+
+\[
+\begin{tikzpicture}[
+>=Stealth,
+every node/.style={
+draw,
+minimum width=0.9cm,
+minimum height=0.8cm,
+font=\small
+}
+]
+
+% Nodes
+\node (a1) at (0,0) {1};
+\node (a2) at (1.5,0) {2};
+\node (a3) at (3,0) {3};
+\node [fill=green!20](a4) at (4.5,0) {67};
+\node (a5) at (6,0) {4};
+\node (dots) at (7.5,0) {$\cdots$};
+% Existing arrows
+\draw[->] (a1) -- (a2);
+\draw[->] (a2) -- (a3);
+\draw[->] (a3) -- (a4);
+\draw[->] (a4) -- (a5);
+\draw[->] (a5) -- (dots);
+\end{tikzpicture}
+\]
+
+\[
+\textbf{Done!}
+\]
+
+We used a constant number of pointer operations to insert an element into the list. Thus insertion is \(\Theta(1)\) time complexity.
+\subsection*{Why Skip Lists?}
+
+Although insertion is \(\Theta(1)\) time complexity, searching for an element in linked 
+lists is \(\Theta(n)\) time complexity because we have to traverse the whole list. Even if the linked list is "sorted", 
+we can not binary search since that requires random access in constant time, which a linked list can not provide.\\
+
+
+\noindent So the idea of skip lists is to bypass that limitation by
+adding ``express lanes'' to a linked list. Instead of traversing every element one-by-one, 
+we maintain additional higher-level lists that skip\footnote{Hence the name!} over many elements at once.\\
+
+
+\noindent Consider the following skip list --
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+% Level labels
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Nodes
+\node (a2) at (1,2) {1};
+\node (e2) at (5,2) {9};
+
+\node (a1) at (1,1) {1};
+\node (c1) at (3,1) {5};
+\node (e1) at (5,1) {9};
+
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node (c0) at (3,0) {5};
+\node (d0) at (4,0) {7};
+\node (e0) at (5,0) {9};
+
+% Horizontal arrows
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+% Vertical arrows
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+
+\noindent Higher levels contain fewer elements and allow us to jump across large portions of the list quickly.
+
+\subsection{The Structure}
+
+The presence of an element in a level is determined by a random choice. An element occurs 
+in level $i$ with probability $2^{-i}$. This means every element must occur in level 0.\\
+
+
+\noindent Consequently, $\Pr(\text{node reaches level }k)=\frac1{2^k}$. Thus, the expected 
+number of nodes in level \(k\) is $\frac{n}{2^k}$.
+
+\[
+\begin{array}{|c|c|}
+\hline
+\textbf{Level} & \textbf{Expected Number of Nodes} \\
+\hline
+0 & n \\
+\hline
+1 & n/2\\
+\hline
+2 & n/4 \\
+\hline
+3 & n/8 \\
+\hline
+\vdots & \vdots \\
+\hline
+\end{array}
+\]
+
+\subsection{Expected Height}
+
+Let \(H\) be the height of a skip list with \(n\) independent nodes, where each node is promoted to the next level with probability \(1/2\). Then:
+\[
+\Pr(H\ge h)=1-(1-2^{-h})^n
+\]
+
+We use the tail-sum formula
+\[
+\mathbb{E}[H]=\sum_{h=1}^{\infty}\Pr(H\ge h)
+=\sum_{h=1}^{\infty}\left(1-(1-2^{-h})^n\right)
+\]
+
+
+\paragraph{Step 1: Split the expectation}
+
+
+Let $h_o=\lfloor \log_2 n \rfloor$
+\[
+\mathbb{E}[H]
+=\sum_{h\le h_0}\Pr(H\ge h)
++\sum_{h>h_0}\Pr(H\ge h)
+=S_1+S_2
+\]
+
+
+\paragraph{Step 2: Bounding \(S_1\)}
+
+\[
+\text{Let } Pr(H\ge h)=f(h)=1-(1-2^{-h})^{n}
+\implies 
+f(h_{o}) \le f(h) \le f(0) \; \forall \; 0 \le h \le h_o
+\]
+
+\[
+\implies 
+\sum_{h=1}^{h_o}f(h_{o}) \le \sum_{h=1}^{h_o}f(h) \le \sum_{h=1}^{h_o}f(0)
+\]
+
+Since $f(0)=1$, and $f(h_o) \ge 1-(1-\frac{1}{n})^n \ge 1-\frac{1}{e}$ we get:
+
+\[
+h_o(1-\frac{1}{e})\le S_1 \le h_o
+\]
+
+\paragraph{Step 3: Bounding \(S_2\)}
+
+
+Since $(1-x)^{n} \ge 1-nx$,
+\[
+1-(1-2^{-h})^n \le n \cdot 2^{-h}
+\implies
+\sum_{h>h_0}n \cdot 2^{-h} \ge S_2
+\]
+
+Since LHS of that inequality evaluates to $\approx 2$, we can guarantee $S_2 \le 3$
+\paragraph{Step 4: Combining bounds}
+
+\[
+(1-e^{-1})h_0 + 3\le \mathbb{E}[H] \le h_0 + 3
+\]
+
+Since \(h_0 \approx \log_2 n\), we get $\mathbb{E}[H]=\Theta(\log n)$
+
+\subsubsection*{Geometric Decline Theorem}
+
+Recall that using the markov inequality, we proved that the height of the 
+recursion tree for \texttt{QuickSelect} is at most \(\Theta(\log n)\) \\
+
+\noindent Using the same technique, we can show that if a 
+sequence of nonnegative random variables satisfies $\frac{\mathbb E[X_{i+1}]}{\mathbb E[X_i]} \le p 
+\; (0<p<1)$ and \(T\) denotes the first index for which \(X_T \le 1\), then
+\[
+\mathbb E[T] \le \Theta(\log (X_0))
+\]
+
+\vspace{1em}
+
+\noindent \textbf{Applying the Theorem}\\
+
+\noindent Let \(X_i\) denote the number of nodes present at level \(i\) of the skip list. Since 
+every node is promoted independently with probability \(1/2\),
+\[
+\mathbb E[X_i]
+=
+n\left(\frac12\right)^i
+\implies
+\frac{\mathbb E[X_{i+1}]}{\mathbb E[X_i]}
+=
+\frac12
+\]
+
+The height of the skip list is precisely the highest level 
+containing at least one node. Equivalently, if $H=\min\{i:X_i \le 1\}$ then the height is H.
+
+Applying the Geometric-Decline theorem with \(p=\frac12\) gives
+\[
+\mathbb E[H] \le \Theta(\log n)
+\]
+
+\noindent \textbf{Why did we do the first method at all?}\\
+
+In the second method we did not prove a lower bound! Although even in further 
+analyses we won't need the lower bound, it is good to have 
+established that it is exactly $\Theta(\log n)$.
+Also, we revised the "splitting" technique 
+for finding the complexity of an expression, which is a useful tool in general.
+\subsection{Search}
+
+Suppose we wish to search for the element \(7\).
+
+We begin at the top left level and move right while the next element is \(\leq 7\).
+Once that element is strictly greater than \(7\), we move down to the next level.
+Repeat until we reach the bottom level.\\
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+contains(x)
+{
+    current = top-left node
+    while current exists
+    {
+
+        while current.right exists and is <= x
+            current = current.right
+
+        if current.value == x
+            return FOUND
+
+        current = current.down
+    }
+    
+    return NOT FOUND
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+\paragraph{Step 1: Start at top, check right}
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Level 2
+\node[draw,rectangle,fill=green!30] (a2) at (1,2) {1};
+\node[draw,rectangle,fill=red!30] (e2) at (5,2) {9};
+
+% Level 1
+\node (a1) at (1,1) {1};
+\node (c1) at (3,1) {5};
+\node (e1) at (5,1) {9};
+
+% Level 0
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node (c0) at (3,0) {5};
+\node (d0) at (4,0) {7};
+\node (e0) at (5,0) {9};
+
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+
+Since on the right we have an element strictly greater than \(7\), we intend to move down.
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Level 2
+\node[draw,rectangle,fill=green!30] (a2) at (1,2) {1};
+\node[draw,rectangle,fill=red!30] (e2) at (5,2) {9};
+
+% Level 1
+\node [draw,rectangle,fill=yellow!30] (a1) at (1,1) {1};
+\node (c1) at (3,1) {5};
+\node (e1) at (5,1) {9};
+
+% Level 0
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node (c0) at (3,0) {5};
+\node (d0) at (4,0) {7};
+\node (e0) at (5,0) {9};
+
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+\paragraph{Step 2: Moved down, now check right}
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Level 2
+\node (a2) at (1,2) {1};
+\node (e2) at (5,2) {9};
+
+% Level 1
+\node[draw,rectangle,fill=green!30] (a1) at (1,1) {1};
+\node[draw,rectangle,fill=yellow!40] (c1) at (3,1) {5};
+\node (e1) at (5,1) {9};
+
+% Level 0
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node (c0) at (3,0) {5};
+\node (d0) at (4,0) {7};
+\node (e0) at (5,0) {9};
+
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+
+Since \(5 \leq 7\), we intend to move right.
+\paragraph{Step 3: Moved right, check right}
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Level 2
+\node (a2) at (1,2) {1};
+\node (e2) at (5,2) {9};
+
+% Level 1
+\node (a1) at (1,1) {1};
+\node[draw,rectangle,fill=green!30] (c1) at (3,1) {5};
+\node[draw,rectangle,fill=red!30] (e1) at (5,1) {9};
+
+% Level 0
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node (c0) at (3,0) {5};
+\node(d0) at (4,0) {7};
+\node (e0) at (5,0) {9};
+
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+
+Since \(9 > 7\), we intend to move down.
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Level 2
+\node (a2) at (1,2) {1};
+\node (e2) at (5,2) {9};
+
+% Level 1
+\node (a1) at (1,1) {1};
+\node[draw,rectangle,fill=green!30] (c1) at (3,1) {5};
+\node[draw,rectangle,fill=red!30] (e1) at (5,1) {9};
+
+% Level 0
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node [draw,rectangle,fill=yellow!30](c0) at (3,0) {5};
+\node(d0) at (4,0) {7};
+\node (e0) at (5,0) {9};
+
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+\paragraph{Step 4: Moved down, check right}
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Level 2
+\node (a2) at (1,2) {1};
+\node (e2) at (5,2) {9};
+
+% Level 1
+\node (a1) at (1,1) {1};
+\node (c1) at (3,1) {5};
+\node (e1) at (5,1) {9};
+
+% Level 0
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node[draw,rectangle,fill=green!30] (c0) at (3,0) {5};
+\node[draw,rectangle,fill=yellow!40] (d0) at (4,0) {7};
+\node(e0) at (5,0) {9};
+
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+
+\paragraph{Step 5: Moved right, found the target!}
+
+\[
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Level 2
+\node (a2) at (1,2) {1};
+\node (e2) at (5,2) {9};
+
+% Level 1
+\node (a1) at (1,1) {1};
+\node (c1) at (3,1) {5};
+\node(e1) at (5,1) {9};
+
+% Level 0
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node (c0) at (3,0) {5};
+\node[draw,rectangle,fill=green!30] (d0) at (4,0) {7};
+\node(e0) at (5,0) {9};
+
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
+\]
+
+We move right to \(7\) and locate the desired element.
+
+
+\subsection{Insertion}
+One may wonder why skip lists use randomization at all.
+Could we not deterministically place
 \begin{itemize}
-\item Is a given integer prime?
-\item How can a large prime be generated efficiently?
-\item If an integer is composite, can its factors be found quickly?
+\item every second element in level \(1\),
+\item every fourth element in level \(2\),
+\item every eighth element in level \(3\),
+\item and so on?
 \end{itemize}
 
-At first glance, these problems appear daunting. Consider an 
-integer with several hundred decimal digits. Testing 
-divisibility by every smaller integer is clearly infeasible, 
-and even more sophisticated deterministic approaches 
-may require substantial computational effort.\\
+While this would indeed support logarithmic search complexity, insertions and 
+deletions would become expensive. For example, inserting a new element near the 
+beginning of the list changes which elements are the second, fourth, eighth, $\dots$ elements of the list.\\
 
-\noindent Surprisingly, randomness provides an elegant alternative. Instead of attempting to prove 
-directly that a number is prime, randomized algorithms often 
-search for evidence that it is composite. A carefully 
-chosen random experiment can reveal such evidence with high probability. \\
+\noindent Consequently, many levels may require rebuilding. Randomization avoids 
+this problem by assigning heights independently to each node. Thus, updates are 
+$\Theta(height)=\Theta(\log n)$ while the structure stays balanced in expectation.
+
+The insertion operation in a skip list closely mirrors the search procedure. 
+In fact, insertion is essentially a search followed by a series of pointer modifications. To insert a value \(x\), we first perform the standard search starting 
+from the topmost level. At each level, we move right until we either find \(x\) or encounter 
+the first node with a key greater than \(x\) (or reach the end of the list).
+
+If the key \(x\) is found during this traversal, then we do nothing. Otherwise, the 
+search naturally terminates at the position where \(x\) should logically appear 
+in the bottom level. This position is determined by the first “blocking” node 
+whose key is greater than \(x\), or by reaching a null pointer at the end of the list.
+
+Once this position is identified, insertion proceeds as follows. We insert \(x\) immediately to the left of the blocking node at level 
+\(0\). After placing it in the bottom layer, we decide randomly (typically 
+with probability \(1/2\)) whether the node should also appear 
+in higher levels. If it is promoted, we move upward level by level, and 
+at each level we again insert it in the same relative horizontal position, 
+maintaining alignment with the structure discovered during the search phase.
+
+Thus, the update process reuses the search path and only modifies pointers locally 
+along that path. This is what ensures that skip list insertion remains logarithmic in expected time.
 
 
-\noindent In this chapter, we will not be treating multiplication and 
-division as constant time operations. Since these algorithms frequently work with numbers 
-of the order $10^100$ or even larger, we will assume that multiplication and division are 
-$\Theta(\log^2 n)$ time, since a number $n$ has $\Theta(\log n)$ digits.
-\section{Fermat Test}
-
-The simplest algorithm to test the primality of an integer \(n\) is to check for 
-divisibility by every integer from \(2\) up to \(\sqrt{n}\). Using the fact that divison takes $\Theta(\log^2 n)$, the whole algorithm
-runs in \(\Theta(\sqrt{n}\log^2 n)\) time. Any algorithm we come up with should be at least as efficient as this!\\
 
 
-\noindent The central result underlying our first algorithm is 
-Fermat's Little Theorem. Let the set of primes be denoted by \(\mathbb{P}\) and 
-the set \{0,1,\dots\} by \(\mathbb{N}\).
 
-\medskip
 
-\subsection{Fermat's Little Theorem}
-\[
-p \in \mathbb{P}, a \in \mathbb{N} \implies a^{p} \equiv a \hspace{-0.8em} \pmod{p}
-\]
 
-\medskip
 
-A useful equivalent form is obtained if $p \nmid a$, in which case we can divide both sides by \(a\) to get
-\[
-a^{p-1} \equiv 1 \hspace{-0.8em} \pmod p
-\]
+\section{Treaps}
 
-\medskip
+Treaps are randomized balanced binary search trees. They combine two ideas:
 
-This observation immediately suggests a test for primality. Given an integer \(n\), 
-choose some value \(a\), compute \(a^{n-1}\bmod n\), and check whether the congruence holds. If the 
-congruence fails, then \(n\) cannot be prime.
+\begin{enumerate}
+\item The \emph{binary search tree} property, which allows efficient searching.
+\item The \emph{heap} property, which is used to maintain balance.
+\end{enumerate}
 
-\subsection{The Algorithm}
+In a simple binary search tree, the insertion order matters. Certain orders can make the height $\Theta(n)$ 
+while others can make it $\Theta(\log n)$. But if we average over all insertion orders, the height 
+is $\Theta(\log n)$. So it seems to avoid adversarial inputs we should randomise the insertion order 
+and the tree will be balanced in expectation! But the whole point of the data structure 
+is we can insert elements at any time so we can not really manipulate the input order.\\
 
-\begin{center}
-\begin{minipage}{0.9\linewidth}
-\begin{framed}
-\begin{Verbatim}[commandchars=+\[\]]
 
-exp(a, x, n) // computes a^x modulo n in O(log x)
-{
-    if x == 0
-        return 1
-    y = exp(a, x/2, n)
-    if x even
-        return (y*y) mod n
-    else
-        return (a*y*y) mod n
+This brings us to the idea of assigning each element an index (called a priority) just before insertion and 
+then whenever an element is inserted using the standard binary search tree way, we 
+modify the existing tree to pretend as if it was inserted in increasing order of the 
+priorities. To achieve this, we define an operation called \emph{rotation}.\\
+
+
+A \emph{rotation} preserves the binary search property while ``changing'' the order of insertion. Thus we ensure a random insertion order 
+and the treap remains balanced in expectation. This is a relatively simple implementation as compared to 
+Red-Black Trees which stay balanced using rotations as well as recolorings.
+
+\subsection{Binary Trees}
+A binary tree is a rooted tree in which every node has at most two children, 
+called the left child and the right child. For implementation purposes, the \texttt{struct Node} has 
+three pieces of data -- its own value, the pointer to its left child, and the pointer to its right child. 
+If the child does not exist, the pointer is set to \texttt{nullptr}. We may show an empty node if there 
+is no child for clarity in some figures.
+
+\begin{tikzpicture}[
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
+]
+\node {A}
+child {
+    node {B}
+    child {node {D}}
+    child {node {E}}
 }
+child {
+    node {C}
+    child {node {F}}
+    child {node {G}}
+};
+\end{tikzpicture}
 
-PrimalityTest(n) // for n>=4
-{
-    if(n even)
-        return "composite"
-    
-    choose a random a in {2, ..., n-2} 
+The topmost node is called the \textbf{root}. A node with no children is called a \textbf{leaf}. 
+Every node together with all of its descendants forms a \textbf{subtree}.
 
-    /*We avoid a=1 and a=n-1 since they trivially satisfy 
-    the congruence even when n is composite */
- 
-    if exp(a, n-1, n) != 1
-        return "composite"
-    else
-        return "probably prime"
-}
-\end{Verbatim}
-\vspace{-4mm}
-\end{framed}
-\end{minipage}
-\end{center}
-Note the rather beautiful technique used in the function\footnote{This is sometimes called the binary exponentiation algorithm.}
-\texttt{exp(a, x, n)}.
-Another way of looking at it is that we find the binary expansion of \(x\) and compute the 
-powers of \(a\) corresponding to the bits of \(x\) using repeated squaring.\\
-
-\subsection{Error Probability}
-
-The natural question is --
-\begin{quote}
-"How often can a composite number fool the test?"
-\end{quote}
-
-For many composite integers the probability is quite small. 
-Unfortunately, there exists a remarkable family of numbers 
-that pass Fermat's test for \emph{every} admissible choice of \(a\).
-
-These numbers are known as Carmichael\footnote{The smallest Carmichael number is 561. It has been proven 
-that there are infinitely many Carmichael numbers.} numbers, and they expose a fundamental weakness of the algorithm.
-
-\section{Miller--Rabin Test}
-
-\subsection{A Key Property}
-
-Let \(p\) be an odd prime and let d such that
-\[
-p-1=2^s d, \hspace{1.5em} d \text{ is odd}
-\]
-
-\[
-\text{Define }
-x_i=a^{2^{i}d} \hspace{-0.7em} \pmod{p}, i \in \mathbb{N}
-\iff
-x_0=a^{d},
-\quad
-x_1=a^{2d},
-\quad
-x_2=a^{4d},
-\quad
-\ldots,
-\quad
-x_s=a^{2^s d}
-\]
-
-\vspace{1em}
-\noindent By Fermat's Little Theorem, we have $x_s=a^{p-1}\equiv1\pmod p$.\\
-
-
-\noindent Clearly, each term is the square of the previous one modulo \(p\). That is,
-\[
-x_{i+1}
-\equiv
-x_i^2
-\hspace{-0.7em}
-\pmod p
-\]
-
-\noindent A simple fact about prime moduli --
-\[
-p \in \mathbb{P},\hspace{0.2em} x \in \mathbb{N}, \hspace{0.2em}
-x^2
-\equiv
-1
-\hspace{-0.7em}
-\pmod p
-\implies
-x
-\equiv
-1
-\hspace{-0.7em}
-\pmod p
-\; \text{or} \;
-x
-\equiv
--1
-\hspace{-0.7em}
-\pmod p.
-\]
-\vspace{1em}
-\noindent So either $x_0=1 \hspace{-0.3em} \pmod p$ or there is 
-some index \(i \ge 0\) such that $x_i=-1 \hspace{-0.3em} \pmod p$.
-
-\subsection{The Algorithm}
+\subsection{Tree Traversal}
+A traversal specifies the order in which nodes are visited. The most important traversal for 
+our purposes is the \textbf{In-Order Traversal}.
 
 \begin{center}
 \begin{minipage}{0.9\linewidth}
 \begin{framed}
 \begin{Verbatim}
-exp(a, x, n)
+IOT(x)
 {
-    if x == 0
-        return 1
-    y = exp(a, x/2, n)
-    if x even
-        return (y*y) mod n
-    else
-        return (a*y*y) mod n
+    if (x is null)
+        return
+
+    IOT(x.left)
+    print(x.value)
+    IOT(x.right)
 }
 
-isPrime(n) // for n>=4
+IOT(root) \\starting the recursive traversal from the root
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+\vspace{2em}
+\subsubsection*{Example}
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
+]
+\node {4}
+child {
+    node {2}
+    child {node {1}}
+    child {node {3}}
+}
+child {
+    node {6}
+    child {node {5}}
+    child {node {7}}
+};
+\end{tikzpicture}
+\end{center}
+
+Convince yourself that the output will be \texttt{1 2 3 4 5 6 7}. In-Order Traversal is most commonly seen in 
+\texttt{Depth-First Search}, popularly known as \texttt{DFS}. 
+
+\subsection{Binary Search Trees}
+
+The value stored at each node is referred to as its \textbf{key}. A binary search tree (BST) is a 
+binary tree in which every non-leaf node satisfies
+\begin{itemize}
+\item all keys in the left subtree are smaller than the node's key,
+\item all keys in the right subtree are larger than the node's key.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
+]
+\node {8}
+child {
+    node {5}
+    child {node {2}}
+    child {node {6}}
+}
+child {
+    node {11}
+    child {node {10}}
+    child {node {15}}
+};
+\end{tikzpicture}
+\end{center}
+
+With some thought it can be proved that an In-Order Traversal of a BST lists all keys in sorted order.
+
+\subsubsection*{Search}
+Searching for a key proceeds exactly as in binary search. At each node we 
+compare the desired key with the current key and move either left or right. 
+If the tree is balanced, the tree is the same as the recursion tree of a normal binary search 
+on a sorted array $\dots$ \\
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+Search(key,node)
 {
-    if(n even)
-        return "composite"
+    if (node is null)
+        return false
 
-    s=0
-    d=n-1
-    while d is even
-        increment s by 1, divide d by 2
-    
-    //here we have decomposed n-1 into 2^s and d, where d is odd
+    if(key < node.value)
+        return Search(key,node.left)
+    if(node.value == key)
+        return true
+    if(key > node.value)
+        return Search(key,node.right)
+}
 
-    Choose a random a in {2, ..., n-2} 
-    x = exp(a, d, n)
+Search(x,root) \\Search the key x, starting from the root
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
 
-    if x == 1 or x == n-1
-        return "probably prime"
+Let us say we are searching for $6$ in the tree we saw earlier. 
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
+]
+\node (1)[fill=green]{8}
+child{
+    node (2){5}
+    child {
+        node (4){2}
+    }
+    child {
+        node (5){6}
+    }
+}
+child {
+    node (3){11}
+    child {node (6){10}}
+    child {node (7){15}}
+};
 
-    loop i=1 to s-1
+\end{tikzpicture}
+\end{center}
+
+
+Since $8$ is greater than $6$, we move left.\\
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
+]
+\node (1){8}
+child{
+    node (2)[fill=green]{5}
+    child {
+        node (4){2}
+    }
+    child {
+        node (5){6}
+    }
+}
+child {
+    node (3){11}
+    child {node (6){10}}
+    child {node (7){15}}
+};
+
+\draw[white,very thick,->] (1) -- (2);
+\draw[black,very thick,->] (1) -- (2);
+\end{tikzpicture}
+\end{center}
+
+
+Since $5$ is less than $6$, we move right.\\
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
+]
+\node (1){8}
+child{
+    node (2){5}
+    child {
+        node (4){2}
+    }
+    child {
+        node (5)[fill=green]{6}
+    }
+}
+child {
+    node (3){11}
+    child {node (6){10}}
+    child {node (7){15}}
+};
+
+\draw[white,very thick,->] (1) -- (2);
+\draw[black,very thick,->] (1) -- (2);
+\draw[white,very thick,->] (2) -- (5);
+\draw[black,very thick,->] (2) -- (5);
+\end{tikzpicture}
+\end{center}
+
+We found it! If we had instead been looking for $7$, we would have taken the same path and ended 
+up at the right child of leaf $6$ (which is of course, an empty node) so we would have concluded that $7$ is not 
+in the tree. 
+
+\subsubsection*{Insertion}
+Insertion is similar to binary search. At each node we compare the key to be inserted with the 
+current key and move either left or right. If we find the key in the tree, we do nothing. If we reach an empty 
+node we insert the key there.
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+Insert(key,node)
+{
+    if (node is null)
     {
-        x = (x*x) mod n
-        if x == n-1
-            return "probably prime"
-        if x == 1
-        {
-            return "composite" 
-            /*since hitting 1 mod n early means we have found a 
-            non-trivial square root of 1 mod n, so n is composite*/
+        node = new Node(value=key, left=null, right=null)
+        return
+    }
+
+    if(key < node.value)
+        Insert(key,node.left)
+
+    if(node.value == key)
+        return
+
+    if(key > node.value)
+        Insert(key,node.right)
+}
+
+Insert(x,root) \\Insert the key x, recurse starting from the root
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+
+Let us say we want to insert $7$ in the tree we saw earlier. \\
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw,minimum size=8mm}
+]
+\node (1)[fill=green]{8}
+child{
+    node (2){5}
+    child {
+        node (4){2}
+        child { node (8){} }
+        child { node (9){} }
+    }
+    child {
+        node (5){6}
+        child { node (10){} }
+        child { node (11){} }
+    }
+}
+child {
+    node (3){11}
+    child {
+        node (6){10}
+        child { node (12){} }
+        child { node (13){} }
+    }
+    child {
+        node (7){15}
+        child { node (14){} }
+        child { node (15){} }
+    }
+};
+\end{tikzpicture}
+\end{center}
+
+
+Since $8$ is greater than $7$, we move left.\\
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw,minimum size=8mm}
+]
+\node (1){8}
+child{
+    node [fill=green](2){5}
+    child {
+        node (4){2}
+        child { node (8){} }
+        child { node (9){} }
+    }
+    child {
+        node (5){6}
+        child { node (10){} }
+        child { node (11){} }
+    }
+}
+child {
+    node (3){11}
+    child {
+        node (6){10}
+        child { node (12){} }
+        child { node (13){} }
+    }
+    child {
+        node (7){15}
+        child { node (14){} }
+        child { node (15){} }
+    }
+};
+\draw[white,very thick,->] (1) -- (2); 
+\draw[black,very thick,->] (1) -- (2); 
+\end{tikzpicture}
+\end{center}
+
+Since $5$ is less than $7$, we move right.\\
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw,minimum size=8mm}
+]
+\node (1){8}
+child{
+    node (2){5}
+    child {
+        node (4){2}
+        child { node (8){} }
+        child { node (9){} }
+    }
+    child {
+        node [fill=green](5){6}
+        child { node (10){} }
+        child { node (11){} }
+    }
+}
+child {
+    node (3){11}
+    child {
+        node (6){10}
+        child { node (12){} }
+        child { node (13){} }
+    }
+    child {
+        node (7){15}
+        child { node (14){} }
+        child { node (15){} }
+    }
+};
+\draw[white,very thick,->] (1) -- (2); 
+\draw[black,very thick,->] (1) -- (2); 
+\draw[white,very thick,->] (2) -- (5); 
+\draw[black,very thick,->] (2) -- (5); 
+\end{tikzpicture}
+\end{center}
+
+Since $6$ is less than $7$, we move right.\\
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw,minimum size=8mm}
+]
+\node (1){8}
+child{
+    node (2){5}
+    child {
+        node (4){2}
+        child { node (8){} }
+        child { node (9){} }
+    }
+    child {
+        node (5){6}
+        child { node (10){} }
+        child { node (11)[fill=red!65]{} }
+    }
+}
+child {
+    node (3){11}
+    child {
+        node (6){10}
+        child { node (12){} }
+        child { node (13){} }
+    }
+    child {
+        node (7){15}
+        child { node (14){} }
+        child { node (15){} }
+    }
+};
+\draw[white,very thick,->] (1) -- (2); 
+\draw[black,very thick,->] (1) -- (2); 
+\draw[white,very thick,->] (2) -- (5); 
+\draw[black,very thick,->] (2) -- (5); 
+\draw[white,very thick,->] (5) -- (11);
+\draw[black,very thick,->] (5) -- (11);
+\end{tikzpicture}
+\end{center}
+
+Since the node is empty, we create a new node and put $7$ in it.\\
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw,minimum size=8mm}
+]
+\node (1){8}
+child{
+    node (2){5}
+    child {
+        node (4){2}
+        child { node (8){} }
+        child { node (9){} }
+    }
+    child {
+        node (5){6}
+        child { node (10){} }
+        child { node (11)[fill=green]{7} }
+    }
+}
+child {
+    node (3){11}
+    child {
+        node (6){10}
+        child { node (12){} }
+        child { node (13){} }
+    }
+    child {
+        node (7){15}
+        child { node (14){} }
+        child { node (15){} }
+    }
+};
+\draw[white,very thick,->] (1) -- (2); 
+\draw[black,very thick,->] (1) -- (2); 
+\draw[white,very thick,->] (2) -- (5); 
+\draw[black,very thick,->] (2) -- (5); 
+\draw[white,very thick,->] (5) -- (11);
+\draw[black,very thick,->] (5) -- (11);
+\end{tikzpicture}
+\end{center}
+
+
+\subsection{Balancing}
+
+The efficiency of a BST depends on its height. If the tree has height \(h\), 
+then search, insertion and deletion requires worst-case \(\Theta(h)\) time. 
+Ideally we would like $h=\Theta(\log n)$ where \(n\) is the number of stored keys. Unfortunately, a 
+BST can become highly unbalanced. For example, inserting the keys $1, 2, 3, 4, \dots n$ in this order 
+produces a tree with height \(n\). 
+
+
+\begin{center}
+\begin{tikzpicture}[
+level distance=12mm,
+every node/.style={circle,draw,minimum size=8mm}
+]
+\node {1}
+child[missing]
+child {
+    node {2}
+    child[missing]
+    child {
+        node {3}
+        child[missing]
+        child {
+            node {4}
+            child[missing]
+            child {node {5}}
         }
     }
-    return "composite"
-}
-\end{Verbatim}
-\vspace{-4mm}
-\end{framed}
-\end{minipage}
+};
+\end{tikzpicture}
 \end{center}
 
-
-\subsection{Error Probability}
-
-It can be shown that if \(n\) is composite, then the probability that the Miller--Rabin test 
-returns "probably prime" is at most \(1/4\).\\
-
-
-\noindent The proof\footnote{In case you are interested, see https://codeforces.com/blog/entry/98102} that the Miller--Rabin test has error probability at most \(1/4\) is 
-quite technical and relies on some non-trivial number theory and group theory. Let $T=\{2,\dots,n-2\}$ 
-, the set of all possible $a$'s. The key and final step is to show that one can partition T into 
-disjoint subsets of size at least 4 such that each subset contains at most one false positive. Thus, 
-
-\[
-|F|\le |T|/4
-\implies 
-\frac{|F|}{|T|} \le \frac{1}{4}
-\]
-
-\subsection{Performance}
-Since there are \(\Theta(\log n)\) multiplications involved in binary exponentiation, 
-and each multiplication takes \(\Theta(\log^2 n)\) time, the overall total time complexity 
-is \(\Theta(\log^3 n)\).\\
-
-
-\noindent Repeating the test $k$ times will take $\Theta(k\log^3 n)$ time. A reasonable 
-choice of \(k\) (e.g., \(k=34\)) makes the error probability at most $10^{-20}$.
-
-\section{Pollard's Rho Algorithm}
-
-\textbf{The Problem --} Given a composite integer \(n\), find a non-trivial\footnote{In this case, 
-that would be a factor other than 1 and \(n\)} factor of \(n\). 
-
+\begin{center}
+\vspace{-0.3em}
+\textbf{Example with $\mathbf{n=5}$}
+\end{center}
 \vspace{1em}
-\noindent \textbf{The Solution --} We can create a pseudo-random
-sequence of integers $x_0, x_1, \dots, x_i, \dots$ such that 
-$x_i \equiv x_{i-1}^2 + c \pmod n$ for some $c$.\\
 
+This tree is essentially a linked list. Its height is \(n\) and consequently all operations 
+require \(\Theta(n)\) time. To avoid this degeneration we need a 
+mechanism for changing the shape of a tree while preserving the BST property.
 
-\noindent If at any point gcd(\(x_i-x_j,n\)) is not 1 or 
-\(n\), we can take that to be a 
-factor of \(n\) by definition\footnote{Conventionally, gcd(0,n) is taken to be n.} of the gcd! \\
+\subsection{Rotations}
+These are operations that transform a tree into another tree with the same inorder traversal. From an 
+undirected graph perspective the only change that occurs is one edge is deleted and one is added. But from 
+a rooted tree perspective 2 father-child relationships are changed. There are two types of rotations (left 
+and right) which are inverse of each other.
 
+\subsubsection*{Left Rotation}
+\vspace{1em}
+\begin{center}
+\begin{tikzpicture}[
+every node/.style={
+    circle,
+    draw,
+    minimum size=7mm,
+    inner sep=0pt
+},
+level distance=12mm,
+sibling distance=18mm
+]
 
-Why do we use the weird sequence \(x_i \equiv x_{i-1}^2 + c \pmod n\)? 
-Why not generate a sequence of random integers and do the same thing?
-The reason behind using a deterministic sequence is that in this iterative process, we can use 
-Floyd's cycle-finding algorithm to detect collision which takes time 
-linear in the cycle size. In the other case, we would have to store and check with all previous 
-values of $x_j$ for every new $x_i$ generated. That is quadratic in the length of the cycle!
-Secondly, choosing $x_0$ and $c$ randomly acts as a seed for the pseudo-random process. The sequence is thus
-overall truly random for our analysis purposes yet is compatible with Floyd's algorithm.
+%---------------- Original ----------------
+\begin{scope}
+\node (x) at (0,0) {5};
+\node (y) at (2,-1.2) {8};
+\node (a) at (1,-2.4) {6};
+\node (b) at (3,-2.4) {11};
 
-\subsection{Floyd's Cycle-Detection Algorithm}
+\draw (x)--(y);
+\draw (y)--(a);
+\draw (y)--(b);
+
+\node[draw=none] at (1,-3.5) {Before};
+\end{scope}
+
+%---------------- Intermediate ----------------
+\begin{scope}[xshift=6cm]
+\node (x) at (0,0) {5};
+\node (y) at (2.3,-0.2) {8};
+\node (a) at (1,-2.4) {6};
+\node (b) at (3,-1.6) {11};
+
+\draw[dashed,thick,blue!80!black] (x)--(a);
+\draw (x)--(y);
+\draw[dashed,thick,red!90!black] (y)--(a);
+\draw (y)--(b);
+
+\node[draw=none] at (1,-3.5) {Intermediate};
+\end{scope}
+
+%---------------- Final ----------------
+\begin{scope}[xshift=13cm]
+\node (y) at (0.6,0) {8};
+\node (x) at (-1.2,-1.2) {5};
+\node (a) at (0,-2.4) {6};
+\node (b) at (2.4,-1.2) {11};
+
+\draw (y)--(x);
+\draw (y)--(b);
+\draw (x)--(a);
+
+\node[draw=none] at (0,-3.5) {After};
+\end{scope}
+
+\draw[->,thick] (3.5,-1) -- (4.8,-1);
+\draw[->,thick] (9.5,-1) -- (10.8,-1);
+
+\end{tikzpicture}
+\end{center}
+
+\subsubsection*{Right Rotation}
+\vspace{1em}
+\begin{center}
+\begin{tikzpicture}[
+every node/.style={
+    circle,
+    draw,
+    minimum size=7mm,
+    inner sep=0pt
+},
+level distance=12mm,
+sibling distance=18mm
+]
+
+%---------------- Original ----------------
+\begin{scope}
+\node (y) at (0.6,0) {8};
+\node (x) at (-1.2,-1.2) {5};
+\node (a) at (0,-2.4) {6};
+\node (b) at (2.4,-1.2) {11};
+
+\draw (y)--(x);
+\draw (y)--(b);
+\draw (x)--(a);
+
+\node[draw=none] at (0,-3.5) {Before};
+\end{scope}
+
+\draw[->,thick] (3.5,-1) -- (4.8,-1);
+\draw[->,thick] (9.5,-1) -- (10.8,-1);
+
+%---------------- Intermediate ----------------
+\begin{scope}[xshift=6cm]
+\node (x) at (0,0) {5};
+\node (y) at (2.3,-0.2) {8};
+\node (a) at (1,-2.4) {6};
+\node (b) at (3,-1.6) {11};
+
+\draw[dashed,thick,red!90!black] (x)--(a);
+\draw (x)--(y);
+\draw[dashed,thick,blue!80!black] (y)--(a);
+\draw (y)--(b);
+
+\node[draw=none] at (1,-3.5) {Intermediate};
+\end{scope}
+
+%---------------- Final ----------------
+\begin{scope}[xshift=13cm]
+\node (x) at (0,0) {5};
+\node (y) at (2,-1.2) {8};
+\node (a) at (1,-2.4) {6};
+\node (b) at (3,-2.4) {11};
+
+\draw (x)--(y);
+\draw (y)--(a);
+\draw (y)--(b);
+
+\node[draw=none] at (1,-3.5) {After};
+\end{scope}
+
+\end{tikzpicture}
+\end{center}
+
+\subsection{Min-Heaps}
+
+A min-heap is a binary tree that satisfies two important properties:
+
+\begin{enumerate}
+\item \textbf{Complete}: Every level is completely filled except possibly the last 
+level, which is filled from left to right. 
+
+\begin{center}
+\begin{tikzpicture}[
+minimum size=8mm,
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
+]
+\node {A}
+child {
+node {B}
+child {node {D}}
+child {node {E}}
+}
+child {
+node {C}
+child {node {F}}
+child {node {}}
+};
+\end{tikzpicture}
+\end{center}
+
+The above figure shows a complete binary tree.
+
+\item \textbf{Min-Heap Property}:
+\begin{itemize}
+\item In a \textbf{Min-Heap}, every node is less than or equal to its children.
+
+\begin{center}
+\begin{tikzpicture}[
+minimum size=8mm,
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={circle,draw}
+]
+\node {5}
+child{
+	node{10}
+	child {
+		node {20}
+	}
+	child {
+		node {30}
+	}
+}
+child {
+	node {15}
+	child {
+		node {25}
+	}
+	child {
+		node {}
+	}
+};
+\end{tikzpicture}
+\end{center}
+
+The above figure shows a min-heap. It can be easily proved that the root has the smallest value in a 
+min-heap. 
+
+\end{itemize}
+\end{enumerate}
+
+A min-heap can support the \texttt{push} and \texttt{pop} operations.
+
+\subsubsection*{Popping}
+The \texttt{pop()} function returns the root of the heap and removes it from the heap. To maintain the heap, 
+we must then move some values up the tree. Logically, the smaller child should be moved up to the root. 
+This creates a vacancy in the subtree in which the child was pushed up. That subtree now behaves like a 
+smaller version of the original problem -- a heap from which the root was removed. So we can recursively 
+push the smaller child up until we hit empty node.
+
 \begin{center}
 \begin{minipage}{0.9\linewidth}
 \begin{framed}
 \begin{Verbatim}
-FloydCycleDetection(f,x)
+pop(root)
 {
-    tortoise = f(x)
-    hare = f(f(x))
-
-    while tortoise != hare:
-    {
-        tortoise = f(tortoise)
-        hare = f(f(hare))
-    }
-
-    return 
+	ans=root.value
+	root.value=null
+	if(root.left < root.right)
+		root.value=pop(root.leftChild)
+	else
+		pop(root.rightChild)
+	return ans
 }
 \end{Verbatim}
 \vspace{-4mm}
@@ -316,233 +1688,25 @@ FloydCycleDetection(f,x)
 \end{minipage}
 \end{center}
 
-\subsubsection*{Example}
-We can represent the sequence with a directed graph as follows -- there is an edge between each $x$ and $f(x)$ or 
-equivalently each $x_i$ and $x_{i+1}$. The starting node 
-is $x_0$ where both the hare and tortoise start. It can be proven that 
-Floyd's algorithm works with some effort, but the point of this example is to give a 
-visual intuition rather than write a rigorous proof. Also, I like colorful graphs!
+\subsubsection*{Pushing}
 
-The shape of the graph is deliberately chosen to be like the greek letter $\rho$, which is 
-where the name \texttt{Pollard's Rho} comes from. It is the general shape of the 
-sequence which the algorithm considers, because the output space of $f(x)$ is finite so it must 
-go into a cycle by pigeonhole principle.
-\begin{center}
-\begin{tikzpicture}[
-    every node/.style={circle,draw,minimum size=8mm},
-    >=stealth
-]
+The \texttt{push()} function adds a new value to the heap by putting the new value at the 
+bottom of the tree and then pushing it up until heap property is restored. 
 
-% Legend
-\node[circle,draw,fill=TortoiseColor!50,minimum size=5mm] at (5,6.5) {};
-\node[draw=none,anchor=west] at (5.4,6.5) {Tortoise};
-
-\node[circle,draw,fill=HareColor!50,minimum size=5mm] at (5,5.7) {};
-\node[draw=none,anchor=west] at (5.4,5.7) {Hare};
-
-\node[circle,draw,fill=MeetColor!50,minimum size=5mm] at (5,4.9) {};
-\node[draw=none,anchor=west] at (5.4,4.9) {Both};
-
-\node[fill=MeetColor!50] (1) at (-1,1) {1};
-\node (2) at (0,2.5) {2};
-\node (3) at (0,4) {3};
-\node (4) at (0,5.5) {4};
-
-\node (5) at (1.5,4.5) {5};
-\node (6) at (3,5.5) {6};
-\node (7) at (1.5,6.5) {7};
-
-\draw[->] (1)--(2);
-\draw[->] (2)--(3);
-\draw[->] (3)--(4);
-\draw[->] (4)--(5);
-\draw[->] (5)--(6);
-\draw[->] (6)--(7);
-\draw[->] (7)--(4);
-
-\end{tikzpicture}
-\end {center}
-
-\begin{center}
-\begin{tikzpicture}[
-    every node/.style={circle,draw,minimum size=8mm},
-    >=stealth
-]
-
-% Legend
-\node[circle,draw,fill=TortoiseColor!50,minimum size=5mm] at (5,6.5) {};
-\node[draw=none,anchor=west] at (5.4,6.5) {Tortoise};
-
-\node[circle,draw,fill=HareColor!50,minimum size=5mm] at (5,5.7) {};
-\node[draw=none,anchor=west] at (5.4,5.7) {Hare};
-
-\node[circle,draw,fill=MeetColor!50,minimum size=5mm] at (5,4.9) {};
-\node[draw=none,anchor=west] at (5.4,4.9) {Both};
-
-\node (1) at (-1,1) {1};
-\node [fill=TortoiseColor!50](2) at (0,2.5) {2};
-\node [fill=HareColor!50](3) at (0,4) {3};
-\node (4) at (0,5.5) {4};
-
-\node (5) at (1.5,4.5) {5};
-\node (6) at (3,5.5) {6};
-\node (7) at (1.5,6.5) {7};
-
-\draw[->] (1)--(2);
-\draw[->] (2)--(3);
-\draw[->] (3)--(4);
-\draw[->] (4)--(5);
-\draw[->] (5)--(6);
-\draw[->] (6)--(7);
-\draw[->] (7)--(4);
-
-\end{tikzpicture}
-\end {center}
-
-\begin{center}
-\begin{tikzpicture}[
-    every node/.style={circle,draw,minimum size=8mm},
-    >=stealth
-]
-
-% Legend
-\node[circle,draw,fill=TortoiseColor!50,minimum size=5mm] at (5,6.5) {};
-\node[draw=none,anchor=west] at (5.4,6.5) {Tortoise};
-
-\node[circle,draw,fill=HareColor!50,minimum size=5mm] at (5,5.7) {};
-\node[draw=none,anchor=west] at (5.4,5.7) {Hare};
-
-\node[circle,draw,fill=MeetColor!50,minimum size=5mm] at (5,4.9) {};
-\node[draw=none,anchor=west] at (5.4,4.9) {Both};
-
-\node (1) at (-1,1) {1};
-\node (2) at (0,2.5) {2};
-\node [fill=TortoiseColor!50](3) at (0,4) {3};
-\node (4) at (0,5.5) {4};
-
-\node [fill=HareColor!50](5) at (1.5,4.5) {5};
-\node (6) at (3,5.5) {6};
-\node (7) at (1.5,6.5) {7};
-
-\draw[->] (1)--(2);
-\draw[->] (2)--(3);
-\draw[->] (3)--(4);
-\draw[->] (4)--(5);
-\draw[->] (5)--(6);
-\draw[->] (6)--(7);
-\draw[->] (7)--(4);
-
-\end{tikzpicture}
-\end {center}
-
-\begin{center}
-\begin{tikzpicture}[
-    every node/.style={circle,draw,minimum size=8mm},
-    >=stealth
-]
-
-% Legend
-\node[circle,draw,fill=TortoiseColor!50,minimum size=5mm] at (5,6.5) {};
-\node[draw=none,anchor=west] at (5.4,6.5) {Tortoise};
-
-\node[circle,draw,fill=HareColor!50,minimum size=5mm] at (5,5.7) {};
-\node[draw=none,anchor=west] at (5.4,5.7) {Hare};
-
-\node[circle,draw,fill=MeetColor!50,minimum size=5mm] at (5,4.9) {};
-\node[draw=none,anchor=west] at (5.4,4.9) {Both};
-
-\node (1) at (-1,1) {1};
-\node (2) at (0,2.5) {2};
-\node (3) at (0,4) {3};
-\node [fill=TortoiseColor!50](4) at (0,5.5) {4};
-
-\node (5) at (1.5,4.5) {5};
-\node (6) at (3,5.5) {6};
-\node [fill=HareColor!50](7) at (1.5,6.5) {7};
-
-\draw[->] (1)--(2);
-\draw[->] (2)--(3);
-\draw[->] (3)--(4);
-\draw[->] (4)--(5);
-\draw[->] (5)--(6);
-\draw[->] (6)--(7);
-\draw[->] (7)--(4);
-
-\end{tikzpicture}
-\end {center}
-
-\begin{center}
-\begin{tikzpicture}[
-    every node/.style={circle,draw,minimum size=8mm},
-    >=stealth
-]
-
-% Legend
-\node[circle,draw,fill=TortoiseColor!50,minimum size=5mm] at (5,6.5) {};
-\node[draw=none,anchor=west] at (5.4,6.5) {Tortoise};
-
-\node[circle,draw,fill=HareColor!50,minimum size=5mm] at (5,5.7) {};
-\node[draw=none,anchor=west] at (5.4,5.7) {Hare};
-
-\node[circle,draw,fill=MeetColor!50,minimum size=5mm] at (5,4.9) {};
-\node[draw=none,anchor=west] at (5.4,4.9) {Both};
-
-\node (1) at (-1,1) {1};
-\node (2) at (0,2.5) {2};
-\node (3) at (0,4) {3};
-\node (4) at (0,5.5) {4};
-
-\node [fill=MeetColor!50](5) at (1.5,4.5) {5};
-\node (6) at (3,5.5) {6};
-\node (7) at (1.5,6.5) {7};
-
-\draw[->] (1)--(2);
-\draw[->] (2)--(3);
-\draw[->] (3)--(4);
-\draw[->] (4)--(5);
-\draw[->] (5)--(6);
-\draw[->] (6)--(7);
-\draw[->] (7)--(4);
-
-\end{tikzpicture}
-\end {center}
-
-And thus when both coincide, we can report we have found the cycle! Try this on a 
-cycle with a different (perhaps odd) number of nodes to really convince yourself that it works. 
-
-\subsection{The Algorithm}
 \begin{center}
 \begin{minipage}{0.9\linewidth}
 \begin{framed}
 \begin{Verbatim}
-f(t)
+push(x)
 {
-    return (t*t + c) mod n
-}
+	curr=bottomLeftMostNode
+	curr.value=x
 
-PollardRho(n)
-{
-    if n is even:
-        return 2
-
-    choose random c in [1, n-1]
-    choose random x in [0, n-1]
-
-    y = x
-    d = 1
-
-    while d == 1:
-    {
-        x = f(x)
-        y = f(f(y))
-
-        d = gcd(|x - y|, n)
-    }
-
-    if d == n:
-        restart algorithm with new x, c
-
-    return d
+	while(curr.value<curr.parent.value)
+	{
+		swap(curr.value,curr.parent.value)
+		curr=curr.parent
+	}
 }
 \end{Verbatim}
 \vspace{-4mm}
@@ -550,255 +1714,1019 @@ PollardRho(n)
 \end{minipage}
 \end{center}
 
+Let us insert $7$ into the following min-heap.
 
-\subsection{Performance}
+\begin{center}
+\begin{tikzpicture}[
+minimum size=8mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw}
+]
+\node{5}
+child{
+	node{10}
+	child{ 
+		node{20}
+		child{node{40}}
+		child{node{}}
+	}
+	child {
+		node{30}
+		child{node{}}
+		child{node{}}
+	}
+}
+child {
+	node {15}
+	child {
+		node{25}
+		child{node{}}
+		child{node{}}
+	}
+	child {
+		node{50}
+		child{node{}}
+		child{node{}}
+	}
+};
+\end{tikzpicture}
+\end{center}
 
-\subsubsection{Collision Model}
 
-Our sequence $x_0,x_1,x_2,\dots$ is generated by iterating a polynomial function modulo \(n\).
-Since our choice of $x_0$ and $c$ is random,the sequence can be treated as independent samples from a 
-uniform distribution over \(\{0,1,\dots,n-1\}\), until repetition occurs. And we are looking for a 
-hidden number $p$, the modulo over which the sequence repeats. Since $p$ divides \(n\), the sequence 
-when taken modulo p will thus act like independent samples from a uniform distribution over \(\{0,1,\dots,p-1\}\).\\
+Insert 7 in bottom left most node. We detect the violation $20>7$.
+\begin{center}
+\begin{tikzpicture}[
+minimum size=8mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw}
+]
+\node{5}
+child{
+	node{10}
+	child{ 
+		node[fill=red!65](1){20}
+		child{node{40}}
+		child{node[fill=red!65](2){7}}
+	}
+	child {
+		node{30}
+		child{node{}}
+		child{node{}}
+	}
+}
+child {
+	node {15}
+	child {
+		node{25}
+		child{node{}}
+		child{node{}}
+	}
+	child {
+		node{50}
+		child{node{}}
+		child{node{}}
+	}
+};
+\end{tikzpicture}
+\end{center}
 
-\noindent Equivalently it can be said that the distribution Uniform(0,n-1) modulo p is equivalent to the
-distribution Uniform(0,p-1).\\
 
-\noindent This naturally leads us to the birthday paradox\footnote{The probability that in a group of 23 people we find two with 
-the same birthday is approximately 1/2. This is of course, not a true \emph{paradox} but simply a 
-surprising result from an intuition standpoint.} model, where we are 
-interested in the expected time until a collision occurs in a sequence of random samples from a finite set.
+We swap them to solve the violation.
+\begin{center}
+\begin{tikzpicture}[
+minimum size=8mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw}
+]
+\node{5}
+child{
+	node{10}
+	child{ 
+		node(1){7}
+		child{node{40}}
+		child{node(2){20}}
+	}
+	child {
+		node{30}
+		child{node{}}
+		child{node{}}
+	}
+}
+child {
+	node {15}
+	child {
+		node{25}
+		child{node{}}
+		child{node{}}
+	}
+	child {
+		node{50}
+		child{node{}}
+		child{node{}}
+	}
+};
+\draw[<->,very thick] (1)--(2);
+\end{tikzpicture}
+\end{center}
 
-Suppose we define the collision step \(S\) as the smallest 
-index such that a repetition occurs, 
+
+
+We detect the violation $10>7$.
+\begin{center}
+\begin{tikzpicture}[
+minimum size=8mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw}
+]
+\node{5}
+child{
+	node[fill=red!65]{10}
+	child{ 
+		node(1)[fill=red!65]{7}
+		child{node{40}}
+		child{node(2){20}}
+	}
+	child {
+		node{30}
+		child{node{}}
+		child{node{}}
+	}
+}
+child {
+	node {15}
+	child {
+		node{25}
+		child{node{}}
+		child{node{}}
+	}
+	child {
+		node{50}
+		child{node{}}
+		child{node{}}
+	}
+};
+\draw[<->,very thick] (1)--(2);
+\end{tikzpicture}
+\end{center}
+
+
+We swap them to solve the violation.
+\begin{center}
+\begin{tikzpicture}[
+minimum size=8mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={circle,draw}
+]
+\node{5}
+child{
+	node(3){7}
+	child{ 
+		node(1){10}
+		child{node{40}}
+		child{node(2){20}}
+	}
+	child {
+		node{30}
+		child{node{}}
+		child{node{}}
+	}
+}
+child {
+	node {15}
+	child {
+		node{25}
+		child{node{}}
+		child{node{}}
+	}
+	child {
+		node{50}
+		child{node{}}
+		child{node{}}
+	}
+};
+\draw[<->,very thick] (1)--(2);
+\draw[<->,very thick] (3)--(1);
+\end{tikzpicture}
+\end{center}
+
+
+It can be proved that when there is no more violation involving the inserted value, there is no more 
+violation in the tree. Thus the heap property is restored.
+
+
+\subsection{Treaps}
+
+Each node stores a key and along with it a random priority. 
+
 \[
-\iff S = \min\{j \mid x_i = x_j \text{ for some } i<j\}
+\texttt{Node.value=(key,priority)}
 \]
 
-\subsubsection{Probability of No Collision}
 
-Let \(P_k\) denote the probability that the first \(k\) samples are all distinct. 
-This is equivalent to \(Pr(S > k)\). Then using the fact that the samples 
-are uniform and independent, we can express \(P_k\) as
+A treap simultaneously satisfies:
+\begin{enumerate}
+\item The \textbf{BST property} with respect to keys.
+\item The \textbf{min-heap property} with respect to priorities.
+\end{enumerate}
+
+
+\begin{center}
+\begin{tikzpicture}[
+minimum size=5mm,
+level 1/.style={level distance=20mm, sibling distance=40mm},
+level 2/.style={level distance=12mm, sibling distance=20mm},
+every node/.style={draw,rounded corners}
+]
+\node {$8,7$}
+child {
+    node {$4,15$}
+    child {node {$3,30$}}
+    child {node {$6,60$}}
+}
+child {
+    node {$12,30$}
+    child {node {$10,50$}}
+    child {node {$14,70$}}
+};
+\end{tikzpicture}
+\end{center}
+
+The above figure shows a treap.
+
+\subsubsection*{Insertion}
+
+Insertion in a treap proceeds in two phases. First, we insert the new key exactly as in a 
+binary search tree. Then, if the heap property is violated, we restore it using rotations. Consider the 
+following treap, where each node stores a pair $(\text{key},\text{priority})$ and priorities 
+satisfy the min-heap property.
+
+\begin{center}
+\begin{tikzpicture}[
+minimum size=5mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={draw,rounded corners}
+]
+\node {$8,7$}
+child {
+    node {$4,15$}
+    child {
+		node {$3,30$}
+		child{node{}}
+		child{node{}}
+	}
+    child {
+		node {$6,60$}
+		child{node{}}
+		child{node{}}
+	}
+}
+child {
+    node {$12,30$}
+    child {
+		node {$10,50$}
+		child{node{}}
+		child{node{}}
+	}
+    child {
+		node {$14,70$}
+		child{node{}}
+		child{node{}}
+	}
+};
+\end{tikzpicture}
+\end{center}
+
+Suppose we wish to insert the node $(5,10)$.
+
+\paragraph{Step 1: BST Insertion}
+
+Ignoring priorities, we first insert the key according to the BST property -- the new node 
+becomes the left child of $(6,60)$.
+
+\begin{center}
+\begin{tikzpicture}[
+minimum size=5mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={draw,rounded corners}
+]
+\node (1){$8,7$}
+child {
+    node (2){$4,15$}
+    child {
+		node {$3,30$}
+		child{node{}}
+		child{node{}}
+	}
+    child {
+		node (3){$6,60$}
+		child{node(4){5,10}}
+		child{node{}}
+	}
+}
+child {
+    node {$12,30$}
+    child {
+		node {$10,50$}
+		child{node{}}
+		child{node{}}
+	}
+    child {
+		node {$14,70$}
+		child{node{}}
+		child{node{}}
+	}
+};
+
+\draw[->,very thick] (1)--(2);
+\draw[->,very thick] (2)--(3);
+\draw[->,very thick] (3)--(4);
+\end{tikzpicture}
+\end{center}
+
+The BST property holds, but the min-heap property is violated since $10<60$.
+
+\begin{center}
+\begin{tikzpicture}[
+minimum size=5mm,
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={draw,rounded corners}
+]
+\node (1){$8,7$}
+child {
+    node (2){$4,15$}
+    child {
+		node {$3,30$}
+		child{node{}}
+		child{node{}}
+	}
+    child {
+		node [fill=red!73](3){$6,60$}
+		child{node(4)[fill=red!73]{5,10}}
+		child{node{}}
+	}
+}
+child {
+    node {$12,30$}
+    child {
+		node {$10,50$}
+		child{node{}}
+		child{node{}}
+	}
+    child {
+		node {$14,70$}
+		child{node{}}
+		child{node{}}
+	}
+};
+
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Step 2: Rotation at $(6,60)$}
+
+Strictly speaking rotation involves three nodes, so we imagine the right child of $(5,10)$ which is an empty 
+node. We now perform a right rotation at $(6,60)$.
+
+\usetikzlibrary{fit}
+
+\begin{center}
+\begin{tikzpicture}[minimum size=5mm, every node/.style={draw,rounded corners}]
+
+\begin{scope}
+\coordinate (a1) at (-1,1);
+\coordinate (a2) at (0.2,0.1);
+\node (b) at (1,-0.5) {$6,60$};
+\node (c) at (-0.5,-2) {$5,10$};
+\node (d) at (0.2,-3.2) {};
+\node[
+    draw,
+    dotted,
+    rounded corners,
+    fit=(b)(c)(d),
+    inner sep=8pt
+] {};
+\draw (a1)--(a2);
+\draw (b)--(c);
+\draw (c)--(d);
+\end{scope}
+
+\begin{scope}[xshift=8cm]
+\coordinate (a1) at (-1,1);
+\coordinate (a2) at (0.2,0.1);
+\node (b) at (1,-0.5) {$5,10$};
+\node (c) at (2.5,-2) {$6,60$};
+\node (d) at (1.8,-3.2) {};
+\draw (a1)--(a2);
+\draw (b)--(c);
+\draw (c)--(d);
+\node[
+    draw,
+    dotted,
+    rounded corners,
+    fit=(b)(c)(d),
+    inner sep=8pt
+] {};
+
+\end{scope}
+
+\draw[->,thick] (3,-1.5)--(7,-1.5);
+
+
+\end{tikzpicture}
+\end{center}
+
+The treap now becomes
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={draw,rounded corners}
+]
+\node {$8,7$}
+child {
+    node {$4,15$}
+    child {node {$3,30$}}
+    child {
+        node {$5,10$}
+        child[missing]
+        child {node {$6,60$}}
+    }
+}
+child {
+    node {$12,30$}
+    child {node {$10,50$}}
+    child {node {$14,70$}}
+};
+\end{tikzpicture}
+\end{center}
+
+The heap property is still violated since
 
 \[
-P_k
-= Pr(S > k) =
-\prod_{i=0}^{k-1}\left(1-\frac{i}{p}\right)
+10 < 15.
 \]
 
+\paragraph{Step 3: Rotation at $(4,15)$}
 
-\subsubsection{Expected Collision Step}
+We imagine the left child of $(5,10)$ (which is an empty node) for the purposes of the rotation.
 
-The expected collision time can be expressed as
+\begin{center}
+\begin{tikzpicture}[minimum size=5mm, every node/.style={draw,rounded corners}]
+
+\begin{scope}
+\coordinate (a1) at (-1,1);
+\coordinate (a2) at (0.2,0.1);
+\node (b) at (1,-0.5) {$4,15$};
+\node (c) at (2.5,-2) {$5,10$};
+\node (d) at (-0.6,-2) {$3,30$};
+\node (e) at (4,-3.2) {$6,60$};
+\node (f) at (1.3,-3.2) {};
+
+\draw (a1)--(a2);
+\draw (b)--(c);
+\draw (b)--(d);
+\draw (c)--(e);
+\draw (c)--(f);
+
+\node[
+    draw,
+    dotted,
+    rounded corners,
+    fit=(b)(c)(f),
+    inner sep=8pt
+] {};
+
+\end{scope}
+
+\begin{scope}[xshift=12cm]
+\coordinate (a1) at (-1,1);
+\coordinate (a2) at (0.2,0.1);
+
+\node (b) at (1,-0.5) {$5,10$};
+\node (c) at (-0.2,-2) {$4,15$};
+\node (d) at (-1.7,-3.2) {$3,30$};
+\node (e) at (2.5,-2) {$6,60$};
+\node (f) at (0.9,-3.2) {};
+
+\draw (a1)--(a2);
+\draw (b)--(c);
+\draw (c)--(d);
+\draw (b)--(e);
+\draw (c)--(f);
+\node[
+    draw,
+    dotted,
+    rounded corners,
+    fit=(b)(c)(f),
+    inner sep=8pt
+] {};
+
+\end{scope}
+
+\draw[->,thick] (5,-1.5)--(8,-1.5);
+
+\end{tikzpicture}
+\end{center}
+
+The treap now becomes
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={draw,rounded corners}
+]
+\node {$8,7$}
+child {
+    node {$5,10$}
+    child {
+        node {$4,15$}
+        child {node {$3,30$}}
+        child[missing]
+    }
+    child {
+        node {$6,60$}
+    }
+}
+child {
+    node {$12,30$}
+    child {node {$10,50$}}
+    child {node {$14,70$}}
+};
+\end{tikzpicture}
+\end{center}
+
+The heap property is now satisfied at every node:
 
 \[
-\mathbb{E}[S]
-=
-\sum_{k=0}^{\infty}Pr(S>k)
-=
-\sum_{k=0}^{\infty} P_k
-=
-1+\left(1-\frac1p\right)+\sum_{k=2}^{\infty}P_k
-=
-2-\frac1p + \sum_{k=2}^{\infty}P_k
+7 < 10,\qquad
+10 < 15,\qquad
+10 < 60,\qquad
+30 < 50,\qquad
+30 < 70.
 \]
 
-\vspace{1em}
-We will use $2-\frac1p \le 2$ and the inequality \(1-x\le e^{-x}\) to bound this.
+The BST property is also preserved because rotations never change the
+in-order ordering of keys.
+
+\paragraph{Final Treap}
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={draw,rounded corners}
+]
+\node {$8,7$}
+child {
+    node {$5,10$}
+    child {
+        node {$4,15$}
+        child {node {$3,30$}}
+        child[missing]
+    }
+    child {
+        node {$6,60$}
+    }
+}
+child {
+    node {$12,30$}
+    child {node {$10,50$}}
+    child {node {$14,70$}}
+};
+\end{tikzpicture}
+\end{center}
+
+Hence the insertion of $(5,10)$ is complete.
+
+\section{Hash Tables}
+
+The need arose for a data structure to store a set of elements with efficient search, 
+insertion and deletion operations -- so we turn to hash tables!
+
+\subsection{The Structure}
+
+We begin with an empty array of size \(m\). Since this is a plain old normal 
+array of size \(m\), we can access and modify 
+any random element in constant time$\dots$
+
+\begin{center}
+\begin{tikzpicture}
+\foreach \i in {0,...,7}{
+\draw (\i,0) rectangle (\i+1,1);
+\node at (\i+0.5,1.4){\i};
+}
+
+\node at (8.5,0.5){$\dots$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Insertion}
+We add an element \(x\) by computing $i=\mathbf{H}(x)$. For example, 
+suppose $\mathbf{H}(6)=3$. So we place \(6\) at index \(3\).
+
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+Insert(x)
+{
+    i = H(x)
+    traverse Linked_List[i]
+    {
+        if x present
+            return
+    }
+    add x to end of Linked_List[i]
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+\paragraph{First insertion}
+
+\begin{center}
+\begin{tikzpicture}
+\foreach \i in {0,...,7}{
+\draw (\i,0) rectangle (\i+1,1);
+\node at (\i+0.5,1.4){\i};
+}
+
+\node at (8.5,0.5){$\dots$};
+
+\node at (3.5,0.5){6};
+\end{tikzpicture}
+\end{center}
+
+Similarly, we continue inserting elements in the same way as long as no two elements collide at the same index.
+
+\paragraph{More insertions}
+
+\begin{center}
+\begin{tikzpicture}
+\foreach \i in {0,...,7}{
+\draw (\i,0) rectangle (\i+1,1);
+\node at (\i+0.5,1.4){\i};
+}
+
+\node at (8.5,0.5){$\dots$};
+
+\node at (1.5,0.5){4};
+\node at (3.5,0.5){6};
+\node at (5.5,0.5){11};
+\node at (6.5,0.5){2};
+\end{tikzpicture}
+\end{center}
+
+At this point, every index contains at most one element.
+
+\paragraph{First \emph{collision}}
+
+Now we attempt to insert \(7\). Suppose $\mathbf{H}(7)=3$.
+We try to place \(7\) at index \(3\), but we find \(6\) already present.
+So we extend that position into a linked list.
+
+\begin{center}
+\begin{tikzpicture}
+
+% array
+\foreach \i in {0,...,7}{
+\draw (\i,0) rectangle (\i+1,1);
+\node at (\i+0.5,1.4){\i};
+}
+
+\node at (8.5,0.5){$\dots$};
+
+\node at (1.5,0.5){4};
+\node at (3.5,0.5){6};
+\node at (5.5,0.5){11};
+\node at (6.5,0.5){2};
+
+% arrow down
+\draw[-{Latex}] (3.5,0) -- (3.5,-1);
+
+% second element
+\draw (3,-1) rectangle (4,-2);
+\node at (3.5,-1.5){7};
+
+\end{tikzpicture}
+\end{center}
+
+\paragraph{More collisions}
+
+As more elements are inserted, collisions may occur at multiple indices, forming multiple linked lists.
+
+\begin{center}
+\begin{tikzpicture}
+
+% array
+\foreach \i in {0,...,7}{
+\draw (\i,0) rectangle (\i+1,1);
+\node at (\i+0.5,1.4){\i};
+}
+
+\node at (8.5,0.5){$\dots$};
+
+
+\node at (1.5,0.5){4};
+\node at (5.5,0.5){11};
+\node at (6.5,0.5){2};
+
+% chain at index 1
+\node at (2.5,0.5){9};
+\draw[-{Latex}] (1.5,0) -- (1.5,-1);
+\draw (1,-1) rectangle (2,-2);
+\node at (1.5,-1.5){14};
+\draw[-{Latex}] (1.5,-2) -- (1.5,-3);
+\draw (1,-3) rectangle (2,-4);
+\node at (1.5,-3.5){21};
+
+% chain at index 3 (our example)
+\node at (3.5,0.5){6};
+\draw[-{Latex}] (3.5,0) -- (3.5,-1);
+\draw (3,-1) rectangle (4,-2);
+\node at (3.5,-1.5){7};
+
+\end{tikzpicture}
+\end{center}
+
+Thus, each index i stores a linked list of all elements 
+inserted till now who hash to i. Let the total number of elements 
+inserted be \(n\) and the number of indices be \(m\). Since on average 
+each index has $\frac{n}{m}$ elements, the expected time of insertion 
+is $\Theta(1+\frac{n}{m})$.
+
+\subsection{Search}
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+Search(x)
+{
+    i = H(x)
+    traverse Linked_List[i]
+    {
+        if x found
+            return true
+    }
+    return false
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+Since the expected number of elements per index is $\frac{n}{m}$, the 
+expected time of search is $\Theta(\frac{n}{2m})$ since on average half the 
+linked list is searched in a linear traversal.
+
+\subsection{Deletion}
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+Delete(x)
+{
+    i = H(x)
+    traverse Linked_List[i]
+    if x found
+        remove x from Linked_List[i]
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+The expected time of deletion is $\Theta(\frac{n}{2m})$ since on 
+average half the linked list is searched in a linear traversal.
+\section{Bloom Filters}
+
+Suppose we wish to store a set of elements and support the operations 
+\texttt{insert(x)} and \texttt{contains(x)}.
+A straightforward solution is to store all inserted elements in an \texttt{unordered\_set}.
+This gives expected $\Theta(1)$ insertion and lookup time, but requires memory proportional 
+to the number of stored elements. When the number of elements becomes 
+extremely large, memory itself may become the primary constraint. Bloom filters can achieve this tradeoff.
+
+\subsection{The Structure}
+
+Instead of storing the elements themselves, we store only a hash of the set. We begin with 
+a bit array of size $m$ initialised to all zeros.
+
+\begin{center}
+\begin{tikzpicture}
+\foreach \i in {0,...,7}{
+\draw (\i,0) rectangle (\i+1,1);
+\node at (\i+0.5,1.4){\i};
+\node at (\i+0.5,0.5){0};
+}
+
+\node at (8.5,0.5){$\dots$};
+\end{tikzpicture}
+\end{center}
+
+We then choose $k$ hash functions
 \[
-P_k
-=
-\prod_{i=0}^{k-1}\left(1-\frac{i}{p}\right)
-\le
-\prod_{i=0}^{k-1}e^{-i/p}
-=
-e^{-\sum_{i=0}^{k-1} i/p}
-=
-e^{-k(k-1)/(2p)}
+\left(H_1,H_2,\ldots,H_k\right)
 \]
+each mapping elements to the set of indices $\{0,1,\ldots,m-1\}$.
 
+\subsection{Insertion}
 
+To insert an element $x$, we compute
 \[
-\implies
-\mathbb{E}[T]
-\le
-2
-+
-\sum_{k=2}^{\infty}
-e^{-k(k-1)/(2p)}
+\left(H_1(x),H_2(x),\ldots,H_k(x)\right)
 \]
 
-\vspace{1em}
-For \(k\ge2\),
+and set all corresponding bits to $1$. For example, if $k=3$ and the hash functions are $H_1(x)=3,\; H_2(x)=7,\; H_3(x)=10$
+then we set positions $3,7,$ and $10$ of the bit array to $1$. If while inserting we see that a bit is already $1$, then we do nothing.\\
+
+
+\noindent This operation is $\Theta(k)$ time.
+\subsection{Search}
+
+To determine whether an element $x$ is present, we again compute
 \[
-k(k-1)\ge \frac{k^2}{2}
-\implies 
-\frac{k(k-1)}{2p}
-\ge
-\frac{k^2}{4p}
-\implies
-e^{-k(k-1)/(2p)}
-\le
-e^{-k^2/(4p)}
+\left(H_1(x),H_2(x),\ldots,H_k(x)\right)
 \]
-
-\[
-\implies
-\mathbb{E}[S]
-\le 
-2
-+
-\sum_{k=2}^{\infty}
-e^{-k^2/(4p)}
-\]
-
-\vspace{1em}
-Since the function $f(x)=e^{-x^2/(4p)}$ is monotonically decreasing on \([0,\infty)\), 
-we can compare the sum with an integral!
-\[
-\sum_{k=2}^{\infty}
-e^{-k^2/(4p)}
-\le
-\int_0^{\infty}
-e^{-x^2/(4p)}\,dx.
-\]
-
-Using the substitution $x=2\sqrt{p}\,t,\; dx=2\sqrt{p}\,dt,$
+and inspect the corresponding bits.
+\begin{itemize}
+\item If at least one of these bits is $0$, then $x$ was certainly never inserted.
+\item If all of these bits are $1$, then we report that $x$ is present.
+\end{itemize}
+The second conclusion is of course subject to false positives! It is possible that the required bits 
+were set earlier by completely different elements.\\
 
 
-\[
-\implies
-\int_0^{\infty}
-e^{-x^2/(4p)}\,dx
-=
-2\sqrt{p}
-\int_0^{\infty}
-e^{-t^2}\,dt
-=
-2\sqrt{p}\cdot \frac{\sqrt{\pi}}{2}
-=
-\sqrt{\pi p}.
-\]
+\noindent This operation is $\Theta(k)$ time.
+\subsection{Utility of Bloom Filters}
+
+The most important property of Bloom filters is that false negatives are impossible. If the filter 
+reports that an element is absent, then that element was definitely never inserted. The only possible 
+error is reporting that an element is present when it is actually absent.\\
 
 
-
-\[
-\implies
-\mathbb{E}[S]
-\le
-2+\sqrt{\pi p}
-\implies
-\mathbb{E}[S]\le \Theta(\sqrt{p})
-\]
+Interestingly, Bloom filters (as the name suggests) are used as a filter. This means that incoming 
+queries will go through the bloom filter -- if the element is absent, we can trust the result. Otherwise we can 
+perform a more expensive lookup in the database. So it is useful to reduce the time taken to process a 
+membership query.\\
 
 
-\subsubsection{Collision Detection}
+\noindent It can be shown\footnote{See Problems!} that the error probability of a Bloom filter with 
+optimal k is approximately $2^{-\frac{m\ln 2}{n}}$. For this to be small, we need $m$ to be large and $n$ to be small. But one might question, wasn't the 
+whole point of the bloom filter to reduce the memory usage?\\
 
-Once a collision occurs modulo \(p\), say
+\noindent Let me clarify this with a practical example -- lets say we have a database of URLs. 
+Each URL takes 100 bytes to store. Now let us say we have $10^9$ URLs -- and the deterministic \texttt{set} structure 
+has a constant factor of about 10 per node in memory. So overall that would require $10^{12}$ bytes of memory which is about 1 TB.
+In comparison, a Bloom filter of size $m=10\cdot n = 10^{10}$ bits would require only about 12.5 GB of memory.\\
 
-\[
-x_i \equiv x_j \hspace{-0.7em}\pmod p,
-\quad i \ne j,
-\]
+\section{Cuckoo Hashing}
+Recall that in ordinary hash tables, collisions are handled using linked lists. Cuckoo hashing takes a 
+different approach. Instead of allowing multiple elements to occupy the same location, 
+each element is given multiple possible locations and is stored in exactly one of
+them.
 
-we know $p$ must divide \(x_i-x_j\). But how do we check that if we don't know $p$?
-Knowing we want to find a $p$ which divides \(x_i-x_j\) and $n$, the logical step 
-is to find the gcd(\(x_i-x_j,n\)), because if that is 1 then p is 
-definitely\footnote{This is concluded using the lemma -- all common divisors of a and b divide the gcd(a,b)} 1.
-And as soon as gcd(\(x_i-x_j,n\)) becomes not 1 (and not n), we can take that as the divisor. We know all p for 
-which the collision happened are definitely\footnote{By definition of the gcd, it must be the \emph{greatest} common divisor!} smaller than this number so we could not have done better!
+\subsection{The Structure}
 
-Due to Floyd's cycle detection algorithm, we don't need to keep track of all pairs 
-of indices \(i,j\). We can simply keep track of the pairs \((x_i,x_{2i})\) 
-for \(i=1,2,\dots\) and check for collisions between these pairs. This is 
-what the algorithm does by maintaining two pointers \(x\) and \(y\) that move at different speeds.\\
+We maintain an array of size $m$ together with two hash functions $(H_1,H_2)$.
 
+\begin{center}
+\begin{tikzpicture}
+\foreach \i in {0,...,7}{
+\draw (\i,0) rectangle (\i+1,1);
+\node at (\i+0.5,1.4){\i};
+}
 
-\subsubsection{Cost Per Step}
-Each step of the algorithm performs a constant number of 
-modular multiplications and one greatest common divisor computation. Using the Euclidean 
-algorithm, $\gcd(a,b)$ can be computed in at most \(\Theta(\log^3 max(a,b)))\) time.
+\node at (8.5,0.5){$\dots$};
+\end{tikzpicture}
+\end{center}
 
-Hence each iteration costs at most \(\Theta(\log^3 n)\) time since 
-n is the largest number we are working with for all the involved operations.
+\subsection{Insertion}
+Suppose we wish to insert an element $x$. Choose either of the hash functions $H_1$ or $H_2$ at random. 
+Let this chosen hash be applied to $x$ to obtain an index $H(x)$. If the array is empty at that index, 
+we are done. Otherwise, let the occupant be $y$. We evict\footnote{This behaviour resembles the cuckoo 
+bird which lays its eggs in another bird's nest and kicks out the occupying eggs. Hence the name \dots} $y$ 
+and place $x$ in its position. The displaced element $y$ must now be 
+moved to its other possible location. If that position is occupied, 
+another element is evicted, and the process continues.\\
 
-\subsubsection{Total Expected Complexity}
+\noindent We repeat this process until we either find an empty slot or find a 
+cycle. 
 
-Since cost per step is at most \(\Theta(\log^3 n)\), and the expected number 
-of steps is at most \(\Theta(\sqrt p)\), the total expected complexity is 
-at most \(\Theta(\sqrt p \log^3 n)\) for a particular prime $p$.\\
+\subsubsection*{Cycles and Rehashing}
+In case we enter a cycle and insertion cannot be completed, choose new hash functions and 
+rebuild the table from scratch. 
 
+Note that overall, as long as we keep $n/m$ low, it can be shown that the expected time to 
+insert an element is \(\Theta(1)\) average time similar to hash tables.
+\subsection{Search}
 
-\noindent Let \(n=\prod_{i=1}^k p_i^{e_i}\) where \(p_1<p_2<\cdots<p_k\) are the 
-prime factors of \(n\). Let \(T_i\) denote 
-the random time until a collision occurs modulo \(p_i\), and let \(T\) be the 
-running time of \texttt{Pollard's Rho}, i.e.
-\[
-T=\min_{1\le i\le k} T_i
-\]
-
-Since \(T\le T_i\) for every \(i\), taking expectations gives
-\[
-\mathbb E[T]\le \mathbb E[T_i]\quad \forall i \in \{1,2,\dots,k\}
-\implies
-\mathbb E[T]\le \min_{1 \le i \le k} \mathbb E[T_i]
-\]
-
-\[
-\implies
-\mathbb E[T]\le \Theta(\sqrt{p_1}\log^3 n), \hspace{1em}\text{where \(p_1\) is the smallest prime factor of }n
-\]
-
-\vspace{0.7em}
-
-
-\[
-p_1<=\sqrt n \implies \mathbb E[T]\le \Theta(\sqrt p_1 \log^3 n) \le \Theta(n^{\frac{1}{4}}\log^3 n)
-\]
-
-\subsection*{What did we achieve?}
-
-We can find a factor of \(n\) in expected time \(\Theta(n^{\frac{1}{4}}\log^3 n)\), a vast 
-improvement over the naive \(\Theta(n^{\frac{1}{2}}\log^2 n)\) method.
-
-To factorise a large number n fully, we can use the Pollard-Rho algorithm now! Since every 
-factor we find is at least 2, after dividing n by 2 and repeating the factor-finding process, 
-the overall procedure terminates in at most \(\Theta(\log_2 n)\) steps. Thus we can factorise a 
-number n (no matter how large), in expected time at most \(\Theta(n^{\frac{1}{4}} \log^4 n)\).\\
-
-\noindent Note that we have used a lot of worst case upper bounds in the analysis. The average 
-performance in practice is much better than the complexity suggests! 
-
+To determine whether an element $x$ is present, we simply check the 
+two possible locations $H_1(x)$ and  $H_2(x)$. If $x$ is found at either location, 
+we report that it is present. Thus every lookup requires at most two array accesses, 
+giving $\Theta(1)$ search time.
 
 \clearpage
 \section{Problems}
+
 \begin{enumerate}
 \item[\textbf{1}]
-During RSA encryption, one computes a secret integer \(x=\phi(n)\).
-A valid public exponent \(e\) must satisfy
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item Prove that the expected search time in a skip list is \(\Theta(\log n)\). 
+\textit{Hint: downward moves are bounded by height, which is expected \(\Theta(\log n\)).}
+
+\item Deduce similarly that insertion takes expected \(\Theta(\log n)\) time.
+
+\item Try inserting \(8\) into the following skip list using
+ the procedure we described earlier:
+
 \[
-\gcd(e,x)=1.
+\begin{tikzpicture}[
+x=1.8cm,
+y=1.2cm,
+>=Stealth,
+every node/.style={font=\small}
+]
+
+\node[left] at (0,2) {Level 2:};
+\node[left] at (0,1) {Level 1:};
+\node[left] at (0,0) {Level 0:};
+
+% Level 2
+\node(a2) at (1,2) {1};
+\node (e2) at (5,2) {9};
+
+% Level 1
+\node (a1) at (1,1) {1};
+\node (c1) at (3,1) {5};
+\node (e1) at (5,1) {9};
+
+% Level 0
+\node (a0) at (1,0) {1};
+\node (b0) at (2,0) {3};
+\node (c0) at (3,0) {5};
+\node (d0) at (4,0) {7};
+\node (e0) at (5,0) {9};
+
+\draw[->] (a2) -- (e2);
+
+\draw[->] (a1) -- (c1);
+\draw[->] (c1) -- (e1);
+
+\draw[->] (a0) -- (b0);
+\draw[->] (b0) -- (c0);
+\draw[->] (c0) -- (d0);
+\draw[->] (d0) -- (e0);
+
+\draw[->] (a2) -- (a1);
+\draw[->] (a1) -- (a0);
+
+\draw[->] (c1) -- (c0);
+
+\draw[->] (e2) -- (e1);
+\draw[->] (e1) -- (e0);
+
+\end{tikzpicture}
 \]
 
-Since we do not want to reveal \(x\) to the public, we can not take \(e\) to be something 
-deterministic like $x-1$ because an adversary can crack our encryption if he gets to know the algorithm.
-One possible strategy is to repeatedly choose \(e\) uniformly at random from
-\(\{1,2,\dots,x\}\) until a suitable value is found.
+\item Can you think of a $\Theta(\log n)$ deletion strategy for skip lists?
+\end{enumerate}
+
+\item[\textbf{2}]
+Consider n,m,k to be number of inserted elements, the size of bit array and the 
+number of hash functions respectively in a Bloom filter. Assume the hash functions are independent.
 
 \begin{enumerate}[label=\textbf{(\alph*)}]
-\item Let
-\[
-x=\prod_{i=1}^{k} p_i^{e_i}
-\]
-be the prime factorization of \(x\). Show that the probability that a randomly
-chosen \(e\in\{1,2,\dots,x\}\) satisfies \(\gcd(e,x)=1\) is
-\[
-\frac{\varphi(x)}{x} = \prod_{i=1}^{k}\left(1-\frac{1}{p_i}\right).
-\]
-
-\item Show that if x can be any number from $1$ to $n$ where $n$ is very large,
-the probability of the randomly chosen e being correct tends to $\frac{6}{\pi^2}$ as n becomes larger.\\
-\textit{Hint: Use $\sum_{n=1}^{\infty} \frac{1}{n^2}= \frac{\pi^2}{6}$}
+\item Show that the probability of a particular bit in the array being set is $\left(1-\left(1-\frac{1}{m}\right)^{kn}\right)$ 
+and thus the probability of a false positive is $\left(1-\left(1-\frac{1}{m}\right)^{kn}\right)^k$
+\item Using suitable large m, n approximations, show that the optimal number of hash functions is $k=\frac{m}{n}\ln 2$
+\item Put the above results together to show that the probability of a false positive is approximately $2^{-\frac{m\ln 2}{n}}$.
 \end{enumerate}
 \end{enumerate}

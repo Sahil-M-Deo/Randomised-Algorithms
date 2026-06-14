@@ -1,2732 +1,364 @@
-\chapter{Data Structures}
 
-\section{Skip Lists}
+\chapter{Hashing}
 
-\subsection*{Why not just use Arrays?}
-Suppose we store the following array in contiguous memory:
+\section{What even is Hashing?}
+
+A recurring theme in randomized algorithms is the idea of replacing a large object by a much smaller \textit{fingerprint} or \textit{hash} which approximately preserves equality.
+
+Instead of comparing two complicated objects directly, we compare their hashes.
+If the hashes differ, the objects are certainly different.
+If the hashes are equal, the objects are \emph{probably} equal.
+
+The power of hashing comes from the fact that computing and comparing hashes is often significantly 
+faster than comparing the original objects themselves. It may also be seen as a form of compression 
+that preserves some information about the original object. In data structures like the \texttt{unordered set}, 
+hashing helps to achieve constant time complexity (on average) within finite memory constraints.
+
+Usually hashes are many-one functions, meaning that multiple different objects can have the same hash. 
+Two inputs having the same hash is called a \textit{collision}. The probability of collision depends on 
+the specific hash function used and the distribution of inputs. A good hash function should minimize the 
+probability of collisions for typical inputs.
+
+\section{Polynomial Multiplication}
+
+Suppose we are given two expressions:
 \[
-\begin{tikzpicture}[
->=Stealth,
-every node/.style={
-draw,
-minimum width=0.9cm,
-minimum height=0.8cm,
-font=\small
-}
-]
-
-% Original array
-\node (a1) at (0,0) {1};
-\node (a2) at (1,0) {2};
-\node (a3) at (2,0) {3};
-\node (a4) at (3,0) {4};
-\node (a5) at (4,0) {5};
-\node (dots) at (5,0) {$\cdots$};
-\node (a50) at (6,0) {n};
-\end{tikzpicture}
+P(x)=\prod_{i=1}^k (a_i x+b_i), Q(x) = \sum_{j=0}^k c_j x^j
 \]
 
-Suppose we wish to insert the element \(67\) between \(3\) and \(4\).
-
-Since arrays occupy contiguous memory, every element beginning from \(4\) must be shifted one position to the right in order to create space for the new element.
-
+We would like to verify whether
 \[
-\begin{tikzpicture}[
->=Stealth,
-every node/.style={
-draw,
-minimum width=0.9cm,
-minimum height=0.8cm,
-font=\small
-}
-]
-
-% Original array
-\node (a1) at (0,0) {1};
-\node (a2) at (1,0) {2};
-\node (a3) at (2,0) {3};
-\node (a4) at (3,0) {4};
-\node (a5) at (4,0) {5};
-\node (dots) at (5,0) {$\cdots$};
-\node (a50) at (6,0) {n};
-
-% Empty boxes
-\node (e1) at (7,0) {};
-\node (e2) at (8,0) {};
-
-% New element above
-\node[fill=green!20] (new) at (3,1.6) {67};
-
-% Down arrow
-\draw[->,thick] (new) -- (a4);
-
-% Shift arrows
-\draw[->,thick] ($(a4.east)+(-0.18,0)$) -- ($(a5.west)+(0.18,0)$);
-
-\draw[->,thick] ($(a5.east)+(-0.18,0)$) -- ($(dots.west)+(0.18,0)$);
-
-\draw[->,thick] ($(a50.east)+(-0.18,0)$) -- ($(e1.west)+(0.18,0)$);
-
-\end{tikzpicture}
+P(x)\equiv Q(x)
 \]
 
-\[
-\begin{tikzpicture}[
->=Stealth,
-every node/.style={
-draw,
-minimum width=0.9cm,
-minimum height=0.8cm,
-font=\small
-}
-]
+Naively expanding the product takes $\Theta(k^2)$ time, and then comparing the resulting 
+polynomials takes $\Theta(k)$ time, so the total verification time is $\Theta(k^2)$.
 
-% Original array
-\node (a1) at (0,0) {1};
-\node (a2) at (1,0) {2};
-\node (a3) at (2,0) {3};
-\node [fill=green!20](a4) at (3,0) {67};
-\node (a5) at (4,0) {4};
-\node (a6) at (5,0) {5};
-\node (dots) at (6,0) {$\cdots$};
-\node (a50) at (7,0) {n};
-\node (e1) at (8,0) {};
-\end{tikzpicture}
+A more efficient approach is to compute the hashes of the polynomials.
+Choose three random values
+\[
+r_1,r_2,r_3
+\]
+from the domain of the polynomial.
+
+Define the hash of a polynomial to be the tuple
+\[
+(P(r_1),P(r_2),P(r_3))
 \]
 
-Insertion into an array requires shifting \(\Theta(n)\) elements in the worst as well as
- average case, so a single insertion is \(\Theta(n)\) time complexity.
-
-\subsection*{How are Linked Lists any better?}
-
-Unlike arrays, linked lists do not store elements contiguously in memory.
-Instead, each element stores \texttt{\{Value,Next\}}, where \texttt{Next} is a pointer to the next element.\\
-
-\noindent So a linked list containing the elements
-$1,2,3,4,5,\dots,n$
-may be represented as
-
+Similarly compute
 \[
-\begin{tikzpicture}[
->=Stealth,
-every node/.style={
-draw,
-minimum width=0.9cm,
-minimum height=0.8cm,
-font=\small
-}
-]
-
-% Nodes
-\node (a1) at (0,0) {1};
-\node (a2) at (1.5,0) {2};
-\node (a3) at (3,0) {3};
-\node (a4) at (4.5,0) {4};
-\node (a5) at (6,0) {5};
-\node (dots) at (7.5,0) {$\cdots$};
-% Existing arrows
-\draw[->] (a1) -- (a2);
-\draw[->] (a2) -- (a3);
-\draw[->] (a3) -- (a4);
-\draw[->] (a4) -- (a5);
-\draw[->] (a5) -- (dots);
-\end{tikzpicture}
+(Q(r_1),Q(r_2),Q(r_3))
 \]
 
-\noindent To insert an element 67 between say 3 and 4, we simply create a new node containing 67 and link it between 3 and 4.
+If the hashes differ at any coordinate, then the polynomials are certainly different.
 
+If all three evaluations agree, then with high probability the polynomials are identical.\\
+
+The reason this works is that the nonzero polynomial $P(x)-Q(x)$ of degree at most $k$ can 
+have at most $k$ roots 
+in the domain from which we are choosing the random values.
+
+If we are choosing random 32-bit integers, then the probability of a false positive 
+(i.e. the polynomials are different but the hashes match) 
+is at most $\left(\frac{k}{2^{32}}\right)^3$ since we are checking three independent random values, 
+which is astronomically small for any reasonable $k$!\\
+
+\noindent Each evaluation of $P$ or $Q$ at a random point takes $\Theta(k)$ time, so 
+the total verification time is $\Theta(k)$. So we have achieved a significant improvement over 
+the naive\footnote{There exists deterministic techniques to get this down to $\Theta(k\log k)$ time, 
+but they have a large constant factor and also are very difficult to implement.} $\Theta(k^2)$ time.\\
+
+\noindent Note that choosing 3 random values has no particular significance - we could choose any small
+constant number of random values to achieve this - it is a tradeoff between time and correctness probability.
+
+\section{Matrix Multiplication}
+
+Suppose we are given matrices $A,B,C\in\mathbb{R}^{n\times n}$
+and wish to verify whether
 \[
-\textbf{Step 1: Remove the old connection}
+AB=C
 \]
 
+Computing the product explicitly requires matrix multiplication. Standard matrix multiplication takes $\Theta(n^3)$ time.\\
+time, while the fastest known algorithms run in roughly $\Theta(n^{2.37})$ time, though 
+they are highly complicated and rarely used in practice. \\
+
+
+\subsection{Freivalds' Algorithm}
+
+Choose a random vector $X\in\{0,1,\dots,p-1\}^n$, aka of form \[\begin{bmatrix}
+x_1\\
+x_2\\
+\vdots\\
+x_n
+\end{bmatrix}\]
+
+Instead of comparing the matrices themselves, we compute $ABX$ and $CX$. Since matrix-vector 
+multiplication takes only $\Theta(n^2)$ and we are doing 3 
+such multiplications -- $B\cdot X$, then $A\cdot(BX)$, and $C\cdot X$.
+Then we compare the two products entry by entry in $\Theta(n)$ time.
+So the overall procedure is $\Theta(n^2)$ time. \\
+
+\noindent The quantity \(MX\) may be viewed as a compact randomized hash of the matrix \(M\). If two matrices differ, 
+their hashes are unlikely to coincide for a random choice of \(X\).
+
+\noindent More generally, one may choose k independent random vectors
 \[
-\begin{tikzpicture}[
->=Stealth,
-every node/.style={
-draw,
-minimum width=0.9cm,
-minimum height=0.8cm,
-font=\small
-}
-]
-
-% Nodes
-\node (a1) at (0,0) {1};
-\node (a2) at (1.5,0) {2};
-\node (a3) at (3,0) {3};
-\node (a4) at (4.5,0) {4};
-\node (a5) at (6,0) {5};
-\node (dots) at (7.5,0) {$\cdots$};
-% Hovering node
-\node[fill=green!20] (new) at (3.75,1.5) {67};
-
-% Existing arrows
-\draw[->] (a1) -- (a2);
-\draw[->] (a2) -- (a3);
-
-% Broken connection
-\draw[red,->] (a3) -- (a4);
-
-\draw[->] (a4) -- (a5);
-\draw[->] (a5) -- (dots);
-\end{tikzpicture}
+X_1,X_2,\dots,X_k
+\]
+and define the hash of a matrix \(M\) as
+\[
+\textbf{H}(M)=(MX_1,MX_2,\dots,MX_k)
 \]
 
+Each additional random vector independently decreases the probability of error.
+Here k must be $\Theta(1)$ to preserve the overall $\Theta(n^2)$ time complexity.
+
+\subsection*{Error Probability Analysis}
+
+Let \(M=AB-C\). We want to bound the probability that \(MX=0\) when 
+\(M\) is nonzero. Choose a prime \(p\), and consider the finite field
 \[
-\begin{tikzpicture}[
->=Stealth,
-every node/.style={
-draw,
-minimum width=0.9cm,
-minimum height=0.8cm,
-font=\small
-}
-]
-
-% Nodes
-\node (a1) at (0,0) {1};
-\node (a2) at (1.5,0) {2};
-\node (a3) at (3,0) {3};
-\node (a4) at (4.5,0) {4};
-\node (a5) at (6,0) {5};
-\node (dots) at (7.5,0) {$\cdots$};
-% Hovering node
-\node[fill=green!20] (new) at (3.75,1.5) {67};
-
-% Existing arrows
-\draw[->] (a1) -- (a2);
-\draw[->] (a2) -- (a3);
-
-\draw[->] (a4) -- (a5);
-\draw[->] (a5) -- (dots);
-\end{tikzpicture}
+\mathbb Z_p=(\{0,1,2,\dots,p-1\},+_p,\times_p)
 \]
 
+\noindent To avoid making the entries of $M\equiv0\pmod{p}$ when it is 
+nonzero over \(\mathbb Z\) (and thus avoiding making it null in $\mathbb Z_p$), we use such a $p$
+which is strictly greater than every entry of $M$. We then choose the random 
+vector $X\in\mathbb Z_p^n$ uniformly at random.\\
+
+\noindent Notice that whenever \(MX=0\) over the integers, we also have \(MX=0\) over \(\mathbb Z_p\) 
+since $0 \equiv 0\pmod{p}$. So the set of false positives over \(\mathbb Z\) is a subset 
+of the set of false positives over \(\mathbb Z_p\). Thus the 
+probability of a false positive over \(\mathbb Z\) is 
+at most the probability of a false positive over \(\mathbb Z_p\).\\
+
+\noindent Now \(\mathbb (Z_p)^n\) is a vector space\footnote{It may be helpful to brush up on 
+the theory of vector spaces, but you may choose to not bother with the finer details 
+and take my word for it!} of dimension \(n\) over \(\mathbb Z_p\). If $M$ is not the null matrix, 
+the dimension of its nullspace\footnote{Refer \autoref{nullspace}} is at most \(n-1\).\\
+
+\noindent A \(d\)-dimensional vector space over \(\mathbb Z_p\) contains exactly \(p^d\) vectors. So
 \[
-\textbf{Step 2: Create new connections}
+|nullspace(M)| \le p^{n-1}
 \]
-
+\vspace{0.5em}
+\noindent Since \(X\) is chosen uniformly from \(\mathbb (Z_p)^n\), which contains \(p^n\) vectors,
 \[
-\begin{tikzpicture}[
->=Stealth,
-every node/.style={
-draw,
-minimum width=0.9cm,
-minimum height=0.8cm,
-font=\small
-}
-]
-
-% Nodes
-\node (a1) at (0,0) {1};
-\node (a2) at (1.5,0) {2};
-\node (a3) at (3,0) {3};
-\node (a4) at (4.5,0) {4};
-\node (a5) at (6,0) {5};
-\node (dots) at (7.5,0) {$\cdots$};
-% New node
-\node[fill=green!20] (new) at (3.75,1.5) {67};
-
-% Existing arrows
-\draw[->] (a1) -- (a2);
-\draw[->] (a2) -- (a3);
-\draw[->] (a4) -- (a5);
-\draw[->] (a5) -- (dots);
-% Curved insertion arrows
-\draw[->,thick,bend left=25] (a3) to (new);
-\draw[->,thick,bend left=25] (new) to (a4);
-
-\end{tikzpicture}
-\]
-
-\[
-\begin{tikzpicture}[
->=Stealth,
-every node/.style={
-draw,
-minimum width=0.9cm,
-minimum height=0.8cm,
-font=\small
-}
-]
-
-% Nodes
-\node (a1) at (0,0) {1};
-\node (a2) at (1.5,0) {2};
-\node (a3) at (3,0) {3};
-\node [fill=green!20](a4) at (4.5,0) {67};
-\node (a5) at (6,0) {4};
-\node (dots) at (7.5,0) {$\cdots$};
-% Existing arrows
-\draw[->] (a1) -- (a2);
-\draw[->] (a2) -- (a3);
-\draw[->] (a3) -- (a4);
-\draw[->] (a4) -- (a5);
-\draw[->] (a5) -- (dots);
-\end{tikzpicture}
-\]
-
-\[
-\textbf{Done!}
-\]
-
-We used a constant number of pointer operations to insert an element into the list. Thus insertion is \(\Theta(1)\) time complexity.
-\subsection*{Why Skip Lists?}
-
-Although insertion is \(\Theta(1)\) time complexity, searching for an element in linked 
-lists is \(\Theta(n)\) time complexity because we have to traverse the whole list. Even if the linked list is "sorted", 
-we can not binary search since that requires random access in constant time, which a linked list can not provide.\\
-
-
-\noindent So the idea of skip lists is to bypass that limitation by
-adding ``express lanes'' to a linked list. Instead of traversing every element one-by-one, 
-we maintain additional higher-level lists that skip\footnote{Hence the name!} over many elements at once.\\
-
-
-\noindent Consider the following skip list --
-
-\[
-\begin{tikzpicture}[
-x=1.8cm,
-y=1.2cm,
->=Stealth,
-every node/.style={font=\small}
-]
-
-% Level labels
-\node[left] at (0,2) {Level 2:};
-\node[left] at (0,1) {Level 1:};
-\node[left] at (0,0) {Level 0:};
-
-% Nodes
-\node (a2) at (1,2) {1};
-\node (e2) at (5,2) {9};
-
-\node (a1) at (1,1) {1};
-\node (c1) at (3,1) {5};
-\node (e1) at (5,1) {9};
-
-\node (a0) at (1,0) {1};
-\node (b0) at (2,0) {3};
-\node (c0) at (3,0) {5};
-\node (d0) at (4,0) {7};
-\node (e0) at (5,0) {9};
-
-% Horizontal arrows
-\draw[->] (a2) -- (e2);
-
-\draw[->] (a1) -- (c1);
-\draw[->] (c1) -- (e1);
-
-\draw[->] (a0) -- (b0);
-\draw[->] (b0) -- (c0);
-\draw[->] (c0) -- (d0);
-\draw[->] (d0) -- (e0);
-
-% Vertical arrows
-\draw[->] (a2) -- (a1);
-\draw[->] (a1) -- (a0);
-
-\draw[->] (c1) -- (c0);
-
-\draw[->] (e2) -- (e1);
-\draw[->] (e1) -- (e0);
-
-\end{tikzpicture}
-\]
-
-\noindent Higher levels contain fewer elements and allow us to jump across large portions of the list quickly.
-
-\subsection{The Structure}
-
-The presence of an element in a level is determined by a random choice. An element occurs 
-in level $i$ with probability $2^{-i}$. This means every element must occur in level 0.\\
-
-
-\noindent Consequently, $\Pr(\text{node reaches level }k)=\frac1{2^k}$. Thus, the expected 
-number of nodes in level \(k\) is $\frac{n}{2^k}$.
-
-\[
-\begin{array}{|c|c|}
-\hline
-\textbf{Level} & \textbf{Expected Number of Nodes} \\
-\hline
-0 & n \\
-\hline
-1 & n/2\\
-\hline
-2 & n/4 \\
-\hline
-3 & n/8 \\
-\hline
-\vdots & \vdots \\
-\hline
-\end{array}
-\]
-
-\subsection{Expected Height}
-
-Let \(H\) be the height of a skip list with \(n\) independent nodes, where each node is promoted to the next level with probability \(1/2\). Then:
-\[
-\Pr(H\ge h)=1-(1-2^{-h})^n
-\]
-
-We use the tail-sum formula
-\[
-\mathbb{E}[H]=\sum_{h=1}^{\infty}\Pr(H\ge h)
-=\sum_{h=1}^{\infty}\left(1-(1-2^{-h})^n\right)
-\]
-
-
-\paragraph{Step 1: Split the expectation}
-
-
-Let $h_o=\lfloor \log_2 n \rfloor$
-\[
-\mathbb{E}[H]
-=\sum_{h\le h_0}\Pr(H\ge h)
-+\sum_{h>h_0}\Pr(H\ge h)
-=S_1+S_2
-\]
-
-
-\paragraph{Step 2: Bounding \(S_1\)}
-
-\[
-\text{Let } Pr(H\ge h)=f(h)=1-(1-2^{-h})^{n}
-\implies 
-f(h_{o}) \le f(h) \le f(0) \; \forall \; 0 \le h \le h_o
-\]
-
-\[
-\implies 
-\sum_{h=1}^{h_o}f(h_{o}) \le \sum_{h=1}^{h_o}f(h) \le \sum_{h=1}^{h_o}f(0)
-\]
-
-Since $f(0)=1$, and $f(h_o) \ge 1-(1-\frac{1}{n})^n \ge 1-\frac{1}{e}$ we get:
-
-\[
-h_o(1-\frac{1}{e})\le S_1 \le h_o
-\]
-
-\paragraph{Step 3: Bounding \(S_2\)}
-
-
-Since $(1-x)^{n} \ge 1-nx$,
-\[
-1-(1-2^{-h})^n \le n \cdot 2^{-h}
-\implies
-\sum_{h>h_0}n \cdot 2^{-h} \ge S_2
-\]
-
-Since LHS of that inequality evaluates to $\approx 2$, we can guarantee $S_2 \le 3$
-\paragraph{Step 4: Combining bounds}
-
-\[
-(1-e^{-1})h_0 + 3\le \mathbb{E}[H] \le h_0 + 3
-\]
-
-Since \(h_0 \approx \log_2 n\), we get $\mathbb{E}[H]=\Theta(\log n)$
-
-\subsubsection*{Geometric Decline Theorem}
-
-Recall that using the markov inequality, we proved that the height of the 
-recursion tree for \texttt{QuickSelect} is at most \(\Theta(\log n)\) \\
-
-\noindent Using the same technique, we can show that if a 
-sequence of nonnegative random variables satisfies $\frac{\mathbb E[X_{i+1}]}{\mathbb E[X_i]} \le p 
-\; (0<p<1)$ and \(T\) denotes the first index for which \(X_T \le 1\), then
-\[
-\mathbb E[T] \le \Theta(\log (X_0))
-\]
-
-\vspace{1em}
-
-\noindent \textbf{Applying the Theorem}\\
-
-\noindent Let \(X_i\) denote the number of nodes present at level \(i\) of the skip list. Since 
-every node is promoted independently with probability \(1/2\),
-\[
-\mathbb E[X_i]
+\Pr(MX=0 \mid \mathbb Z) \le \Pr(MX=0 \mid \mathbb Z_p)
+\le
+\frac{p^{n-1}}{p^n}
 =
-n\left(\frac12\right)^i
-\implies
-\frac{\mathbb E[X_{i+1}]}{\mathbb E[X_i]}
-=
-\frac12
+\frac1p
 \]
 
-The height of the skip list is precisely the highest level 
-containing at least one node. Equivalently, if $H=\min\{i:X_i \le 1\}$ then the height is H.
+A suitable choice is \hspace{0.2em} $p=2^{64}+13$ \hspace{0.2em}if we are working with 64-bit integers, 
+which gives an astronomically small error probability of about $5.4\times10^{-20}$.
+\section{A Matrix Problem}
 
-Applying the Geometric-Decline theorem with \(p=\frac12\) gives
+\textbf{Problem Statement\footnote{This question was taken from Codeforces. The editorial indicates that my hashing solution wasn't intended, but when has that ever stopped me?}:} Given two \(n\times m\) matrices \(A\) and \(B\), determine if they are equivalent under row and column permutations. That is, can we permute the rows and columns of \(A\) to obtain \(B\)?
+\\ Additional Constraints: A and B both satisfy -- the set of all entries is \{1,2, \dots, nm\}. \\
+
+\noindent \textbf{Reduction:} First we reduce the problem to a simpler one. If we consider R(M) to be the set of all $R_i$ where each $R_i$ is the set of values in the 
+$i$-th row of a matrix M, and similarly C(M) then the matrices A and B are equivalent under row and column permutations
+if and only if R(A) = R(B) and C(A) = C(B).
+
+\subsection*{Proof of Reduction}
+Clearly, if A and B are equivalent under row and column permutations, then R(A) = R(B) and C(A) = C(B) 
+since the row and column sets are preserved under these permutations. This proves that the set of all B such that R(B) = R(A) and C(B) = C(A)
+contains all matrices equivalent to A under row and column permutations (i.e. the set of all B such that 
+R(B) = R(A) and C(B) = C(A) is a superset of the set of all B equivalent to A under row and column permutations).
+
+Now notice that the number of row and column permutations on A are $n!\cdot m!$ (including the identity permutation). 
+Each of these permutations gives a different matrix since the entries are all distinct.
+Also it can be shown that the number of matrices with given R(M) and C(M) is also $n!\cdot m!$ (In fact while proving 
+this you will notice that the fact we are proving is quite intuitive)  
+
+Since the two sets have the same size and one contains the other, they must be equal. 
+Hence R(A) = R(B) and C(A) = C(B) implies that A and B are equivalent under row and column permutations.
+
+(Note that we assumed all entries are distinct in the above proof)\\
+
+This reduced problem can be solved by two approaches:
+\subsection[Deterministic Method]{Method 1: Set of Sets Approach (Row and Column sets)}
+
+Formally, let
 \[
-\mathbb E[H] \le \Theta(\log n)
+R_i = \{a_{i1}, a_{i2}, \dots, a_{im}\}
 \]
+be the representation of row \(i\). We compare:
+\[
+\{R_1, R_2, \dots, R_n\}_A = \{R_1, R_2, \dots, R_n\}_B
+\]
+and similarly for columns.
 
-\noindent \textbf{Why did we do the first method at all?}\\
+This method is conceptually exact but computationally heavy due to the need to compare complex set-of-sets structures.
+Set structures can be implemented using balanced binary trees in $\Theta(n\log n)$ time - In \texttt{C++} we have the \texttt{set} data structure which is implemented as a balanced binary tree. 
+Comparing two sets of size \(m\) takes \(\Theta(m\log m)\) time, and we have to do this for \(n\) rows and \(n\) columns, leading to a total time complexity of \(\Theta(nm\log n\log m)\). \\
 
-In the second method we did not prove a lower bound! Although even in further 
-analyses we won't need the lower bound, it is good to have 
-established that it is exactly $\Theta(\log n)$.
-Also, we revised the "splitting" technique 
-for finding the complexity of an expression, which is a useful tool in general.
-\subsection{Search}
-
-Suppose we wish to search for the element \(7\).
-
-We begin at the top left level and move right while the next element is \(\leq 7\).
-Once that element is strictly greater than \(7\), we move down to the next level.
-Repeat until we reach the bottom level.\\
-
-\begin{center}
-\begin{minipage}{0.9\linewidth}
-\begin{framed}
-\begin{Verbatim}
-contains(x)
+\noindent \texttt{C++} implementation:
+\begin{verbatim}
+//Matrices are 0-indexed and stored in 2D vectors "first" and "second"
+set<set<int>>F;//set of sets for first matrix
+for(int i=0;i<n;i++)
 {
-    current = top-left node
-    while current exists
+    set<int>temp(first[i].begin(),first[i].end()); //set of ith row
+    F.insert(temp);
+}
+
+for(int i=0;i<n;i++)
+{
+    set<int>temp(second[i].begin(),second[i].end()); //set of ith row
+    if (!F.count(temp)) //early exit if this row doesn't exist in the first matrix
     {
-
-        while current.right exists and is <= x
-            current = current.right
-
-        if current.value == x
-            return FOUND
-
-        current = current.down
+        cout<<"NO\n";
+        return;
     }
-    
-    return NOT FOUND
 }
-\end{Verbatim}
-\vspace{-4mm}
-\end{framed}
-\end{minipage}
-\end{center}
+\end{verbatim}
 
-\paragraph{Step 1: Start at top, check right}
+\subsection[Hashing Method]{Method 2: Hashing Based Verification of Rows and Columns}
 
+To obtain a more efficient solution, each row is hashed to a pair of values $(\text{sum}, \text{squaresum})$, where $\text{sum}$ and $\text{squaresum}$ denote the sum and sum of squares of elements in the row respectively. This representation is much easier to compare across rows.
+
+Assuming the hash is sufficiently collision-resistant, we compare the sets of row hashes for both matrices. This can be implemented efficiently using \texttt{unordered\_set} in \texttt{C++}, which provides expected $\Theta(1)$ insertion and lookup time.
+
+For each row $i$, we compute:
 \[
-\begin{tikzpicture}[
-x=1.8cm,
-y=1.2cm,
->=Stealth,
-every node/.style={font=\small}
-]
-
-\node[left] at (0,2) {Level 2:};
-\node[left] at (0,1) {Level 1:};
-\node[left] at (0,0) {Level 0:};
-
-% Level 2
-\node[draw,rectangle,fill=green!30] (a2) at (1,2) {1};
-\node[draw,rectangle,fill=red!30] (e2) at (5,2) {9};
-
-% Level 1
-\node (a1) at (1,1) {1};
-\node (c1) at (3,1) {5};
-\node (e1) at (5,1) {9};
-
-% Level 0
-\node (a0) at (1,0) {1};
-\node (b0) at (2,0) {3};
-\node (c0) at (3,0) {5};
-\node (d0) at (4,0) {7};
-\node (e0) at (5,0) {9};
-
-\draw[->] (a2) -- (e2);
-
-\draw[->] (a1) -- (c1);
-\draw[->] (c1) -- (e1);
-
-\draw[->] (a0) -- (b0);
-\draw[->] (b0) -- (c0);
-\draw[->] (c0) -- (d0);
-\draw[->] (d0) -- (e0);
-
-\draw[->] (a2) -- (a1);
-\draw[->] (a1) -- (a0);
-
-\draw[->] (c1) -- (c0);
-
-\draw[->] (e2) -- (e1);
-\draw[->] (e1) -- (e0);
-
-\end{tikzpicture}
+h(R_i) = \left(\sum_{j=1}^{m} a_{ij}, \sum_{j=1}^{m} a_{ij}^2\right)
 \]
 
-Since on the right we have an element strictly greater than \(7\), we intend to move down.
-
+We define a custom hash for a pair $(x,y)$ as:
 \[
-\begin{tikzpicture}[
-x=1.8cm,
-y=1.2cm,
->=Stealth,
-every node/.style={font=\small}
-]
-
-\node[left] at (0,2) {Level 2:};
-\node[left] at (0,1) {Level 1:};
-\node[left] at (0,0) {Level 0:};
-
-% Level 2
-\node[draw,rectangle,fill=green!30] (a2) at (1,2) {1};
-\node[draw,rectangle,fill=red!30] (e2) at (5,2) {9};
-
-% Level 1
-\node [draw,rectangle,fill=yellow!30] (a1) at (1,1) {1};
-\node (c1) at (3,1) {5};
-\node (e1) at (5,1) {9};
-
-% Level 0
-\node (a0) at (1,0) {1};
-\node (b0) at (2,0) {3};
-\node (c0) at (3,0) {5};
-\node (d0) at (4,0) {7};
-\node (e0) at (5,0) {9};
-
-\draw[->] (a2) -- (e2);
-
-\draw[->] (a1) -- (c1);
-\draw[->] (c1) -- (e1);
-
-\draw[->] (a0) -- (b0);
-\draw[->] (b0) -- (c0);
-\draw[->] (c0) -- (d0);
-\draw[->] (d0) -- (e0);
-
-\draw[->] (a2) -- (a1);
-\draw[->] (a1) -- (a0);
-
-\draw[->] (c1) -- (c0);
-
-\draw[->] (e2) -- (e1);
-\draw[->] (e1) -- (e0);
-
-\end{tikzpicture}
+H(x,y) = x \cdot 2^{32} + y
 \]
-\paragraph{Step 2: Moved down, now check right}
+where $x$ and $y$ are the computed row statistics. This choice of pair hash is popular for 32 bit integers, as it combines the two values into a single 64-bit integer guaranteeing unique hashes.
 
-\[
-\begin{tikzpicture}[
-x=1.8cm,
-y=1.2cm,
->=Stealth,
-every node/.style={font=\small}
-]
+We insert the hashes of all rows of matrix \(A\) into an unordered set and then check if the hashes of rows of matrix \(B\) are present in this set. If any hash from \(B\) is not found in the set from \(A\), we can conclude that the matrices are not equivalent under row permutations.
 
-\node[left] at (0,2) {Level 2:};
-\node[left] at (0,1) {Level 1:};
-\node[left] at (0,0) {Level 0:};
+Similarly for columns, we compute the column hashes and compare them in the same manner.
 
-% Level 2
-\node (a2) at (1,2) {1};
-\node (e2) at (5,2) {9};
+This method has an expected time complexity of \(\Theta(nm)\) due to the linear time required to compute the hashes and the expected constant time for hash set operations.\\
 
-% Level 1
-\node[draw,rectangle,fill=green!30] (a1) at (1,1) {1};
-\node[draw,rectangle,fill=yellow!40] (c1) at (3,1) {5};
-\node (e1) at (5,1) {9};
-
-% Level 0
-\node (a0) at (1,0) {1};
-\node (b0) at (2,0) {3};
-\node (c0) at (3,0) {5};
-\node (d0) at (4,0) {7};
-\node (e0) at (5,0) {9};
-
-\draw[->] (a2) -- (e2);
-
-\draw[->] (a1) -- (c1);
-\draw[->] (c1) -- (e1);
-
-\draw[->] (a0) -- (b0);
-\draw[->] (b0) -- (c0);
-\draw[->] (c0) -- (d0);
-\draw[->] (d0) -- (e0);
-
-\draw[->] (a2) -- (a1);
-\draw[->] (a1) -- (a0);
-
-\draw[->] (c1) -- (c0);
-
-\draw[->] (e2) -- (e1);
-\draw[->] (e1) -- (e0);
-
-\end{tikzpicture}
-\]
-
-Since \(5 \leq 7\), we intend to move right.
-\paragraph{Step 3: Moved right, check right}
-
-\[
-\begin{tikzpicture}[
-x=1.8cm,
-y=1.2cm,
->=Stealth,
-every node/.style={font=\small}
-]
-
-\node[left] at (0,2) {Level 2:};
-\node[left] at (0,1) {Level 1:};
-\node[left] at (0,0) {Level 0:};
-
-% Level 2
-\node (a2) at (1,2) {1};
-\node (e2) at (5,2) {9};
-
-% Level 1
-\node (a1) at (1,1) {1};
-\node[draw,rectangle,fill=green!30] (c1) at (3,1) {5};
-\node[draw,rectangle,fill=red!30] (e1) at (5,1) {9};
-
-% Level 0
-\node (a0) at (1,0) {1};
-\node (b0) at (2,0) {3};
-\node (c0) at (3,0) {5};
-\node(d0) at (4,0) {7};
-\node (e0) at (5,0) {9};
-
-\draw[->] (a2) -- (e2);
-
-\draw[->] (a1) -- (c1);
-\draw[->] (c1) -- (e1);
-
-\draw[->] (a0) -- (b0);
-\draw[->] (b0) -- (c0);
-\draw[->] (c0) -- (d0);
-\draw[->] (d0) -- (e0);
-
-\draw[->] (a2) -- (a1);
-\draw[->] (a1) -- (a0);
-
-\draw[->] (c1) -- (c0);
-
-\draw[->] (e2) -- (e1);
-\draw[->] (e1) -- (e0);
-
-\end{tikzpicture}
-\]
-
-Since \(9 > 7\), we intend to move down.
-
-\[
-\begin{tikzpicture}[
-x=1.8cm,
-y=1.2cm,
->=Stealth,
-every node/.style={font=\small}
-]
-
-\node[left] at (0,2) {Level 2:};
-\node[left] at (0,1) {Level 1:};
-\node[left] at (0,0) {Level 0:};
-
-% Level 2
-\node (a2) at (1,2) {1};
-\node (e2) at (5,2) {9};
-
-% Level 1
-\node (a1) at (1,1) {1};
-\node[draw,rectangle,fill=green!30] (c1) at (3,1) {5};
-\node[draw,rectangle,fill=red!30] (e1) at (5,1) {9};
-
-% Level 0
-\node (a0) at (1,0) {1};
-\node (b0) at (2,0) {3};
-\node [draw,rectangle,fill=yellow!30](c0) at (3,0) {5};
-\node(d0) at (4,0) {7};
-\node (e0) at (5,0) {9};
-
-\draw[->] (a2) -- (e2);
-
-\draw[->] (a1) -- (c1);
-\draw[->] (c1) -- (e1);
-
-\draw[->] (a0) -- (b0);
-\draw[->] (b0) -- (c0);
-\draw[->] (c0) -- (d0);
-\draw[->] (d0) -- (e0);
-
-\draw[->] (a2) -- (a1);
-\draw[->] (a1) -- (a0);
-
-\draw[->] (c1) -- (c0);
-
-\draw[->] (e2) -- (e1);
-\draw[->] (e1) -- (e0);
-
-\end{tikzpicture}
-\]
-\paragraph{Step 4: Moved down, check right}
-
-\[
-\begin{tikzpicture}[
-x=1.8cm,
-y=1.2cm,
->=Stealth,
-every node/.style={font=\small}
-]
-
-\node[left] at (0,2) {Level 2:};
-\node[left] at (0,1) {Level 1:};
-\node[left] at (0,0) {Level 0:};
-
-% Level 2
-\node (a2) at (1,2) {1};
-\node (e2) at (5,2) {9};
-
-% Level 1
-\node (a1) at (1,1) {1};
-\node (c1) at (3,1) {5};
-\node (e1) at (5,1) {9};
-
-% Level 0
-\node (a0) at (1,0) {1};
-\node (b0) at (2,0) {3};
-\node[draw,rectangle,fill=green!30] (c0) at (3,0) {5};
-\node[draw,rectangle,fill=yellow!40] (d0) at (4,0) {7};
-\node(e0) at (5,0) {9};
-
-\draw[->] (a2) -- (e2);
-
-\draw[->] (a1) -- (c1);
-\draw[->] (c1) -- (e1);
-
-\draw[->] (a0) -- (b0);
-\draw[->] (b0) -- (c0);
-\draw[->] (c0) -- (d0);
-\draw[->] (d0) -- (e0);
-
-\draw[->] (a2) -- (a1);
-\draw[->] (a1) -- (a0);
-
-\draw[->] (c1) -- (c0);
-
-\draw[->] (e2) -- (e1);
-\draw[->] (e1) -- (e0);
-
-\end{tikzpicture}
-\]
-
-\paragraph{Step 5: Moved right, found the target!}
-
-\[
-\begin{tikzpicture}[
-x=1.8cm,
-y=1.2cm,
->=Stealth,
-every node/.style={font=\small}
-]
-
-\node[left] at (0,2) {Level 2:};
-\node[left] at (0,1) {Level 1:};
-\node[left] at (0,0) {Level 0:};
-
-% Level 2
-\node (a2) at (1,2) {1};
-\node (e2) at (5,2) {9};
-
-% Level 1
-\node (a1) at (1,1) {1};
-\node (c1) at (3,1) {5};
-\node(e1) at (5,1) {9};
-
-% Level 0
-\node (a0) at (1,0) {1};
-\node (b0) at (2,0) {3};
-\node (c0) at (3,0) {5};
-\node[draw,rectangle,fill=green!30] (d0) at (4,0) {7};
-\node(e0) at (5,0) {9};
-
-\draw[->] (a2) -- (e2);
-
-\draw[->] (a1) -- (c1);
-\draw[->] (c1) -- (e1);
-
-\draw[->] (a0) -- (b0);
-\draw[->] (b0) -- (c0);
-\draw[->] (c0) -- (d0);
-\draw[->] (d0) -- (e0);
-
-\draw[->] (a2) -- (a1);
-\draw[->] (a1) -- (a0);
-
-\draw[->] (c1) -- (c0);
-
-\draw[->] (e2) -- (e1);
-\draw[->] (e1) -- (e0);
-
-\end{tikzpicture}
-\]
-
-We move right to \(7\) and locate the desired element.
-
-
-\subsection{Insertion}
-One may wonder why skip lists use randomization at all.
-Could we not deterministically place
-\begin{itemize}
-\item every second element in level \(1\),
-\item every fourth element in level \(2\),
-\item every eighth element in level \(3\),
-\item and so on?
-\end{itemize}
-
-While this would indeed support logarithmic search complexity, insertions and 
-deletions would become expensive. For example, inserting a new element near the 
-beginning of the list changes which elements are the second, fourth, eighth, $\dots$ elements of the list.\\
-
-\noindent Consequently, many levels may require rebuilding. Randomization avoids 
-this problem by assigning heights independently to each node. Thus, updates are 
-$\Theta(height)=\Theta(\log n)$ while the structure stays balanced in expectation.
-
-The insertion operation in a skip list closely mirrors the search procedure. 
-In fact, insertion is essentially a search followed by a series of pointer modifications. To insert a value \(x\), we first perform the standard search starting 
-from the topmost level. At each level, we move right until we either find \(x\) or encounter 
-the first node with a key greater than \(x\) (or reach the end of the list).
-
-If the key \(x\) is found during this traversal, then we do nothing. Otherwise, the 
-search naturally terminates at the position where \(x\) should logically appear 
-in the bottom level. This position is determined by the first “blocking” node 
-whose key is greater than \(x\), or by reaching a null pointer at the end of the list.
-
-Once this position is identified, insertion proceeds as follows. We insert \(x\) immediately to the left of the blocking node at level 
-\(0\). After placing it in the bottom layer, we decide randomly (typically 
-with probability \(1/2\)) whether the node should also appear 
-in higher levels. If it is promoted, we move upward level by level, and 
-at each level we again insert it in the same relative horizontal position, 
-maintaining alignment with the structure discovered during the search phase.
-
-Thus, the update process reuses the search path and only modifies pointers locally 
-along that path. This is what ensures that skip list insertion remains logarithmic in expected time.
-
-
-
-
-
-
-
-
-\section{Treaps}
-
-Treaps are randomized balanced binary search trees. They combine two ideas:
-
-\begin{enumerate}
-\item The \emph{binary search tree} property, which allows efficient searching.
-\item The \emph{heap} property, which is used to maintain balance.
-\end{enumerate}
-
-In a simple binary search tree, the insertion order matters. Certain orders can make the height $\Theta(n)$ 
-while others can make it $\Theta(\log n)$. But if we average over all insertion orders, the height 
-is $\Theta(\log n)$. So it seems to avoid adversarial inputs we should randomise the insertion order 
-and the tree will be balanced in expectation! But the whole point of the data structure 
-is we can insert elements at any time so we can not really manipulate the input order.\\
-
-
-This brings us to the idea of assigning each element an index (called a priority) just before insertion and 
-then whenever an element is inserted using the standard binary search tree way, we 
-modify the existing tree to pretend as if it was inserted in increasing order of the 
-priorities. To achieve this, we define an operation called \emph{rotation}.\\
-
-
-A \emph{rotation} preserves the binary search property while ``changing'' the order of insertion. Thus we ensure a random insertion order 
-and the treap remains balanced in expectation. This is a relatively simple implementation as compared to 
-Red-Black Trees which stay balanced using rotations as well as recolorings.
-
-\subsection{Binary Trees}
-A binary tree is a rooted tree in which every node has at most two children, 
-called the left child and the right child. For implementation purposes, the \texttt{struct Node} has 
-three pieces of data -- its own value, the pointer to its left child, and the pointer to its right child. 
-If the child does not exist, the pointer is set to \texttt{nullptr}. We may show an empty node if there 
-is no child for clarity in some figures.
-
-\begin{tikzpicture}[
-level 1/.style={level distance=20mm, sibling distance=40mm},
-level 2/.style={level distance=12mm, sibling distance=20mm},
-every node/.style={circle,draw}
-]
-\node {A}
-child {
-    node {B}
-    child {node {D}}
-    child {node {E}}
-}
-child {
-    node {C}
-    child {node {F}}
-    child {node {G}}
+This method involved hashing so the correctness of the algorithm is itself a random variable -- but given the constraint that
+the matrix entries are from \{1,2,\dots,nm\}, it seems highly unlikely that this will fail.
+In fact, it seems that this may be a unique hash in this case, but i am yet to find a proof for general (n,m).\\\\
+\noindent \texttt{C++} implementation:
+\begin{verbatim}
+auto pair_hash=[](int x,int y){
+    return ((x)<<32)+y;
 };
-\end{tikzpicture}
 
-The topmost node is called the \textbf{root}. A node with no children is called a \textbf{leaf}. 
-Every node together with all of its descendants forms a \textbf{subtree}.
-
-\subsection{Tree Traversal}
-A traversal specifies the order in which nodes are visited. The most important traversal for 
-our purposes is the \textbf{In-Order Traversal}.
-
-\begin{center}
-\begin{minipage}{0.9\linewidth}
-\begin{framed}
-\begin{Verbatim}
-IOT(x)
+unordered_set<long long>s;
+loop(i,n)
 {
-    if (x is null)
-        return
-
-    IOT(x.left)
-    print(x.value)
-    IOT(x.right)
-}
-
-IOT(root) \\starting the recursive traversal from the root
-\end{Verbatim}
-\vspace{-4mm}
-\end{framed}
-\end{minipage}
-\end{center}
-
-\vspace{2em}
-\subsubsection*{Example}
-\begin{center}
-\begin{tikzpicture}[
-level 1/.style={level distance=20mm, sibling distance=40mm},
-level 2/.style={level distance=12mm, sibling distance=20mm},
-every node/.style={circle,draw}
-]
-\node {4}
-child {
-    node {2}
-    child {node {1}}
-    child {node {3}}
-}
-child {
-    node {6}
-    child {node {5}}
-    child {node {7}}
-};
-\end{tikzpicture}
-\end{center}
-
-Convince yourself that the output will be \texttt{1 2 3 4 5 6 7}. In-Order Traversal is most commonly seen in 
-\texttt{Depth-First Search}, popularly known as \texttt{DFS}. 
-
-\subsection{Binary Search Trees}
-
-The value stored at each node is referred to as its \textbf{key}. A binary search tree (BST) is a 
-binary tree in which every non-leaf node satisfies
-\begin{itemize}
-\item all keys in the left subtree are smaller than the node's key,
-\item all keys in the right subtree are larger than the node's key.
-\end{itemize}
-
-\begin{center}
-\begin{tikzpicture}[
-level 1/.style={level distance=20mm, sibling distance=40mm},
-level 2/.style={level distance=12mm, sibling distance=20mm},
-every node/.style={circle,draw}
-]
-\node {8}
-child {
-    node {5}
-    child {node {2}}
-    child {node {6}}
-}
-child {
-    node {11}
-    child {node {10}}
-    child {node {15}}
-};
-\end{tikzpicture}
-\end{center}
-
-With some thought it can be proved that an In-Order Traversal of a BST lists all keys in sorted order.
-
-\subsubsection*{Search}
-Searching for a key proceeds exactly as in binary search. At each node we 
-compare the desired key with the current key and move either left or right. 
-If the tree is balanced, the tree is the same as the recursion tree of a normal binary search 
-on a sorted array $\dots$ \\
-
-\begin{center}
-\begin{minipage}{0.9\linewidth}
-\begin{framed}
-\begin{Verbatim}
-Search(key,node)
-{
-    if (node is null)
-        return false
-
-    if(key < node.value)
-        return Search(key,node.left)
-    if(node.value == key)
-        return true
-    if(key > node.value)
-        return Search(key,node.right)
-}
-
-Search(x,root) \\Search the key x, starting from the root
-\end{Verbatim}
-\vspace{-4mm}
-\end{framed}
-\end{minipage}
-\end{center}
-
-Let us say we are searching for $6$ in the tree we saw earlier. 
-\begin{center}
-\begin{tikzpicture}[
-level 1/.style={level distance=20mm, sibling distance=40mm},
-level 2/.style={level distance=12mm, sibling distance=20mm},
-every node/.style={circle,draw}
-]
-\node (1)[fill=green]{8}
-child{
-    node (2){5}
-    child {
-        node (4){2}
-    }
-    child {
-        node (5){6}
-    }
-}
-child {
-    node (3){11}
-    child {node (6){10}}
-    child {node (7){15}}
-};
-
-\end{tikzpicture}
-\end{center}
-
-
-Since $8$ is greater than $6$, we move left.\\
-\begin{center}
-\begin{tikzpicture}[
-level 1/.style={level distance=20mm, sibling distance=40mm},
-level 2/.style={level distance=12mm, sibling distance=20mm},
-every node/.style={circle,draw}
-]
-\node (1){8}
-child{
-    node (2)[fill=green]{5}
-    child {
-        node (4){2}
-    }
-    child {
-        node (5){6}
-    }
-}
-child {
-    node (3){11}
-    child {node (6){10}}
-    child {node (7){15}}
-};
-
-\draw[white,very thick,->] (1) -- (2);
-\draw[black,very thick,->] (1) -- (2);
-\end{tikzpicture}
-\end{center}
-
-
-Since $5$ is less than $6$, we move right.\\
-\begin{center}
-\begin{tikzpicture}[
-level 1/.style={level distance=20mm, sibling distance=40mm},
-level 2/.style={level distance=12mm, sibling distance=20mm},
-every node/.style={circle,draw}
-]
-\node (1){8}
-child{
-    node (2){5}
-    child {
-        node (4){2}
-    }
-    child {
-        node (5)[fill=green]{6}
-    }
-}
-child {
-    node (3){11}
-    child {node (6){10}}
-    child {node (7){15}}
-};
-
-\draw[white,very thick,->] (1) -- (2);
-\draw[black,very thick,->] (1) -- (2);
-\draw[white,very thick,->] (2) -- (5);
-\draw[black,very thick,->] (2) -- (5);
-\end{tikzpicture}
-\end{center}
-
-We found it! If we had instead been looking for $7$, we would have taken the same path and ended 
-up at the right child of leaf $6$ (which is of course, an empty node) so we would have concluded that $7$ is not 
-in the tree. 
-
-\subsubsection*{Insertion}
-Insertion is similar to binary search. At each node we compare the key to be inserted with the 
-current key and move either left or right. If we find the key in the tree, we do nothing. If we reach an empty 
-node we insert the key there.
-
-\begin{center}
-\begin{minipage}{0.9\linewidth}
-\begin{framed}
-\begin{Verbatim}
-Insert(key,node)
-{
-    if (node is null)
+    long long v1=0,v2=0;
+    loop(j,m)
     {
-        node = new Node(value=key, left=null, right=null)
-        return
+        int x=first[i][j];
+        v1+=x;
+        v2+=x*x;
     }
-
-    if(key < node.value)
-        Insert(key,node.left)
-
-    if(node.value == key)
-        return
-
-    if(key > node.value)
-        Insert(key,node.right)
+    s.insert(pair_hash(v1,v2));
 }
-
-Insert(x,root) \\Insert the key x, recurse starting from the root
-\end{Verbatim}
-\vspace{-4mm}
-\end{framed}
-\end{minipage}
-\end{center}
-
-
-Let us say we want to insert $7$ in the tree we saw earlier. \\
-
-\begin{center}
-\begin{tikzpicture}[
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={circle,draw,minimum size=8mm}
-]
-\node (1)[fill=green]{8}
-child{
-    node (2){5}
-    child {
-        node (4){2}
-        child { node (8){} }
-        child { node (9){} }
-    }
-    child {
-        node (5){6}
-        child { node (10){} }
-        child { node (11){} }
-    }
-}
-child {
-    node (3){11}
-    child {
-        node (6){10}
-        child { node (12){} }
-        child { node (13){} }
-    }
-    child {
-        node (7){15}
-        child { node (14){} }
-        child { node (15){} }
-    }
-};
-\end{tikzpicture}
-\end{center}
-
-
-Since $8$ is greater than $7$, we move left.\\
-
-\begin{center}
-\begin{tikzpicture}[
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={circle,draw,minimum size=8mm}
-]
-\node (1){8}
-child{
-    node [fill=green](2){5}
-    child {
-        node (4){2}
-        child { node (8){} }
-        child { node (9){} }
-    }
-    child {
-        node (5){6}
-        child { node (10){} }
-        child { node (11){} }
-    }
-}
-child {
-    node (3){11}
-    child {
-        node (6){10}
-        child { node (12){} }
-        child { node (13){} }
-    }
-    child {
-        node (7){15}
-        child { node (14){} }
-        child { node (15){} }
-    }
-};
-\draw[white,very thick,->] (1) -- (2); 
-\draw[black,very thick,->] (1) -- (2); 
-\end{tikzpicture}
-\end{center}
-
-Since $5$ is less than $7$, we move right.\\
-
-\begin{center}
-\begin{tikzpicture}[
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={circle,draw,minimum size=8mm}
-]
-\node (1){8}
-child{
-    node (2){5}
-    child {
-        node (4){2}
-        child { node (8){} }
-        child { node (9){} }
-    }
-    child {
-        node [fill=green](5){6}
-        child { node (10){} }
-        child { node (11){} }
-    }
-}
-child {
-    node (3){11}
-    child {
-        node (6){10}
-        child { node (12){} }
-        child { node (13){} }
-    }
-    child {
-        node (7){15}
-        child { node (14){} }
-        child { node (15){} }
-    }
-};
-\draw[white,very thick,->] (1) -- (2); 
-\draw[black,very thick,->] (1) -- (2); 
-\draw[white,very thick,->] (2) -- (5); 
-\draw[black,very thick,->] (2) -- (5); 
-\end{tikzpicture}
-\end{center}
-
-Since $6$ is less than $7$, we move right.\\
-
-\begin{center}
-\begin{tikzpicture}[
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={circle,draw,minimum size=8mm}
-]
-\node (1){8}
-child{
-    node (2){5}
-    child {
-        node (4){2}
-        child { node (8){} }
-        child { node (9){} }
-    }
-    child {
-        node (5){6}
-        child { node (10){} }
-        child { node (11)[fill=red!65]{} }
-    }
-}
-child {
-    node (3){11}
-    child {
-        node (6){10}
-        child { node (12){} }
-        child { node (13){} }
-    }
-    child {
-        node (7){15}
-        child { node (14){} }
-        child { node (15){} }
-    }
-};
-\draw[white,very thick,->] (1) -- (2); 
-\draw[black,very thick,->] (1) -- (2); 
-\draw[white,very thick,->] (2) -- (5); 
-\draw[black,very thick,->] (2) -- (5); 
-\draw[white,very thick,->] (5) -- (11);
-\draw[black,very thick,->] (5) -- (11);
-\end{tikzpicture}
-\end{center}
-
-Since the node is empty, we create a new node and put $7$ in it.\\
-
-\begin{center}
-\begin{tikzpicture}[
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={circle,draw,minimum size=8mm}
-]
-\node (1){8}
-child{
-    node (2){5}
-    child {
-        node (4){2}
-        child { node (8){} }
-        child { node (9){} }
-    }
-    child {
-        node (5){6}
-        child { node (10){} }
-        child { node (11)[fill=green]{7} }
-    }
-}
-child {
-    node (3){11}
-    child {
-        node (6){10}
-        child { node (12){} }
-        child { node (13){} }
-    }
-    child {
-        node (7){15}
-        child { node (14){} }
-        child { node (15){} }
-    }
-};
-\draw[white,very thick,->] (1) -- (2); 
-\draw[black,very thick,->] (1) -- (2); 
-\draw[white,very thick,->] (2) -- (5); 
-\draw[black,very thick,->] (2) -- (5); 
-\draw[white,very thick,->] (5) -- (11);
-\draw[black,very thick,->] (5) -- (11);
-\end{tikzpicture}
-\end{center}
-
-
-\subsection{Balancing}
-
-The efficiency of a BST depends on its height. If the tree has height \(h\), 
-then search, insertion and deletion requires worst-case \(\Theta(h)\) time. 
-Ideally we would like $h=\Theta(\log n)$ where \(n\) is the number of stored keys. Unfortunately, a 
-BST can become highly unbalanced. For example, inserting the keys $1, 2, 3, 4, \dots n$ in this order 
-produces a tree with height \(n\). 
-
-
-\begin{center}
-\begin{tikzpicture}[
-level distance=12mm,
-every node/.style={circle,draw,minimum size=8mm}
-]
-\node {1}
-child[missing]
-child {
-    node {2}
-    child[missing]
-    child {
-        node {3}
-        child[missing]
-        child {
-            node {4}
-            child[missing]
-            child {node {5}}
-        }
-    }
-};
-\end{tikzpicture}
-\end{center}
-
-\begin{center}
-\vspace{-0.3em}
-\textbf{Example with $\mathbf{n=5}$}
-\end{center}
-\vspace{1em}
-
-This tree is essentially a linked list. Its height is \(n\) and consequently all operations 
-require \(\Theta(n)\) time. To avoid this degeneration we need a 
-mechanism for changing the shape of a tree while preserving the BST property.
-
-\subsection{Rotations}
-These are operations that transform a tree into another tree with the same inorder traversal. From an 
-undirected graph perspective the only change that occurs is one edge is deleted and one is added. But from 
-a rooted tree perspective 2 father-child relationships are changed. There are two types of rotations (left 
-and right) which are inverse of each other.
-
-\subsubsection*{Left Rotation}
-\vspace{1em}
-\begin{center}
-\begin{tikzpicture}[
-every node/.style={
-    circle,
-    draw,
-    minimum size=7mm,
-    inner sep=0pt
-},
-level distance=12mm,
-sibling distance=18mm
-]
-
-%---------------- Original ----------------
-\begin{scope}
-\node (x) at (0,0) {5};
-\node (y) at (2,-1.2) {8};
-\node (a) at (1,-2.4) {6};
-\node (b) at (3,-2.4) {11};
-
-\draw (x)--(y);
-\draw (y)--(a);
-\draw (y)--(b);
-
-\node[draw=none] at (1,-3.5) {Before};
-\end{scope}
-
-%---------------- Intermediate ----------------
-\begin{scope}[xshift=6cm]
-\node (x) at (0,0) {5};
-\node (y) at (2.3,-0.2) {8};
-\node (a) at (1,-2.4) {6};
-\node (b) at (3,-1.6) {11};
-
-\draw[dashed,thick,blue!80!black] (x)--(a);
-\draw (x)--(y);
-\draw[dashed,thick,red!90!black] (y)--(a);
-\draw (y)--(b);
-
-\node[draw=none] at (1,-3.5) {Intermediate};
-\end{scope}
-
-%---------------- Final ----------------
-\begin{scope}[xshift=13cm]
-\node (y) at (0.6,0) {8};
-\node (x) at (-1.2,-1.2) {5};
-\node (a) at (0,-2.4) {6};
-\node (b) at (2.4,-1.2) {11};
-
-\draw (y)--(x);
-\draw (y)--(b);
-\draw (x)--(a);
-
-\node[draw=none] at (0,-3.5) {After};
-\end{scope}
-
-\draw[->,thick] (3.5,-1) -- (4.8,-1);
-\draw[->,thick] (9.5,-1) -- (10.8,-1);
-
-\end{tikzpicture}
-\end{center}
-
-\subsubsection*{Right Rotation}
-\vspace{1em}
-\begin{center}
-\begin{tikzpicture}[
-every node/.style={
-    circle,
-    draw,
-    minimum size=7mm,
-    inner sep=0pt
-},
-level distance=12mm,
-sibling distance=18mm
-]
-
-%---------------- Original ----------------
-\begin{scope}
-\node (y) at (0.6,0) {8};
-\node (x) at (-1.2,-1.2) {5};
-\node (a) at (0,-2.4) {6};
-\node (b) at (2.4,-1.2) {11};
-
-\draw (y)--(x);
-\draw (y)--(b);
-\draw (x)--(a);
-
-\node[draw=none] at (0,-3.5) {Before};
-\end{scope}
-
-\draw[->,thick] (3.5,-1) -- (4.8,-1);
-\draw[->,thick] (9.5,-1) -- (10.8,-1);
-
-%---------------- Intermediate ----------------
-\begin{scope}[xshift=6cm]
-\node (x) at (0,0) {5};
-\node (y) at (2.3,-0.2) {8};
-\node (a) at (1,-2.4) {6};
-\node (b) at (3,-1.6) {11};
-
-\draw[dashed,thick,red!90!black] (x)--(a);
-\draw (x)--(y);
-\draw[dashed,thick,blue!80!black] (y)--(a);
-\draw (y)--(b);
-
-\node[draw=none] at (1,-3.5) {Intermediate};
-\end{scope}
-
-%---------------- Final ----------------
-\begin{scope}[xshift=13cm]
-\node (x) at (0,0) {5};
-\node (y) at (2,-1.2) {8};
-\node (a) at (1,-2.4) {6};
-\node (b) at (3,-2.4) {11};
-
-\draw (x)--(y);
-\draw (y)--(a);
-\draw (y)--(b);
-
-\node[draw=none] at (1,-3.5) {After};
-\end{scope}
-
-\end{tikzpicture}
-\end{center}
-
-\subsection{Min-Heaps}
-
-A min-heap is a binary tree that satisfies two important properties:
-
-\begin{enumerate}
-\item \textbf{Complete}: Every level is completely filled except possibly the last 
-level, which is filled from left to right. 
-
-\begin{center}
-\begin{tikzpicture}[
-minimum size=8mm,
-level 1/.style={level distance=20mm, sibling distance=40mm},
-level 2/.style={level distance=12mm, sibling distance=20mm},
-every node/.style={circle,draw}
-]
-\node {A}
-child {
-node {B}
-child {node {D}}
-child {node {E}}
-}
-child {
-node {C}
-child {node {F}}
-child {node {}}
-};
-\end{tikzpicture}
-\end{center}
-
-The above figure shows a complete binary tree.
-
-\item \textbf{Min-Heap Property}:
-\begin{itemize}
-\item In a \textbf{Min-Heap}, every node is less than or equal to its children.
-
-\begin{center}
-\begin{tikzpicture}[
-minimum size=8mm,
-level 1/.style={level distance=20mm, sibling distance=40mm},
-level 2/.style={level distance=12mm, sibling distance=20mm},
-every node/.style={circle,draw}
-]
-\node {5}
-child{
-	node{10}
-	child {
-		node {20}
-	}
-	child {
-		node {30}
-	}
-}
-child {
-	node {15}
-	child {
-		node {25}
-	}
-	child {
-		node {}
-	}
-};
-\end{tikzpicture}
-\end{center}
-
-The above figure shows a min-heap. It can be easily proved that the root has the smallest value in a 
-min-heap. 
-
-\end{itemize}
-\end{enumerate}
-
-A min-heap can support the \texttt{push} and \texttt{pop} operations.
-
-\subsubsection*{Popping}
-The \texttt{pop()} function returns the root of the heap and removes it from the heap. To maintain the heap, 
-we must then move some values up the tree. Logically, the smaller child should be moved up to the root. 
-This creates a vacancy in the subtree in which the child was pushed up. That subtree now behaves like a 
-smaller version of the original problem -- a heap from which the root was removed. So we can recursively 
-push the smaller child up until we hit empty node.
-
-\begin{center}
-\begin{minipage}{0.9\linewidth}
-\begin{framed}
-\begin{Verbatim}
-pop(root)
+loop(i,n)
 {
-	ans=root.value
-	root.value=null
-	if(root.left < root.right)
-		root.value=pop(root.leftChild)
-	else
-		pop(root.rightChild)
-	return ans
-}
-\end{Verbatim}
-\vspace{-4mm}
-\end{framed}
-\end{minipage}
-\end{center}
-
-\subsubsection*{Pushing}
-
-The \texttt{push()} function adds a new value to the heap by putting the new value at the 
-bottom of the tree and then pushing it up until heap property is restored. 
-
-\begin{center}
-\begin{minipage}{0.9\linewidth}
-\begin{framed}
-\begin{Verbatim}
-push(x)
-{
-	curr=bottomLeftMostNode
-	curr.value=x
-
-	while(curr.value<curr.parent.value)
-	{
-		swap(curr.value,curr.parent.value)
-		curr=curr.parent
-	}
-}
-\end{Verbatim}
-\vspace{-4mm}
-\end{framed}
-\end{minipage}
-\end{center}
-
-Let us insert $7$ into the following min-heap.
-
-\begin{center}
-\begin{tikzpicture}[
-minimum size=8mm,
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={circle,draw}
-]
-\node{5}
-child{
-	node{10}
-	child{ 
-		node{20}
-		child{node{40}}
-		child{node{}}
-	}
-	child {
-		node{30}
-		child{node{}}
-		child{node{}}
-	}
-}
-child {
-	node {15}
-	child {
-		node{25}
-		child{node{}}
-		child{node{}}
-	}
-	child {
-		node{50}
-		child{node{}}
-		child{node{}}
-	}
-};
-\end{tikzpicture}
-\end{center}
-
-
-Insert 7 in bottom left most node. We detect the violation $20>7$.
-\begin{center}
-\begin{tikzpicture}[
-minimum size=8mm,
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={circle,draw}
-]
-\node{5}
-child{
-	node{10}
-	child{ 
-		node[fill=red!65](1){20}
-		child{node{40}}
-		child{node[fill=red!65](2){7}}
-	}
-	child {
-		node{30}
-		child{node{}}
-		child{node{}}
-	}
-}
-child {
-	node {15}
-	child {
-		node{25}
-		child{node{}}
-		child{node{}}
-	}
-	child {
-		node{50}
-		child{node{}}
-		child{node{}}
-	}
-};
-\end{tikzpicture}
-\end{center}
-
-
-We swap them to solve the violation.
-\begin{center}
-\begin{tikzpicture}[
-minimum size=8mm,
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={circle,draw}
-]
-\node{5}
-child{
-	node{10}
-	child{ 
-		node(1){7}
-		child{node{40}}
-		child{node(2){20}}
-	}
-	child {
-		node{30}
-		child{node{}}
-		child{node{}}
-	}
-}
-child {
-	node {15}
-	child {
-		node{25}
-		child{node{}}
-		child{node{}}
-	}
-	child {
-		node{50}
-		child{node{}}
-		child{node{}}
-	}
-};
-\draw[<->,very thick] (1)--(2);
-\end{tikzpicture}
-\end{center}
-
-
-
-We detect the violation $10>7$.
-\begin{center}
-\begin{tikzpicture}[
-minimum size=8mm,
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={circle,draw}
-]
-\node{5}
-child{
-	node[fill=red!65]{10}
-	child{ 
-		node(1)[fill=red!65]{7}
-		child{node{40}}
-		child{node(2){20}}
-	}
-	child {
-		node{30}
-		child{node{}}
-		child{node{}}
-	}
-}
-child {
-	node {15}
-	child {
-		node{25}
-		child{node{}}
-		child{node{}}
-	}
-	child {
-		node{50}
-		child{node{}}
-		child{node{}}
-	}
-};
-\draw[<->,very thick] (1)--(2);
-\end{tikzpicture}
-\end{center}
-
-
-We swap them to solve the violation.
-\begin{center}
-\begin{tikzpicture}[
-minimum size=8mm,
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={circle,draw}
-]
-\node{5}
-child{
-	node(3){7}
-	child{ 
-		node(1){10}
-		child{node{40}}
-		child{node(2){20}}
-	}
-	child {
-		node{30}
-		child{node{}}
-		child{node{}}
-	}
-}
-child {
-	node {15}
-	child {
-		node{25}
-		child{node{}}
-		child{node{}}
-	}
-	child {
-		node{50}
-		child{node{}}
-		child{node{}}
-	}
-};
-\draw[<->,very thick] (1)--(2);
-\draw[<->,very thick] (3)--(1);
-\end{tikzpicture}
-\end{center}
-
-
-It can be proved that when there is no more violation involving the inserted value, there is no more 
-violation in the tree. Thus the heap property is restored.
-
-
-\subsection{Treaps}
-
-Each node stores a key and along with it a random priority. 
-
-\[
-\texttt{Node.value=(key,priority)}
-\]
-
-
-A treap simultaneously satisfies:
-\begin{enumerate}
-\item The \textbf{BST property} with respect to keys.
-\item The \textbf{min-heap property} with respect to priorities.
-\end{enumerate}
-
-
-\begin{center}
-\begin{tikzpicture}[
-minimum size=5mm,
-level 1/.style={level distance=20mm, sibling distance=40mm},
-level 2/.style={level distance=12mm, sibling distance=20mm},
-every node/.style={draw,rounded corners}
-]
-\node {$8,7$}
-child {
-    node {$4,15$}
-    child {node {$3,30$}}
-    child {node {$6,60$}}
-}
-child {
-    node {$12,30$}
-    child {node {$10,50$}}
-    child {node {$14,70$}}
-};
-\end{tikzpicture}
-\end{center}
-
-The above figure shows a treap.
-
-\subsubsection*{Insertion}
-
-Insertion in a treap proceeds in two phases. First, we insert the new key exactly as in a 
-binary search tree. Then, if the heap property is violated, we restore it using rotations. Consider the 
-following treap, where each node stores a pair $(\text{key},\text{priority})$ and priorities 
-satisfy the min-heap property.
-
-\begin{center}
-\begin{tikzpicture}[
-minimum size=5mm,
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={draw,rounded corners}
-]
-\node {$8,7$}
-child {
-    node {$4,15$}
-    child {
-		node {$3,30$}
-		child{node{}}
-		child{node{}}
-	}
-    child {
-		node {$6,60$}
-		child{node{}}
-		child{node{}}
-	}
-}
-child {
-    node {$12,30$}
-    child {
-		node {$10,50$}
-		child{node{}}
-		child{node{}}
-	}
-    child {
-		node {$14,70$}
-		child{node{}}
-		child{node{}}
-	}
-};
-\end{tikzpicture}
-\end{center}
-
-Suppose we wish to insert the node $(5,10)$.
-
-\paragraph{Step 1: BST Insertion}
-
-Ignoring priorities, we first insert the key according to the BST property -- the new node 
-becomes the left child of $(6,60)$.
-
-\begin{center}
-\begin{tikzpicture}[
-minimum size=5mm,
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={draw,rounded corners}
-]
-\node (1){$8,7$}
-child {
-    node (2){$4,15$}
-    child {
-		node {$3,30$}
-		child{node{}}
-		child{node{}}
-	}
-    child {
-		node (3){$6,60$}
-		child{node(4){5,10}}
-		child{node{}}
-	}
-}
-child {
-    node {$12,30$}
-    child {
-		node {$10,50$}
-		child{node{}}
-		child{node{}}
-	}
-    child {
-		node {$14,70$}
-		child{node{}}
-		child{node{}}
-	}
-};
-
-\draw[->,very thick] (1)--(2);
-\draw[->,very thick] (2)--(3);
-\draw[->,very thick] (3)--(4);
-\end{tikzpicture}
-\end{center}
-
-The BST property holds, but the min-heap property is violated since $10<60$.
-
-\begin{center}
-\begin{tikzpicture}[
-minimum size=5mm,
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={draw,rounded corners}
-]
-\node (1){$8,7$}
-child {
-    node (2){$4,15$}
-    child {
-		node {$3,30$}
-		child{node{}}
-		child{node{}}
-	}
-    child {
-		node [fill=red!73](3){$6,60$}
-		child{node(4)[fill=red!73]{5,10}}
-		child{node{}}
-	}
-}
-child {
-    node {$12,30$}
-    child {
-		node {$10,50$}
-		child{node{}}
-		child{node{}}
-	}
-    child {
-		node {$14,70$}
-		child{node{}}
-		child{node{}}
-	}
-};
-
-\end{tikzpicture}
-\end{center}
-
-\paragraph{Step 2: Rotation at $(6,60)$}
-
-Strictly speaking rotation involves three nodes, so we imagine the right child of $(5,10)$ which is an empty 
-node. We now perform a right rotation at $(6,60)$.
-
-\usetikzlibrary{fit}
-
-\begin{center}
-\begin{tikzpicture}[minimum size=5mm, every node/.style={draw,rounded corners}]
-
-\begin{scope}
-\coordinate (a1) at (-1,1);
-\coordinate (a2) at (0.2,0.1);
-\node (b) at (1,-0.5) {$6,60$};
-\node (c) at (-0.5,-2) {$5,10$};
-\node (d) at (0.2,-3.2) {};
-\node[
-    draw,
-    dotted,
-    rounded corners,
-    fit=(b)(c)(d),
-    inner sep=8pt
-] {};
-\draw (a1)--(a2);
-\draw (b)--(c);
-\draw (c)--(d);
-\end{scope}
-
-\begin{scope}[xshift=8cm]
-\coordinate (a1) at (-1,1);
-\coordinate (a2) at (0.2,0.1);
-\node (b) at (1,-0.5) {$5,10$};
-\node (c) at (2.5,-2) {$6,60$};
-\node (d) at (1.8,-3.2) {};
-\draw (a1)--(a2);
-\draw (b)--(c);
-\draw (c)--(d);
-\node[
-    draw,
-    dotted,
-    rounded corners,
-    fit=(b)(c)(d),
-    inner sep=8pt
-] {};
-
-\end{scope}
-
-\draw[->,thick] (3,-1.5)--(7,-1.5);
-
-
-\end{tikzpicture}
-\end{center}
-
-The treap now becomes
-
-\begin{center}
-\begin{tikzpicture}[
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={draw,rounded corners}
-]
-\node {$8,7$}
-child {
-    node {$4,15$}
-    child {node {$3,30$}}
-    child {
-        node {$5,10$}
-        child[missing]
-        child {node {$6,60$}}
-    }
-}
-child {
-    node {$12,30$}
-    child {node {$10,50$}}
-    child {node {$14,70$}}
-};
-\end{tikzpicture}
-\end{center}
-
-The heap property is still violated since
-
-\[
-10 < 15.
-\]
-
-\paragraph{Step 3: Rotation at $(4,15)$}
-
-We imagine the left child of $(5,10)$ (which is an empty node) for the purposes of the rotation.
-
-\begin{center}
-\begin{tikzpicture}[minimum size=5mm, every node/.style={draw,rounded corners}]
-
-\begin{scope}
-\coordinate (a1) at (-1,1);
-\coordinate (a2) at (0.2,0.1);
-\node (b) at (1,-0.5) {$4,15$};
-\node (c) at (2.5,-2) {$5,10$};
-\node (d) at (-0.6,-2) {$3,30$};
-\node (e) at (4,-3.2) {$6,60$};
-\node (f) at (1.3,-3.2) {};
-
-\draw (a1)--(a2);
-\draw (b)--(c);
-\draw (b)--(d);
-\draw (c)--(e);
-\draw (c)--(f);
-
-\node[
-    draw,
-    dotted,
-    rounded corners,
-    fit=(b)(c)(f),
-    inner sep=8pt
-] {};
-
-\end{scope}
-
-\begin{scope}[xshift=12cm]
-\coordinate (a1) at (-1,1);
-\coordinate (a2) at (0.2,0.1);
-
-\node (b) at (1,-0.5) {$5,10$};
-\node (c) at (-0.2,-2) {$4,15$};
-\node (d) at (-1.7,-3.2) {$3,30$};
-\node (e) at (2.5,-2) {$6,60$};
-\node (f) at (0.9,-3.2) {};
-
-\draw (a1)--(a2);
-\draw (b)--(c);
-\draw (c)--(d);
-\draw (b)--(e);
-\draw (c)--(f);
-\node[
-    draw,
-    dotted,
-    rounded corners,
-    fit=(b)(c)(f),
-    inner sep=8pt
-] {};
-
-\end{scope}
-
-\draw[->,thick] (5,-1.5)--(8,-1.5);
-
-\end{tikzpicture}
-\end{center}
-
-The treap now becomes
-
-\begin{center}
-\begin{tikzpicture}[
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={draw,rounded corners}
-]
-\node {$8,7$}
-child {
-    node {$5,10$}
-    child {
-        node {$4,15$}
-        child {node {$3,30$}}
-        child[missing]
-    }
-    child {
-        node {$6,60$}
-    }
-}
-child {
-    node {$12,30$}
-    child {node {$10,50$}}
-    child {node {$14,70$}}
-};
-\end{tikzpicture}
-\end{center}
-
-The heap property is now satisfied at every node:
-
-\[
-7 < 10,\qquad
-10 < 15,\qquad
-10 < 60,\qquad
-30 < 50,\qquad
-30 < 70.
-\]
-
-The BST property is also preserved because rotations never change the
-in-order ordering of keys.
-
-\paragraph{Final Treap}
-
-\begin{center}
-\begin{tikzpicture}[
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={draw,rounded corners}
-]
-\node {$8,7$}
-child {
-    node {$5,10$}
-    child {
-        node {$4,15$}
-        child {node {$3,30$}}
-        child[missing]
-    }
-    child {
-        node {$6,60$}
-    }
-}
-child {
-    node {$12,30$}
-    child {node {$10,50$}}
-    child {node {$14,70$}}
-};
-\end{tikzpicture}
-\end{center}
-
-Hence the insertion of $(5,10)$ is complete.
-
-\section{Hash Tables}
-
-The need arose for a data structure to store a set of elements with efficient search, 
-insertion and deletion operations -- so we turn to hash tables!
-
-\subsection{The Structure}
-
-We begin with an empty array of size \(m\). Since this is a plain old normal 
-array of size \(m\), we can access and modify 
-any random element in constant time$\dots$
-
-\begin{center}
-\begin{tikzpicture}
-\foreach \i in {0,...,7}{
-\draw (\i,0) rectangle (\i+1,1);
-\node at (\i+0.5,1.4){\i};
-}
-
-\node at (8.5,0.5){$\dots$};
-\end{tikzpicture}
-\end{center}
-
-\subsection{Insertion}
-We add an element \(x\) by computing $i=\mathbf{H}(x)$. For example, 
-suppose $\mathbf{H}(6)=3$. So we place \(6\) at index \(3\).
-
-
-\begin{center}
-\begin{minipage}{0.9\linewidth}
-\begin{framed}
-\begin{Verbatim}
-Insert(x)
-{
-    i = H(x)
-    traverse Linked_List[i]
+    long long v1=0,v2=0;
+    loop(j,m)
     {
-        if x present
-            return
+        int x=second[i][j];
+        v1+=x;
+        v2+=x*x;
     }
-    add x to end of Linked_List[i]
-}
-\end{Verbatim}
-\vspace{-4mm}
-\end{framed}
-\end{minipage}
-\end{center}
-
-\paragraph{First insertion}
-
-\begin{center}
-\begin{tikzpicture}
-\foreach \i in {0,...,7}{
-\draw (\i,0) rectangle (\i+1,1);
-\node at (\i+0.5,1.4){\i};
-}
-
-\node at (8.5,0.5){$\dots$};
-
-\node at (3.5,0.5){6};
-\end{tikzpicture}
-\end{center}
-
-Similarly, we continue inserting elements in the same way as long as no two elements collide at the same index.
-
-\paragraph{More insertions}
-
-\begin{center}
-\begin{tikzpicture}
-\foreach \i in {0,...,7}{
-\draw (\i,0) rectangle (\i+1,1);
-\node at (\i+0.5,1.4){\i};
-}
-
-\node at (8.5,0.5){$\dots$};
-
-\node at (1.5,0.5){4};
-\node at (3.5,0.5){6};
-\node at (5.5,0.5){11};
-\node at (6.5,0.5){2};
-\end{tikzpicture}
-\end{center}
-
-At this point, every index contains at most one element.
-
-\paragraph{First \emph{collision}}
-
-Now we attempt to insert \(7\). Suppose $\mathbf{H}(7)=3$.
-We try to place \(7\) at index \(3\), but we find \(6\) already present.
-So we extend that position into a linked list.
-
-\begin{center}
-\begin{tikzpicture}
-
-% array
-\foreach \i in {0,...,7}{
-\draw (\i,0) rectangle (\i+1,1);
-\node at (\i+0.5,1.4){\i};
-}
-
-\node at (8.5,0.5){$\dots$};
-
-\node at (1.5,0.5){4};
-\node at (3.5,0.5){6};
-\node at (5.5,0.5){11};
-\node at (6.5,0.5){2};
-
-% arrow down
-\draw[-{Latex}] (3.5,0) -- (3.5,-1);
-
-% second element
-\draw (3,-1) rectangle (4,-2);
-\node at (3.5,-1.5){7};
-
-\end{tikzpicture}
-\end{center}
-
-\paragraph{More collisions}
-
-As more elements are inserted, collisions may occur at multiple indices, forming multiple linked lists.
-
-\begin{center}
-\begin{tikzpicture}
-
-% array
-\foreach \i in {0,...,7}{
-\draw (\i,0) rectangle (\i+1,1);
-\node at (\i+0.5,1.4){\i};
-}
-
-\node at (8.5,0.5){$\dots$};
-
-
-\node at (1.5,0.5){4};
-\node at (5.5,0.5){11};
-\node at (6.5,0.5){2};
-
-% chain at index 1
-\node at (2.5,0.5){9};
-\draw[-{Latex}] (1.5,0) -- (1.5,-1);
-\draw (1,-1) rectangle (2,-2);
-\node at (1.5,-1.5){14};
-\draw[-{Latex}] (1.5,-2) -- (1.5,-3);
-\draw (1,-3) rectangle (2,-4);
-\node at (1.5,-3.5){21};
-
-% chain at index 3 (our example)
-\node at (3.5,0.5){6};
-\draw[-{Latex}] (3.5,0) -- (3.5,-1);
-\draw (3,-1) rectangle (4,-2);
-\node at (3.5,-1.5){7};
-
-\end{tikzpicture}
-\end{center}
-
-Thus, each index i stores a linked list of all elements 
-inserted till now who hash to i. Let the total number of elements 
-inserted be \(n\) and the number of indices be \(m\). Since on average 
-each index has $\frac{n}{m}$ elements, the expected time of insertion 
-is $\Theta(1+\frac{n}{m})$.
-
-\subsection{Search}
-
-\begin{center}
-\begin{minipage}{0.9\linewidth}
-\begin{framed}
-\begin{Verbatim}
-Search(x)
-{
-    i = H(x)
-    traverse Linked_List[i]
+    if(!s.count(pair_hash(v1,v2))) //early exit if this row doesn't exist in the first matrix
     {
-        if x found
-            return true
-    }
-    return false
+        cout<<"NO\n";
+        return;
+    }          
 }
-\end{Verbatim}
-\vspace{-4mm}
-\end{framed}
-\end{minipage}
-\end{center}
+\end{verbatim}
 
-Since the expected number of elements per index is $\frac{n}{m}$, the 
-expected time of search is $\Theta(\frac{n}{2m})$ since on average half the 
-linked list is searched in a linear traversal.
+\section{A Sliding Window Problem}
 
-\subsection{Deletion}
-\begin{center}
-\begin{minipage}{0.9\linewidth}
-\begin{framed}
-\begin{Verbatim}
-Delete(x)
+\textbf{The Problem} Two integer arrays $x$ and $y$, each of size $n$, are given along with an integer $k$ $(1 \le k \le n)$. For every contiguous subarray (window) of size $k$, determine whether the corresponding windows in $x$ and $y$ contain the same multiset of elements at every position.
+
+More precisely, for every index (1-based) $i$ such that $1 \le i \le n-k+1$, we compare the multisets:
+\[
+\{x_i, x_{i+1}, \dots, x_{i+k-1}\} \quad \text{and} \quad \{y_i, y_{i+1}, \dots, y_{i+k-1}\}
+\]
+and check whether they are identical for all $i$.
+
+\subsection*{Rolling Hash Method}
+
+To obtain an efficient solution, we maintain two rolling hashes for each window:
+\[
+S = \sum a_i, \quad Q = \sum a_i^2
+\]
+
+These values can be updated in $\Theta(1)$ time when the window slides by removing the outgoing element and adding the incoming element.
+
+For each position $i$, we compute:
+\[
+(S_x(i), Q_x(i)) \quad \text{and} \quad (S_y(i), Q_y(i))
+\]
+and check whether:
+\[
+(S_x(i), Q_x(i)) = (S_y(i), Q_y(i))
+\]
+
+If the condition holds for all $i$, we conclude that every corresponding window has identical multiset structure.\\
+
+\noindent\textbf{C++ Implementation}
+
+\begin{verbatim}
+long long sumX=0,sumY=0;
+long long sumX2=0,sumY2=0;
+
+for(int i=0;i<k;i++)
 {
-    i = H(x)
-    traverse Linked_List[i]
-    if x found
-        remove x from Linked_List[i]
-}
-\end{Verbatim}
-\vspace{-4mm}
-\end{framed}
-\end{minipage}
-\end{center}
-
-The expected time of deletion is $\Theta(\frac{n}{2m})$ since on 
-average half the linked list is searched in a linear traversal.
-\section{Bloom Filters}
-
-Suppose we wish to store a set of elements and support the operations 
-\texttt{insert(x)} and \texttt{contains(x)}.
-A straightforward solution is to store all inserted elements in an \texttt{unordered\_set}.
-This gives expected $\Theta(1)$ insertion and lookup time, but requires memory proportional 
-to the number of stored elements. When the number of elements becomes 
-extremely large, memory itself may become the primary constraint. Bloom filters can achieve this tradeoff.
-
-\subsection{The Structure}
-
-Instead of storing the elements themselves, we store only a hash of the set. We begin with 
-a bit array of size $m$ initialised to all zeros.
-
-\begin{center}
-\begin{tikzpicture}
-\foreach \i in {0,...,7}{
-\draw (\i,0) rectangle (\i+1,1);
-\node at (\i+0.5,1.4){\i};
-\node at (\i+0.5,0.5){0};
+    sumX+=x[i];
+    sumY+=y[i];
+    sumX2+=x[i]*x[i];
+    sumY2+=y[i]*y[i];
 }
 
-\node at (8.5,0.5){$\dots$};
-\end{tikzpicture}
-\end{center}
+bool ok=1;
+for(int i=k;i<n;i++)
+{
+    if(!((sumX==sumY)&&(sumX2==sumY2)))
+    {
+        ok=0;
+        break;
+    }
 
-We then choose $k$ hash functions
-\[
-\left(H_1,H_2,\ldots,H_k\right)
-\]
-each mapping elements to the set of indices $\{0,1,\ldots,m-1\}$.
+    sumX-=x[i-k];
+    sumX+=x[i];
+    sumX2-=x[i-k]*x[i-k];
+    sumX2+=x[i]*x[i];
 
-\subsection{Insertion}
-
-To insert an element $x$, we compute
-\[
-\left(H_1(x),H_2(x),\ldots,H_k(x)\right)
-\]
-
-and set all corresponding bits to $1$. For example, if $k=3$ and the hash functions are $H_1(x)=3,\; H_2(x)=7,\; H_3(x)=10$
-then we set positions $3,7,$ and $10$ of the bit array to $1$. If while inserting we see that a bit is already $1$, then we do nothing.\\
-
-
-\noindent This operation is $\Theta(k)$ time.
-\subsection{Search}
-
-To determine whether an element $x$ is present, we again compute
-\[
-\left(H_1(x),H_2(x),\ldots,H_k(x)\right)
-\]
-and inspect the corresponding bits.
-\begin{itemize}
-\item If at least one of these bits is $0$, then $x$ was certainly never inserted.
-\item If all of these bits are $1$, then we report that $x$ is present.
-\end{itemize}
-The second conclusion is of course subject to false positives! It is possible that the required bits 
-were set earlier by completely different elements.\\
-
-
-\noindent This operation is $\Theta(k)$ time.
-\subsection{Utility of Bloom Filters}
-
-The most important property of Bloom filters is that false negatives are impossible. If the filter 
-reports that an element is absent, then that element was definitely never inserted. The only possible 
-error is reporting that an element is present when it is actually absent.\\
-
-
-Interestingly, Bloom filters (as the name suggests) are used as a filter. This means that incoming 
-queries will go through the bloom filter -- if the element is absent, we can trust the result. Otherwise we can 
-perform a more expensive lookup in the database. So it is useful to reduce the time taken to process a 
-membership query.\\
-
-
-\noindent It can be shown\footnote{See Problems!} that the error probability of a Bloom filter with 
-optimal k is approximately $2^{-\frac{m\ln 2}{n}}$. For this to be small, we need $m$ to be large and $n$ to be small. But one might question, wasn't the 
-whole point of the bloom filter to reduce the memory usage?\\
-
-\noindent Let me clarify this with a practical example -- lets say we have a database of URLs. 
-Each URL takes 100 bytes to store. Now let us say we have $10^9$ URLs -- and the deterministic \texttt{set} structure 
-has a constant factor of about 10 per node in memory. So overall that would require $10^{12}$ bytes of memory which is about 1 TB.
-In comparison, a Bloom filter of size $m=10\cdot n = 10^{10}$ bits would require only about 12.5 GB of memory.\\
-
-\section{Cuckoo Hashing}
-Recall that in ordinary hash tables, collisions are handled using linked lists. Cuckoo hashing takes a 
-different approach. Instead of allowing multiple elements to occupy the same location, 
-each element is given multiple possible locations and is stored in exactly one of
-them.
-
-\subsection{The Structure}
-
-We maintain an array of size $m$ together with two hash functions $(H_1,H_2)$.
-
-\begin{center}
-\begin{tikzpicture}
-\foreach \i in {0,...,7}{
-\draw (\i,0) rectangle (\i+1,1);
-\node at (\i+0.5,1.4){\i};
+    sumY-=y[i-k];
+    sumY+=y[i];
+    sumY2-=y[i-k]*y[i-k];
+    sumY2+=y[i]*y[i];
 }
+cout<<(ok?"YES":"NO");
+\end{verbatim}
 
-\node at (8.5,0.5){$\dots$};
-\end{tikzpicture}
-\end{center}
-
-\subsection{Insertion}
-Suppose we wish to insert an element $x$. Choose either of the hash functions $H_1$ or $H_2$ at random. 
-Let this chosen hash be applied to $x$ to obtain an index $H(x)$. If the array is empty at that index, 
-we are done. Otherwise, let the occupant be $y$. We evict\footnote{This behaviour resembles the cuckoo 
-bird which lays its eggs in another bird's nest and kicks out the occupying eggs. Hence the name \dots} $y$ 
-and place $x$ in its position. The displaced element $y$ must now be 
-moved to its other possible location. If that position is occupied, 
-another element is evicted, and the process continues.\\
-
-\noindent We repeat this process until we either find an empty slot or find a 
-cycle. 
-
-\subsubsection*{Cycles and Rehashing}
-In case we enter a cycle and insertion cannot be completed, choose new hash functions and 
-rebuild the table from scratch. 
-
-Note that overall, as long as we keep $n/m$ low, it can be shown that the expected time to 
-insert an element is \(\Theta(1)\) average time similar to hash tables.
-\subsection{Search}
-
-To determine whether an element $x$ is present, we simply check the 
-two possible locations $H_1(x)$ and  $H_2(x)$. If $x$ is found at either location, 
-we report that it is present. Thus every lookup requires at most two array accesses, 
-giving $\Theta(1)$ search time.
+This method is very easy to implement and runs in $\Theta(n)$ time, which is efficient for this problem. 
+What was especially nice about this method is that we can maintain the hash values in constant time as the window slides, 
+which is what I meant by using a \textbf{rolling hash}.
+However, it relies on the assumption that the hash values are unique for different multisets.
+We can improve this (if needed) by doing a second round of hashing with a different hash function like polynomial hashing. 
 
 \clearpage
 \section{Problems}
-
 \begin{enumerate}
+
 \item[\textbf{1}]
-\begin{enumerate}[label=\textbf{(\alph*)}]
-\item Prove that the expected search time in a skip list is \(\Theta(\log n)\). 
-\textit{Hint: downward moves are bounded by height, which is expected \(\Theta(\log n\)).}
-
-\item Deduce similarly that insertion takes expected \(\Theta(\log n)\) time.
-
-\item Try inserting \(8\) into the following skip list using
- the procedure we described earlier:
-
-\[
-\begin{tikzpicture}[
-x=1.8cm,
-y=1.2cm,
->=Stealth,
-every node/.style={font=\small}
-]
-
-\node[left] at (0,2) {Level 2:};
-\node[left] at (0,1) {Level 1:};
-\node[left] at (0,0) {Level 0:};
-
-% Level 2
-\node(a2) at (1,2) {1};
-\node (e2) at (5,2) {9};
-
-% Level 1
-\node (a1) at (1,1) {1};
-\node (c1) at (3,1) {5};
-\node (e1) at (5,1) {9};
-
-% Level 0
-\node (a0) at (1,0) {1};
-\node (b0) at (2,0) {3};
-\node (c0) at (3,0) {5};
-\node (d0) at (4,0) {7};
-\node (e0) at (5,0) {9};
-
-\draw[->] (a2) -- (e2);
-
-\draw[->] (a1) -- (c1);
-\draw[->] (c1) -- (e1);
-
-\draw[->] (a0) -- (b0);
-\draw[->] (b0) -- (c0);
-\draw[->] (c0) -- (d0);
-\draw[->] (d0) -- (e0);
-
-\draw[->] (a2) -- (a1);
-\draw[->] (a1) -- (a0);
-
-\draw[->] (c1) -- (c0);
-
-\draw[->] (e2) -- (e1);
-\draw[->] (e1) -- (e0);
-
-\end{tikzpicture}
-\]
-
-\item Can you think of a $\Theta(\log n)$ deletion strategy for skip lists?
-\end{enumerate}
+For hashes of form $H(x)=(ax+b)\bmod c$, why is it preferred to have c as a prime number? \textit{Hint: Think of 
+the arithmetic progression (a very common occurence in data) with common difference d -- 
+what happens when d is not coprime with c?}
 
 \item[\textbf{2}]
-Consider n,m,k to be number of inserted elements, the size of bit array and the 
-number of hash functions respectively in a Bloom filter. Assume the hash functions are independent.
-
-\begin{enumerate}[label=\textbf{(\alph*)}]
-\item Show that the probability of a particular bit in the array being set is $\left(1-\left(1-\frac{1}{m}\right)^{kn}\right)$ 
-and thus the probability of a false positive is $\left(1-\left(1-\frac{1}{m}\right)^{kn}\right)^k$
-\item Using suitable large m, n approximations, show that the optimal number of hash functions is $k=\frac{m}{n}\ln 2$
-\item Put the above results together to show that the probability of a false positive is approximately $2^{-\frac{m\ln 2}{n}}$.
-\end{enumerate}
 \end{enumerate}

@@ -1,366 +1,577 @@
 
-\chapter{Heuristic Algorithms}
+\chapter{Online Algorithms}
 
-Many computational problems of practical interest have a statement like ``Given a graph find a set of vertices of size atmost x satisfying property P.'' \\
-Now one way to guarantee a solution is to find the minimum sized set of vertices satisfying P, but this is usually not doable in polynomial time. \\
-So we are often forced to settle for a solution that is not necessarily optimal but can be found efficiently. 
-Such algorithms are \emph{heuristic algorithms} -- algorithms designed to quickly find solutions that are often good in practice,
-even if they do not always provide provable optimality guarantees or even any guarantees at all. \\ 
-Inherently the analysis of heuristic algorithms involve probability and expectation, making them a natural application of the tools we have developed so far.
+\section*{What is an Online Algorithm?}
 
-Notice that the greedy algorithm we saw in the previous chapter was a heuristic algorithm as well!
-\section{Dominating Set Revisited}
+An online algorithm is an algorithm that processes its input piece-by-piece in a serial fashion,
+ without having the entire input available from the start. In some problems, this doesn't matter -- 
+ the obvious solution is online since it requires a single pass over the array only. But in some problems, 
+ the online requirement makes the problem much harder and forces us to make decisions without knowing the future.
 
-Recall the dominating set problem: given a graph \(G=(V,E)\), find a smallest possible subset \(D\subseteq V\) such that every vertex in the graph is either contained in \(D\) or adjacent to some vertex in \(D\).
-\subsection*{A Greedy Heuristic}
+Online decision algorithms have randomness involved in their analysis for non-adversarial\footnote{They 
+are often called oblivious adversaries} inputs. 
+Further, the goal of the algorithm usually is not deterministic optimality, but rather to maximise the probability of 
+success or to achieve a good competitive ratio\footnote{Competitive ratio is a measure of how well an online algorithm 
+performs compared to an optimal offline algorithm that has access to the entire input from the start. The term n-competitive 
+is used when an algorithm achieves at least $\frac{1}{n}$ times the "performance" of an optimal offline algorithm.}.
 
-A very natural approach is the following greedy algorithm:
+\section{Dating}
 
+\textbf{The Problem}\\
+
+Consider the problem of finding the best partner. Assume that 
+the number of people you will eventually date is fixed, i.e. some known value \(n\). After 
+dating a person, you must immediately decide whether to commit to them forever or reject 
+them permanently and continue searching. Figure out a strategy that maximises the 
+probability of ending up with the best partner.\footnote{This is a different 
+problem from maximising the expected ``value'' of your partner. Here the objective 
+is specifically to maximise the probability of selecting the single best partner 
+among all \(n\) people.} We assume that while dating person \(i\), we only know how 
+they compare relative to the people we have already dated. So we could sort the 
+partners till now in a total order if needed.\\
+
+
+\noindent\textbf{The Solution}\\
+
+\noindent Most course materials, internet reels I have encountered this problem in 
+directly jump to the strategy
 \begin{quote}
-Repeatedly select the vertex that dominates the largest number of currently undominated vertices.
+``Reject the first \(r\) people, then accept the first person afterwards who is better than everyone seen so far.''
 \end{quote}
 
-More precisely:
-\begin{enumerate}
-    \item Initially, all vertices are marked undominated.
-    \item At each step, choose a vertex whose closed neighbourhood \(N[v]\) contains the largest number of undominated vertices.
-    \item Add this vertex to the dominating set.
-    \item Mark all vertices in \(N[v]\) as dominated.
-    \item Repeat until every vertex becomes dominated.
-\end{enumerate}
+\noindent However, they often omit the proof of why an optimal strategy must necessarily have this threshold form. We first prove this fact.
 
-At every step we greedily maximise immediate progress.
+\subsection*{Optimality Proof}
 
-\subsection*{Analysing the Greedy Heuristic}
-Let \(\mathrm{OPT}\) denote the size of a minimum dominating set.
+Suppose we are currently considering the \(k\)-th person.
 
-Suppose that at some stage of the algorithm there remain \(r\) undominated vertices.
+If the current person is \emph{not} the best among the first \(k\) people seen so far, then accepting them can never succeed:
+This is because there already exists an earlier person who is strictly better, and that earlier person has already been rejected.
+Hence an optimal strategy should only ever consider accepting people who are the best seen so far.\\
 
-Since the optimal solution uses only \(\mathrm{OPT}\) vertices to dominate the entire graph, those same \(\mathrm{OPT}\) vertices must also collectively dominate these remaining \(r\) vertices.
 
-Therefore, by the pigeonhole principle, at least one of those optimal vertices must dominate at least \(\frac{r}{\mathrm{OPT}}\) of the currently undominated vertices.
+Now suppose the current person \emph{is} the best among the first \(k\) people seen so far. 
+Let $\bm{q_k}$ be the optimal probability of eventually selecting the globally best person if we reject the $k$-th person and continue optimally afterwards.\\
 
-But the greedy algorithm always chooses a vertex dominating as many undominated vertices as possible. Hence the greedy step must dominate at least \(\frac{r}{\mathrm{OPT}}\) new vertices.
 
-Thus after one greedy step, the number of remaining undominated vertices becomes at most
-\[
-r-\frac{r}{\mathrm{OPT}}
-=
-r\left(1-\frac{1}{\mathrm{OPT}}\right)
-\]
+\textbf{Q] If we instead accept the current person immediately, what is the probability of success?}\\
 
-If \(r_t\) denotes the number of undominated vertices after \(t\) greedy steps, then
-\[
-r_{t+1}
-\le
-r_t\left(1-\frac1{\mathrm{OPT}}\right)
-\]
 
-Since initially \(r_0=n\), we obtain
-\[
-r_t
-\le
-n\left(1-\frac1{\mathrm{OPT}}\right)^t
-\]
+A] Since the ordering of the \(n\) people is uniformly random, each of the first \(k\) positions is equally likely to contain the globally best person. 
+Conditioned on the fact that the current person is the best among the first \(k\), the probability that they are actually 
+the globally best person equals $\frac{k}{n}$.\\
 
-We would like all vertices to become dominated, i.e. \(r_t<1\).
-
-Since
-\[
-r_t
-\le
-n\left(1-\frac1{\mathrm{OPT}}\right)^t
-\]
-
-it suffices to find the smallest \(t\) such that
-\[
-n\left(1-\frac1{\mathrm{OPT}}\right)^t<1
-\]
-
-Rearranging:
-\[
-\left(1-\frac1{\mathrm{OPT}}\right)^t<\frac1n
-\]
-
-Taking logarithms:
-\[
-t\ln\left(1-\frac1{\mathrm{OPT}}\right)<-\ln n
-\]
-
-Since \(\ln(1-\frac1{\mathrm{OPT}})<0\), dividing reverses the inequality:
-\[
-t>
-\frac{\ln n}{
--\ln\left(1-\frac1{\mathrm{OPT}}\right)
-}
-\]
-
-Let \(S\) denote the size of the dominating set produced by the greedy algorithm. Then \(S\) is the smallest integer \(t\) satisfying the above inequality. Thus:
-\[
-S=
-\left\lceil
-\frac{\ln n}{
--\ln\left(1-\frac{1}{\mathrm{OPT}}\right)
-}
-\right\rceil
-\le
-\frac{\ln n}{
--\ln\left(1-\frac{1}{\mathrm{OPT}}\right)
-}
-+1
-\]
-
-Now using the inequality
-\[
--\ln(1-x)\ge x
-\]
-
-with \(x=\frac1{\mathrm{OPT}}\), we obtain
-\[
--\ln\left(1-\frac1{\mathrm{OPT}}\right)
-\ge
-\frac1{\mathrm{OPT}}
-\]
 \vspace{0.4em}
-Taking reciprocals reverses the inequality:
+\noindent Therefore, accepting gives success probability \(\frac{k}{n}\), rejecting gives success probability \(q_k\).
+The optimal decision is to accept iff $\frac{k}{n} \ge q_k$\footnote{This is a 
+common theme in online algorithms - the optimal decision at each step 
+is determined by comparing the expected "value" of actions and choosing 
+the one with maximum value. Here our "value" is the success probability. In 
+game theory this is called "utility" instead.}. \\
+
+
+\noindent Now observe that \(\frac{k}{n}\) is \textbf{increasing} with \(k\). \\
+
+\noindent On the other hand, \(q_k\) is \textbf{decreasing} with \(k\). To see this, notice that from time \(k\), one valid strategy is:
+\begin{quote}
+``Reject one more person no matter what, and then behave optimally from time \(k+1\) onwards.''
+\end{quote}
+
+This strategy achieves success probability exactly \(q_{k+1}\). Since \(q_k\) is the \emph{optimal} achievable success probability starting 
+from time \(k\), we must have
 \[
-\frac1{
--\ln\left(1-\frac1{\mathrm{OPT}}\right)
-}
-\le
-\mathrm{OPT}
+\mathbf{q_k \ge q_{k+1}}
 \]
 
-\[
-\implies
-S
-\le
-\ln n\cdot
-\frac1{
--\ln\left(1-\frac1{\mathrm{OPT}}\right)
-}
-+1
-\]
-
-\[
-\implies
-S
-\le
-\mathrm{OPT}\ln n+1
-\]
-
-Hence the greedy algorithm produces a dominating set of size at most
-\[
-\boxed{
-\mathrm{OPT}\ln n+1
-}
-\]
-
-\section{Independent Set}
-
-\textbf{The Problem}
-We are given a set of exams and a set of students. Each student is enrolled in a subset of the exams. 
-We wish to schedule as many exams as possible in the first time slot\footnote{this is different
-from the problem of the overall scheduling problem which is equivalent to finding the Chromatic Number, 
-i.e. the largest number of colors needed to colour a graph which is equivalent to the minimum number 
-of slots required to conduct the whole exam schedule. 
-This is a simpler problem where we only care about the first time slot.}, 
-subject to the constraint that no student should have two exams scheduled at the 
-same time\footnote{Or you could just give them a Time Turner and hope for the best :)}.
-
-The goal is to find a largest possible subset of exams that can be scheduled simultaneously without any conflict.
-
-\subsection*{Reduction}
-
-We model the problem using a graph \(G=(V,E)\) where:
+Since \(\frac{k}{n}\) is increasing and \(q_k\) is decreasing, the optimal decision changes at most once from rejecting to accepting as \(k\) increases.
+Therefore there exists some threshold \(0 \le r \le n\) such that
 \begin{itemize}
-    \item each vertex represents an exam,
-    \item an edge exists between two vertices if there is at least one student enrolled in both corresponding exams.
+    \item for \(k \le r\), rejecting is optimal,
+    \item for \(k > r\), accepting the first ``best-so-far'' person is optimal.
 \end{itemize}
 
-In this formulation, a feasible schedule corresponds to a set of vertices with no edges between them. Such a set is called an \emph{independent set}.
-Thus, the problem reduces to finding a maximum independent set in a graph.
+\noindent Hence every optimal strategy must be a threshold strategy.
+Note that $r=0$ corresponds to accepting the first person, and $r=n$ corresponds to rejecting everyone and ending up with no partner. 
+Both of these are valid threshold strategies, though they are not very good ones\footnote{Though it may be argued that having no partner is the best choice - 
+this is beyond the scope of this text and is left as an exercise for the reader.}.
 
-\subsection{Random Permutation}
+\subsection*{Finding the Optimal Threshold}
 
-$V$ is the set of all vertices.
-Maintain a set - the independent set we are building ($S$).
-Pick a random vertex from $V$ -- delete it from $V$ and if none of its neighbours are in $S$, put it in $S$.
-Keep doing this until $V$ is empty. This guarantees forming a valid independent set.
+We now analyse the threshold strategy --
+\begin{quote}
+``Reject the first \(r\) people, then accept the first person afterwards who is better than everyone seen so far.''
+\end{quote}
 
-Note that the order in which we pick vertices is a uniformly random permutation of the vertices.
+\noindent Suppose the globally best person appears at position \(k\). For our strategy to succeed,
+\begin{enumerate}
+    \item We must have \(k > r\)
+    \item Among the first \(k-1\) people, the best person must appear within the first \(r\) positions.
+\end{enumerate}
 
-\subsection*{Probability a Vertex is Selected}
+\noindent The first condition ensures that we do not automatically reject the best person.
+The second condition ensures that no earlier candidate after position \(r\) triggers acceptance before the globally best person appears.
 
-Fix a vertex \(v\). Consider the set consisting of \(v\) and its neighbours \(N(v)\). There are \(d(v)+1\) vertices in total.
-
-Since all relative orderings are equally likely, the probability that \(v\) is the picked earliest among these vertices is:
+\vspace{0.4em}
 \[
-\Pr[v \in S] = \frac{1}{d(v)+1}
+\Pr[\text{best person appears at position }k] = \frac{1}{n}
+\]
+\vspace{0.2em}
+Further, among the first \(k-1\) people, each position is equally likely to contain their maximum. 
+\vspace{0.2em}
+\[
+\implies
+\Pr[\text{maximum among first }k-1\text{ lies in first }r]
+=
+\frac{r}{k-1}
 \]
 
-\subsection*{Expected Size of the Independent Set}
-
-Let \(I_v\) be the indicator random variable for the event \(v \in S\). Then:
 \[
-|S| = \sum_{v \in V} I_v
+\implies
+\Pr[\text{success}]
+=
+\sum_{k=r+1}^{n}
+\frac{1}{n}\cdot\frac{r}{k-1}
+=
+\frac{r}{n}
+\sum_{k=r}^{n-1}\frac{1}{k}
+=
+\frac{r}{n} \left(H(n-1)-H(r-1)\right)
+\]
+\vspace{0.2em}
+\noindent Using the approximation $H(x) \approx \ln(x)$,
+\[
+\frac{r}{n} \left(H(n-1)-H(r-1)\right)
+\approx
+\frac{r}{n} \ln\left(\frac{n-1}{r-1}\right) 
+\approx
+\frac{r}{n} \ln\left(\frac{n}{r}\right)
 \]
 
-Taking expectation and using linearity:
 \[
-\mathbb{E}[|S|] = \sum_{v \in V} \mathbb{E}[I_v]
-= \sum_{v \in V} \frac{1}{d(v)+1}
+x=\frac{r}{n} 
+\implies
+P(x)=x\ln\left(\frac{1}{x}\right)
 \]
 
-Therefore, there exists an independent set of size at least:
 \[
-\sum_{v \in V} \frac{1}{d(v)+1}
+\implies
+P'(x)=\ln\left(\frac{1}{x}\right)-1
 \]
 
-Denoting the maximum independent set size by \(\alpha(G)\), we have:
-\[\alpha(G) \ge \sum_{v \in V} \frac{1}{d(v)+1}\]
-Using the Jensen's\footnote{Refer \autoref{jensen}} inequality on 1/(x+1), we have:
 \[
-\sum_{v \in V} \frac{1}{d(v)+1} \ge \frac{n}{d+1}
+P'(x_o)=0
+\implies
+\ln\left(\frac{1}{x_o}\right)=1
+\implies
+x_o=\frac{1}{e}
 \]
-where \(d\) is the average degree of the graph. Hence:
+\vspace{0.4em}
+\noindent Since $\frac{r_o}{n}=\frac{1}{e} \implies r_o=\frac{n}{e}$, the optimal strategy is --
+\begin{quote}
+``Reject approximately the first \(\frac{n}{e}\) people, then accept the first person 
+afterwards who is better than everyone seen so far.''
+\end{quote}
+
+\noindent The corresponding success probability is $\frac{1}{e}\ln e = \frac{1}{e}$ which is 
+approximately \(\mathbf{36.8\%}\). Not bad at all!\\
+
+
+\noindent Strictly speaking, we should also verify that this critical point indeed corresponds to a 
+maximum rather than a minimum. One way is via the second derivative test --
 \[
-\alpha(G) \ge \frac{n}{d+1}
+P''(x)=-\frac{1}{x}<0\text{,} \hspace{0.5em} \forall \hspace{0.3em} x \in \mathbb R^{>0}
+\]
+so \(P(x)\) is concave and hence the critical point is necessarily a global maximum.\\
+
+
+\noindent Alternatively, we can avoid calculus entirely by inspecting the behaviour near the boundaries. 
+\[
+\because P(x)=x\ln\left(\frac1x\right)
 \]
 
-\subsection{Local Decision}
+As $x \to 0,P(x) \to 0$ since \(x\) decays faster than \(\ln(1/x)\) grows. \\
 
-We now describe an alternative randomized construction that produces a large independent set via local random choices.
 
-Each vertex independently chooses a random value:
+\noindent Similarly, as $x \to 1,P(x) \to 0$ because $\ln(1)=0$.\\
+
+
+\noindent Since \(P(x)\) is positive for \(0<x<1\), rises away from \(0\), and eventually 
+falls back to \(0\), the unique critical point at $x=\frac1e$ must correspond to the global maximum.
+
+\subsection*{Behaviour for Small \(n\)}
+
+We used some limiting n approximations in finding the optimal threshold (I hope you noticed!).
+In case you were not planning on dating a tending-to-infinite number of people, you might be interested in the optimal strategy for small values of \(n\).
+For finite \(n\), the exact success probability for threshold \(r\) is
 \[
-X_v =
+\max_{0\le r\le n} \left(\frac{r}{n}\sum_{k=r}^{n-1}\frac1k\right)
+\]
+
+Computationally we can now easily find max for each \(n\)
+\[
+\begin{array}{c|cccccc}
+n & 2 & 3 & 4 & 5 & 6 & 7\\
+\hline
+n/e
+& 0.74
+& 1.10
+& 1.47
+& 1.84
+& 2.21
+& 2.58
+\\
+\hline
+\operatorname{round}(n/e)
+& 1
+& 1
+& 1
+& 2
+& 2
+& 3
+\\
+\hline
+\text{Actual optimal }r
+& \mathbf{1}
+& \mathbf{1}
+& \mathbf{1}
+& \mathbf{2}
+& \mathbf{2}
+& \mathbf{3}
+\end{array}
+\]
+
+\vspace{1em}
+
+The corresponding optimal success probabilities are
+\[
+\begin{array}{c|cccccc}
+n & 2 & 3 & 4 & 5 & 6 & 7\\
+\hline
+\Pr[\text{success}]
+&
+\mathbf{0.500}
+&
+\mathbf{0.500}
+&
+\mathbf{0.458}
+&
+\mathbf{0.433}
+&
+\mathbf{0.428}
+&
+\mathbf{0.414}
+\end{array}
+\]
+
+We observe that the optimal threshold follows the value suggested by
+$\frac{n}{e}$ even for relatively small values of \(n\), and it will get closer and closer as \(n\) increases. 
+The success probability is already around \(41.4\%\) for \(n=7\), and it will approach the limiting value of \(\frac{1}{e}\approx 36.8\%\) as \(n\) grows.
+
+\vspace{1em}
+\section{Load Balancing}
+
+Consider a setting with $m$ identical machines processing incoming tasks. The tasks arrive 
+one after another, and the arrival times are sufficiently close that 
+we may assume they arrive within negligible time of each other.
+
+Each incoming task must immediately be assigned to one of the $m$ machines. Once a decision is made, 
+it cannot be reversed. Thus, the algorithm has no knowledge of future tasks while making its decision.\\
+
+\noindent The tasks assigned to a machine are processed sequentially and hence form a queue at that machine.
+Suppose the incoming tasks have processing times $T_1,T_2,\dots,T_n$ where $n$ itself is not known in advance.\\
+
+
+\noindent The objective is to minimize the \textit{makespan}, the finishing time of the 
+busiest machine, equivalently $\max_{1\le i\le m} T_i$ where $T_i$ denotes the total 
+processing time assigned to machine $i$. This is a natural objective since the overall processing 
+time is determined by the machine that finishes last\footnote{This concept 
+is similar to the Rate Determining Step (RDS) in the field of Chemical Kinetics}.
+
+
+\subsection*{Greedy Algorithm}
+A natural strategy is the following greedy algorithm.
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+Assign(Task T)
+{
+    find machine with min load
+    assign T to this machine
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+\subsubsection*{Performance Analysis}
+
+Interestingly, we do not actually have a polynomial time algorithm to find the optimal \emph{offline} solution to this problem.\\
+
+
+\noindent We will therefore use lower bounds on $OPT$ (the optimal offline makespan) to derive an upper 
+bound on the competitive ratio of the greedy algorithm.\\
+
+\noindent Let $ALG$ denote the makespan produced by the greedy algorithm. Consider the task that 
+finishes last in the greedy schedule. This may or may not be the last \emph{assigned} task. Let its 
+processing time be $\mathbf{p}$.\\
+
+\noindent Immediately before assigning this job, suppose the minimum machine load was $L$.
+By our hypothesis that this machine will be the one that finishes last, the greedy makespan is 
+\[
+ALG=L+p
+\]
+\vspace{0.5em}
+Hence the total load already assigned before this final job was at least $\mathbf{mL}$.
+Including the final job, the total processing load is therefore at least $\mathbf{mL+p}$.\\
+
+
+\noindent By Pigeonhole Principle, at least one machine must have load at least the average load, so --
+\[
+OPT\ge \frac{mL+p}{m} = L+\frac{p}{m}
+\]
+
+Since any valid schedule must process the job of size $p$,
+\[
+OPT\ge p \implies OPT(1-\frac{1}{m})\ge p\left(1-\frac{1}{m}\right)
+\]
+
+Adding the two inequalities gives:
+\[
+OPT(2-\frac{1}{m})\ge L+p = ALG
+\implies
+\boxed{\frac{ALG}{OPT}\le 2-\frac1m}
+\]
+\vspace{0.5em}
+Therefore the greedy algorithm is $\left(2-\frac1m\right)$-competitive, sometimes written as $2$-competitive 
+since the difference is negligible for large $m$.
+
+\subsubsection*{Tightness of the Bound}
+
+The previous analysis showed that the greedy algorithm is $\left(2-\frac1m\right)$-competitive.
+ We now construct an example showing that the analysis cannot,
+ in general, be improved beyond a factor of $\left(2-\frac1m\right)$. \\
+
+Consider $m=4$ machines and the following sequence of incoming jobs:
+\[
+1,1,1,\dots,1 \text{ (12 times)},4
+\]
+
+The greedy algorithm will assign the first 12 jobs as follows:
+\[
+\begin{array}{c|cccc}
+\text{Machine }i & 1 & 2 & 3 & 4\\
+\hline
+\text{Jobs assigned} & 1,1,1 & 1,1,1 & 1,1,1 & 1,1,1
+\end{array}
+\]
+
+After processing these 12 jobs, each machine has load 3. The last job of size 4 will be assigned to any machine (say machine 1), resulting in a final makespan of 7.
+On the other hand, an optimal offline algorithm could have assigned the first 12 jobs as follows:
+\[
+\begin{array}{c|cccc}
+\text{Machine }i & 1 & 2 & 3 & 4\\
+\hline
+\text{Jobs assigned} & 1,1,1,1 & 1,1,1,1 & 1,1,1,1 & 4
+\end{array}
+\]
+
+After processing these 13 jobs, each machine has load 4. Thus the optimal makespan is 4,
+ and the competitive ratio is $\frac{7}{4}$, which is indeed our bound of $2-\frac{1}{4}$.
+
+
+
+
+
+
+
+
+
+
+
+\section{Distinct Elements}
+
+We consider a stream of elements
+\[
+a_1,a_2,\dots,a_m
+\]
+drawn from a the finite set \(U\). The goal is to write an online algorithm that estimates 
+the number of distinct elements (denoted by D) in the stream. We have the constraint that both
+m and D are large (say $2^{100}$) so we can not use $\Theta(D)$ space like using a RBT\footnote{This 
+is shorthand for a Red-Black Tree which is used in the implementation of the \texttt{set} in \texttt{C++}}. 
+In fact, we would really like to use a small amount of space as compared to $D$.
+
+
+\subsection{Flajolet–Martin Method}
+We take a hash function $\mathbf{H}:U \to \{0,1\}^{N}$, where we ensure\footnote{This choice of N ensures 
+a small collision probability as is required for this algorithm.} $2^N \approx m^2$. This hash function is not being 
+used in the traditional sense of reducing memory required to store the element but rather a 
+way to convert an element to a random\footnote{As always, we will take pseudo-random as 
+true random for our purposes} bitstring. For each element \(x\), 
+define \(\rho(x)\) as the number of leading zeros in \(\mathbf{H}(x)\). \\
+
+
+\noindent We then maintain $\rho_{max}$ as we go through the input stream. At the end of the stream,
+our estimate for \(D\) is $D = \alpha \cdot 2^{\rho_{max}}$
+
+\subsubsection*{Why $\rho_{max}$?}
+
+The statistic max is multiplicity-insensitive, i.e. repeated occurences of an element in the 
+input do not change the value of the max whereas 
+something like ``the number of elements with $\rho=3$'' will be skewed by 
+multiple occurences of an element. 
+
+
+\subsubsection*{Why $\alpha \cdot 2^{\rho_{max}}$?}
+For a random bitstring, $P(\rho(x)\ge k)=2^{-k}$. For each level \(k\ge 0\) and 
+index of a distinct element \(e\in\{1,\dots,D\}\), define the indicator variable\\
+\[
+I_{k,e}=
 \begin{cases}
-1 & \text{with probability } p \\
-0 & \text{with probability } 1-p
+1 & \text{if $\rho(e)\ge k$}\\
+0 & \text{otherwise}
 \end{cases}
 \]
 
-We construct a set \(S\) by including a vertex \(v\) if:
-\begin{itemize}
-    \item \(X_v = 1\), and
-    \item for every neighbour \(u \in N(v)\), \(X_u = 0\).
-\end{itemize}
-
-\subsection*{Probability of Inclusion}
-
-Fix a vertex \(v\). The probability that \(v\) is included in \(S\) is:
+\noindent The point of defining the indicator variable was to define
 \[
-\Pr[v \in S] = p(1-p)^{d(v)}
+D_k=\sum_{z=1}^{D} I_{k,z}
+\]
+so that \(D_k\) counts the number of distinct elements whose hash values have at least \(k\) leading zeros.\\
+
+
+\noindent Since a uniformly random hash has at least \(k\) leading zeros with probability \(2^{-k}\),
+\[
+E[I_{k,z}]=P(\rho(x)\ge k)=2^{-k}
 \]
 
-Therefore:
+
+\noindent Since the variables \(I_{k,1},I_{k,2},\dots,I_{k,D}\) are i.i.d.\footnote{This is shorthand 
+for independent and identically distributed}, the Strong Law of Large Numbers gives
 \[
-\mathbb{E}[|S|] = \sum_{v \in V} p(1-p)^{d(v)}
+\frac{D_k}{D}
+=
+\frac1D\sum_{z=1}^{D} \left(I_{k,z}\right)
+\;\xrightarrow{\text{a.s.}}\;
+E[I_{k,z}]
+=
+2^{-k}
 \]
 
-\subsection*{Guarantee on Expected Size}
-
-We analyze the randomized construction where each vertex is selected independently with probability \(p\), and a vertex \(v\) is included in the independent set \(S\) if it is selected and none of its neighbors are selected. Then:
+\vspace{1em}
 \[
-\mathbb{E}[|S|]=\sum_{v\in V} p(1-p)^{d(v)}.
+\implies
+D_k \approx D\cdot 2^{-k}
 \]
 
-Using convexity of \(f(x)=(1-p)^x\) and Jensen’s inequality, we obtain:
+So we expect $\rho_{max}$ to be when $D_{\rho_{max}}$ drops to 1, 
 \[
-\sum_{v\in V}(1-p)^{d(v)}\ge n(1-p)^d,
-\]
-where \(d=\frac{1}{n}\sum_{v\in V}d(v)\) is the average degree. Hence:
-\[
-\mathbb{E}[|S|]\ge np(1-p)^d.
+D_{\rho_{max}} \approx 1 \implies D \cdot 2^{-\rho_{max}} \approx 1 \implies D \approx 2^{\rho_{max}}
 \]
 
-We now optimize the function:
+\subsubsection*{What is $\alpha$?}
+
+If we do multiple parallel runs of the algorithm (essentially using different hash functions and 
+maintaining $\rho_{max}$ separately for each) and take simple average over them 
+(given enough number of runs the Strong Law of Large Numbers will hold), 
+then $\alpha=\frac{E[2^{\rho_{max}}]}{D}$, which we can find since we know the distribution of the random 
+variable $\rho_{max}$ with respect to a fixed D. \\
+
+\noindent The cumulative distribution function of $\rho_{max}$ is
 \[
-f(p)=p(1-p)^d.
+Pr(\rho_{max} \ge k) = 1 - (1-2^{-k})^D
 \]
 
-Differentiating:
+
+\noindent The calculus to find $\alpha$ is quite involved so we just skip to stating $\alpha \approx 1.29281$.
+
+\subsubsection*{Modification}
+The average of the random variable $2^{\rho_{max}}$ takes quite a large number of samples 
+to converge to the mean because it has a long right tail (which means the larger values skew the mean a lot). 
+This can also be observed by the large variance of the random variable $2^{\rho_{max}}$.\\
+
+
+\noindent Let \(R_1,R_2,\dots,R_m\) be the values obtained from \(m\) independent runs and compute the 
+average of $2^{-R_i}$ rather than the usual $2^{R_i}$ or equivalently use the harmonic mean of $2^{R_i}$. The 
+modified estimate is then proportional to harmonic mean
+of $2^{R_i}$ with \(\beta_m\) as constant factor.
 \[
-f'(p)=(1-p)^d - pd(1-p)^{d-1}
-=(1-p)^{d-1}\big((1-p)-pd\big).
+D = \beta_m \cdot HM(2^{R_i}) = \frac{\beta_m}{Avg(2^{-R_i})} 
+\]
+The random variable $2^{-R_i}$ has a smaller variance hence will help us converge to the correct answer faster.\\
+
+
+\subsection{HyperLogLog Method}
+Instead of designing multiple independent hashes as in Flajolet–Martin, we can achieve the 
+same effect using a single hash function and storing multiple max statistics of the data. 
+Let $\mathbf H(x)\in\{0,1\}^{N}$ exactly as defined before. We now split the hash into two parts,
+\[
+\mathbf H(x)=B(x)\,\Vert\,S(x)
+\]
+where the first \(p\) bits \(B(x)\) determine a bucket. A particular bucket
+is defined as all those elements whose hash starts with a particular bitstring. Thus there are $b=2^p$ different
+buckets -- while reading the input stream, we classify each element into one of these buckets.\\
+
+
+\noindent Define $\rho(x)$ as the number of leading zeros in the bitstring \(S(x)\). For each 
+bucket we maintain its $\rho_{max}$.\\
+
+
+\noindent What we have done is stored $b$ different i.i.d. max statistics of the input stream and 
+we can take the harmonic to get an estimate for number of elements in each bucket. Intuitively, each bucket 
+receives approximately $\frac{D}{b}$ distinct elements and each bucket behaves like a 
+smaller run of the Flajolet–Martin Method.\\
+
+
+\noindent 
+As before, HyperLogLog introduces a constant factor
+\(\beta_b\) and estimates number of distinct elements in one bucket using the harmonic mean of $2^{R_i}$ as
+\[
+\beta_b \cdot 
+HM(2^{R_i})
+=
+\frac{\beta_b}
+{Avg(2^{-R_i})}
 \]
 
-Setting \(f'(p)=0\), we obtain:
+So D is estimated as $b$ times the above estimate so
 \[
-1-p-pd=0
-\quad\Rightarrow\quad
-p=\frac{1}{d+1}.
+D = \frac{\beta_b \cdot b}
+{Avg(2^{-R_i})}
 \]
 
-Substituting this optimal value gives:
+
+\noindent Again, finding the value of the constant \(\beta_b\) is a bit complicated so we skip to stating
 \[
-\mathbb{E}[|S|]\ge n\cdot \frac{1}{d+1}\left(1-\frac{1}{d+1}\right)^d
-=\frac{n}{d+1}\left(\frac{d}{d+1}\right)^d.
+\beta_b
+=
+\left(
+m
+\int_0^\infty
+\left(
+\log_2\!\left(\frac{2+u}{1+u}\right)
+\right)^m
+\,du
+\right)^{-1}
+\approx
+\frac{0.7213}{1+\frac{1.079}{b}}
+\]
+\subsubsection*{Memory Usage}
+
+Each bucket needs a variable which stores the maximum number of leading zeros observed in its bucket. 
+The maximum number of leading zeros is atmost $N$ since that is the length of the hash. To store the 
+number $N$ we need $\log_2 N$ bits. Since chose $N$ such that $2^N \approx m^2$, 
+we have a space requirement of 
+\[
+\log_2(2\log_2 m) = \Theta(\log(\log(m)))
 \]
 
-Using the standard bound \(\left(1-\frac{1}{d+1}\right)^d \ge e^{-d/(d+1)}\), we obtain:
+
+\noindent With \(b\) buckets, the total memory requirement is
 \[
-\mathbb{E}[|S|]\ge \frac{n}{d+1}\cdot e^{-d/(d+1)}. \ge \frac{n}{e(d+1)}.
+\Theta(b\log\log m)
 \]
 
-This is a slightly weaker bound than the previous method, but it has the advantage of being local and easily parallelizable, 
-as each vertex makes its decision independently based on local information. 
-
-Recall from the chapter on data structures that in Skip Lists we let each element 
-locally decide how many levels to appear in. The reason for that was updation was quick 
-since we did not have to change everybody's decision just because of the addition of a single element.
-
-A similar reasoning can be applied here to justify the utility of a local decision algorithm.
-\section{Bipartite Subgraph Revisited}
-
-Recall the problem of finding a bipartition of the vertices that maximizes the number of bichromatic edges. 
-We showed that a random coloring achieves at least $m/2$ bichromatic edges in expectation, and with some probability. 
-Now we refine our approach by showing that we can always find a coloring with at least $m/2$ bichromatic edges via a self-correction procedure.
-\subsection{Self-Correction}
-
-Start with a random coloring of the vertices. If it has at least $m/2$ bichromatic edges, we are done. 
-
-Otherwise, let $X$ be the number of bichromatic edges. We have $X < m/2$, so there are more monochromatic edges than bichromatic edges.
-Call a vertex $v$ \emph{bad} if it has more monochromatic incident edges than bichromatic incident edges. Otherwise it is \emph{good}.\\
-
-\noindent\textbf{Claim:} If the current cut has fewer than $m/2$ crossing edges, then a bad vertex must exist.\\
-
-\noindent\textbf{Proof idea:} Each monochromatic edge contributes equally to two endpoints.
-So total number of monochromatic edges is half the sum of monochromatic degrees of vertices. 
-If globally there are more monochromatic edges than crossing ones, 
-by pigeonhole principle\footnote{You may also prove this by contradiction -- 
-if all vertices are bad, then the total number of monochromatic edges is more than the total number of bichromatic edges by summing the inequality, contradicting the assumption.}, 
-some vertex must be incident to more monochromatic than bichromatic edges.
-
-Now consider flipping the color of a bad vertex $v$. Let $d_h(v)$ be the number of monochromatic (same-color) edges incident to $v$ and $d_c(v)$ the number of bichromatic edges. Since $d_h(v)>d_c(v)$, flipping $v$ increases $X$ by
-\[
-\Delta X = d_h(v)-d_c(v) > 0.
-\]
-
-Thus, each flip strictly increases the number of bichromatic edges. This means that the 
-number of steps is upper bounded by $m/2$. 
-
-\noindent\textbf{Pseudocode:}
-\begin{verbatim}
-initialize random coloring of vertices
-compute X
-
-while exists bad vertex v:
-    flip color of v
-    update X locally
-\end{verbatim}
-
-
-\noindent\textbf{Complexity analysis:}
-Each flip increases $X$ by at least $1$, and $X \le m$, so there are at most $m$ flips.
-
-If we maintain for each vertex the counts of monochromatic and bichromatic incident edges, each flip can be updated in $\Theta(\deg(v))$. To find a bad vertex we need atmost $\Theta(n)$ time. 
-Over all flips, total time is atmost
-\[
-O\left(\sum_{v \text{ flipped}} \left(\deg(v) + n \right) \right) = \Theta(mn+m).
-\]
-
-Hence the full procedure runs in atmost \footnote{this can be improved to $\Theta(m\log n)$ by using priority queues with lazy updates -- 
-its a fun competitive programming exercise, I encourage you to try it!}$\Theta(mn+m)$ after initialization.
-
+In practice \(b\) is chosen to be a fixed constant such as \(2^{10}=1024\) so for $m=2^{100}$, 
+the memory requirement is about $2^{10} \cdot \log_2(2\log_2(2^{100})) \approx 8000$ bits which is very small.

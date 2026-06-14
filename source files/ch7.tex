@@ -1,484 +1,804 @@
-\chapter{Probabilistic Method}
-\section{Dominating Set}
+\chapter{Number-Theoretic Algorithms}
 
-\textbf{The Problem}
-Given a graph:
-\[
-G=(V,E)
-\]
-find a smallest possible subset:
-\[
-D\subseteq V
-\]
-such that every vertex in the graph is either:
+\section{Introduction}
+
+Prime numbers have fascinated mathematicians for many years. 
+They appear deceptively simple to define -- a prime is 
+a positive integer greater than one whose only divisors 
+are $1$ and itself. Yet many of the deepest questions in 
+mathematics revolve around the distribution and properties of primes.
+
+Beyond their theoretical significance, prime numbers occupy a central position in modern computing. 
+Public-key cryptographic systems such as \texttt{RSA} rely on arithmetic 
+involving very large primes, often hundreds or thousands of bits long. 
+As a result, computers routinely face questions such as
+
 \begin{itemize}
-    \item contained in \(D\), or
-    \item adjacent to some vertex in \(D\).
+\item Is a given integer prime?
+\item How can a large prime be generated efficiently?
+\item If an integer is composite, can its factors be found quickly?
 \end{itemize}
 
-Such a set is called a \emph{dominating set}.
+At first glance, these problems appear daunting. Consider an 
+integer with several hundred decimal digits. Testing 
+divisibility by every smaller integer is clearly infeasible, 
+and even more sophisticated deterministic approaches 
+may require substantial computational effort.\\
 
-Intuitively, we may think of the vertices in \(D\) as ``control centers'' or ``facilities'' such that every location in the graph is either itself a facility or directly connected to one.
+\noindent Surprisingly, randomness provides an elegant alternative. Instead of attempting to prove 
+directly that a number is prime, randomized algorithms often 
+search for evidence that it is composite. A carefully 
+chosen random experiment can reveal such evidence with high probability. \\
 
-Unfortunately, finding the minimum dominating set is NP-hard, so we want to find a polynomial time algorithm that gives us a 
-reasonably small\footnote{We care more about the asymptotic behaviour of the size of set produced by the algorithm and less about which polynomial time complexity the algorithm has.} dominating set.
-\subsection*{A Randomised Solution}
 
-Suppose the graph has minimum degree \(d\). We now consider the following extremely simple randomised strategy:
+\noindent In this chapter, we will not be treating multiplication and 
+division as constant time operations. Since these algorithms frequently work with numbers 
+of the order $10^100$ or even larger, we will assume that multiplication and division are 
+$\Theta(\log^2 n)$ time, since a number $n$ has $\Theta(\log n)$ digits.
+\section{Fermat Test}
 
-\begin{quote}
-Choose \(k\) vertices randomly out of the n vertices (uniformly among the $\binom{n}{k}$ possible choices).
-If the chosen set forms a dominating set, output it. Otherwise, try again!
-\end{quote}
-At first glance, this algorithm seems dumb. 
-However, it turns out that if we choose \(k\) large enough, the probability of failure becomes small.
-The key question thus becomes:
-\begin{quote}
-What is the probability of failure as a function of \(k\), \(n\), and \(d\)?
-\end{quote}
-We now analyse this probability.
+The simplest algorithm to test the primality of an integer \(n\) is to check for 
+divisibility by every integer from \(2\) up to \(\sqrt{n}\). Using the fact that divison takes $\Theta(\log^2 n)$, the whole algorithm
+runs in \(\Theta(\sqrt{n}\log^2 n)\) time. Any algorithm we come up with should be at least as efficient as this!\\
 
-\subsection*{Probability That a Vertex Remains Undominated}
 
-Fix a vertex $v\in V$. Since the graph has minimum degree \(d\), $N[v]$ contains 
-at least $d+1$ vertices. For \(v\) to remain undominated, none of the selected \(k\) 
-vertices may lie inside $N[v]$
-
-When choosing vertices uniformly at random, the probability that a single chosen vertex does \emph{not} belong to \(N[v]\) is at most:
-\[
-1-\frac{d+1}{n}
-\]
-
-\[
-\implies
-\Pr[v\text{ remains undominated}]
-\le
-\left(1-\frac{d+1}{n}\right)^k
-\]
-
-Using the inequality\footnote{Refer \autoref{exp_inequality}} $1-x\le e^{-x}$ for all $x\in\mathbb{R}$, we obtain:
-\[
-\Pr[v\text{ remains undominated}]
-\le
-e^{-k(d+1)/n}
-\]
-
-\subsection*{Bounding the Failure Probability}
-
-The algorithm fails if at least one vertex remains undominated.
-
-Applying the union bound\footnote{Refer \autoref{union_bound}}
-
-\[
-\Pr[\text{failure}]
-\le
-n\cdot e^{-k(d+1)/n}
-\]
-
-We would like this probability to be strictly less than \(1\). Therefore we require:
-\[
-n e^{-k(d+1)/n}<1
-\]
-
-\[
-\implies
-\ln n-\frac{k(d+1)}{n}<0
-\]
-
-\[
-\implies
-k>\frac{n\ln n}{d+1}
-\]
-
-Thus, choosing:
-\[
-k=\frac{cn\ln n}{d+1}
-\]
-for any constant $c>1$ gives 
-$
-\Pr[\text{failure}]
-\le
-n^{1-c}
-$ which tends to \(0\) as \(n\to\infty\).
-
-\subsection*{What Does This Actually Mean?}
-
-The important point is not merely that the algorithm succeeds with high probability.
-
-Rather, we have shown something stronger --
-
-\begin{quote}
-There exists a dominating set\footnote{
-This method has a limitation - if $d<c\ln n$, 
-then the size of the dominating set produced by the algorithm is basically the whole set of vertices, making it useless.} of size roughly:
-\[
-\frac{n\log n}{d}
-\]
-\end{quote}
-
-Indeed, if no such dominating set existed, our algorithm could never possibly succeed.
-
-Thus a simple probabilistic argument simultaneously:
-\begin{itemize}
-    \item proves the existence of a reasonably small dominating set,
-    \item and gives a randomised algorithm capable of finding one.
-\end{itemize}
-
-\subsection*{Amplifying the Success Probability}
-
-Even if a single run fails, we may simply repeat the algorithm independently.
-
-If the failure probability of one run is $\bm{p}=\frac{1}{n^{c-1}}$, 
-then after $\bm{t}$ independent repetitions, the probability that \emph{every} run fails equals $\bm{p^t}$
-which decreases exponentially fast. \\
-
-So the tradeoff is choosing a larger $c$ has a smaller expected number of repetitions ($\frac{n^{c-1}}{n^{c-1}-1}$)\footnote{Since the probability of failure is $p=(n^{c-1}-1)/n^{c-1}$ and this is a bernoulli trial, the expected number of trials for success is 1/p } but a larger dominating set,
-while choosing a smaller $c$ has a larger expected number of repetitions but a smaller dominating set.
-
-\section{Bipartite Subgraph}
-
-\textbf{Problem statement.}
-Given an undirected graph $G=(V,E)$ with $|E|=m$, we wish to find a bipartition of $V$ that maximizes the number of edges between vertices of different partitions.
-Equivalently, we want a 2-coloring of the vertices that maximizes the number of bichromatic edges. We aim to show that we can always guarantee at least $m/2$ edges in the cut.
-
-\subsection{Expected Number of Bichromatic Edges}
-Let X be the number of bichromatic edges under a random 2-coloring of the vertices. 
-Each edge has a probability $\frac{1}{2}$ of being bichromatic, so define the indicator variable $I_{i}$ as 1
- when the edge numbered $i$ is bichromatic and 0 otherwise. We can conclude that for a random vertex 2-coloring, 
- Pr($I_{i}=1$)=$\frac{1}{2}$ and Pr($I_{i}=0$)=$\frac{1}{2}$, so $\mathbb{E}[I_{i}]=\frac{1}{2}$.
-Since $X=\sum_{i=1}^{m}I_{i}$, we have:
-\[
-\mathbb{E}[X]=\mathbb{E}[\sum_{i=1}^{m}I_{i}]=\sum_{i=1}^{m}\mathbb{E}[I_{i}]=\frac{m}{2}
-\]
-
-\subsection*{A Weak Lower Bound}
-
-Let $X\in\{0,1,\dots,m\}$ be the number of bichromatic edges under a random 2-coloring of the vertices. We already have
-$\mathbb{E}[X]=\frac{m}{2}$. \\
-
-\noindent We derive a crude lower bound on $\Pr\!\left(X\ge \frac{m}{2}\right)$.
+\noindent The central result underlying our first algorithm is 
+Fermat's Little Theorem. Let the set of primes be denoted by \(\mathbb{P}\) and 
+the set \{0,1,\dots\} by \(\mathbb{N}\).
 
 \medskip
-\noindent\textbf{Case 1: $m=2k$ (even).}\\
 
-\noindent Let $p=\Pr(X\ge k)$. The maximum value of $E(X)$ under these constraints would be achieved 
-when we push all mass in $\{0,1,\dots,k-1\}$ to $k-1$, and all mass in $\{k,\dots,2k\}$ to $2k$. Then
+\subsection{Fermat's Little Theorem}
 \[
-\mathbb{E}[X]\le (1-p)(k-1)+p(2k).
-\]
-
-Using $\mathbb{E}[X]=k$,
-\[
-k \le (1-p)(k-1)+2kp
-\]
-\[
-k \le k-1+p(k+1)
-\]
-\[
-1 \le p(k+1)
-\]
-\[
-p \ge \frac{1}{k+1}=\frac{2}{m+2}.
-\]
-
-\[
-\implies
-\Pr\!\left(X\ge \frac{m}{2}\right)\ge \frac{2}{m+2}.
+p \in \mathbb{P}, a \in \mathbb{N} \implies a^{p} \equiv a \hspace{-0.8em} \pmod{p}
 \]
 
 \medskip
-\noindent\textbf{Case 2: $m=2k+1$ (odd).}\\
 
-\noindent Let $p=\Pr(X\ge k+1)$. The maximum value of $E(X)$ under these constraints would be achieved when
-all mass in $\{0,1,\dots,k\}$ is pushed to $k$, and all mass in $\{k+1,\dots,2k+1\}$ is pushed to $2k+1$. 
-Then
+A useful equivalent form is obtained if $p \nmid a$, in which case we can divide both sides by \(a\) to get
 \[
-\mathbb{E}[X]\le (1-p)k+p(2k+1).
-\]
-
-Using $\mathbb{E}[X]=k+\tfrac{1}{2}$,
-\[
-k+\frac{1}{2} \le k+p(k+1)
-\]
-\[
-\frac{1}{2} \le p(k+1)
-\]
-\[
-p \ge \frac{1}{2(k+1)}=\frac{1}{m+1}.
-\]
-
-\[
-\implies
-\Pr\!\left(X\ge \frac{m}{2}\right)\ge \frac{1}{m+1}.
+a^{p-1} \equiv 1 \hspace{-0.8em} \pmod p
 \]
 
 \medskip
-\textbf{Conclusion --}
+
+This observation immediately suggests a test for primality. Given an integer \(n\), 
+choose some value \(a\), compute \(a^{n-1}\bmod n\), and check whether the congruence holds. If the 
+congruence fails, then \(n\) cannot be prime.
+
+\subsection{The Algorithm}
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}[commandchars=+\[\]]
+
+exp(a, x, n) // computes a^x modulo n in O(log x)
+{
+    if x == 0
+        return 1
+    y = exp(a, x/2, n)
+    if x even
+        return (y*y) mod n
+    else
+        return (a*y*y) mod n
+}
+
+PrimalityTest(n) // for n>=4
+{
+    if(n even)
+        return "composite"
+    
+    choose a random a in {2, ..., n-2} 
+
+    /*We avoid a=1 and a=n-1 since they trivially satisfy 
+    the congruence even when n is composite */
+ 
+    if exp(a, n-1, n) != 1
+        return "composite"
+    else
+        return "probably prime"
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+Note the rather beautiful technique used in the function\footnote{This is sometimes called the binary exponentiation algorithm.}
+\texttt{exp(a, x, n)}.
+Another way of looking at it is that we find the binary expansion of \(x\) and compute the 
+powers of \(a\) corresponding to the bits of \(x\) using repeated squaring.\\
+
+\subsection{Error Probability}
+
+The natural question is --
+\begin{quote}
+"How often can a composite number fool the test?"
+\end{quote}
+
+For many composite integers the probability is quite small. 
+Unfortunately, there exists a remarkable family of numbers 
+that pass Fermat's test for \emph{every} admissible choice of \(a\).
+
+These numbers are known as Carmichael\footnote{The smallest Carmichael number is 561. It has been proven 
+that there are infinitely many Carmichael numbers.} numbers, and they expose a fundamental weakness of the algorithm.
+
+\section{Miller--Rabin Test}
+
+\subsection{A Key Property}
+
+Let \(p\) be an odd prime and let d such that
 \[
-\Pr\!\left(X\ge \frac{m}{2}\right)\ge min(\frac{2}{m+2},\frac{1}{m+1}) = \frac{1}{m+1}.
+p-1=2^s d, \hspace{1.5em} d \text{ is odd}
 \]
 
-\subsection{A Simple Randomised Algorithm}
-
-From the probabilistic analysis, a random coloring satisfies
 \[
-\Pr\left(X \ge \frac{m}{2}\right) \ge \frac{1}{m+1}.
+\text{Define }
+x_i=a^{2^{i}d} \hspace{-0.7em} \pmod{p}, i \in \mathbb{N}
+\iff
+x_0=a^{d},
+\quad
+x_1=a^{2d},
+\quad
+x_2=a^{4d},
+\quad
+\ldots,
+\quad
+x_s=a^{2^s d}
 \]
 
-Therefore, if we repeatedly sample random colorings independently, 
-the probability that none of $T$ trials succeeds is at most
+\vspace{1em}
+\noindent By Fermat's Little Theorem, we have $x_s=a^{p-1}\equiv1\pmod p$.\\
+
+
+\noindent Clearly, each term is the square of the previous one modulo \(p\). That is,
 \[
-(1-\frac{1}{m+1})^T.
+x_{i+1}
+\equiv
+x_i^2
+\hspace{-0.7em}
+\pmod p
 \]
 
-\noindent Choosing $T=(m+1)\ln(m+1)$ gives
+\noindent A simple fact about prime moduli --
 \[
-(1-\frac{1}{m+1})^T
-\le
-e^{-\frac{T}{m+1}}
+p \in \mathbb{P},\hspace{0.2em} x \in \mathbb{N}, \hspace{0.2em}
+x^2
+\equiv
+1
+\hspace{-0.7em}
+\pmod p
+\implies
+x
+\equiv
+1
+\hspace{-0.7em}
+\pmod p
+\; \text{or} \;
+x
+\equiv
+-1
+\hspace{-0.7em}
+\pmod p.
+\]
+\vspace{1em}
+\noindent So either $x_0=1 \hspace{-0.3em} \pmod p$ or there is 
+some index \(i \ge 0\) such that $x_i=-1 \hspace{-0.3em} \pmod p$.
+
+\subsection{The Algorithm}
+
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+exp(a, x, n)
+{
+    if x == 0
+        return 1
+    y = exp(a, x/2, n)
+    if x even
+        return (y*y) mod n
+    else
+        return (a*y*y) mod n
+}
+
+isPrime(n) // for n>=4
+{
+    if(n even)
+        return "composite"
+
+    s=0
+    d=n-1
+    while d is even
+        increment s by 1, divide d by 2
+    
+    //here we have decomposed n-1 into 2^s and d, where d is odd
+
+    Choose a random a in {2, ..., n-2} 
+    x = exp(a, d, n)
+
+    if x == 1 or x == n-1
+        return "probably prime"
+
+    loop i=1 to s-1
+    {
+        x = (x*x) mod n
+        if x == n-1
+            return "probably prime"
+        if x == 1
+        {
+            return "composite" 
+            /*since hitting 1 mod n early means we have found a 
+            non-trivial square root of 1 mod n, so n is composite*/
+        }
+    }
+    return "composite"
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+
+\subsection{Error Probability}
+
+It can be shown that if \(n\) is composite, then the probability that the Miller--Rabin test 
+returns "probably prime" is at most \(1/4\).\\
+
+
+\noindent The proof\footnote{In case you are interested, see https://codeforces.com/blog/entry/98102} that the Miller--Rabin test has error probability at most \(1/4\) is 
+quite technical and relies on some non-trivial number theory and group theory. Let $T=\{2,\dots,n-2\}$ 
+, the set of all possible $a$'s. The key and final step is to show that one can partition T into 
+disjoint subsets of size at least 4 such that each subset contains at most one false positive. Thus, 
+
+\[
+|F|\le |T|/4
+\implies 
+\frac{|F|}{|T|} \le \frac{1}{4}
+\]
+
+\subsection{Performance}
+Since there are \(\Theta(\log n)\) multiplications involved in binary exponentiation, 
+and each multiplication takes \(\Theta(\log^2 n)\) time, the overall total time complexity 
+is \(\Theta(\log^3 n)\).\\
+
+
+\noindent Repeating the test $k$ times will take $\Theta(k\log^3 n)$ time. A reasonable 
+choice of \(k\) (e.g., \(k=34\)) makes the error probability at most $10^{-20}$.
+
+\section{Pollard's Rho Algorithm}
+
+\textbf{The Problem --} Given a composite integer \(n\), find a non-trivial\footnote{In this case, 
+that would be a factor other than 1 and \(n\)} factor of \(n\). 
+
+\vspace{1em}
+\noindent \textbf{The Solution --} We can create a pseudo-random
+sequence of integers $x_0, x_1, \dots, x_i, \dots$ such that 
+$x_i \equiv x_{i-1}^2 + c \pmod n$ for some $c$.\\
+
+
+\noindent If at any point gcd(\(x_i-x_j,n\)) is not 1 or 
+\(n\), we can take that to be a 
+factor of \(n\) by definition\footnote{Conventionally, gcd(0,n) is taken to be n.} of the gcd! \\
+
+
+Why do we use the weird sequence \(x_i \equiv x_{i-1}^2 + c \pmod n\)? 
+Why not generate a sequence of random integers and do the same thing?
+The reason behind using a deterministic sequence is that in this iterative process, we can use 
+Floyd's cycle-finding algorithm to detect collision which takes time 
+linear in the cycle size. In the other case, we would have to store and check with all previous 
+values of $x_j$ for every new $x_i$ generated. That is quadratic in the length of the cycle!
+Secondly, choosing $x_0$ and $c$ randomly acts as a seed for the pseudo-random process. The sequence is thus
+overall truly random for our analysis purposes yet is compatible with Floyd's algorithm.
+
+\subsection{Floyd's Cycle-Detection Algorithm}
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+FloydCycleDetection(f,x)
+{
+    tortoise = f(x)
+    hare = f(f(x))
+
+    while tortoise != hare:
+    {
+        tortoise = f(tortoise)
+        hare = f(f(hare))
+    }
+
+    return 
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+\subsubsection*{Example}
+We can represent the sequence with a directed graph as follows -- there is an edge between each $x$ and $f(x)$ or 
+equivalently each $x_i$ and $x_{i+1}$. The starting node 
+is $x_0$ where both the hare and tortoise start. It can be proven that 
+Floyd's algorithm works with some effort, but the point of this example is to give a 
+visual intuition rather than write a rigorous proof. Also, I like colorful graphs!
+
+The shape of the graph is deliberately chosen to be like the greek letter $\rho$, which is 
+where the name \texttt{Pollard's Rho} comes from. It is the general shape of the 
+sequence which the algorithm considers, because the output space of $f(x)$ is finite so it must 
+go into a cycle by pigeonhole principle.
+\begin{center}
+\begin{tikzpicture}[
+    every node/.style={circle,draw,minimum size=8mm},
+    >=stealth
+]
+
+% Legend
+\node[circle,draw,fill=TortoiseColor!50,minimum size=5mm] at (5,6.5) {};
+\node[draw=none,anchor=west] at (5.4,6.5) {Tortoise};
+
+\node[circle,draw,fill=HareColor!50,minimum size=5mm] at (5,5.7) {};
+\node[draw=none,anchor=west] at (5.4,5.7) {Hare};
+
+\node[circle,draw,fill=MeetColor!50,minimum size=5mm] at (5,4.9) {};
+\node[draw=none,anchor=west] at (5.4,4.9) {Both};
+
+\node[fill=MeetColor!50] (1) at (-1,1) {1};
+\node (2) at (0,2.5) {2};
+\node (3) at (0,4) {3};
+\node (4) at (0,5.5) {4};
+
+\node (5) at (1.5,4.5) {5};
+\node (6) at (3,5.5) {6};
+\node (7) at (1.5,6.5) {7};
+
+\draw[->] (1)--(2);
+\draw[->] (2)--(3);
+\draw[->] (3)--(4);
+\draw[->] (4)--(5);
+\draw[->] (5)--(6);
+\draw[->] (6)--(7);
+\draw[->] (7)--(4);
+
+\end{tikzpicture}
+\end {center}
+
+\begin{center}
+\begin{tikzpicture}[
+    every node/.style={circle,draw,minimum size=8mm},
+    >=stealth
+]
+
+% Legend
+\node[circle,draw,fill=TortoiseColor!50,minimum size=5mm] at (5,6.5) {};
+\node[draw=none,anchor=west] at (5.4,6.5) {Tortoise};
+
+\node[circle,draw,fill=HareColor!50,minimum size=5mm] at (5,5.7) {};
+\node[draw=none,anchor=west] at (5.4,5.7) {Hare};
+
+\node[circle,draw,fill=MeetColor!50,minimum size=5mm] at (5,4.9) {};
+\node[draw=none,anchor=west] at (5.4,4.9) {Both};
+
+\node (1) at (-1,1) {1};
+\node [fill=TortoiseColor!50](2) at (0,2.5) {2};
+\node [fill=HareColor!50](3) at (0,4) {3};
+\node (4) at (0,5.5) {4};
+
+\node (5) at (1.5,4.5) {5};
+\node (6) at (3,5.5) {6};
+\node (7) at (1.5,6.5) {7};
+
+\draw[->] (1)--(2);
+\draw[->] (2)--(3);
+\draw[->] (3)--(4);
+\draw[->] (4)--(5);
+\draw[->] (5)--(6);
+\draw[->] (6)--(7);
+\draw[->] (7)--(4);
+
+\end{tikzpicture}
+\end {center}
+
+\begin{center}
+\begin{tikzpicture}[
+    every node/.style={circle,draw,minimum size=8mm},
+    >=stealth
+]
+
+% Legend
+\node[circle,draw,fill=TortoiseColor!50,minimum size=5mm] at (5,6.5) {};
+\node[draw=none,anchor=west] at (5.4,6.5) {Tortoise};
+
+\node[circle,draw,fill=HareColor!50,minimum size=5mm] at (5,5.7) {};
+\node[draw=none,anchor=west] at (5.4,5.7) {Hare};
+
+\node[circle,draw,fill=MeetColor!50,minimum size=5mm] at (5,4.9) {};
+\node[draw=none,anchor=west] at (5.4,4.9) {Both};
+
+\node (1) at (-1,1) {1};
+\node (2) at (0,2.5) {2};
+\node [fill=TortoiseColor!50](3) at (0,4) {3};
+\node (4) at (0,5.5) {4};
+
+\node [fill=HareColor!50](5) at (1.5,4.5) {5};
+\node (6) at (3,5.5) {6};
+\node (7) at (1.5,6.5) {7};
+
+\draw[->] (1)--(2);
+\draw[->] (2)--(3);
+\draw[->] (3)--(4);
+\draw[->] (4)--(5);
+\draw[->] (5)--(6);
+\draw[->] (6)--(7);
+\draw[->] (7)--(4);
+
+\end{tikzpicture}
+\end {center}
+
+\begin{center}
+\begin{tikzpicture}[
+    every node/.style={circle,draw,minimum size=8mm},
+    >=stealth
+]
+
+% Legend
+\node[circle,draw,fill=TortoiseColor!50,minimum size=5mm] at (5,6.5) {};
+\node[draw=none,anchor=west] at (5.4,6.5) {Tortoise};
+
+\node[circle,draw,fill=HareColor!50,minimum size=5mm] at (5,5.7) {};
+\node[draw=none,anchor=west] at (5.4,5.7) {Hare};
+
+\node[circle,draw,fill=MeetColor!50,minimum size=5mm] at (5,4.9) {};
+\node[draw=none,anchor=west] at (5.4,4.9) {Both};
+
+\node (1) at (-1,1) {1};
+\node (2) at (0,2.5) {2};
+\node (3) at (0,4) {3};
+\node [fill=TortoiseColor!50](4) at (0,5.5) {4};
+
+\node (5) at (1.5,4.5) {5};
+\node (6) at (3,5.5) {6};
+\node [fill=HareColor!50](7) at (1.5,6.5) {7};
+
+\draw[->] (1)--(2);
+\draw[->] (2)--(3);
+\draw[->] (3)--(4);
+\draw[->] (4)--(5);
+\draw[->] (5)--(6);
+\draw[->] (6)--(7);
+\draw[->] (7)--(4);
+
+\end{tikzpicture}
+\end {center}
+
+\begin{center}
+\begin{tikzpicture}[
+    every node/.style={circle,draw,minimum size=8mm},
+    >=stealth
+]
+
+% Legend
+\node[circle,draw,fill=TortoiseColor!50,minimum size=5mm] at (5,6.5) {};
+\node[draw=none,anchor=west] at (5.4,6.5) {Tortoise};
+
+\node[circle,draw,fill=HareColor!50,minimum size=5mm] at (5,5.7) {};
+\node[draw=none,anchor=west] at (5.4,5.7) {Hare};
+
+\node[circle,draw,fill=MeetColor!50,minimum size=5mm] at (5,4.9) {};
+\node[draw=none,anchor=west] at (5.4,4.9) {Both};
+
+\node (1) at (-1,1) {1};
+\node (2) at (0,2.5) {2};
+\node (3) at (0,4) {3};
+\node (4) at (0,5.5) {4};
+
+\node [fill=MeetColor!50](5) at (1.5,4.5) {5};
+\node (6) at (3,5.5) {6};
+\node (7) at (1.5,6.5) {7};
+
+\draw[->] (1)--(2);
+\draw[->] (2)--(3);
+\draw[->] (3)--(4);
+\draw[->] (4)--(5);
+\draw[->] (5)--(6);
+\draw[->] (6)--(7);
+\draw[->] (7)--(4);
+
+\end{tikzpicture}
+\end {center}
+
+And thus when both coincide, we can report we have found the cycle! Try this on a 
+cycle with a different (perhaps odd) number of nodes to really convince yourself that it works. 
+
+\subsection{The Algorithm}
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
+f(t)
+{
+    return (t*t + c) mod n
+}
+
+PollardRho(n)
+{
+    if n is even:
+        return 2
+
+    choose random c in [1, n-1]
+    choose random x in [0, n-1]
+
+    y = x
+    d = 1
+
+    while d == 1:
+    {
+        x = f(x)
+        y = f(f(y))
+
+        d = gcd(|x - y|, n)
+    }
+
+    if d == n:
+        restart algorithm with new x, c
+
+    return d
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
+
+
+\subsection{Performance}
+
+\subsubsection{Collision Model}
+
+Our sequence $x_0,x_1,x_2,\dots$ is generated by iterating a polynomial function modulo \(n\).
+Since our choice of $x_0$ and $c$ is random,the sequence can be treated as independent samples from a 
+uniform distribution over \(\{0,1,\dots,n-1\}\), until repetition occurs. And we are looking for a 
+hidden number $p$, the modulo over which the sequence repeats. Since $p$ divides \(n\), the sequence 
+when taken modulo p will thus act like independent samples from a uniform distribution over \(\{0,1,\dots,p-1\}\).\\
+
+\noindent Equivalently it can be said that the distribution Uniform(0,n-1) modulo p is equivalent to the
+distribution Uniform(0,p-1).\\
+
+\noindent This naturally leads us to the birthday paradox\footnote{The probability that in a group of 23 people we find two with 
+the same birthday is approximately 1/2. This is of course, not a true \emph{paradox} but simply a 
+surprising result from an intuition standpoint.} model, where we are 
+interested in the expected time until a collision occurs in a sequence of random samples from a finite set.
+
+Suppose we define the collision step \(S\) as the smallest 
+index such that a repetition occurs, 
+\[
+\iff S = \min\{j \mid x_i = x_j \text{ for some } i<j\}
+\]
+
+\subsubsection{Probability of No Collision}
+
+Let \(P_k\) denote the probability that the first \(k\) samples are all distinct. 
+This is equivalent to \(Pr(S > k)\). Then using the fact that the samples 
+are uniform and independent, we can express \(P_k\) as
+
+\[
+P_k
+= Pr(S > k) =
+\prod_{i=0}^{k-1}\left(1-\frac{i}{p}\right)
+\]
+
+
+\subsubsection{Expected Collision Step}
+
+The expected collision time can be expressed as
+
+\[
+\mathbb{E}[S]
 =
-e^{-\ln(m+1)}
+\sum_{k=0}^{\infty}Pr(S>k)
 =
-\frac{1}{m+1}
+\sum_{k=0}^{\infty} P_k
+=
+1+\left(1-\frac1p\right)+\sum_{k=2}^{\infty}P_k
+=
+2-\frac1p + \sum_{k=2}^{\infty}P_k
 \]
-Which goes to 0 as $m\to\infty$.
 
-While simple, this method does not exploit structure of intermediate solutions and relies purely on repeated random sampling rather than improvement steps.
-
-\subsection{Derandomisation}
-
-Instead of making random choices, we assign vertices one by one 
-smartly, trying to maximise the number of bichromatic edges.
-Suppose some vertices have already been assigned and the remaining vertices are
-still unassigned. Let X be the random variable denoting the number of bichromatic edges.
-Let L and R be the bipartitions.\\
-
-
-Denote the expected value of X given the first \(i\) assignments by:
+\vspace{1em}
+We will use $2-\frac1p \le 2$ and the inequality \(1-x\le e^{-x}\) to bound this.
 \[
-\mathbb E[X \mid i]
+P_k
+=
+\prod_{i=0}^{k-1}\left(1-\frac{i}{p}\right)
+\le
+\prod_{i=0}^{k-1}e^{-i/p}
+=
+e^{-\sum_{i=0}^{k-1} i/p}
+=
+e^{-k(k-1)/(2p)}
 \]
 
-
-For the $i+1$-th assignment of vertex \(v\), we have two choices:
-\begin{itemize}
-\item place \(v\) in \(L\),
-\item place \(v\) in \(R\).
-\end{itemize}
-
-The current conditional expectation is the average of the expectations obtained
-from these two choices. Therefore, at least one choice must yield a conditional
-expectation that is at least as large as the current one.
-
-\[
-\max \left( \mathbb E[X \mid \text{i, v in L}], \mathbb E[X \mid \text{i, v in R}] \right) >= \frac{1}{2} \left(\mathbb E[X \mid \text{i, v in L}] + \mathbb E[X \mid \text{i, v in R}] \right) = \mathbb E[X \mid i]
-\]
-
-
-We simply assign the next vertex such that it would add the most 
-bichromatic edges in this step -- that choice yields a better expectation for the future.
-\vspace{0.5em}
-
-\[
-\text{Since I have ensured that }\mathbb E[X \mid i+1] \ge \mathbb E[X \mid i]
-\]
-
-\[
-\implies \mathbb E[X \mid \text{n assignments}] \ge \mathbb E[X \mid \text{0 assignments}]
-\]
-
-\[
-\implies X_{final} \ge \frac{m}{2}
-\]
-
-\vspace{0.5em}
-
-\noindent\textbf{Why did that work?}\\
-
-
-\noindent Initially $\mathbb E[X]=\frac{m}{2}$. At every step we choose an 
-assignment that does not decrease the conditional
-expectation\footnote{This is by no means a proof for optimality -- it does not 
-maximise the number of bichromatic edges.}. Hence the conditional expectation never drops below \(m/2\)!\\
-
-
-\noindent After all vertices have been assigned, no randomness remains. The conditional
-expectation is then equal\footnote{If you are feeling tricked somehow, 
-I relate fully! But it is true, we designed this deterministic algorithm and simultaneously proved that 
-it produces at least \(m/2\) crossing edges using conditional expectation!} to the 
-actual number of crossing edges produced by the algorithm.
 
 \[
 \implies
-X_{final} \ge \frac{m}{2}.
+\mathbb{E}[T]
+\le
+2
++
+\sum_{k=2}^{\infty}
+e^{-k(k-1)/(2p)}
 \]
 
-\noindent Thus we obtain a deterministic algorithm that always constructs a bipartite
-subgraph containing at least half of the edges.\\
+\vspace{1em}
+For \(k\ge2\),
+\[
+k(k-1)\ge \frac{k^2}{2}
+\implies 
+\frac{k(k-1)}{2p}
+\ge
+\frac{k^2}{4p}
+\implies
+e^{-k(k-1)/(2p)}
+\le
+e^{-k^2/(4p)}
+\]
+
+\[
+\implies
+\mathbb{E}[S]
+\le 
+2
++
+\sum_{k=2}^{\infty}
+e^{-k^2/(4p)}
+\]
+
+\vspace{1em}
+Since the function $f(x)=e^{-x^2/(4p)}$ is monotonically decreasing on \([0,\infty)\), 
+we can compare the sum with an integral!
+\[
+\sum_{k=2}^{\infty}
+e^{-k^2/(4p)}
+\le
+\int_0^{\infty}
+e^{-x^2/(4p)}\,dx.
+\]
+
+Using the substitution $x=2\sqrt{p}\,t,\; dx=2\sqrt{p}\,dt,$
 
 
-\noindent\textbf{Why does this not work for all problems?}\\
+\[
+\implies
+\int_0^{\infty}
+e^{-x^2/(4p)}\,dx
+=
+2\sqrt{p}
+\int_0^{\infty}
+e^{-t^2}\,dt
+=
+2\sqrt{p}\cdot \frac{\sqrt{\pi}}{2}
+=
+\sqrt{\pi p}.
+\]
 
 
-\noindent The properties of this particular problem we needed for this to work were -- 
 
-\noindent \begin{enumerate}
-\item $E[X \mid 1] = m/2$, regardless of which assignment that was -- symmetry between the left and right sides.
-\item It was obvious which assignment would maximise $E[X \mid i+1]$ given $E[X \mid i]$.
+\[
+\implies
+\mathbb{E}[S]
+\le
+2+\sqrt{\pi p}
+\implies
+\mathbb{E}[S]\le \Theta(\sqrt{p})
+\]
+
+
+\subsubsection{Collision Detection}
+
+Once a collision occurs modulo \(p\), say
+
+\[
+x_i \equiv x_j \hspace{-0.7em}\pmod p,
+\quad i \ne j,
+\]
+
+we know $p$ must divide \(x_i-x_j\). But how do we check that if we don't know $p$?
+Knowing we want to find a $p$ which divides \(x_i-x_j\) and $n$, the logical step 
+is to find the gcd(\(x_i-x_j,n\)), because if that is 1 then p is 
+definitely\footnote{This is concluded using the lemma -- all common divisors of a and b divide the gcd(a,b)} 1.
+And as soon as gcd(\(x_i-x_j,n\)) becomes not 1 (and not n), we can take that as the divisor. We know all p for 
+which the collision happened are definitely\footnote{By definition of the gcd, it must be the \emph{greatest} common divisor!} smaller than this number so we could not have done better!
+
+Due to Floyd's cycle detection algorithm, we don't need to keep track of all pairs 
+of indices \(i,j\). We can simply keep track of the pairs \((x_i,x_{2i})\) 
+for \(i=1,2,\dots\) and check for collisions between these pairs. This is 
+what the algorithm does by maintaining two pointers \(x\) and \(y\) that move at different speeds.\\
+
+
+\subsubsection{Cost Per Step}
+Each step of the algorithm performs a constant number of 
+modular multiplications and one greatest common divisor computation. Using the Euclidean 
+algorithm, $\gcd(a,b)$ can be computed in at most \(\Theta(\log^3 max(a,b)))\) time.
+
+Hence each iteration costs at most \(\Theta(\log^3 n)\) time since 
+n is the largest number we are working with for all the involved operations.
+
+\subsubsection{Total Expected Complexity}
+
+Since cost per step is at most \(\Theta(\log^3 n)\), and the expected number 
+of steps is at most \(\Theta(\sqrt p)\), the total expected complexity is 
+at most \(\Theta(\sqrt p \log^3 n)\) for a particular prime $p$.\\
+
+
+\noindent Let \(n=\prod_{i=1}^k p_i^{e_i}\) where \(p_1<p_2<\cdots<p_k\) are the 
+prime factors of \(n\). Let \(T_i\) denote 
+the random time until a collision occurs modulo \(p_i\), and let \(T\) be the 
+running time of \texttt{Pollard's Rho}, i.e.
+\[
+T=\min_{1\le i\le k} T_i
+\]
+
+Since \(T\le T_i\) for every \(i\), taking expectations gives
+\[
+\mathbb E[T]\le \mathbb E[T_i]\quad \forall i \in \{1,2,\dots,k\}
+\implies
+\mathbb E[T]\le \min_{1 \le i \le k} \mathbb E[T_i]
+\]
+
+\[
+\implies
+\mathbb E[T]\le \Theta(\sqrt{p_1}\log^3 n), \hspace{1em}\text{where \(p_1\) is the smallest prime factor of }n
+\]
+
+\vspace{0.7em}
+
+
+\[
+p_1<=\sqrt n \implies \mathbb E[T]\le \Theta(\sqrt p_1 \log^3 n) \le \Theta(n^{\frac{1}{4}}\log^3 n)
+\]
+
+\subsection*{What did we achieve?}
+
+We can find a factor of \(n\) in expected time \(\Theta(n^{\frac{1}{4}}\log^3 n)\), a vast 
+improvement over the naive \(\Theta(n^{\frac{1}{2}}\log^2 n)\) method.
+
+To factorise a large number n fully, we can use the Pollard-Rho algorithm now! Since every 
+factor we find is at least 2, after dividing n by 2 and repeating the factor-finding process, 
+the overall procedure terminates in at most \(\Theta(\log_2 n)\) steps. Thus we can factorise a 
+number n (no matter how large), in expected time at most \(\Theta(n^{\frac{1}{4}} \log^4 n)\).\\
+
+\noindent Note that we have used a lot of worst case upper bounds in the analysis. The average 
+performance in practice is much better than the complexity suggests! 
+
+
+\clearpage
+\section{Problems}
+\begin{enumerate}
+\item[\textbf{1}]
+During RSA encryption, one computes a secret integer \(x=\phi(n)\).
+A valid public exponent \(e\) must satisfy
+\[
+\gcd(e,x)=1.
+\]
+
+Since we do not want to reveal \(x\) to the public, we can not take \(e\) to be something 
+deterministic like $x-1$ because an adversary can crack our encryption if he gets to know the algorithm.
+One possible strategy is to repeatedly choose \(e\) uniformly at random from
+\(\{1,2,\dots,x\}\) until a suitable value is found.
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item Let
+\[
+x=\prod_{i=1}^{k} p_i^{e_i}
+\]
+be the prime factorization of \(x\). Show that the probability that a randomly
+chosen \(e\in\{1,2,\dots,x\}\) satisfies \(\gcd(e,x)=1\) is
+\[
+\frac{\varphi(x)}{x} = \prod_{i=1}^{k}\left(1-\frac{1}{p_i}\right).
+\]
+
+\item Show that if x can be any number from $1$ to $n$ where $n$ is very large,
+the probability of the randomly chosen e being correct tends to $\frac{6}{\pi^2}$ as n becomes larger.\\
+\textit{Hint: Use $\sum_{n=1}^{\infty} \frac{1}{n^2}= \frac{\pi^2}{6}$}
 \end{enumerate}
-
-\noindent Both these properties do not hold, for example, in the Dominating Set problem. Depending 
-on your first choice (to put in the dominating set or dominated set), you might get a 
-very good dominating set in expectation or a very bad one. An extreme counter example is a star shaped\footnote{A star shaped graph is a graph with 
-one central node and \(n-1\) nodes connected to it and only it.} 
-graph, where if you put the central node in dominated set you will get a dominating set of size \(n-1\), 
-but if you put it in dominating set you will get a dominating set of size 1. 
-The second property also fails because in further choices it is not 
-clear how to choose which set to put the node in to maximise the conditional expectation.
-
-
-\section{Array Construction}
-
-\subsection*{The Problem}
-
-In this problem, we must construct an array of $4n$ integers in which each of the values
-$1,2,\dots,n$ appears exactly four times, subject to the following condition --
-for a value $x$, let $p_{x,1}<p_{x,2}<p_{x,3}<p_{x,4}$ be the positions of its
-four occurrences. Then for every $x$ the three consecutive gaps
-\[
-  g_1 = p_{x,2}-p_{x,1},\qquad
-  g_2 = p_{x,3}-p_{x,2},\qquad
-  g_3 = p_{x,4}-p_{x,3}
-\]
-must be pairwise distinct. For instance, with $n=3$ the array
-$[1,1,2,1,2,3,1,3,2,2,3,3]$ works because the gaps are $(1,2,3)$ for $1$, $(2,4,1)$ for $2$
-and $(2,3,1)$ for $3$, each consisting of three different numbers.
-
-\subsection*{The Solution}
-Consider the naive randomised algorithm of simply generating a random array of $4n$ integers which have 4 of each 
-of $\{1,2,3,\dots,n\}$. We can then check if the condition holds for each of the $n$ values and if not, 
-generate again. This is a simple Las Vegas algorithm but as we will see, pretty effective 
-in generating the required construction quickly.
-
-\subsection*{Success Probability}
-Let the four positions of $x$, in increasing order, be
-$a_1<a_2<a_3<a_4$, and define the gaps
-\[
-  g_1=a_2-a_1,\qquad g_2=a_3-a_2,\qquad g_3=a_4-a_3,
-\]
-each a positive integer, with span $s=g_1+g_2+g_3=a_4-a_1$. Once the gaps are 
-fixed, the subset is determined by the starting position $a_1$ alone, which
-must satisfy $a_1\ge 1$ and $a_1+s=a_4\le N$.\\
-
-\noindent There are therefore exactly
-$N-s$ admissible subsets for each tuple of gaps with $s\le N-1$. Also note that the probability of 
-two gaps being equal is the same regardless of which pair of gaps we are referring to (by symmetry).
-
-\[
-  \Pr(g_1=g_2)=\Pr(g_2=g_3)=\Pr(g_1=g_3)
-\]
-
-\subsubsection*{Two Equal Gaps}
-When $g_1=g_2=g$ and $g_3=h$, $s=2g+h$. So the number of such subsets are $N-(2g+h)$. Double 
-summation over all possible $g$ and $h$ will yield all valid subsets and thus the exact probability.
-
-\[
-  \Pr(g_1=g_2)
-  =
-  \frac{1}{\binom{4n}{4}}\sum_{g=1}^{2n-1}\left(\sum_{h=1}^{4n-2g-1}\bigl(4n-2g-h\bigr)\right)
-  =
-  \frac{1}{\binom{4n}{4}}\sum_{g=1}^{2n-1}\binom{4n-2g}{2}
-  =
-  \frac{n(2n-1)(8n-5)}{3\cdot\binom{4n}{4}}
-\]
-
-\vspace{1em}
-\[
-\implies
-\Pr(g_1=g_2)
-=
-\frac{n(2n-1)(8n-5)}{n(2n-1)(4n-1)(4n-3)}
-=
-\frac{8n-5}{(4n-1)(4n-3)}
-\approx 
-\frac{1}{2n} + \Theta(\frac{1}{n^2})
-\]
-
-\subsubsection*{All Equal Gaps}
-Here $g_1=g_2=g_3=g$, so $s=3g$ and the number of subsets is $4n-3g$.\\
-
-\noindent The summation over g will go from 1 to $G=\bigl\lfloor\tfrac{4n-1}{3}\bigr\rfloor$.
-
-\[
-  \sum_{g=1}^{G}(4n-3g)
-  =4nG-\frac{3G(G+1)}{2}
-  =\frac{G\,(8n-3G-3)}{2}
-\]
-
-\[
-\implies
-  \Pr(g_1=g_2=g_3)
-  =\frac{G\,(8n-3G-3)}{2\binom{4n}{4}}
-  =\frac{3\,G\,(8n-3G-3)}{(2n)(2n-1)(4n-1)(4n-3)}
-\]
-
-\vspace{1em}
-\noindent Taking large n approximations and $G \approx \frac{4n}{3}$ gives
-
-\[
-\Pr(g_1=g_2=g_3) \approx \frac{4n\,(8n-4n)}{(2n)(2n)(4n)(4n)} \approx \frac{1}{4n^2}
-\]
-
-\subsubsection*{Inclusion-Exclusion}
-
-\[
-  \Pr(\text{bad value})=\Pr((g_1=g_2) \;\cup\; (g_2=g_3) \;\cup\; (g_1=g_3)) 
-\]
-
-\[
-  =
-  \Pr(g_1=g_2)+\Pr(g_2=g_3)+\Pr(g_1=g_3)-3\cdot\Pr(g_1=g_2=g_3)+\Pr(g_1=g_2=g_3)
-\]
-
-\[
-  =
-  3\Pr(g_1=g_2)-2\cdot\Pr(g_1=g_2=g_3)
-  \approx
-  3 \cdot (\frac{1}{2n}) - 2 \cdot (\frac{1}{4n^2}) + \Theta(\frac{1}{n^2})
-  \approx 
-  \frac{3}{2n}
-\]
-
-
-\[
-	\implies
-	\Pr[\text{bad value}] \approx \frac{3}{2n}
-\]
-
-\subsubsection*{Overall Success Probability}
-The arrangement fails exactly when the gaps of at least one value is bad. The union bound gives 
-$n \cdot \frac{3}{2n} = \frac{3}{2}$ as the upper bound on overall failure which is useless. 
-To find anything useful, we need to know something about how they are dependent on each other. We will skip 
-the exact analysis of this interdependence and notice that the placement of one value affects the gaps of 
-other value by at most 4. Since this won't affect most arrangements, they are almost\footnote{Yes, this is an 
-approximation but the graph of empirical data should convince you how good it is.} independent.
-
-\[
-  \Pr[\text{success}] \approx (1-\Pr(\text{bad value}))^n \approx \left(1-\frac{3}{2n}\right)^{n}
-\]
-
-\begin{figure}[ht]
-  \captionsetup{labelformat=empty}
-  \centering
-  \includegraphics[width=0.78\linewidth]{../Images/randcheck_failprob.pdf}
-  \caption{Interestingly, the method used to generate this graph is also a randomised algorithm -- the method of sampling. 
-We used the idea of law of large numbers by saying that the number of failures divided by total number of 
-runs (10000) should be a good approximation to the failure probability. Of course, 10000 was chosen 
-because it was large as compared to the $n$ under consideration.}
-  \label{fig:randcheck}
-\end{figure}
-
-Since each run takes $\Theta(n)$ time (generation and verification), the overall runtime 
-is also expected $\Theta(n)$ using Wald's equation\footnote{Refer \autoref{wald_eq}} since we have 
-expected number of runs to be $1/\Pr[\text{success}]$ which is constant hence $\Theta(1)$.
-
+\end{enumerate}

@@ -1,429 +1,300 @@
-\chapter{The Classics}
-\section{QuickSort}
+\chapter{Complexity Classes}
 
-In general, to sort an input array of size n deterministically using only pairwise comparisons,
-it can be proved via a decision tree that we need at least $n\log_2 n$ operations. From a 
-time complexity point of view this is $\Theta(n\log n)$ time. \texttt{QuickSort} does not really improve upon that, but 
-in practice it is very quick with a small constant factor. The STL 
-library of \texttt{C++} uses \texttt{QuickSort} in its \texttt{std::sort()} function.\\
+Given what we have already seen, what is the best time complexity for a problem? When can we hope 
+to come up with a \emph{fast} algorithm?
 
-\subsection{The Algorithm}
-\begin{center}
-\begin{minipage}{0.9\linewidth}
-\begin{framed}
-\begin{Verbatim}
-QuickSort(A)
-{
-    choose an element p from A as the "pivot"
-    partition A into A<p, A=p, A>p
-    return {QuickSort(A<p) : (A=p) : QuickSort(A>p)}
-}
-\end{Verbatim}
-\vspace{-4mm}
-\end{framed}
-\end{minipage}
-\end{center}
+This is exactly what complexity classes are about. While the classes themselves are defined rigorously, 
+there are some very important things which we have not yet proved -- they remain open problems and we 
+believe them to be true in practice$\dots$
 
-\noindent Note that \texttt{A<p} is our notation for the elements of \texttt{A} that are strictly less than \texttt{p}.
-Similarly we can define \texttt{A>p} and \texttt{A=p}.\\
+\section{Decision Problems}
+Complexity classes are traditionally defined using \emph{decision problems}. A decision problem is a 
+computational problem whose answer is either \texttt{YES} or \texttt{NO}.
 
+\paragraph{Examples}
+\begin{itemize}
+\item Given a graph $G$, is $G$ connected?
+\item Given an integer $m$, is $m$ prime?
+\item Given a graph $G$ and an integer $k$, does $G$ contain a clique\footnote{Refer \autoref{clique}} of 
+size at least $k$?
+\end{itemize}
 
-\subsection{Worst Case Runtime}
-\noindent A deterministic implementation may always choose the first or last element as pivot. 
-Unfortunately, this can lead to very poor performance on adversarial inputs. 
-For example, if the array is already sorted and we always choose the leftmost element as 
-pivot, the recursion becomes extremely unbalanced --
-\[
-(n-1)+(n-2)+\dots+1
-=
-\Theta(n^2)
-\]
+Although not all computational tasks are naturally decision problems, most can be 
+reformulated as one.
 
-\noindent Thus \texttt{QuickSort} has worst case complexity
-\[
-T(n)=\Theta(n^2)
-\]
+\section{$P$}
 
-\noindent The standard randomised version instead chooses the pivot uniformly at random. This tiny 
-modification dramatically changes the behaviour of the algorithm. 
-Intuitively, it becomes very unlikely that we repeatedly choose extremely bad pivots.
-
-\subsection{Expected Runtime}
-
-\subsubsection*{Recurrence Relation}
-Let \(T(n)\) denote the expected runtime of randomised \texttt{QuickSort} on 
-an array of size \(n\) over all possible inputs.\\
-
-
-\noindent Suppose the pivot finally ends up at position \(k\), where \(0\le k\le n-1\). 
-Then the recursive subproblems have sizes \(k\) and \(n-1-k\). Since partitioning itself 
-takes n operations, we obtain the recurrence
-\[
-T(n \mid \text{pivot} = k)
-=
-T(k)+T(n-1-k)+n
-\]
-
-\noindent Because the pivot is chosen uniformly at random, every value of \(k\) is equally likely. Taking expectation 
-over all random choices made by the algorithm gives
-\[
-E[T(n \mid \text{pivot} = k)]
-=
-n
-+
-\frac{1}{n}\sum_{k=0}^{n-1}
-\Big(
-T(k)+T(n-1-k)
-\Big)
-\]
-
-Using the law\footnote{See \autoref{total_expectation}} of total 
-expectation gives $E[T(n \mid \text{pivot} = k)] = T(n)$. Using that and the fact 
-$\sum_{k=0}^{n-1}T(k)=\sum_{k=0}^{n-1}T(n-1-k)$,
-\[
-T(n)=n+\frac{2}{n}\sum_{k=0}^{n-1}T(k)
-\]
-
-
-\noindent Changing the variable from $T(n)$ to $S(n)$ gives,
-\[
-\implies
-S(n)-S(n-1)
-=
-n+\frac{2}{n}S(n-1)
-\quad (\text{Substituting } S(n)=\sum_{k=0}^{n}T(k))
-\]
+The class $P$ consists of all decision problems that can be solved by a 
+deterministic algorithm in at most polynomial time. Let Q be a decision problem and T(Q) be the best
+time complexity\footnote{This time complexity is in terms of the input length 
+and not the input number itself -- a number $n$ when taken as input is represented by 
+a bit string of size $m=\Theta(\log n)$. So an algorithm which takes $O(n)$ time will be considered 
+as an exponential time algorithm since $\Theta(n) = \Theta(2^m)$. This is why the normal method of 
+trying all numbers from $1$ to $\sqrt n$ will not prove that primality testing of a number is in $P$.} 
+of a deterministic algorithm for Q. Then $T(Q) \le \Theta(n^c)$ for some constant $c\ge1$.
 
 \[
-\implies
-S(n)
-=
-\left(1+\frac{2}{n}\right)S(n-1)+cn
+P \; = \; \bigcup_{c\ge1} \;\; \{Q: T(Q) \le \Theta(n^c)\}
 \]
-
-\[
-\implies
-\frac{S(n)}{(n+1)(n+2)}
-=
-\frac{S(n-1)}{n(n+1)}
-+
-\frac{n}{(n+1)(n+2)}
-\]
-
-\[
-\implies
-\frac{S(n)}{(n+1)(n+2)}
--
-\frac{S(n-1)}{n(n+1)}
-=
-\frac{2}{n+2}-\frac{1}{n+1}
-\]
-
-\vspace{0.5em}
-Summing this recurrence telescopically gives
-
-\[
-\frac{S(n)}{(n+1)(n+2)}
-=
-\Theta(\log n)
-\implies
-S(n)=\Theta(n^2\log n)
-\]
-
-\[
-\implies
-T(n)
-=
-S(n)-S(n-1)
-=
-\Theta(n\log n)
-\]
-
-Hence the expected runtime of randomised \texttt{QuickSort} is $\Theta(n\log n)$
-
-\subsubsection*{Indicator Variables}
-
-\noindent Here we explore an alternative method to arrive at the expected runtime of \texttt{QuickSort}. 
-Observe that any pair of elements is compared at most once during the entire execution of \texttt{QuickSort}.
-Without loss of generality assume the array is a permutation of $\{1,2,\dots,n\}$.
-\noindent Consider the indicator variable,
-\[
-I_{ij}=
-\begin{cases}
-1,&\text{if elements }i,j\text{ are compared}\\
-0,&\text{otherwise}
-\end{cases}
-\]
-
-\vspace{0.5em}
-\noindent Then the total number of comparisons $C$ is given by
-\vspace{0.3em}
-\[
-C=\sum_{1\le i<j\le n}I_{ij}
-\]
-\vspace{0.5em}
-
-Two elements are compared only if one of them becomes the first pivot chosen 
-among all elements lying between them in sorted order. Since all of them are equally likely, 
-we have a 2 out of \(j-i+1\) chance of this happening.
-
-\[
-\Pr(I_{ij}=1)=\frac{2}{j-i+1}
-\implies
-\mathbb{E}[C]
-=
-\mathbb{E}[\sum_{1\le i<j\le n}I_{ij}]
-=
-\sum_{1\le i<j\le n}\frac{2}{j-i+1}
-=
-\Theta(n\log n)
-\]
-
-\section{QuickSelect}
-
-\texttt{QuickSort} is used to Find the \(k\)-th smallest element\footnote{This is commonly 
-referred to as the \(k\)-th order statistic of the array.} of an unsorted input array. An obvious method is 
-to sort the array using \texttt{MergeSort}\footnote{\texttt{MergeSort} is a divide and conquer 
-deterministic sort algorithm which runs in $\Theta(n\log n)$ time.} or \texttt{QuickSort} and then 
-access the \(k\)-th element in $\Theta(1)$. But since we only care about one element, it 
-seems inefficient to sort the entire array.\\
-
-\subsection{The Algorithm}
-
-We pick a pivot \(p\) and partition the array as before.
-Basis the size of the partitions we can figure out which partition the \(k\)-th element is in.
-If it is in the \texttt{A=p} partition, then we already have our answer!
-Else we recurse into that partition and continue this process until we find the \(k\)-th element.
 
 \begin{center}
-\begin{minipage}{0.9\linewidth}
-\begin{framed}
-\begin{Verbatim}
-QuickSelect(A,k)
-{
-    choose an element p from A as the "pivot"
-    partition A into A<p, A=p, A>p
-    if size(A<p) >= k                   f// k-th element is in A<p
-        return QuickSelect(A<p,k)
-    else if size(A<p)+size(A=p) >= k    // k-th element is in A=p
-        return p
-    else                                // k-th element is in A>p
-        return QuickSelect(A>p,k-size(A<p)-size(A=p))
-}
-\end{Verbatim}
-\vspace{-4mm}
-\end{framed}
-\end{minipage}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Decision Problem(Q)} & \textbf{Algorithm} & \textbf{Runtime (T(Q))} \\
+\hline
+Primality Test & AKS & $\Theta(m^{12})$ \\
+Graph Connectivity & BFS & $\Theta(V+E)$ \\
+\hline
+\end{tabular}
 \end{center}
 
-Intuitively, this is similar to \texttt{QuickSort}. However, unlike \texttt{QuickSort}, 
-we recurse into only one side -- each step discarding a significant\footnote{On an expected basis.}
-fraction of the array. This is a similar approach to Binary Search although not 
-quite same since this does not assume a sorted array. 
+\section{NP}
 
-\subsection{Expected Runtime}
+The class $NP$ consists of all decision problems whose answer when "YES" can be verified in polynomial 
+time. The algorithm which solved the problem outputs a \emph{certificate} along with "YES" -- this 
+certificate is information which can be used to verify in polynomial time that the answer is indeed "YES". 
 
-Let \(X_i\) denote the size of the search space after \(i\) recursive calls of 
-\texttt{QuickSelect}. $(X_0=n)$\\
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Decision Problem (Q)} & \textbf{Certificate} & \textbf{Verification Time} \\
+\hline
+Clique of size $k$ & Set of $k$ vertices & $\Theta(k^2)$ \\
 
-\noindent At each step, a pivot is chosen uniformly at random and the array is partitioned around it.
-Depending on the rank we are searching for, \texttt{QuickSelect} recurses into exactly one of the two partitions. 
-To obtain a worst-case bound, we imagine that the algorithm always recurses into the larger partition and that 
-all elements are distinct.\\
+Graph Coloring of k colors & Vertex\;:\;Color mapping & $\Theta(V+E)$ \\
+\hline
+\end{tabular}
+\end{center}
 
+An obvious conclusion from the definition of $NP$ is that $P\subseteq NP$ because any problem that can be 
+solved efficiently can also be verified efficiently.
 
-\noindent If the current search space has size \(x\), and the pivot ends up at position \(k\), 
-then the larger partition has size $\max(k-1,x-k)$\\
+\subsection{The Question of \texorpdfstring{$P$}{P} versus \texorpdfstring{$NP$}{NP}}
 
-\noindent Averaging over all pivot positions,
-\[
-\mathbb E[X_{i+1}\mid X_i=x]
-=
-\frac1x
-\sum_{k=1}^{x}
-\max(k-1,x-k)
-\le
-\frac34(x-1)
-\le
-\frac34x
-\]
+Every problem that can be solved efficiently can certainly be verified efficiently. Therefore,
 
 \[
-\implies
-\mathbb E[X_{i+1}\mid X_i]
-\le
-\frac34 X_i
+P\subseteq NP.
 \]
 
-Taking expectations and applying the law of total expectation,
+The central open problem in theoretical computer science is whether this inclusion is strict.
+
+\paragraph{The $P$ versus $NP$ Problem.}
+
+Is
 
 \[
-\mathbb E[X_{i+1}]
-=
-\mathbb E\!\left[\mathbb E[X_{i+1}\mid X_i]\right]
-\le
-\frac34\mathbb E[X_i]
+P=NP;?
 \]
+
+No proof is currently known.
+
+If $P=NP$, then every problem whose solutions can be verified efficiently can also be solved efficiently.
+
+\section{The Class \texorpdfstring{$co$-$NP$}{co-NP}}
+
+The class $co$-$NP$ contains complements of problems in $NP$.
+
+\paragraph{Definition (Class $co$-$NP$).}
+A decision problem belongs to $co$-$NP$ if its complement belongs to $NP$.
+
+Equivalently, a \texttt{NO} answer admits a polynomially verifiable certificate.
+
+For example, the complement of the Clique problem asks whether a graph contains no clique of size at least $k$.
+
+We currently do not know whether
 
 \[
-\implies \frac{\mathbb E[X_{i+1}]}{\mathbb E[X_i]} \le \frac34
-\implies
-\frac{\mathbb E[X_i]}{\mathbb E[X_0]}
-\le
-\left(\frac34\right)^i
-\]
-\[
-\implies E[X_i] \le n (\frac{3}{4})^i \quad (\text{Using }\mathbb E[X_0]=X_0=n)
+NP=co\text{-}NP.
 \]
 
-\noindent Let $T$ be the random variable which denotes the number of recursive calls of \texttt{QuickSelect}. 
-It is the first $i$ such that $X_i \le 1$. \\
+\section{Polynomial-Time Reductions}
 
+To compare the difficulty of computational problems, we use reductions.
 
-\noindent Taking one comparison with the pivot as one operation,
+\paragraph{Definition (Polynomial-Time Reduction).}
+A problem $A$ is polynomial-time reducible to a problem $B$, written
 
 \[
-E[T_{run}] \le \sum_{i=1}^T n (\frac{3}{4})^i \le \sum_{i=1}^{\infty} n(\frac{3}{4})^i = 3n
+A\le_p B,
 \]
 
-\noindent So the expected runtime of \texttt{QuickSelect} is \(\Theta(n)\), which is a significant improvement 
-over the sort-and-access method which takes \(\Theta(n\log n)\)
-\subsection{Expected Recursion Depth}
+if every instance of $A$ can be transformed into an equivalent instance of $B$ in polynomial time.
 
-Recall that $H$ is the first $i$ such that $X_i \le 1$.
-Since $X_i \le 1$ is equivalent to $i\ge T$, $i<H$ is equivalent to $X_i \ge 2$.
-Using Markov's Inequality\footnote{See \autoref{markov_inequality}},
-\[
-\Pr(i<H)
-=
-\Pr(X_i\ge2)
-\le
-\frac{\mathbb E[X_i]}{2}
-\]
+Intuitively, if $A\le_p B$ and we know how to solve $B$ efficiently, then we can also solve $A$ efficiently.
 
-\noindent Using the upper bound for $\mathbb E[X_i]$,
-\[
-\Pr(X_i\ge2)
-\le
-\frac{\mathbb E[X_i]}{2}
-\le
-\frac n2\left(\frac34\right)^i
-\]
+Reductions allow us to transfer algorithmic techniques as well as hardness results between problems.
 
-\noindent Using the tail sum formula\footnote{See \autoref{tail_sum}},
-\[
-\mathbb E[H]
-=
-\sum_{i=0}^{\infty}\Pr(H>i)
-\]
+\section{NP-Complete Problems}
 
-\[
-\implies
-\mathbb E[H]
-\le
-\sum_{i=0}^{\infty}
-\min\left(1,\frac n2\left(\frac34\right)^i\right) \quad (\text{Using the trivial } Pr(H>i) \le 1)
-\]
+Some problems are at least as hard as every problem in $NP$.
 
-\vspace{0.6em}
-\noindent \textbf{The Splitting\footnote{I feel this is useful and common enough to warrant a name!} Technique}
-We split the sum into two parts, and bound them or find 
-them separately, thus finding our overall bound. Here we split according to when 
-the min() changes from $1$ to $\frac n2\left(\frac34\right)^i$.\\
-\[
-\mathbb E[H] \le \sum_{i=0}^{m-1} 1 +
-\sum_{i=m}^{\infty} \frac{n}{2} \left( \frac{3}{4} \right)^i
-=m+ \sum_{i=m}^{\infty} \frac{n}{2} \left( \frac{3}{4} \right)^i
-\;\;\left(\text{where } m= \left\lceil \log_{\frac{4}{3}} \left( \frac{n}{2} \right) \right\rceil\right)
-\]
-
-\vspace{1em}
-\noindent For the summation we can factor out the first term,
-
-\[
-\sum_{i=m}^{\infty} \frac{n}{2} \left( \frac{3}{4} \right)^i
-=
-\left( \frac n2\left(\frac34\right)^m \right) \cdot 
-\left(\sum_{j=m}^{\infty}\left(\frac34\right)^{j-m}\right)
-\]
-
-\[
-\begin{aligned}
-\text{We have}\hspace{1em}
-\frac n2\left(\frac34\right)^m \le 1
-\text{ (By definition of }m)
-&
-\hspace{1em}\text{and }
-&
-\sum_{j=m}^{\infty}\left(\frac34\right)^{j-m}
-=
-\sum_{j=0}^{\infty}\left(\frac34\right)^{j}
-=
-\frac1{1-\frac34}
-=
-4
-\end{aligned}
-\]
-
-\[
-\implies
-\sum_{i=m}^{\infty}
-\frac n2\left(\frac34\right)^i
-\le
-4
-\]
-
-Combining the two bounds,
-
-\[
-\mathbb E[H]
-\le
-m+4
-=
-\left\lceil
-\log_{4/3}\!\left(\frac n2\right)
-\right\rceil
-+4
-\]
-
-So we can conclude $\mathbb E[H] \le \Theta(\log n)$
-
-\clearpage
-\section{Problems}
+\paragraph{Definition (NP-Complete).}
+A problem $L$ is NP-complete if
 
 \begin{enumerate}
-\item[\textbf{1}]
-\begin{enumerate}[label=\textbf{(\alph*)}]
-\item We concluded an upper bound for the expected recursion depth $\mathbb E[H] \le \Theta(\log n)$ 
-for \texttt{QuickSelect}. But to justify the expected complexity as $\Theta(\log n)$, 
-show that $\mathbb E[H] \ge \Theta(\log n)$
-
-\item For a general series of random variables $X_0=n, X_1, X_2, \ldots$ and T being the first 
-$i$ such that $X_i \le 1$, given $\frac{\mathbb E[X_{i+1}]}{\mathbb E[X_{i}]} \le p$ 
-with $0<p<1$, show that $\mathbb E[T] \le \Theta(\log n)$\\
-\end{enumerate}
-
-\item[\textbf{2}]
-Let $C_n$ be the number of comparisons made by \texttt{QuickSort} on an array of size \(n\). 
-We already established $\mathbb E[C_n]=\sum\limits_{1 \le i < j \le n} \frac{2}{j-i+1}$
-
-\begin{enumerate}[label=\textbf{(\alph*)}]
-\item By grouping together all pairs with the same value of \(j-i\), show that
+\item $L\in NP$,
+\item For every problem $A\in NP$,
 \[
-\sum\limits_{1 \le i < j \le n} \frac{2}{j-i+1}
-=
-2\sum_{k=1}^{n-1}
-\frac{n-k}{k+1}
-\]
-
-\item Let $H_n=\sum_{i=1}^{n}\frac1i$ be the \(n\)-th harmonic number. Using this and the 
-above result show that
-\[
-\mathbb E[C_n]
-=
-2(n+1)H_n-4n = \Theta(n\log n)
+A\le_p L.
 \]
 \end{enumerate}
 
+Thus every problem in $NP$ can be transformed into $L$ using only polynomial time.
+
+\paragraph{Theorem.}
+
+If any NP-complete problem belongs to $P$, then
+
+\[
+P=NP.
+\]
+
+\paragraph{Examples of NP-Complete Problems.}
+
+\begin{itemize}
+\item SAT
+\item 3-SAT
+\item Clique
+\item Vertex Cover
+\item Hamiltonian Cycle
+\item Subset Sum
+\end{itemize}
+
+The discovery of NP-completeness provides strong evidence that these problems are unlikely to possess polynomial-time algorithms.
+
+\section{Randomized Complexity Classes}
+
+We now introduce complexity classes that permit algorithms to use random bits during computation.
+
+\subsection{The Class \texorpdfstring{$RP$}{RP}}
+
+\paragraph{Definition (Randomized Polynomial Time).}
+
+A decision problem belongs to $RP$ if there exists a randomized polynomial-time algorithm satisfying:
+
+\begin{itemize}
+\item If the correct answer is \texttt{NO}, the algorithm always outputs \texttt{NO}.
+\item If the correct answer is \texttt{YES}, the algorithm outputs \texttt{YES} with probability at least $\frac12$.
+\end{itemize}
+
+Thus an $RP$ algorithm may make false negatives but never false positives.
+
+Repeating the algorithm independently reduces the error probability exponentially.
+
+\subsection{The Class \texorpdfstring{$co$-$RP$}{co-RP}}
+
+\paragraph{Definition ($co$-$RP$).}
+
+A problem belongs to $co$-$RP$ if there exists a randomized polynomial-time algorithm satisfying:
+
+\begin{itemize}
+\item If the correct answer is \texttt{YES}, the algorithm always outputs \texttt{YES}.
+\item If the correct answer is \texttt{NO}, the algorithm outputs \texttt{NO} with probability at least $\frac12$.
+\end{itemize}
+
+Such algorithms may make false positives but never false negatives.
+
+\subsection{The Class \texorpdfstring{$ZPP$}{ZPP}}
+
+\paragraph{Definition (Zero-Error Probabilistic Polynomial Time).}
+
+A problem belongs to $ZPP$ if there exists a randomized algorithm that
+
+\begin{itemize}
+\item never outputs an incorrect answer,
+\item has expected polynomial running time.
+\end{itemize}
+
+An important characterization is
+
+\[
+ZPP=RP\cap co\text{-}RP.
+\]
+
+\subsection{The Class \texorpdfstring{$BPP$}{BPP}}
+
+\paragraph{Definition (Bounded-Error Probabilistic Polynomial Time).}
+
+A decision problem belongs to $BPP$ if there exists a randomized polynomial-time algorithm whose probability of producing the correct answer is at least $\frac23$ on every input.
+
+The constants $\frac23$ and $\frac13$ are arbitrary. By repeating the algorithm several times and taking a majority vote, the error probability can be reduced exponentially.
+
+Thus $BPP$ captures problems that can be solved efficiently with an arbitrarily small probability of error.
+
+\section{Probabilistic Polynomial-Time Algorithms}
+
+The term \emph{Probabilistic Polynomial Time} (PPT) is frequently used in randomized algorithms and cryptography.
+
+\paragraph{Definition (PPT Algorithm).}
+
+A PPT algorithm is a randomized algorithm that
+
+\begin{enumerate}
+\item uses random bits during execution,
+\item runs in polynomial time.
 \end{enumerate}
 
+Unlike classes such as $RP$ or $BPP$, the term PPT refers to a model of computation rather than a class of decision problems.
+
+\paragraph{Examples.}
+
+\begin{itemize}
+\item Randomized QuickSort.
+\item Miller--Rabin primality testing.
+\item Karger's minimum cut algorithm.
+\end{itemize}
+
+All of these are PPT algorithms.
+
+\section{Relationships Between the Classes}
+
+The following inclusions are known:
+
+\[
+P\subseteq ZPP\subseteq RP\subseteq BPP.
+\]
+
+Similarly,
+
+\[
+P\subseteq ZPP\subseteq co\text{-}RP\subseteq BPP.
+\]
+
+Moreover,
+
+\[
+ZPP=RP\cap co\text{-}RP.
+\]
+
+We also know that
+
+\[
+P\subseteq NP,
+\qquad
+P\subseteq co\text{-}NP.
+\]
+
+Many other relationships remain unknown. In particular, we do not know whether
+
+\[
+P=NP,
+\qquad
+NP=co\text{-}NP,
+\qquad
+BPP=P.
+\]
+
+These questions lie at the heart of modern complexity theory.
+
+\section*{Summary}
+
+\begin{itemize}
+\item $P$ contains efficiently solvable decision problems.
+\item $NP$ contains problems whose \texttt{YES} instances can be verified efficiently.
+\item $co$-$NP$ contains problems whose \texttt{NO} instances can be verified efficiently.
+\item NP-complete problems are the hardest known problems in $NP$.
+\item $RP$, $co$-$RP$, $ZPP$, and $BPP$ model different forms of randomized computation.
+\item A PPT algorithm is simply a randomized polynomial-time algorithm.
+\item The relationship between many of these classes remains unknown.
+\end{itemize}

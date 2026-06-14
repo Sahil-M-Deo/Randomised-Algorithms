@@ -1,0 +1,366 @@
+
+\chapter{Heuristic Algorithms}
+
+Many computational problems of practical interest have a statement like ``Given a graph find a set of vertices of size atmost x satisfying property P.'' \\
+Now one way to guarantee a solution is to find the minimum sized set of vertices satisfying P, but this is usually not doable in polynomial time. \\
+So we are often forced to settle for a solution that is not necessarily optimal but can be found efficiently. 
+Such algorithms are \emph{heuristic algorithms} -- algorithms designed to quickly find solutions that are often good in practice,
+even if they do not always provide provable optimality guarantees or even any guarantees at all. \\ 
+Inherently the analysis of heuristic algorithms involve probability and expectation, making them a natural application of the tools we have developed so far.
+
+Notice that the greedy algorithm we saw in the previous chapter was a heuristic algorithm as well!
+\section{Dominating Set Revisited}
+
+Recall the dominating set problem: given a graph \(G=(V,E)\), find a smallest possible subset \(D\subseteq V\) such that every vertex in the graph is either contained in \(D\) or adjacent to some vertex in \(D\).
+\subsection*{A Greedy Heuristic}
+
+A very natural approach is the following greedy algorithm:
+
+\begin{quote}
+Repeatedly select the vertex that dominates the largest number of currently undominated vertices.
+\end{quote}
+
+More precisely:
+\begin{enumerate}
+    \item Initially, all vertices are marked undominated.
+    \item At each step, choose a vertex whose closed neighbourhood \(N[v]\) contains the largest number of undominated vertices.
+    \item Add this vertex to the dominating set.
+    \item Mark all vertices in \(N[v]\) as dominated.
+    \item Repeat until every vertex becomes dominated.
+\end{enumerate}
+
+At every step we greedily maximise immediate progress.
+
+\subsection*{Analysing the Greedy Heuristic}
+Let \(\mathrm{OPT}\) denote the size of a minimum dominating set.
+
+Suppose that at some stage of the algorithm there remain \(r\) undominated vertices.
+
+Since the optimal solution uses only \(\mathrm{OPT}\) vertices to dominate the entire graph, those same \(\mathrm{OPT}\) vertices must also collectively dominate these remaining \(r\) vertices.
+
+Therefore, by the pigeonhole principle, at least one of those optimal vertices must dominate at least \(\frac{r}{\mathrm{OPT}}\) of the currently undominated vertices.
+
+But the greedy algorithm always chooses a vertex dominating as many undominated vertices as possible. Hence the greedy step must dominate at least \(\frac{r}{\mathrm{OPT}}\) new vertices.
+
+Thus after one greedy step, the number of remaining undominated vertices becomes at most
+\[
+r-\frac{r}{\mathrm{OPT}}
+=
+r\left(1-\frac{1}{\mathrm{OPT}}\right)
+\]
+
+If \(r_t\) denotes the number of undominated vertices after \(t\) greedy steps, then
+\[
+r_{t+1}
+\le
+r_t\left(1-\frac1{\mathrm{OPT}}\right)
+\]
+
+Since initially \(r_0=n\), we obtain
+\[
+r_t
+\le
+n\left(1-\frac1{\mathrm{OPT}}\right)^t
+\]
+
+We would like all vertices to become dominated, i.e. \(r_t<1\).
+
+Since
+\[
+r_t
+\le
+n\left(1-\frac1{\mathrm{OPT}}\right)^t
+\]
+
+it suffices to find the smallest \(t\) such that
+\[
+n\left(1-\frac1{\mathrm{OPT}}\right)^t<1
+\]
+
+Rearranging:
+\[
+\left(1-\frac1{\mathrm{OPT}}\right)^t<\frac1n
+\]
+
+Taking logarithms:
+\[
+t\ln\left(1-\frac1{\mathrm{OPT}}\right)<-\ln n
+\]
+
+Since \(\ln(1-\frac1{\mathrm{OPT}})<0\), dividing reverses the inequality:
+\[
+t>
+\frac{\ln n}{
+-\ln\left(1-\frac1{\mathrm{OPT}}\right)
+}
+\]
+
+Let \(S\) denote the size of the dominating set produced by the greedy algorithm. Then \(S\) is the smallest integer \(t\) satisfying the above inequality. Thus:
+\[
+S=
+\left\lceil
+\frac{\ln n}{
+-\ln\left(1-\frac{1}{\mathrm{OPT}}\right)
+}
+\right\rceil
+\le
+\frac{\ln n}{
+-\ln\left(1-\frac{1}{\mathrm{OPT}}\right)
+}
++1
+\]
+
+Now using the inequality
+\[
+-\ln(1-x)\ge x
+\]
+
+with \(x=\frac1{\mathrm{OPT}}\), we obtain
+\[
+-\ln\left(1-\frac1{\mathrm{OPT}}\right)
+\ge
+\frac1{\mathrm{OPT}}
+\]
+\vspace{0.4em}
+Taking reciprocals reverses the inequality:
+\[
+\frac1{
+-\ln\left(1-\frac1{\mathrm{OPT}}\right)
+}
+\le
+\mathrm{OPT}
+\]
+
+\[
+\implies
+S
+\le
+\ln n\cdot
+\frac1{
+-\ln\left(1-\frac1{\mathrm{OPT}}\right)
+}
++1
+\]
+
+\[
+\implies
+S
+\le
+\mathrm{OPT}\ln n+1
+\]
+
+Hence the greedy algorithm produces a dominating set of size at most
+\[
+\boxed{
+\mathrm{OPT}\ln n+1
+}
+\]
+
+\section{Independent Set}
+
+\textbf{The Problem}
+We are given a set of exams and a set of students. Each student is enrolled in a subset of the exams. 
+We wish to schedule as many exams as possible in the first time slot\footnote{this is different
+from the problem of the overall scheduling problem which is equivalent to finding the Chromatic Number, 
+i.e. the largest number of colors needed to colour a graph which is equivalent to the minimum number 
+of slots required to conduct the whole exam schedule. 
+This is a simpler problem where we only care about the first time slot.}, 
+subject to the constraint that no student should have two exams scheduled at the 
+same time\footnote{Or you could just give them a Time Turner and hope for the best :)}.
+
+The goal is to find a largest possible subset of exams that can be scheduled simultaneously without any conflict.
+
+\subsection*{Reduction}
+
+We model the problem using a graph \(G=(V,E)\) where:
+\begin{itemize}
+    \item each vertex represents an exam,
+    \item an edge exists between two vertices if there is at least one student enrolled in both corresponding exams.
+\end{itemize}
+
+In this formulation, a feasible schedule corresponds to a set of vertices with no edges between them. Such a set is called an \emph{independent set}.
+Thus, the problem reduces to finding a maximum independent set in a graph.
+
+\subsection{Random Permutation}
+
+$V$ is the set of all vertices.
+Maintain a set - the independent set we are building ($S$).
+Pick a random vertex from $V$ -- delete it from $V$ and if none of its neighbours are in $S$, put it in $S$.
+Keep doing this until $V$ is empty. This guarantees forming a valid independent set.
+
+Note that the order in which we pick vertices is a uniformly random permutation of the vertices.
+
+\subsection*{Probability a Vertex is Selected}
+
+Fix a vertex \(v\). Consider the set consisting of \(v\) and its neighbours \(N(v)\). There are \(d(v)+1\) vertices in total.
+
+Since all relative orderings are equally likely, the probability that \(v\) is the picked earliest among these vertices is:
+\[
+\Pr[v \in S] = \frac{1}{d(v)+1}
+\]
+
+\subsection*{Expected Size of the Independent Set}
+
+Let \(I_v\) be the indicator random variable for the event \(v \in S\). Then:
+\[
+|S| = \sum_{v \in V} I_v
+\]
+
+Taking expectation and using linearity:
+\[
+\mathbb{E}[|S|] = \sum_{v \in V} \mathbb{E}[I_v]
+= \sum_{v \in V} \frac{1}{d(v)+1}
+\]
+
+Therefore, there exists an independent set of size at least:
+\[
+\sum_{v \in V} \frac{1}{d(v)+1}
+\]
+
+Denoting the maximum independent set size by \(\alpha(G)\), we have:
+\[\alpha(G) \ge \sum_{v \in V} \frac{1}{d(v)+1}\]
+Using the Jensen's\footnote{Refer \autoref{jensen}} inequality on 1/(x+1), we have:
+\[
+\sum_{v \in V} \frac{1}{d(v)+1} \ge \frac{n}{d+1}
+\]
+where \(d\) is the average degree of the graph. Hence:
+\[
+\alpha(G) \ge \frac{n}{d+1}
+\]
+
+\subsection{Local Decision}
+
+We now describe an alternative randomized construction that produces a large independent set via local random choices.
+
+Each vertex independently chooses a random value:
+\[
+X_v =
+\begin{cases}
+1 & \text{with probability } p \\
+0 & \text{with probability } 1-p
+\end{cases}
+\]
+
+We construct a set \(S\) by including a vertex \(v\) if:
+\begin{itemize}
+    \item \(X_v = 1\), and
+    \item for every neighbour \(u \in N(v)\), \(X_u = 0\).
+\end{itemize}
+
+\subsection*{Probability of Inclusion}
+
+Fix a vertex \(v\). The probability that \(v\) is included in \(S\) is:
+\[
+\Pr[v \in S] = p(1-p)^{d(v)}
+\]
+
+Therefore:
+\[
+\mathbb{E}[|S|] = \sum_{v \in V} p(1-p)^{d(v)}
+\]
+
+\subsection*{Guarantee on Expected Size}
+
+We analyze the randomized construction where each vertex is selected independently with probability \(p\), and a vertex \(v\) is included in the independent set \(S\) if it is selected and none of its neighbors are selected. Then:
+\[
+\mathbb{E}[|S|]=\sum_{v\in V} p(1-p)^{d(v)}.
+\]
+
+Using convexity of \(f(x)=(1-p)^x\) and Jensen’s inequality, we obtain:
+\[
+\sum_{v\in V}(1-p)^{d(v)}\ge n(1-p)^d,
+\]
+where \(d=\frac{1}{n}\sum_{v\in V}d(v)\) is the average degree. Hence:
+\[
+\mathbb{E}[|S|]\ge np(1-p)^d.
+\]
+
+We now optimize the function:
+\[
+f(p)=p(1-p)^d.
+\]
+
+Differentiating:
+\[
+f'(p)=(1-p)^d - pd(1-p)^{d-1}
+=(1-p)^{d-1}\big((1-p)-pd\big).
+\]
+
+Setting \(f'(p)=0\), we obtain:
+\[
+1-p-pd=0
+\quad\Rightarrow\quad
+p=\frac{1}{d+1}.
+\]
+
+Substituting this optimal value gives:
+\[
+\mathbb{E}[|S|]\ge n\cdot \frac{1}{d+1}\left(1-\frac{1}{d+1}\right)^d
+=\frac{n}{d+1}\left(\frac{d}{d+1}\right)^d.
+\]
+
+Using the standard bound \(\left(1-\frac{1}{d+1}\right)^d \ge e^{-d/(d+1)}\), we obtain:
+\[
+\mathbb{E}[|S|]\ge \frac{n}{d+1}\cdot e^{-d/(d+1)}. \ge \frac{n}{e(d+1)}.
+\]
+
+This is a slightly weaker bound than the previous method, but it has the advantage of being local and easily parallelizable, 
+as each vertex makes its decision independently based on local information. 
+
+Recall from the chapter on data structures that in Skip Lists we let each element 
+locally decide how many levels to appear in. The reason for that was updation was quick 
+since we did not have to change everybody's decision just because of the addition of a single element.
+
+A similar reasoning can be applied here to justify the utility of a local decision algorithm.
+\section{Bipartite Subgraph Revisited}
+
+Recall the problem of finding a bipartition of the vertices that maximizes the number of bichromatic edges. 
+We showed that a random coloring achieves at least $m/2$ bichromatic edges in expectation, and with some probability. 
+Now we refine our approach by showing that we can always find a coloring with at least $m/2$ bichromatic edges via a self-correction procedure.
+\subsection{Self-Correction}
+
+Start with a random coloring of the vertices. If it has at least $m/2$ bichromatic edges, we are done. 
+
+Otherwise, let $X$ be the number of bichromatic edges. We have $X < m/2$, so there are more monochromatic edges than bichromatic edges.
+Call a vertex $v$ \emph{bad} if it has more monochromatic incident edges than bichromatic incident edges. Otherwise it is \emph{good}.\\
+
+\noindent\textbf{Claim:} If the current cut has fewer than $m/2$ crossing edges, then a bad vertex must exist.\\
+
+\noindent\textbf{Proof idea:} Each monochromatic edge contributes equally to two endpoints.
+So total number of monochromatic edges is half the sum of monochromatic degrees of vertices. 
+If globally there are more monochromatic edges than crossing ones, 
+by pigeonhole principle\footnote{You may also prove this by contradiction -- 
+if all vertices are bad, then the total number of monochromatic edges is more than the total number of bichromatic edges by summing the inequality, contradicting the assumption.}, 
+some vertex must be incident to more monochromatic than bichromatic edges.
+
+Now consider flipping the color of a bad vertex $v$. Let $d_h(v)$ be the number of monochromatic (same-color) edges incident to $v$ and $d_c(v)$ the number of bichromatic edges. Since $d_h(v)>d_c(v)$, flipping $v$ increases $X$ by
+\[
+\Delta X = d_h(v)-d_c(v) > 0.
+\]
+
+Thus, each flip strictly increases the number of bichromatic edges. This means that the 
+number of steps is upper bounded by $m/2$. 
+
+\noindent\textbf{Pseudocode:}
+\begin{verbatim}
+initialize random coloring of vertices
+compute X
+
+while exists bad vertex v:
+    flip color of v
+    update X locally
+\end{verbatim}
+
+
+\noindent\textbf{Complexity analysis:}
+Each flip increases $X$ by at least $1$, and $X \le m$, so there are at most $m$ flips.
+
+If we maintain for each vertex the counts of monochromatic and bichromatic incident edges, each flip can be updated in $\Theta(\deg(v))$. To find a bad vertex we need atmost $\Theta(n)$ time. 
+Over all flips, total time is atmost
+\[
+O\left(\sum_{v \text{ flipped}} \left(\deg(v) + n \right) \right) = \Theta(mn+m).
+\]
+
+Hence the full procedure runs in atmost \footnote{this can be improved to $\Theta(m\log n)$ by using priority queues with lazy updates -- 
+its a fun competitive programming exercise, I encourage you to try it!}$\Theta(mn+m)$ after initialization.
+
