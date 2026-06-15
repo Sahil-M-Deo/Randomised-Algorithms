@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  14 JUN 2026 19:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  15 JUN 2026 18:06
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1053,7 +1053,7 @@ Package caption Info: End \AtBeginDocument code.
 
 pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
 DF version <1.7>, but at most version <1.5> allowed
-<../Images/Cover.pdf, id=66, 597.23125pt x 845.1575pt>
+<../Images/Cover.pdf, id=46, 597.23125pt x 845.1575pt>
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf>
 Package pdftex.def Info: ../Images/Cover.pdf  used on input line 7.
@@ -1066,7 +1066,7 @@ DF version <1.7>, but at most version <1.5> allowed
 
 pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
 DF version <1.7>, but at most version <1.5> allowed
-<../Images/Cover.pdf, id=68, page=1, 597.23125pt x 845.1575pt>
+<../Images/Cover.pdf, id=48, page=1, 597.23125pt x 845.1575pt>
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
 Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 7.
@@ -1106,32 +1106,41 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.52 ...reivalds' Algorithm}{25}{subsection.5.3.1}
+l.39 ...numberline {5.6}Problems}{30}{section.5.6}
                                                   % [1
 
-{C:/Users/hp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2])
+{C:/Users/hp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2] [3])
 \tf@toc=\write7
 \openout7 = `report.toc'.
 
- [3]
+ [4]
 \openout2 = `ch3.aux'.
 
  (ch3.tex
 Chapter 3.
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 25.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 25.
+Overfull \hbox (61.63158pt too wide) in paragraph at lines 51--60
+ [] 
+ []
 
 [13
 
 
 
 
-] [14] [15] [16]) [17]
+]
+Underfull \hbox (badness 10000) in paragraph at lines 85--89
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 100--107
+
+ []
+
+[14] [15]) [16
+
+]
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.aux
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch1.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch2.aux)
@@ -1149,18 +1158,18 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: F684A28D675C7B328EF9B7E7D4BD7807;2332.
+(rerunfilecheck)             Checksum: 4A1E8A403811AE38FA77A2420E42C441;1003.
  ) 
 Here is how much of TeX's memory you used:
- 35836 strings out of 467691
- 818745 string characters out of 5416439
- 1318371 words of memory out of 5000000
- 64090 multiletter control sequences out of 15000+600000
- 658361 words of font info for 127 fonts, out of 8000000 for 9000
+ 35852 strings out of 467691
+ 818986 string characters out of 5416439
+ 1318893 words of memory out of 5000000
+ 64092 multiletter control sequences out of 15000+600000
+ 655042 words of font info for 117 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  104i,17n,111p,746b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-pdfTeX warning (dest): name{section*.111} has been referenced but does not exis
+pdfTeX warning (dest): name{section*.103} has been referenced but does not exis
 t, replaced by a fixed one
 
 
@@ -1190,6 +1199,18 @@ pdfTeX warning (dest): name{section.E.1} has been referenced but does not exist
 
 pdfTeX warning (dest): name{appendix.E} has been referenced but does not exist,
  replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.D.3} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.D.2.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.D.2.1} has been referenced but does not 
+exist, replaced by a fixed one
 
 
 pdfTeX warning (dest): name{section.D.2} has been referenced but does not exist
@@ -1308,7 +1329,7 @@ pdfTeX warning (dest): name{appendix.A} has been referenced but does not exist,
  replaced by a fixed one
 
 
-pdfTeX warning (dest): name{section*.99} has been referenced but does not exist
+pdfTeX warning (dest): name{section*.89} has been referenced but does not exist
 , replaced by a fixed one
 
 
@@ -1454,6 +1475,82 @@ pdfTeX warning (dest): name{section.7.1} has been referenced but does not exist
 
 pdfTeX warning (dest): name{chapter.7} has been referenced but does not exist, 
 replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.6.6} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.5.3} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.5.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.5.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.6.5} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.4.4} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.4.3} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.4.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.4.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.6.4} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.3.4} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.3.3} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.3.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.3.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.6.3} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.2.7} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.2.6} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.2.5} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.2.4} has been referenced but does not 
+exist, replaced by a fixed one
 
 
 pdfTeX warning (dest): name{subsection.6.2.3} has been referenced but does not 
@@ -1611,36 +1708,39 @@ pdfTeX warning (dest): name{section.1.1} has been referenced but does not exist
 pdfTeX warning (dest): name{chapter.1} has been referenced but does not exist, 
 replaced by a fixed one
 
- <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.
+ <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti0900.
 pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm09
 00.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecr
 m0600.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\
-ecrm0800.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi6
-00\tcrm1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
-pi600\ecbx1440.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/e
+tcrm1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi6
+00\ecbx1440.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
+pi600\ecrm0800.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/e
 c/dpi600\ecti1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappe
 n/ec/dpi600\ecbx2074.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jkna
 ppen/ec/dpi600\ectt1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/j
 knappen/ec/dpi600\ecrm1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfou
 r/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/lj
 four/jknappen/ec/dpi600\ecbx2488.pk><C:/Users/hp/AppData/Local/Programs/MiKTeX/
-fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/hp/AppData/Local/Programs/M
-iKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/hp/AppData/Local/Prog
-rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/hp/AppData/Loca
-l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/hp/AppData
-/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/hp/Ap
-pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Users/
-hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/U
-sers/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><
-C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.p
-fb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
-sy10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts
-/cm/cmsy8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
-fonts/cm/cmsy9.pfb>
+fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/hp/AppData/Local/Programs/M
+iKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/hp/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Users/hp/AppData/Local
+/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Users/hp/AppData/
+Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/hp/Ap
+pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users
+/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/
+Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb
+><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi
+9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm
+/cmr10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
+ts/cm/cmr8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/am
+sfonts/cm/cmr9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/publi
+c/amsfonts/cm/cmsy10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1
+/public/amsfonts/cm/cmsy8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/
+type1/public/amsfonts/cm/cmsy9.pfb>
 Output written on "C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.
-pdf" (9 pages, 393435 bytes).
+pdf" (9 pages, 442247 bytes).
 PDF statistics:
- 794 PDF objects out of 1000 (max. 8388607)
- 158 named destinations out of 1000 (max. 500000)
- 148 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 870 PDF objects out of 1000 (max. 8388607)
+ 173 named destinations out of 1000 (max. 500000)
+ 108 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -644,6 +644,50 @@ If every \(a_i < \frac{S}{n}\), then summing over all \(i\) gives
 \]
 which is a contradiction.
 
+
+
+\section{Relations}
+
+A relation $R:A \to B$ is defined as the set of $(a,b) \in A \times B$. The presence of an 
+element $(a,b)$ in $R$ is denoted by $a\; R \;b$.
+\subsection{Partial Orders}
+\label{partial_orders}
+A relation $\preceq$ on a set $S$ is called a \emph{partial order} if it satisfies 
+the following properties for all $a,b,c\in S$:
+\begin{enumerate}
+    \item \textbf{Reflexivity:} $a\preceq a$
+    \item \textbf{Antisymmetry:} $a\preceq b$ and $b\preceq a \implies a=b$
+    \item \textbf{Transitivity:} $a\preceq b$ and $b\preceq c \implies a\preceq c$
+\end{enumerate}
+
+\subsection*{Posets}
+A \emph{poset}, is a pair $(S,\preceq)$ consisting of a set and a 
+partial order on it. 
+
+\subsection{Equivalence Relations}
+\label{equivalence_classes}
+
+A relation $\equiv$ on a set $S$ is called an \emph{equivalence relation} if it satisfies the following properties for all $a,b,c\in S$:
+\begin{enumerate}
+    \item \textbf{Reflexivity:} $a\equiv a$
+    \item \textbf{Symmetry:} $a\equiv b \implies b\equiv a$
+    \item \textbf{Transitivity:} $a\equiv b$ and $b\equiv c \implies a\equiv c$
+\end{enumerate}
+
+
+A very common construction of an equivalence relation is from a partial order as follows --
+\[
+aRb \text{  iff  } a\preceq b \text{  and  } b\preceq a
+\]
+
+\subsection*{Equivalence Classes}
+Given an equivalence relation $\equiv$ on $S$, the \emph{equivalence class} of an 
+element $a\in S$ is all the elements related to it.
+
+\[
+[a]=\{x\in S:x\equiv a\}
+\]
+
 \section{Graph Theory}
 
 A graph $G$ is an ordered pair $(V,E)$ where \(V\) is a set of vertices 

@@ -1,17 +1,24 @@
+\newcommand{\classP}{\mathbf{P}}
+\newcommand{\NP}{\mathbf{NP}}
+\newcommand{\coNP}{\mathbf{NP_{co}}}
+\newcommand{\RP}{\mathbf{RP}}
+\newcommand{\coRP}{\mathbf{RP_{co}}}
+\newcommand{\BPP}{\mathbf{BPP}}
+\newcommand{\ZPP}{\mathbf{ZPP}}
+\newcommand{\NPcomp}{\mathbf{NP-complete}}
 \chapter{Complexity Classes}
 
-Given what we have already seen, what is the best time complexity for a problem? When can we hope 
-to come up with a \emph{fast} algorithm?
-
-This is exactly what complexity classes are about. While the classes themselves are defined rigorously, 
-there are some very important things which we have not yet proved -- they remain open problems and we 
-believe them to be true in practice$\dots$
+What is the best time complexity for a problem? When can we hope 
+to come up with a \emph{fast} algorithm? This is exactly the point of defining complexity classes 
+are about. While the classes themselves are defined rigorously, there are some very 
+important\footnote{Such as the classic question of $\classP \neq \NP \dots$} things which we 
+have not yet proved -- they remain open problems but in practice we have conjectures which we believe 
+to be true for now$\dots$
 
 \section{Decision Problems}
 Complexity classes are traditionally defined using \emph{decision problems}. A decision problem is a 
 computational problem whose answer is either \texttt{YES} or \texttt{NO}.
 
-\paragraph{Examples}
 \begin{itemize}
 \item Given a graph $G$, is $G$ connected?
 \item Given an integer $m$, is $m$ prime?
@@ -20,281 +27,217 @@ size at least $k$?
 \end{itemize}
 
 Although not all computational tasks are naturally decision problems, most can be 
-reformulated as one.
+reformulated as one. For example, the largest clique in a graph can be reformulated\footnote{Some 
+of these reformulations are called \emph{polynomial time reductions} which will be properly discussed later.} as 
+"is there a clique of size at least $k$ in $G$?". 
 
-\section{$P$}
 
-The class $P$ consists of all decision problems that can be solved by a 
-deterministic algorithm in at most polynomial time. Let Q be a decision problem and T(Q) be the best
+\section{P}
+
+The class $\classP$ consists of all decision problems that can be solved by a 
+deterministic algorithm in at most polynomial time. Let $Q$ be a decision problem and $T(Q)$ be the best
 time complexity\footnote{This time complexity is in terms of the input length 
 and not the input number itself -- a number $n$ when taken as input is represented by 
 a bit string of size $m=\Theta(\log n)$. So an algorithm which takes $O(n)$ time will be considered 
 as an exponential time algorithm since $\Theta(n) = \Theta(2^m)$. This is why the normal method of 
 trying all numbers from $1$ to $\sqrt n$ will not prove that primality testing of a number is in $P$.} 
-of a deterministic algorithm for Q. Then $T(Q) \le \Theta(n^c)$ for some constant $c\ge1$.
+of a deterministic algorithm for $Q$. Then $T(Q) \le \Theta(n^c)$ for some constant $c\ge1$.
 
 \[
-P \; = \; \bigcup_{c\ge1} \;\; \{Q: T(Q) \le \Theta(n^c)\}
+\classP \; = \; \bigcup_{c\ge1} \;\; \{Q: T(Q) \le \Theta(n^c)\}
 \]
 
 \begin{center}
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|}
 \hline
-\textbf{Decision Problem(Q)} & \textbf{Algorithm} & \textbf{Runtime (T(Q))} \\
+\textbf{Decision Problem(Q)} & \textbf{Algorithm} & \textbf{Input} & \textbf{Input Size} & \textbf{Runtime (T(Q))} \\
 \hline
-Primality Test & AKS & $\Theta(m^{12})$ \\
-Graph Connectivity & BFS & $\Theta(V+E)$ \\
+Primality Test & AKS & Integer & $m=\Theta(\log_2 n)$  & $\Theta(m^{12})$ \\
+Graph Connectivity & BFS & Adjacency Matrix & $n=|V|\times|V|$ & $\Theta(n)$ \\
+Interval Scheduling & Sorting and Greedy & Start-End times & $nm$ & $\Theta(nm\log n)$ \\
 \hline
 \end{tabular}
 \end{center}
 
 \section{NP}
 
-The class $NP$ consists of all decision problems whose answer when "YES" can be verified in polynomial 
-time. The algorithm which solved the problem outputs a \emph{certificate} along with "YES" -- this 
-certificate is information which can be used to verify in polynomial time that the answer is indeed "YES". 
+The class $NP$ consists of all decision problems whose answer when \texttt{YES} can be verified in polynomial 
+time. The algorithm which solved the problem can output a \emph{certificate} along with \texttt{YES} -- this 
+certificate is information which can be used to verify in polynomial time that the answer is indeed \texttt{YES}. 
 
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
 \textbf{Decision Problem (Q)} & \textbf{Certificate} & \textbf{Verification Time} \\
 \hline
-Clique of size $k$ & Set of $k$ vertices & $\Theta(k^2)$ \\
+Clique of size at least $k$ & Set of $k$ vertices & $\Theta(k^2)$ \\
 
-Graph Coloring of k colors & Vertex\;:\;Color mapping & $\Theta(V+E)$ \\
+Graph Coloring of $k$ colors & Vertex\;:\;Color mapping & $\Theta(V+E)$ \\
 \hline
 \end{tabular}
 \end{center}
 
-An obvious conclusion from the definition of $NP$ is that $P\subseteq NP$ because any problem that can be 
-solved efficiently can also be verified efficiently.
+An obvious conclusion from the definition of $\NP$ is that $\classP\subseteq \NP$ because any problem that can be 
+solved in polynomial time can also be verified in polynomial time by giving the problem itself as a certificate.
 
-\subsection{The Question of \texorpdfstring{$P$}{P} versus \texorpdfstring{$NP$}{NP}}
+\section*{$\coNP$}
 
-Every problem that can be solved efficiently can certainly be verified efficiently. Therefore,
+The class $\coNP$ contains complements of problems in $\NP$. This means that the answer \texttt{NO} has a 
+certificate verifiable in polynomial time. For example, the complement of the Clique problem asks 
+whether every clique in the graph has size at most $k-1$. The answer \texttt{NO} can be accompanied by a 
+certificate which is the set of vertices forming a clique of size at least $k$.\\
 
-\[
-P\subseteq NP.
-\]
-
-The central open problem in theoretical computer science is whether this inclusion is strict.
-
-\paragraph{The $P$ versus $NP$ Problem.}
-
-Is
-
-\[
-P=NP;?
-\]
-
-No proof is currently known.
-
-If $P=NP$, then every problem whose solutions can be verified efficiently can also be solved efficiently.
-
-\section{The Class \texorpdfstring{$co$-$NP$}{co-NP}}
-
-The class $co$-$NP$ contains complements of problems in $NP$.
-
-\paragraph{Definition (Class $co$-$NP$).}
-A decision problem belongs to $co$-$NP$ if its complement belongs to $NP$.
-
-Equivalently, a \texttt{NO} answer admits a polynomially verifiable certificate.
-
-For example, the complement of the Clique problem asks whether a graph contains no clique of size at least $k$.
-
-We currently do not know whether
-
-\[
-NP=co\text{-}NP.
-\]
+\noindent An obvious conclusion is that any algorithm that solves an $\NP$ problem also 
+immediately solves the corresponding $\coNP$ problem by just flipping the answer from \texttt{YES} to \texttt{NO} 
+and vice versa but it may not be able to provide a certificate in polynomial time.
 
 \section{Polynomial-Time Reductions}
 
-To compare the difficulty of computational problems, we use reductions.
+To compare the difficulty of computational problems, we use the idea of \emph{polynomial-time reductions}. A 
+problem $A$ is polynomial-time reducible to a problem $B$, then 
+\[
+A\le_p B
+\]
+if we can convert $A$ to $B$ in polynomial time. This means that if we can solve $B$ in polynomial time, 
+then we can also solve $A$ in polynomial time. The notation suggests $B$ is harder than $A$ and you 
+might find this confusing because we "reduced" $A$ to $B$ so shouldn't $B$ be easier? Think of a 
+reduction as a one-way procedure that converts $A$ to a \emph{particular} case of $B$. Solving the 
+general case of a problem is at least as hard as solving the particular case. That is why $B$ is 
+at least as hard as $A$ under polynomial time reduction.\\
 
-\paragraph{Definition (Polynomial-Time Reduction).}
-A problem $A$ is polynomial-time reducible to a problem $B$, written
+The operator $<_p$ is a partial order\footnote{Refer \autoref{partial_orders}} which is defined 
+as $A <_p B$ iff $A \le_p B$ but not $B \le_p A$. We can also define $=_p$ as $A =_p B$ iff $A\le_p B$ and $B\le_p A$. This 
+can be used to induce equivalence classes\footnote{Refer \autoref{equivalence_classes}} within the 
+complexity classes like $\NPcomp$ which is the ``biggest'' equivalence class in $\NP$.
+
+\section{NP-Complete}
+$\NPcomp$ consists of those $\NP$ problems which are at least as hard as \emph{every} problem in $\NP$. 
+For an $L$ in $\NPcomp$, every problem in $\NP$ can be polynomially reduced to $L$.
 
 \[
-A\le_p B,
+\NPcomp \; = \; \{L: Q \le_p L \quad \forall \; Q \in \NP\}
 \]
 
-if every instance of $A$ can be transformed into an equivalent instance of $B$ in polynomial time.
+\section{RP}
 
-Intuitively, if $A\le_p B$ and we know how to solve $B$ efficiently, then we can also solve $A$ efficiently.
-
-Reductions allow us to transfer algorithmic techniques as well as hardness results between problems.
-
-\section{NP-Complete Problems}
-
-Some problems are at least as hard as every problem in $NP$.
-
-\paragraph{Definition (NP-Complete).}
-A problem $L$ is NP-complete if
-
-\begin{enumerate}
-\item $L\in NP$,
-\item For every problem $A\in NP$,
-\[
-A\le_p L.
-\]
-\end{enumerate}
-
-Thus every problem in $NP$ can be transformed into $L$ using only polynomial time.
-
-\paragraph{Theorem.}
-
-If any NP-complete problem belongs to $P$, then
-
-\[
-P=NP.
-\]
-
-\paragraph{Examples of NP-Complete Problems.}
-
-\begin{itemize}
-\item SAT
-\item 3-SAT
-\item Clique
-\item Vertex Cover
-\item Hamiltonian Cycle
-\item Subset Sum
-\end{itemize}
-
-The discovery of NP-completeness provides strong evidence that these problems are unlikely to possess polynomial-time algorithms.
-
-\section{Randomized Complexity Classes}
-
-We now introduce complexity classes that permit algorithms to use random bits during computation.
-
-\subsection{The Class \texorpdfstring{$RP$}{RP}}
-
-\paragraph{Definition (Randomized Polynomial Time).}
-
-A decision problem belongs to $RP$ if there exists a randomized polynomial-time algorithm satisfying:
+A decision problem belongs to $\RP$ if there exists a randomised polynomial-time algorithm with input size $n$ 
+satisfying the following properties:
 
 \begin{itemize}
 \item If the correct answer is \texttt{NO}, the algorithm always outputs \texttt{NO}.
-\item If the correct answer is \texttt{YES}, the algorithm outputs \texttt{YES} with probability at least $\frac12$.
+\item If the correct answer is \texttt{YES}, the algorithm outputs \texttt{YES} with 
+probability at least $\frac{1}{n^c}$, $c>0$.
 \end{itemize}
 
-Thus an $RP$ algorithm may make false negatives but never false positives.
+Consider an algorithm as mentioned above -- it outputs \texttt{YES} in the case where correct answer is 
+\texttt{YES} with probability $p \ge \frac{1}{n^c}$. Run it $k$ times and answer \texttt{YES} 
+if it occurs even once in the $k$ runs otherwise answer \texttt{NO}. This new algorithm has the 
+same properties as the original algorithm except $p$ is replaced by $1-(1-p)^k$. So if an 
+algorithm has $p \ge \frac{1}{n^c}$, then for $k=n^c$ the probability will be more than $1-\frac{1}{e}$. 
 
-Repeating the algorithm independently reduces the error probability exponentially.
+\[
+(1-\frac{1}{n^c})^{n^c} \le \frac{1}{e} \implies 1-(1-\frac{1}{n^c})^{n^c} \ge 1-\frac{1}{e}
+\]
 
-\subsection{The Class \texorpdfstring{$co$-$RP$}{co-RP}}
+\vspace{1em}
+As long as $k$ is polynomial in the input size, the overall algorithm is also polynomial time.
+The point of having a lower bound $\frac{1}{n^c}$ is that we should be able to 
+achieve any desired correctness probability by repeating the algorithm a polynomial number of times
+times -- this may not be possible if our criterion is something like $\frac{1}{2^n}$. Once we get a 
+lower bound of $1-\frac{1}{e}$, we can do a constant number of repetitions (still keeping the 
+algorithm overall polynomial) to achieve a probability which is as close to 1 
+as we desire. 
 
-\paragraph{Definition ($co$-$RP$).}
-
-A problem belongs to $co$-$RP$ if there exists a randomized polynomial-time algorithm satisfying:
+\section*{$\coRP$}
+A problem belongs to $\coRP$ if there exists a randomised polynomial-time algorithm satisfying the 
+following properties:
 
 \begin{itemize}
 \item If the correct answer is \texttt{YES}, the algorithm always outputs \texttt{YES}.
 \item If the correct answer is \texttt{NO}, the algorithm outputs \texttt{NO} with probability at least $\frac12$.
 \end{itemize}
 
-Such algorithms may make false positives but never false negatives.
+To clarify, when we say randomised polynomial time algorithm, we mean an algorithm which makes 
+random choices but whose time complexity is polynomial in the input size. The relevant time complexity here is 
+the actual worst-case time complexity and \textbf{not} the expected time complexity.
 
-\subsection{The Class \texorpdfstring{$ZPP$}{ZPP}}
-
-\paragraph{Definition (Zero-Error Probabilistic Polynomial Time).}
-
-A problem belongs to $ZPP$ if there exists a randomized algorithm that
+\section{ZPP}
+A decision problem belongs to $\ZPP$ if there exists a randomized algorithm that has the following properties:
 
 \begin{itemize}
-\item never outputs an incorrect answer,
-\item has expected polynomial running time.
+\item It outputs the correct answer with probability $1$.
+\item Expected time complexity is polynomial in the input size.
 \end{itemize}
 
-An important characterization is
+$\ZPP$ contains all those problems which can be solved correctly and \emph{efficiently in expectation}.
 
-\[
-ZPP=RP\cap co\text{-}RP.
-\]
+\section{BPP}
+A decision problem belongs to $\BPP$ if there exists a randomized polynomial-time algorithm 
+whose probability of producing the correct answer is at least $\frac{1}{n^c}$, where $c>0$.
 
-\subsection{The Class \texorpdfstring{$BPP$}{BPP}}
-
-\paragraph{Definition (Bounded-Error Probabilistic Polynomial Time).}
-
-A decision problem belongs to $BPP$ if there exists a randomized polynomial-time algorithm whose probability of producing the correct answer is at least $\frac23$ on every input.
-
-The constants $\frac23$ and $\frac13$ are arbitrary. By repeating the algorithm several times and taking a majority vote, the error probability can be reduced exponentially.
-
-Thus $BPP$ captures problems that can be solved efficiently with an arbitrarily small probability of error.
-
-\section{Probabilistic Polynomial-Time Algorithms}
-
-The term \emph{Probabilistic Polynomial Time} (PPT) is frequently used in randomized algorithms and cryptography.
-
-\paragraph{Definition (PPT Algorithm).}
-
-A PPT algorithm is a randomized algorithm that
+\clearpage
+\section{Problems}
 
 \begin{enumerate}
-\item uses random bits during execution,
-\item runs in polynomial time.
+
+\item[\textbf{1}]
+Solving an $\NPcomp$ problem in polynomial time is considered extremely difficult (if not impossible).
+Let $C$ be the event that a single $\NPcomp$ problem is solved in polynomial time.
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item Show that $C \implies \classP = \NP = \NPcomp$
+\item Show that $\classP \subseteq \left(\coNP \cap \NP\right) \subseteq \NP$ and thus show $C \implies \NP = \coNP$
 \end{enumerate}
 
-Unlike classes such as $RP$ or $BPP$, the term PPT refers to a model of computation rather than a class of decision problems.
+\item[\textbf{2}]
+Modern cryptography relies on the existence of one-way functions. One-way functions are functions which 
+are computable in polynomial time but not invertible in polynomial time. 
 
-\paragraph{Examples.}
+Consider the function $F: \{0,1\}^n \mapsto \{0,1\}^m$. 
 
-\begin{itemize}
-\item Randomized QuickSort.
-\item Miller--Rabin primality testing.
-\item Karger's minimum cut algorithm.
-\end{itemize}
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item Show that if $F$ is invertible, $m \ge n$.
+\item Using the above result, show that if $\classP=\NP$ then $F$ can not be a one-way function by 
+reformulating the invertibility problem as a decision problem.
+\emph{Hint: Construct the inverse bit-by-bit.}
+\end{enumerate}
 
-All of these are PPT algorithms.
+\item[\textbf{4}]
+\noindent Consider an algorithm \texttt{ALGO} which solves a decision problem $Q \in \ZPP$ with 
+runtime $T$ whose expected value is $E$ such that $E \le n^c$ where $c>0$. 
+Now consider the algorithm \texttt{TIMED\_ALGO}:
 
-\section{Relationships Between the Classes}
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
 
-The following inclusions are known:
+TIMED_ALGO
+{
+    run ALGO with time limit 2*E
+    if time limit exceeded
+        return NO
+    else 
+        return answer of ALGO
+}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
 
-\[
-P\subseteq ZPP\subseteq RP\subseteq BPP.
-\]
+Let $p$ be the probability that \texttt{TIMED\_ALGO} gives the correct answer.
 
-Similarly,
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item Show that $p \ge Pr(T \le 2E)$
+\item Use the markov inequality to show that $Pr(T > 2E) \le \frac12$
+\item Use the answers to \textbf{(a)} and \textbf{(b)} to show that the problem is solved by \texttt{TIMED\_ALGO} 
+with probability at least $\frac{1}{2}$. 
+\item Using the result from \textbf{(c)}, show that $Q \in\BPP$. Subsequently conclude 
+that this proof works for a general $Q \in \ZPP$, thus proving that $\ZPP \subseteq \BPP$
+\item Use a similar setup to show $\ZPP \subseteq \RP \cap \coRP$
+\item Use a $\RP$ algorithm and a $\coRP$ algorithm to show that $\RP \cap \coRP \subseteq \ZPP$, 
+thus proving $\ZPP = \RP \cap \coRP$
+\end{enumerate}
 
-\[
-P\subseteq ZPP\subseteq co\text{-}RP\subseteq BPP.
-\]
-
-Moreover,
-
-\[
-ZPP=RP\cap co\text{-}RP.
-\]
-
-We also know that
-
-\[
-P\subseteq NP,
-\qquad
-P\subseteq co\text{-}NP.
-\]
-
-Many other relationships remain unknown. In particular, we do not know whether
-
-\[
-P=NP,
-\qquad
-NP=co\text{-}NP,
-\qquad
-BPP=P.
-\]
-
-These questions lie at the heart of modern complexity theory.
-
-\section*{Summary}
-
-\begin{itemize}
-\item $P$ contains efficiently solvable decision problems.
-\item $NP$ contains problems whose \texttt{YES} instances can be verified efficiently.
-\item $co$-$NP$ contains problems whose \texttt{NO} instances can be verified efficiently.
-\item NP-complete problems are the hardest known problems in $NP$.
-\item $RP$, $co$-$RP$, $ZPP$, and $BPP$ model different forms of randomized computation.
-\item A PPT algorithm is simply a randomized polynomial-time algorithm.
-\item The relationship between many of these classes remains unknown.
-\end{itemize}
+\end{enumerate}
