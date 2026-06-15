@@ -19,6 +19,30 @@ equal to the number of inversions $N_{inv}$ in the input array.
 swaps to be one operation taking constant time, we can estimate runtime 
 of \texttt{BubbleSort} to be $T_{run}\propto N_{inv}$
 
+\section{Operations}
+In complexity analysis, we must know which operations are to be taken as a unit of time. This is sometimes a 
+bit subjective since arithmetic operations (+,-,$\times$,$\div$) can be taken as constant time 
+if we operate under the assumption that we are using fixed-length numbers like 32-bit integers.
+
+Regardless, here is a list of the common operations taken as a unit of time in complexity analysis.
+
+\begin{itemize}
+
+\item Arithmetic operations (+,-,$\times$,$\div$) 
+
+\item Comparisons ($<$,$>$,$\leq$,$\geq$)
+
+\item Boolean operations ($\land$,$\lor$,$\neg$)
+
+\item Bitwise operations ($\&$,$\|$,$\neg$)
+
+\item Variable read/write
+
+\item Array read/write 
+
+\end{itemize}
+
+
 \section{Worst Case Analysis}
 
 In worst case analysis, we determine the maximum possible number of operations over all valid 

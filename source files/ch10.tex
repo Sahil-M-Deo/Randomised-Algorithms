@@ -341,15 +341,21 @@ Now consider flipping the color of a bad vertex $v$. Let $d_h(v)$ be the number 
 Thus, each flip strictly increases the number of bichromatic edges. This means that the 
 number of steps is upper bounded by $m/2$. 
 
-\noindent\textbf{Pseudocode:}
-\begin{verbatim}
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
 initialize random coloring of vertices
 compute X
 
 while exists bad vertex v:
     flip color of v
-    update X locally
-\end{verbatim}
+    update X
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
 
 
 \noindent\textbf{Complexity analysis:}
@@ -361,6 +367,7 @@ Over all flips, total time is atmost
 O\left(\sum_{v \text{ flipped}} \left(\deg(v) + n \right) \right) = \Theta(mn+m).
 \]
 
-Hence the full procedure runs in atmost \footnote{this can be improved to $\Theta(m\log n)$ by using priority queues with lazy updates -- 
-its a fun competitive programming exercise, I encourage you to try it!}$\Theta(mn+m)$ after initialization.
+Hence the full procedure runs in atmost\footnote{this can be improved to $\Theta(m\log n)$ by 
+using priority queues with lazy updates -- its a fun competitive programming exercise, I encourage 
+you to try it!}$\Theta(mn+m)$ after initialization.
 

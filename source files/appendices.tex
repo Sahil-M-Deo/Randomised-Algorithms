@@ -398,7 +398,8 @@ the sequence $X_n(\omega)$ is a real number sequence, the usual definition of li
 such that $\lim\limits_{n\to\infty} X_n(\omega)=a$. I personally do not like this notation since 
 we are trying to define the notion of convergence and hence limits for random variables and in the definition 
 we are using the notation $\lim\limits_{n\to\infty} X_n$ which makes it seem circular when it really is not. The 
-notation means to talk about the limit of sequences of real numbers and not a sequence of random variables.
+notation means to talk about an event defined using the limit of sequences of real numbers 
+and not a sequence of random variables.
 
 \section{Convergence in Probability}
 
@@ -420,7 +421,7 @@ Define the random variable $Z_n$ to be average of the random variables $X_1,X_2,
 Z_n = \frac{X_1+X_2+\cdots+X_n}{n}
 \]
 
-\noindent The Weak Law of Large Numbers states that $Z_n$ converges in probability to $\mu$.
+\noindent The Weak Law of Large Numbers (WLLN) states that $Z_n$ converges in probability to $\mu$.
 
 \[
 n \to \infty \implies Z_n
@@ -463,8 +464,8 @@ the Weak Law of Large Numbers is proved.
 
 
 \section{Almost Sure Convergence}
-A sequence of random variables \(X_n\) "almost surely converges" to a constant \(a\) if 
-$\lim\limits_{n\to\infty}X_n=a$ almost surely. This means for almost every 
+A sequence of random variables \(X_n\) "almost surely converges" to a constant \(a\) if the event 
+$\lim\limits_{n\to\infty}X_n=a$ occurs almost surely. This means for almost every 
 outcome $\omega$, $\lim\limits_{n\to\infty}X_n(\omega)=a$. 
 
 \[
@@ -472,40 +473,6 @@ X_n\xrightarrow{\mathrm{a.s.}}a \iff
 \Pr\!\left(
 \lim\limits_{n\to\infty}X_n=a
 \right)=1
-\]
-
-\section{$A_n$ infinitely often}
-Let $A_1,A_2,A_3,\ldots$ be a sequence of events. Then the event "$A_n$ infinitely often" 
-or "$A_n$ i.o." is defined as there are infinite $n \in {1,2,3,\ldots}$ such that $A_n$ occurs.
-Thus the event "$A_n$ i.o." occurs iff for all N, at least one of the 
-events $A_N, A_{N+1}, A_{N+2}, \ldots$ occur.
-
-\[
-A_n \ \mathrm{i.o.} \;
-=
-\bigcap_{N=1}^{\infty}
-\bigcup_{n = N}^{\infty}A_n
-\]
-
-
-\section{The Borel--Cantelli Lemmas}
-
-The \textbf{first} Borel--Cantelli lemma states that if the sum of $Pr(A_n)$ is finite, then $A_n$ i.o. almost never.
-
-\[
-\sum_{n=1}^{\infty}\Pr(A_n)<\infty
-\implies
-\Pr(A_n\ \mathrm{i.o.})=0
-\]
-
-
-\noindent The \textbf{second} Borel--Cantelli lemma states that if all $A_n$ are independent and 
-the sum of $Pr(A_n)$ diverges, then $A_n$ i.o. almost surely.
-\[
-\text{All $A_n$ independent and }
-\sum_{n=1}^{\infty}\Pr(A_n)=\infty
-\implies
-\Pr(A_n\ \mathrm{i.o.})=1
 \]
 
 \section*{Example}
@@ -547,24 +514,61 @@ never convergent to 0, yet it is convergent in probability to 0. Hence the two n
 
 \noindent With some thought, it can be shown that almost sure convergence implies 
 convergence in probability, but as we saw, not necessarily the other way around.
+
+\section{$A_n$ infinitely often}
+Let $A_1,A_2,A_3,\ldots$ be a sequence of events. Then the event "$A_n$ infinitely often" 
+or "$A_n$ i.o." is defined as there are infinite $n \in {1,2,3,\ldots}$ such that $A_n$ occurs.
+Thus the event "$A_n$ i.o." occurs iff for all N, at least one of the 
+events $A_N, A_{N+1}, A_{N+2}, \ldots$ occur.
+
+\[
+A_n \ \mathrm{i.o.} \;
+=
+\bigcap_{N=1}^{\infty}
+\bigcup_{n = N}^{\infty}A_n
+\]
+
+
+\section{The Borel--Cantelli Lemmas}
+
+The \textbf{first} Borel--Cantelli lemma states that if the sum of $Pr(A_n)$ is finite, then the event 
+($A_n$ i.o.) occurs almost never.
+
+\[
+\sum_{n=1}^{\infty}\Pr(A_n)<\infty
+\implies
+\Pr(A_n\ \mathrm{i.o.})=0
+\]
+
+
+\noindent The \textbf{second} Borel--Cantelli lemma states that if all $A_n$ are independent and 
+the sum of $Pr(A_n)$ diverges, then the event ($A_n$ i.o.) occurs almost surely.
+\[
+\text{All $A_n$ independent and }
+\sum_{n=1}^{\infty}\Pr(A_n)=\infty
+\implies
+\Pr(A_n\ \mathrm{i.o.})=1
+\]
+
 \section{The Strong Law of Large Numbers}
 
 Let $X_1,X_2,\ldots,X_n$ be i.i.d random variables with $\mathbb E[X_i]=\mu$ and finite variance $\sigma^2$.
-Define the random variable $Z_n$ to be average of the random variables $X_1,X_2,\ldots,X_n$.\\
+Define the random variable $Z_n$ to be average of the random variables $X_1,X_2,\ldots,X_n$.
 
 \[
 Z_n = \frac{X_1+X_2+\cdots+X_n}{n}
 \]
 
-\noindent The Strong Law of Large Numbers states that $Z_n$ converges almost surely to $\mu$.
+\noindent The Strong Law of Large Numbers (SLLN) states that $Z_n$ converges almost surely to $\mu$.
+
 \[
 X_n\xrightarrow{\mathrm{a.s.}}\mu
 \]
-I feel there is not much utility at this point in stating the proof. We should focus on 
-understanding the result with an application!
 
+The proof of the SLLN uses the Borel--Cantelli lemmas and we 
+will not state it here as the proof itself does not hold much instructive value. 
 
-\section*{Application}
+\section*{Application of SLLN}
 
 
 If I want to find the expected value of a random variable $X$ and the only thing 
@@ -719,9 +723,9 @@ additional condition that the subgraph must be a valid graph!
 
 \subsection*{Clique}
 \label{clique}
-A clique of size k in a graph $G$ is a subset of vertices such that every pair of 
-vertices in the clique is connected by an edge. In other words, the clique is a complete 
-subgraph of size k.
+A clique in a graph $G$ is a subset chosen from the set of vertices of $G$ such that 
+every pair of vertices in the clique is connected by an edge. The size of the clique is 
+defined as the number of vertices in the clique.
 
 \chapter{Linear Algebra}
 

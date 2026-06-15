@@ -38,22 +38,37 @@ Randomised algorithms are often used for the following purposes:
 \section{Implementation of Randomness in \texttt{C++}}
 
 Let us make things more concrete with some actual code and implementation details! \texttt{C++} 
-provides pseudo-random\footnote{Since computers are deterministic, they rely on parameters like atmospheric noise and temperature for randomness. The details are irrelevant for us... We will take pseudo random as true random for our purposes} number generators through the \texttt{<random>} library. A commonly used generator is \texttt{mt19937}, which is based on the Mersenne Twister algorithm.
+provides pseudo-random\footnote{Since computers are deterministic, they rely on parameters like 
+atmospheric noise and temperature for randomness. The details are mostly irrelevant for us... We will 
+take pseudo random as true random for our purposes} number generators through the 
+\texttt{<random>} library. A commonly used generator is \texttt{mt19937}.
 
-\begin{verbatim}
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
 #include <bits/stdc++.h>
-mt19937 rng(chrono::steady_clock::now().time_since_epoch().count()); //using time as a seed
-\end{verbatim}
+mt19937 rng(42);
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
 
-This creates an object rng with seed\footnote{Seed values are used in pseudo random generators as a way to recreate the generated random numbers. This can be used for debugging a randomised algorithm. If you don't care about that, 
-set it to the current time in milliseconds or something similar and that should be good enough!} as current time which will be passed as a parameter to other functions.
- It has the capability to produce "truly" random 32-bit integers.
+This creates an object rng with seed\footnote{Seed values are used in pseudo random generators as a way 
+to recreate the generated random numbers. This can be used for debugging a randomised algorithm. If 
+you don't care about that, set it to the current time in milliseconds or something 
+similar and that should be good enough!} as 42 which will be passed as a 
+parameter to other functions. It has the capability to produce "truly" random 32-bit integers.
 
 \subsection*{Generating Random Integers}
 
-To generate a random integer uniformly from a range \([L,R]\), we use
+To generate a random integer uniformly from a range \([L,R]\), we use \texttt{uniform\_int\_distribution<int>}.
 
-\begin{verbatim}
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
 uniform_int_distribution<int>uid(L,R);
 
 int x=uid(rng);
@@ -61,25 +76,13 @@ int y=uid(rng);
 .
 .
 .
-\end{verbatim}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
 
 \noindent Each generation takes around constant time.
-
-\subsection*{Generating Random Real Numbers}
-
-To generate a real number uniformly from an interval \([x,y)\), we use
-
-\begin{verbatim}
-uniform_real_distribution<double>urd(x,y);
-
-double x=urd(rng);
-double y=urd(rng);
-.
-.
-.
-\end{verbatim}
-
-\noindent This also takes constant time per generation.
 
 \subsection*{Generating a Random Permutation}
 
@@ -88,18 +91,6 @@ A random permutation of an array (in-place modification) can be generated using 
 \begin{verbatim}
 shuffle(a.begin(),a.end(),rng);
 \end{verbatim}
-
-\noindent Internally, this does something like:
-
-\begin{verbatim}
-for(int i=n-1;i>0;i--)
-{
-    int j=random integer from [0,i];
-    swap(a[i],a[j]);
-}
-\end{verbatim}
-
-\noindent Deduce why all permutations are equally likely with this method!
 
 \subsection*{Implementing Random Decisions}
 

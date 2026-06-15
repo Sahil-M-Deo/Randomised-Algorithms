@@ -2,9 +2,9 @@
 \section{QuickSort}
 
 In general, to sort an input array of size n deterministically using only pairwise comparisons,
-it can be proved via a decision tree that we need at least $n\log_2 n$ operations. From a 
-time complexity point of view this is $\Theta(n\log n)$ time. \texttt{QuickSort} does not really improve upon that, but 
-in practice it is very quick with a small constant factor. The STL 
+it can be proved via a decision tree that we need at least $\approx n\log_2 n$ operations. From a 
+time complexity point of view this is $\Theta(n\log n)$ time. \texttt{QuickSort} does not have a better time 
+complexity, but it is parallelisable on a multi-core machine hence it is really quick! The STL 
 library of \texttt{C++} uses \texttt{QuickSort} in its \texttt{std::sort()} function.\\
 
 \subsection{The Algorithm}
@@ -25,7 +25,8 @@ QuickSort(A)
 \end{center}
 
 \noindent Note that \texttt{A<p} is our notation for the elements of \texttt{A} that are strictly less than \texttt{p}.
-Similarly we can define \texttt{A>p} and \texttt{A=p}.\\
+Similarly we can define \texttt{A>p} and \texttt{A=p}. For simplicity of analysis, we will assume all 
+elements in the array are distinct since that is the toughest case. So \texttt{A=p} is a single element.\\
 
 
 \subsection{Worst Case Runtime}
@@ -33,20 +34,18 @@ Similarly we can define \texttt{A>p} and \texttt{A=p}.\\
 Unfortunately, this can lead to very poor performance on adversarial inputs. 
 For example, if the array is already sorted and we always choose the leftmost element as 
 pivot, the recursion becomes extremely unbalanced --
+
 \[
+T(n)=
 (n-1)+(n-2)+\dots+1
 =
 \Theta(n^2)
 \]
 
-\noindent Thus \texttt{QuickSort} has worst case complexity
-\[
-T(n)=\Theta(n^2)
-\]
-
-\noindent The standard randomised version instead chooses the pivot uniformly at random. This tiny 
-modification dramatically changes the behaviour of the algorithm. 
-Intuitively, it becomes very unlikely that we repeatedly choose extremely bad pivots.
+\noindent Thus \texttt{QuickSort} has worst case complexity of $\Theta(n^2)$. The standard randomised 
+version instead chooses the pivot uniformly at random. This modification dramatically changes 
+the behaviour of the algorithm -- it becomes very unlikely that we 
+repeatedly choose extremely bad pivots.
 
 \subsection{Expected Runtime}
 
@@ -55,7 +54,7 @@ Let \(T(n)\) denote the expected runtime of randomised \texttt{QuickSort} on
 an array of size \(n\) over all possible inputs.\\
 
 
-\noindent Suppose the pivot finally ends up at position \(k\), where \(0\le k\le n-1\). 
+\noindent Suppose the pivot is at position \(k\), where \(0\le k\le n-1\). 
 Then the recursive subproblems have sizes \(k\) and \(n-1-k\). Since partitioning itself 
 takes n operations, we obtain the recurrence
 \[
@@ -98,7 +97,7 @@ n+\frac{2}{n}S(n-1)
 \implies
 S(n)
 =
-\left(1+\frac{2}{n}\right)S(n-1)+cn
+\left(1+\frac{2}{n}\right)S(n-1)+n
 \]
 
 \[
@@ -146,7 +145,8 @@ Hence the expected runtime of randomised \texttt{QuickSort} is $\Theta(n\log n)$
 \noindent Here we explore an alternative method to arrive at the expected runtime of \texttt{QuickSort}. 
 Observe that any pair of elements is compared at most once during the entire execution of \texttt{QuickSort}.
 Without loss of generality assume the array is a permutation of $\{1,2,\dots,n\}$.
-\noindent Consider the indicator variable,
+\noindent Consider the indicator variable $I_{ij}$ indicating whether elements $i$ and $j$ are compared or not.
+
 \[
 I_{ij}=
 \begin{cases}
@@ -156,12 +156,11 @@ I_{ij}=
 \]
 
 \vspace{0.5em}
-\noindent Then the total number of comparisons $C$ is given by
-\vspace{0.3em}
+\noindent Then the total number of comparisons $C$ is given by the sum of all $I_{ij}$.
+
 \[
 C=\sum_{1\le i<j\le n}I_{ij}
 \]
-\vspace{0.5em}
 
 Two elements are compared only if one of them becomes the first pivot chosen 
 among all elements lying between them in sorted order. Since all of them are equally likely, 
@@ -181,7 +180,7 @@ we have a 2 out of \(j-i+1\) chance of this happening.
 
 \section{QuickSelect}
 
-\texttt{QuickSort} is used to Find the \(k\)-th smallest element\footnote{This is commonly 
+\texttt{QuickSort} is used to find the \(k\)-th smallest element\footnote{This is commonly 
 referred to as the \(k\)-th order statistic of the array.} of an unsorted input array. An obvious method is 
 to sort the array using \texttt{MergeSort}\footnote{\texttt{MergeSort} is a divide and conquer 
 deterministic sort algorithm which runs in $\Theta(n\log n)$ time.} or \texttt{QuickSort} and then 
@@ -326,7 +325,7 @@ Using Markov's Inequality\footnote{See \autoref{markov_inequality}},
 \]
 
 \vspace{0.6em}
-\noindent \textbf{The Splitting\footnote{I feel this is useful and common enough to warrant a name!} Technique}
+\subsubsection*{The Splitting Technique}
 We split the sum into two parts, and bound them or find 
 them separately, thus finding our overall bound. Here we split according to when 
 the min() changes from $1$ to $\frac n2\left(\frac34\right)^i$.\\
@@ -373,9 +372,8 @@ the min() changes from $1$ to $\frac n2\left(\frac34\right)^i$.\\
 4
 \]
 
-Combining the two bounds,
-
 \[
+\implies
 \mathbb E[H]
 \le
 m+4
@@ -384,9 +382,10 @@ m+4
 \log_{4/3}\!\left(\frac n2\right)
 \right\rceil
 +4
+\implies
+\mathbb E[H] \le \Theta(\log n)
 \]
 
-So we can conclude $\mathbb E[H] \le \Theta(\log n)$
 
 \clearpage
 \section{Problems}
