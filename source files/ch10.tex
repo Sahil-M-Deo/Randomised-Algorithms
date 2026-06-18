@@ -1,14 +1,20 @@
 
 \chapter{Heuristic Algorithms}
 
-Many computational problems of practical interest have a statement like ``Given a graph find a set of vertices of size atmost x satisfying property P.'' \\
-Now one way to guarantee a solution is to find the minimum sized set of vertices satisfying P, but this is usually not doable in polynomial time. \\
-So we are often forced to settle for a solution that is not necessarily optimal but can be found efficiently. 
-Such algorithms are \emph{heuristic algorithms} -- algorithms designed to quickly find solutions that are often good in practice,
-even if they do not always provide provable optimality guarantees or even any guarantees at all. \\ 
-Inherently the analysis of heuristic algorithms involve probability and expectation, making them a natural application of the tools we have developed so far.
+\section{Introduction}
+Many computational problems of practical interest have a statement like ``given a graph find a set of 
+vertices of size at most x satisfying property P.'' \\
 
-Notice that the greedy algorithm we saw in the previous chapter was a heuristic algorithm as well!
+
+Now one way to guarantee a solution is to find the minimum sized set of vertices satisfying P, but 
+the optimisation problem may be $\NPhard$. So we are often forced to settle for a solution 
+that is not necessarily optimal but can be found efficiently. Such algorithms are 
+\emph{heuristic algorithms} -- algorithms designed to quickly find solutions that 
+are often good in practice, even if they do not always provide provable optimality guarantees or 
+even any guarantees at all. \\ 
+
+
+A famous example of a heuristic algorithm is the 
 \section{Dominating Set Revisited}
 
 Recall the dominating set problem: given a graph \(G=(V,E)\), find a smallest possible subset \(D\subseteq V\) such that every vertex in the graph is either contained in \(D\) or adjacent to some vertex in \(D\).

@@ -1,11 +1,3 @@
-\newcommand{\classP}{\mathbf{P}}
-\newcommand{\NP}{\mathbf{NP}}
-\newcommand{\coNP}{\mathbf{NP_{co}}}
-\newcommand{\RP}{\mathbf{RP}}
-\newcommand{\coRP}{\mathbf{RP_{co}}}
-\newcommand{\BPP}{\mathbf{BPP}}
-\newcommand{\ZPP}{\mathbf{ZPP}}
-\newcommand{\NPcomp}{\mathbf{NP-complete}}
 \chapter{Complexity Classes}
 
 What is the best time complexity for a problem? When can we hope 
@@ -117,6 +109,16 @@ For an $L$ in $\NPcomp$, every problem in $\NP$ can be polynomially reduced to $
 \NPcomp \; = \; \{L: Q \le_p L \quad \forall \; Q \in \NP\}
 \]
 
+\section{NP-Hard}
+$\NPhard$ consists of all those problems which are harder than \emph{every} problem in $\NP$. These problems 
+need not even have polynomially verifiable certificates for \texttt{YES}. The problems need not even be 
+decision problems -- they could be any type of problem like optimisation or search problems. 
+
+\[
+\NPhard \; = \; \{L: L \le_p Q \quad \forall \; Q \in \NP\}
+\]
+
+An obvious conclusion is that $\NPcomp \subseteq \NPhard$.
 \section{RP}
 
 A decision problem belongs to $\RP$ if there exists a randomised polynomial-time algorithm with input size $n$ 

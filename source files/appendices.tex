@@ -697,7 +697,7 @@ element $a\in S$ is all the elements related to it.
 A graph $G$ is an ordered pair $(V,E)$ where \(V\) is a set of vertices 
 and \(E\subseteq \{\{u,v\}\mid u,v\in V,\ u\neq v\}\) is a set of edges.
 $|E|$ is usually denoted by \(m\) and $|V|$ is usually denoted by \(n\).
-\subsection*{Degree}
+\subsection{Degree}
 
 For a vertex \(v\in V\), the degree \(d(v)\) is the number of edges which have \(v\) as an endpoint. 
 Equivalently, \(d(v)\) is the number of neighbours of \(v\).\\
@@ -708,7 +708,7 @@ of a graph is
 d=\frac{1}{n}\left(\sum_{v\in V} d(v)\right)=\frac{2m}{n}
 \]
 
-\subsection*{Bipartite Graph}
+\subsection{Bipartite Graph}
 
 A graph \(G=(V,E)\) is bipartite if the vertex set \(V\) can be partitioned into two disjoint sets \(L\) and \(R\) such that
 \[
@@ -716,12 +716,13 @@ V=L\cup R,\quad L\cap R=\emptyset
 \]
 and every edge connects a vertex in \(L\) to a vertex in \(R\). That is, there are no edges with both endpoints in the same set.
 
-\subsection*{Subgraph}
+\subsection{Subgraph}
+\label{subgraph}
 A subgraph of a graph $(V,E)$ is a pair of sets $(V',E')$ where \(V'\subseteq V\) and \(E'\subseteq E\) with the 
 additional condition that the subgraph must be a valid graph!
 
 
-\subsection*{Clique}
+\subsection{Clique}
 \label{clique}
 A clique in a graph $G$ is a subset chosen from the set of vertices of $G$ such that 
 every pair of vertices in the clique is connected by an edge. The size of the clique is 
