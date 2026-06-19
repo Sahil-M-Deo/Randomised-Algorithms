@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  17 JUN 2026 17:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  20 JUN 2026 02:19
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -808,10 +808,55 @@ File: tikzlibraryplotmarks.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 plotmarks.code.tex
 File: pgflibraryplotmarks.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )))
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/diagbox\diagbox.sty
+Package: diagbox 2020/02/09 v2.3 Making table heads with diagonal lines
+
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/pict2e\pict2e.sty
+Package: pict2e 2020/09/30 v0.4b Improved picture commands (HjG,RN,JT)
+
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/pict2e\pict2e.cfg
+File: pict2e.cfg 2016/02/05 v0.1u pict2e configuration for teTeX/TeXLive
+)
+Package pict2e Info: Driver file: pdftex.def on input line 112.
+Package pict2e Info: Driver file for pict2e: p2e-pdftex.def on input line 114.
+
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/pict2e\p2e-pdftex.def
+File: p2e-pdftex.def 2016/02/05 v0.1u Driver-dependant file (RN,HjG,JT)
+)
+\pIIe@GRAPH=\toks55
+\@arclen=\dimen311
+\@arcrad=\dimen312
+\pIIe@tempdima=\dimen313
+\pIIe@tempdimb=\dimen314
+\pIIe@tempdimc=\dimen315
+\pIIe@tempdimd=\dimen316
+\pIIe@tempdime=\dimen317
+\pIIe@tempdimf=\dimen318
+)
+(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
+Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
+\col@sep=\dimen319
+\ar@mcellbox=\box71
+\extrarowheight=\dimen320
+\NC@list=\toks56
+\extratabsurround=\skip63
+\backup@length=\skip64
+\ar@cellbox=\box72
+)
+\diagbox@boxa=\box73
+\diagbox@boxb=\box74
+\diagbox@boxm=\box75
+\diagbox@wd=\dimen321
+\diagbox@ht=\dimen322
+\diagbox@insepl=\dimen323
+\diagbox@insepr=\dimen324
+\diagbox@outsepl=\dimen325
+\diagbox@outsepr=\dimen326
+)
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/footmisc\footmisc.sty
 Package: footmisc 2025/05/09 v7.0b a miscellany of footnote facilities
-\FN@temptoken=\toks55
-\footnotemargin=\dimen311
+\FN@temptoken=\toks57
+\footnotemargin=\dimen327
 Package footmisc Info: Declaring symbol style bringhurst on input line 549.
 Package footmisc Info: Declaring symbol style chicago on input line 557.
 Package footmisc Info: Declaring symbol style wiley on input line 566.
@@ -823,42 +868,32 @@ Package footmisc Info: Declaring symbol style lamport*-robust on input line 618
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/enumitem\enumitem.sty
 Package: enumitem 2025/02/06 v3.11 Customized lists
-\labelindent=\skip63
-\enit@outerparindent=\dimen312
-\enit@toks=\toks56
-\enit@inbox=\box71
+\labelindent=\skip65
+\enit@outerparindent=\dimen328
+\enit@toks=\toks58
+\enit@inbox=\box76
 \enit@count@id=\count346
 \enitdp@description=\count347
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen313
-\lightrulewidth=\dimen314
-\cmidrulewidth=\dimen315
-\belowrulesep=\dimen316
-\belowbottomsep=\dimen317
-\aboverulesep=\dimen318
-\abovetopsep=\dimen319
-\cmidrulesep=\dimen320
-\cmidrulekern=\dimen321
-\defaultaddspace=\dimen322
+\heavyrulewidth=\dimen329
+\lightrulewidth=\dimen330
+\cmidrulewidth=\dimen331
+\belowrulesep=\dimen332
+\belowbottomsep=\dimen333
+\aboverulesep=\dimen334
+\abovetopsep=\dimen335
+\cmidrulesep=\dimen336
+\cmidrulekern=\dimen337
+\defaultaddspace=\dimen338
 \@cmidla=\count348
 \@cmidlb=\count349
-\@aboverulesep=\dimen323
-\@belowrulesep=\dimen324
+\@aboverulesep=\dimen339
+\@belowrulesep=\dimen340
 \@thisruleclass=\count350
 \@lastruleclass=\count351
-\@thisrulewidth=\dimen325
-)
-(C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
-Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
-\col@sep=\dimen326
-\ar@mcellbox=\box72
-\extrarowheight=\dimen327
-\NC@list=\toks57
-\extratabsurround=\skip64
-\backup@length=\skip65
-\ar@cellbox=\box73
+\@thisrulewidth=\dimen341
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/tools\bm.sty
 Package: bm 2025/10/21 v1.2g Bold Symbol Support (DPC/FMi)
@@ -885,10 +920,10 @@ File: tikzlibrarypositioning.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibrary
 arrows.meta.code.tex
 File: pgflibraryarrows.meta.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-\pgfarrowinset=\dimen328
-\pgfarrowlength=\dimen329
-\pgfarrowwidth=\dimen330
-\pgfarrowlinewidth=\dimen331
+\pgfarrowinset=\dimen342
+\pgfarrowlength=\dimen343
+\pgfarrowwidth=\dimen344
+\pgfarrowlinewidth=\dimen345
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/pdfpages\pdfpages.sty
 Package: pdfpages 2026/03/30 v0.6h Insert pages of external PDF documents (AM)
@@ -896,35 +931,35 @@ Package: pdfpages 2026/03/30 v0.6h Insert pages of external PDF documents (AM)
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/base\ifthen.sty
 Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
 )
-\AM@pagewidth=\dimen332
-\AM@pageheight=\dimen333
-\AM@fboxrule=\dimen334
+\AM@pagewidth=\dimen346
+\AM@pageheight=\dimen347
+\AM@fboxrule=\dimen348
 
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/pdfpages\pppdftex.def
 File: pppdftex.def 2026/03/30 v0.6h Pdfpages driver for pdfTeX (AM)
 )
 \pdfpages@includegraphics@status=\count352
-\AM@pagebox=\box74
-\AM@global@opts=\toks58
+\AM@pagebox=\box77
+\AM@global@opts=\toks59
 \AM@pagecnt=\count353
-\AM@toc@title=\toks59
-\AM@lof@heading=\toks60
+\AM@toc@title=\toks60
+\AM@lof@heading=\toks61
 \c@AM@survey=\count354
-\AM@templatesizebox=\box75
+\AM@templatesizebox=\box78
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption.sty
 Package: caption 2023/08/05 v3.6o Customizing captions (AR)
 
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption3.sty
 Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
-\caption@tempdima=\dimen335
-\captionmargin=\dimen336
-\caption@leftmargin=\dimen337
-\caption@rightmargin=\dimen338
-\caption@width=\dimen339
-\caption@indent=\dimen340
-\caption@parindent=\dimen341
-\caption@hangindent=\dimen342
+\caption@tempdima=\dimen349
+\captionmargin=\dimen350
+\caption@leftmargin=\dimen351
+\caption@rightmargin=\dimen352
+\caption@width=\dimen353
+\caption@indent=\dimen354
+\caption@parindent=\dimen355
+\caption@hangindent=\dimen356
 Package caption Info: Standard document class detected.
 )
 \c@caption@flags=\count355
@@ -952,27 +987,28 @@ LaTeX Warning: Label `fig:randcheck' multiply defined.
 
 ) (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch9.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch10.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch11.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\appendices.aux))
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1011,16 +1047,16 @@ LaTeX Font Info:    ... okay on input line 3.
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count358
-\scratchdimen=\dimen343
-\scratchbox=\box76
+\scratchdimen=\dimen357
+\scratchbox=\box79
 \nofMPsegments=\count359
 \nofMParguments=\count360
-\everyMPshowfont=\toks61
+\everyMPshowfont=\toks62
 \MPscratchCnt=\count361
-\MPscratchDim=\dimen344
+\MPscratchDim=\dimen358
 \MPnumerator=\count362
 \makeMPintoPDFobject=\count363
-\everyMPtoPDFconversion=\toks62
+\everyMPtoPDFconversion=\toks63
 )
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base
 .sty
@@ -1031,7 +1067,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring ON on input line 3.
+Package hyperref Info: Link coloring ON on input line 2.
  (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.out)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.out)
 \@outlinefile=\write6
@@ -1060,10 +1096,10 @@ Package caption Info: End \AtBeginDocument code.
 
 pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
 DF version <1.7>, but at most version <1.5> allowed
-<../Images/Cover.pdf, id=666, 597.23125pt x 845.1575pt>
+<../Images/Cover.pdf, id=706, 597.23125pt x 845.1575pt>
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf>
-Package pdftex.def Info: ../Images/Cover.pdf  used on input line 6.
+Package pdftex.def Info: ../Images/Cover.pdf  used on input line 5.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 
 
@@ -1073,26 +1109,26 @@ DF version <1.7>, but at most version <1.5> allowed
 
 pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
 DF version <1.7>, but at most version <1.5> allowed
-<../Images/Cover.pdf, id=668, page=1, 597.23125pt x 845.1575pt>
+<../Images/Cover.pdf, id=708, page=1, 597.23125pt x 845.1575pt>
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
-Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
+Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 5.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
-Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
+Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 5.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
-Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
+Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 5.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
-Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
+Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 5.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
-Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
+Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 5.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 [1
 
@@ -1676,7 +1712,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 38--41
 
 
 ] [71]
-<../Images/randcheck_failprob.pdf, id=1351, 332.44202pt x 209.58301pt>
+<../Images/randcheck_failprob.pdf, id=1401, 332.44202pt x 209.58301pt>
 File: ../Images/randcheck_failprob.pdf Graphic file (type pdf)
 <use ../Images/randcheck_failprob.pdf>
 Package pdftex.def Info: ../Images/randcheck_failprob.pdf  used on input line 1
@@ -1690,7 +1726,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 348--351
 
  []
 
-<../Images/dominating_failprob.pdf, id=1432, 332.44202pt x 209.58301pt>
+<../Images/dominating_failprob.pdf, id=1482, 332.44202pt x 209.58301pt>
 File: ../Images/dominating_failprob.pdf Graphic file (type pdf)
 <use ../Images/dominating_failprob.pdf>
 Package pdftex.def Info: ../Images/dominating_failprob.pdf  used on input line 
@@ -1721,7 +1757,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 596--599
  []
 
 [78]
-<../Images/worstcase_big.pdf, id=1522, 332.44202pt x 209.58301pt>
+<../Images/worstcase_big.pdf, id=1572, 332.44202pt x 209.58301pt>
 File: ../Images/worstcase_big.pdf Graphic file (type pdf)
 <use ../Images/worstcase_big.pdf>
 Package pdftex.def Info: ../Images/worstcase_big.pdf  used on input line 623.
@@ -1937,16 +1973,144 @@ Underfull \hbox (badness 10000) in paragraph at lines 333--334
  []
 
 ) [94]
+\openout2 = `ch11.aux'.
+
+ (ch11.tex
+Chapter 11.
+
+Underfull \hbox (badness 10000) in paragraph at lines 6--9
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 10--15
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 16--18
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 24--30
+
+ []
+
+[95
+
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 73--77
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 78--82
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 83--90
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 91--94
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 104--108
+
+ []
+
+[96]
+Underfull \hbox (badness 10000) in paragraph at lines 124--127
+
+ []
+
+
+Overfull \hbox (28.62825pt too wide) detected at line 168
+\U/msb/m/n/10.95 E\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OMS/cmsy/m/n/10.9
+5 j\OML/cmm/m/it/10.95 S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 L\OT1/cmr/m
+/n/10.95 ] = \OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 E\OT1
+/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95
+ S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 L; S[] \OT1/cmr/m/n/10.95 = \OML/
+cmm/m/it/10.95 L\OT1/cmr/m/n/10.95 ]) + (1 \OMS/cmsy/m/n/10.95 ^^@ \OML/cmm/m/i
+t/10.95 q\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 E\OT1/cmr/m/n/10.95 [\OML/cmm/
+m/it/10.95 U[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 S[] \OT1/cmr/m/n/10.95 =
+ \OML/cmm/m/it/10.95 L; S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 R\OT1/cmr/
+m/n/10.95 ] = \OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 (\OMS/cmsy/m/n/10.95 ^^@\
+OT1/cmr/m/n/10.95 1) + (1 \OMS/cmsy/m/n/10.95 ^^@ \OML/cmm/m/it/10.95 q\OT1/cmr
+/m/n/10.95 )(1) = 1 \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr/m/n/10.95 2\OML/cmm/m/it/1
+0.95 q
+ []
+
+
+Overfull \hbox (31.4684pt too wide) detected at line 171
+\U/msb/m/n/10.95 E\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OMS/cmsy/m/n/10.9
+5 j\OML/cmm/m/it/10.95 S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 R\OT1/cmr/m
+/n/10.95 ] = \OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 E\OT1
+/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95
+ S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 R; S[] \OT1/cmr/m/n/10.95 = \OML/
+cmm/m/it/10.95 L\OT1/cmr/m/n/10.95 ]) + (1 \OMS/cmsy/m/n/10.95 ^^@ \OML/cmm/m/i
+t/10.95 q\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 E\OT1/cmr/m/n/10.95 [\OML/cmm/
+m/it/10.95 U[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 S[] \OT1/cmr/m/n/10.95 =
+ \OML/cmm/m/it/10.95 R; S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 R\OT1/cmr/
+m/n/10.95 ] = \OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 (1) + (1 \OMS/cmsy/m/n/10
+.95 ^^@ \OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 )(\OMS/cmsy/m/n/10.95 ^^@\OT1/c
+mr/m/n/10.95 1) = 2\OML/cmm/m/it/10.95 q \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr/m/n/1
+0.95 1
+ []
+
+[97]
+Underfull \hbox (badness 10000) in paragraph at lines 196--198
+
+ []
+
+
+Overfull \hbox (28.1009pt too wide) detected at line 230
+\U/msb/m/n/10.95 E\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OT1/cmr/m/n/10.95
+ ] = [] \OML/cmm/m/it/10.95 p[] \OMS/cmsy/m/n/10.95 ^^A \OML/cmm/m/it/10.95 E\O
+T1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.
+95 S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 i\OT1/cmr/m/n/10.95 ][]  =[]\OM
+S/cmsy/m/n/10.95 )  \OML/cmm/m/it/10.95 E\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.9
+5 U[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 S[] \OT1/cmr/m/n/10.95 = 1] = \OM
+L/cmm/m/it/10.95 E\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OMS/cmsy/m/n/10.9
+5 j\OML/cmm/m/it/10.95 S[] \OT1/cmr/m/n/10.95 = 2] = [] = \OML/cmm/m/it/10.95 E
+\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/1
+0.95 S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 n\OT1/cmr/m/n/10.95 ]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 236--239
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 241--250
+
+ []
+
+[98]
+Underfull \hbox (badness 10000) in paragraph at lines 251--258
+
+ []
+
+) [99]
 \openout2 = `appendices.aux'.
 
- (appendices.tex [95
+ (appendices.tex [100
 
 
 
 
 ]
 Appendix A.
-[96
+[101
 
 
 ]
@@ -1959,15 +2123,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 136--139
 
  []
 
-[97] [98]
+[102] [103]
 Appendix B.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [99
+ [104
 
 ]
-[100]
+[105]
 Appendix C.
 
 Underfull \hbox (badness 10000) in paragraph at lines 368--372
@@ -2016,9 +2180,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 392--395
 
  []
 
-[101
+[106
 
-] [102]
+] [107]
 Underfull \hbox (badness 10000) in paragraph at lines 490--494
 
  []
@@ -2045,7 +2209,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 518.
 
-[103]
+[108]
 Underfull \hbox (badness 10000) in paragraph at lines 574--580
 
  []
@@ -2055,23 +2219,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 587--592
 
  []
 
-[104]
+[109]
 Underfull \hbox (badness 10000) in paragraph at lines 620--624
 
  []
 
-[105]
+[110]
 Appendix D.
-[106
+[111
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 702--704
 
  []
 
-[107]
+[112]
 Appendix E.
-[108
+[113
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 804--805
@@ -2083,7 +2247,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 807--808
 
  []
 
-) [109] (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.aux
+) [114] (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.aux
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch1.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch2.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch3.aux)
@@ -2094,6 +2258,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 807--808
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch8.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch9.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch10.aux)
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch11.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\appendices.aux))
  ***********
 LaTeX2e <2025-11-01>
@@ -2104,16 +2269,16 @@ L3 programming layer <2026-03-20>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 7B89497A39A8086F017006EF72522E6A;22845.
+(rerunfilecheck)             Checksum: A42647E83F8E0605152F923640646F56;24338.
  ) 
 Here is how much of TeX's memory you used:
- 38641 strings out of 467691
- 876607 string characters out of 5416439
- 1430165 words of memory out of 5000000
- 66540 multiletter control sequences out of 15000+600000
+ 38980 strings out of 467691
+ 882454 string characters out of 5416439
+ 1437404 words of memory out of 5000000
+ 66841 multiletter control sequences out of 15000+600000
  665469 words of font info for 139 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 104i,17n,111p,746b,2173s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 104i,17n,111p,741b,2173s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbi109
 5.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm
 1000.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\e
@@ -2161,9 +2326,9 @@ ublic/amsfonts/cm/cmsy9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/ty
 pe1/public/amsfonts/symbols/msam10.pfb><C:/Users/hp/AppData/Local/Programs/MiKT
 eX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
 Output written on "C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.
-pdf" (110 pages, 1185320 bytes).
+pdf" (115 pages, 1211288 bytes).
 PDF statistics:
- 2694 PDF objects out of 2984 (max. 8388607)
- 478 named destinations out of 1000 (max. 500000)
- 1363 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2776 PDF objects out of 2984 (max. 8388607)
+ 496 named destinations out of 1000 (max. 500000)
+ 1443 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,268 @@
+\chapter{Game Theoretic Algorithms}
+Game Theory is an \emph{idealisation} of real life games where under different axioms of the game and 
+assumptions about the players' abilities we seek to find their optimal choices. 
+
+\section{Definitions}
+In a game each player has some \emph{actions} which they can play in the current \emph{state} when it is their turn. 
+A state is a complete description of the current game situation. A \emph{history} is the sequence of 
+states until (and including) the current state. \\
+
+\noindent A \emph{strategy} for a player is a function that maps every possible state 
+to an action which is legal to play. Simply stated, a strategy is a plan for what to play 
+in what situation. A strategy may be as simple as "pick any random legal move" or as complicated 
+as an entire mapping of every state to a carefully chosen legal 
+move. A strategy profile is the collection of all strategies for all players. \\
+
+\noindent A \emph{rational} player is a player who has the "intelligence" to find and choose a strategy that 
+maximises their own utility. \\
+
+\noindent A fact is \emph{common knowledge} in a set of players means that every player knows the 
+fact, and every player knows that every player knows the fact and so on till infinity. This is an 
+interesting definition but for our purposes the layman meaning will be sufficient.
+
+\section{Nash Equilibria}
+A Nash equilibrium is a situation where deviation from 
+the chosen strategy by a player (keeping the strategies of the other players fixed) does not 
+strictly increase the utility of the player. Such a deviation\footnote{In some sense, 
+a Nash equilibrium is like the equilibrium of a body in physics where the energy is a function of multiple variables. To 
+check equilibrium, a valid way would be to keep all variables except one fixed and analyse with 
+respect to variation of that variable.} is called a \emph{unilateral deviation}. \\
+
+We will use the idea of \emph{Nash Equilibrium} to predict the optimal action of a player under the following
+assumptions (which will be referred to as the \emph{standard rationality assumptions}):
+
+\begin{itemize}
+\item All players are rational.
+\item The fact that all players are rational is common knowledge among all players.
+\end{itemize}
+
+In case of multiple Nash equilibria, technically all of them are valid answers to the question -- "what 
+will happen in the game under the standard rationality assumptions?"
+
+\subsection{Kingdom's Dilemma}
+
+The game is very simple with only one state and two actions for both players. The usual example is 
+a symmetric game set between two kingdoms. Two kingdoms must independently choose between 
+PEACE and WAR. They are not allowed to communicate or offer anything in 
+exchange for cooperation or surrender - it is as if the only purpose of these two players is to 
+maximise their utility and they care about nothing else. Let $S_A$ and $S_B$ be the strategies of 
+Kingdom A and Kingdom B respectively.
+
+
+\[
+\begin{tabular}{|c|c|c|}
+\hline
+\diagbox{$S_B$}{$S_A$}
+& \text{PEACE}
+& \text{WAR}
+\\
+\hline
+\text{PEACE}
+& (4,4)
+& (0,5)
+\\
+\hline
+\text{WAR}
+& (5,0)
+& (1,1) \\
+\hline
+\end{tabular}
+\]
+
+
+\noindent Each entry in the above table is of the form $(U_A,U_B)$, where $U_A$ and $U_B$ denote 
+the utilities of Kingdom A and Kingdom B respectively. Usually this table is a strategy-utility matrix but here the strategy is simply 
+to choose an action so we wrote it as a action-utility matrix. This matrix is in general 
+called the \emph{payoff matrix}.\\
+
+\noindent The first coordinate denotes the utility of Kingdom A and the second denotes the utility 
+of Kingdom B for this set of actions. So $(S_A,S_B)=(PEACE,PEACE)$ would give both $4$ utility, 
+$(S_A,S_B)=(PEACE,WAR)$ would give A utility $0$ and B utility $5$, $(S_A,S_B)=(WAR,PEACE)$ would give 
+A utility $5$ and B utility $0$ and $(S_A,S_B)=(WAR,WAR)$ would give both $1$ utility. \\
+
+\noindent Looking at the table, we observe that it would of course be preferable for both to 
+choose PEACE since that gives both of them $5$ utility. But a deviation from this would be 
+beneficial -- for example, if Kingdom B chose WAR instead, they would gain $1$ extra utility. So 
+clearly the strategy profile $(S_A,S_B)=(PEACE,PEACE)$ is not a Nash equilibrium. Looking 
+at each of the four strategy profiles, it is clear that $(S_A,S_B)=(WAR,WAR)$ is a Nash equilibrium -- 
+since any kingdom's change of strategy to PEACE would not increase their utility 
+(in fact in this case it strictly decrease their utility). \\
+
+\noindent This analysis reveals that a profile with better utilities for all players 
+may not be the rational outcome! (PEACE,PEACE) was better for both players but was not an 
+equilibrium$\dots$\\
+
+\noindent A side point to be noted here is that a decrease of the utility of Kingdom A does not matter 
+to Kingdom B. If B had a choice to go from $(U_A,U_B)=(3,5)$ to $(U_A,U_B)=(0,4)$ he would not 
+take it since it decreases his own utility -- the common idea that another's loss is our gain 
+is not true in general. The class of two-player games where this is true is called a \emph{constant-sum game}, 
+because the sum of utilities of both players is constant for any strategy profile 
+so maximisation of own utility automatically means minimisation of the opponent's. A common case of 
+constant-sum game is the zero-sum game.
+
+\subsection{Penalty Kick}
+The shooter and the keeper are playing a game of penalty kick. The shooter is allowed to kick 
+the ball in two sides -- left(L) and right(R). The keeper is allowed to choose between two actions -- jump 
+to left(L) or jump to right (R). If both choose same side, the keeper wins. If they choose different 
+sides, the shooter wins.\\
+
+\noindent Let A be the keeper and B be the shooter. The payoff matrix is as follows:
+
+\[
+\begin{tabular}{|c|c|c|}
+\hline
+\diagbox {$S_B$}{$S_A$} & \text{L} & \text{R} \\
+\hline
+\text{L} & (-1,1) & (1,-1) \\
+\hline
+\text{R} & (1,-1) & (-1,1) \\
+\hline
+\end{tabular}
+\]
+
+
+Upon careful inspection, we notice that no square of the payoff matrix is a Nash equilibrium. This is 
+because there exists an obvious deviation for the losing player that would 
+strictly increase their utility -- just switch action to the other.\\
+
+This should make us uncomfortable -- our planning stage would never end because there would be no 
+settled conclusion of what strategy to have. So would a rational player just not play the game? Or would 
+there be no point in choosing a strategy, just choose any one because does it really matter? This 
+question itself suggests the introduction of randomisation as part of the strategy.
+
+\section{Mixed Strategies}
+A pure strategy is a deterministic map of states to actions. A mixed strategy is a mapping from states 
+to a probability distribution over actions -- basically a particular probability of taking any action.
+The failure of pure strategies suggests that perhaps randomisation would settle the game 
+into equilibrium. In mixed strategies, a rational player seeks to maximise the \emph{expected} utility 
+instead of the usual maximisation of utility.
+
+\section{Mixed Strategy Nash Equilibria}
+The Nash equilibrium we saw earlier is called a Pure Strategy Nash equilibrium. But with mixed strategies, 
+the unilateral deviation is a player changing the probability distribution over actions. Note that 
+the distribution can take any real values as long as the sum of probabilities is 1.
+
+Let us consider the penalty kick game again. 
+
+\[
+\begin{tabular}{|c|c|c|}
+\hline
+\diagbox {$S_B$}{$S_A$} & \text{L} & \text{R} \\
+\hline
+\text{L} & (-1,1) & (1,-1) \\
+\hline
+\text{R} & (1,-1) & (-1,1) \\
+\hline
+\end{tabular}
+\]
+
+Let $S_A = (p:L \;,\; 1-p:R)$ be the distribution over L and R for player A. Similarly $S_B = (q:L\;,\;1-q:R)$ 
+be the distribution over L and R for player B. The expected utility of player A can be written in terms 
+of $p$ and the conditional expected utilities.
+
+\[
+\mathbb E[U_A] = p \cdot (E[U_A | S_A = L]) + (1-p) \cdot E[U_A | S_A = R]
+\]
+\[
+\mathbb E[U_A | S_A = L] = q(E[U_A | S_A = L, S_B = L]) + (1-q)E[U_A | S_A = L, S_B = R] = q(-1) + (1-q)(1) = 1-2q
+\]
+\[
+\mathbb E[U_A | S_A = R] = q(E[U_A | S_A = R, S_B = L]) + (1-q)E[U_A | S_A = R, S_B = R] = q(1) + (1-q)(-1) = 2q-1
+\]
+
+\[
+\implies
+\mathbb E[U_A] = p(1-2q) + (1-p)(2q-1) = (2p-1)(2q-1)
+\]
+
+Now to ensure unilateral deviation does not increase the expected utility of either player, we must 
+have partial derivatives of the expected utility of player A with respect to $p$ and $q$ equal to zero.
+
+\[
+\frac{\partial \mathbb E[U_A]}{\partial p} = 0
+\implies 
+2(2q-1)=0 
+\implies 
+q = \frac{1}{2}
+\]
+\[
+\frac{\partial \mathbb E[U_A]}{\partial q} = 0
+\implies
+2(2p-1)=0
+\implies
+p = \frac{1}{2}
+\]
+
+So both actions are chosen with equal probability for both players. This is not surprising 
+because of the symmetries of the payoff matrix.\\
+
+\noindent Now you may have noticed there was an easier way to find $E[U_A]$ by using the normal definition of 
+expected value as a weighted average of the four cases \{LL,LR,RL,RR\}. But this way illustrates the fact that 
+the partial derivative with respect to $p$ gave the value of $q$ and vice versa. This is 
+not a coincidence, in fact it is rather obvious from the equation we saw earlier.
+
+\[
+\mathbb E[U_A] = p \cdot (E[U_A | S_A = L]) + (1-p)\cdot E[U_A | S_A = R]
+\]
+
+Here the conditional probabilities do not depend on $p$ so upon differentiation we get that both 
+conditional expectations must be equal which upon solving yields the value of $q$. Applying the same 
+argument on the corresponding equation written using $q$ would yield the value of $p$.
+
+\[
+\mathbb E[U_A] = q \cdot (E[U_A | S_B = L]) + (1-q)\cdot E[U_A | S_B = R]
+\]
+
+\section{Indifference Theorem}
+The generalisation of the observation in the previous section is the \emph{indifference theorem}, where 
+for a general set of probabilities $p_1,p_2,\dots,p_n$ (whose sum must obviously be 1) corresponding 
+to $n$ strategies of player A, a Mixed Strategy Nash Equilibrium implies all the 
+conditional expected utilities are equal. This makes player A indifferent to which strategy 
+he chooses since all give same expected utility. If one of the conditional expected utilities is higher than the others, then 
+player A will simply choose that strategy with probability 1. This may be viewed as B being 
+forced to make all choices for A equal. Of course, the same thing applies with A being forced 
+to make all choices for B equal. 
+
+\[
+\mathbb E[U_A] = \sum_{i=1}^n p_i \cdot E[U_A | S_A = i] \text { and MSNE }
+\implies 
+E[U_A | S_A = 1] = E[U_A | S_A = 2] = \cdots = E[U_A | S_A = n]
+\]
+
+An important question is -- when can mixed strategy Nash equilibria exist? When can both 
+players enforce indifference for each other (or in general, multiple players)?
+
+\section{The Minimax Principle}
+We state without proof that for every finite two-player zero-sum game, there 
+exists a mixed strategy Nash equilibrium. A pure strategy Nash equilibrium is 
+considered to be a special case of the general mixed strategy Nash equilibrium.\\
+
+\section*{Philosophical Note}
+The analysis leading to Nash equilibrium assumes that when a player considers 
+changing strategy, the strategies of all other players remain fixed. Some philosophers have argued 
+that in perfectly symmetric situations between identical rational agents, this may not be the 
+correct thing to check. If both agents reason in exactly the same way, they will expect both their 
+planning stages to reach identical conclusions. Using this idea in the Kingdom's dilemma, one will 
+be led to conclude that both players should choose PEACE. Personally, this seems much more appropriate 
+to me than the Nash perspective. This alternative viewpoint leads to 
+ideas such as superrationality and other decision theories. Classical game theory, however, 
+adopts the Nash perspective and studies unilateral deviations and this is the commonly accepted viewpoint.\\
+
+Interestingly enough, the fact that most people who study game theory are prone to accepting the 
+Nash perspective is one of the reasons why it is important for us to also adopt the Nash perspective! 
+One of the ways I like to convince myself of the Nash perspective is that a Nash equilibrium is 
+secure against spies -- if a spy in your kingdom reveals your strategy to the other kingdom 
+before the actual simultaneous big "reveal", it won't matter as long as you chose the Nash 
+answer since deviation by the other kingdom won't affect you. In general, as long as only one 
+kingdom gets this leaked info, Nash equilibria are secure.\\
+
+\noindent A side note is that Nash equilibrium is simply a mathematical definiton and is not prescriptive 
+in the sense of "what should players do". Under certain assumptions we can conclude 
+that Nash equilibrium is the optimal choice.
+
+\section{Problems}
+
+\begin{enumerate}
+\item Derive the mixed strategy equilibrium of Rock--Paper--Scissors.
+
+\end{enumerate}
