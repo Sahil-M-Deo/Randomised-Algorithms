@@ -135,7 +135,11 @@ A pure strategy is a deterministic map of states to actions. A mixed strategy is
 to a probability distribution over actions -- basically a particular probability of taking any action.
 The failure of pure strategies suggests that perhaps randomisation would settle the game 
 into equilibrium. In mixed strategies, a rational player seeks to maximise the \emph{expected} utility 
-instead of the usual maximisation of utility.
+instead of the usual maximisation of utility.\\
+
+The idea of a mixed strategy should feel familiar -- a deterministic algorithm can be 
+exploited by an adversarial input and randomisation in the algorithm can help us deal with 
+such adversaries, like in \texttt{QuickSort}.
 
 \section{Mixed Strategy Nash Equilibria}
 The Nash equilibrium we saw earlier is called a Pure Strategy Nash equilibrium. But with mixed strategies, 
