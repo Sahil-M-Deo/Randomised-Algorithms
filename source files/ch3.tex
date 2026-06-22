@@ -53,9 +53,13 @@ Graph Connectivity & BFS & Adjacency Matrix & $n=|V|\times|V|$ & $\Theta(n)$ \\
 
 \section{NP}
 
-The class $NP$ consists of all decision problems whose answer when \texttt{YES} can be verified in polynomial 
-time. The algorithm which solved the problem can output a \emph{certificate} along with \texttt{YES} -- this 
-certificate is information which can be used to verify in polynomial time that the answer is indeed \texttt{YES}. 
+$\NP$ stands for non-deterministic polynomial time. What that really means is, if you perform the 
+non-deterministic procedure called \emph{guessing}, you can check your answer in polynomial time. $\NP$ 
+does \textbf{not} stand for non-polynomial time. Formally, the class $\NP$ consists of all decision 
+problems whose answer when \texttt{YES} can be verified in polynomial time. The algorithm which 
+solved the problem can output a \emph{certificate} along with \texttt{YES} -- this certificate is 
+information which can be used to verify in polynomial time that the answer is indeed \texttt{YES}. 
+
 
 \begin{center}
 \begin{tabular}{|c|c|c|}
@@ -106,7 +110,7 @@ $\NPcomp$ consists of those $\NP$ problems which are at least as hard as \emph{e
 For an $L$ in $\NPcomp$, every problem in $\NP$ can be polynomially reduced to $L$.
 
 \[
-\NPcomp \; = \; \{L: Q \le_p L \quad \forall \; Q \in \NP\}
+\NPcomp \; = \; \{L \in \NP : Q \le_p L \quad \forall \; Q \in \NP\}
 \]
 
 \section{NP-Hard}
@@ -118,7 +122,85 @@ decision problems -- they could be any type of problem like optimisation or sear
 \NPhard \; = \; \{L: L \le_p Q \quad \forall \; Q \in \NP\}
 \]
 
-An obvious conclusion is that $\NPcomp \subseteq \NPhard$.
+An obvious conclusion is that $\NPcomp = \NP \cap \NPhard \subseteq \NPhard$.
+
+
+
+\section*{Example}
+
+The \textsc{k-SAT} decision problem is defined as follows -- given a Boolean formula $\phi$ in 
+the form $(k-CLAUSE_1)$ AND $(k-CLAUSE_2)$ AND $\dots$ (where a $k-CLAUSE$ is defined as $k$ boolean 
+variables joined using OR), determine whether there exists a satisfying assignment, that is, whether 
+each variable in $\phi$ can be assigned a value to make $\phi = 1$. An example of a \textsc{k-SAT} 
+expression with $k=2$ is $\phi = (x \vee \neg z) \wedge (\neg x \vee y) \wedge (y \vee w)$\\
+
+
+\noindent For $k=2$, the problem \textsc{2-SAT} can be polynomially reduced to the problem of 
+\textsc{SCC} (Strongly Connected Graphs) by considering each variable as a node and each clause as inducing 
+edges. \textsc{SCC} has been solved in polynomial time using \texttt{DFS} based approach. 
+Now, given an instance of \textsc{2-SAT}, replace each clause $a\vee b$ by 
+$(a\vee b\vee z)\wedge(a\vee b\vee\neg z)$ where $z$ is a fresh variable that does not appear 
+elsewhere in the formula. These two expressions are logically equivalent, so this is a valid reduction. 
+This reduction can clearly be performed in polynomial time.
+
+\[
+\implies \textsc{2-SAT}\le_p\textsc{SCC} \;\; \text{ and } \;\;\textsc{2-SAT} \le_p \textsc{3-SAT}
+\]
+
+In fact, from any clause $(a_1 \vee a_2 \vee $\dots$ \vee a_n)$ we can go to 
+$(a_1 \vee a_2 \vee $\dots$ \vee a_n \vee z) \wedge (\neg z \vee a_1 \vee a_2 \vee $\dots$ \vee a_n)$
+
+\[
+\implies \textsc{2-SAT} \le_p \textsc{3-SAT} \le_p \dots
+\iff \textsc{2-SAT} \le_p \textsc{3-SAT} \le_p \textsc{k-SAT} \;\; \forall \; k 
+\]
+
+All the $\textsc{k-SAT} \in \NP$ because the satisfying assignment is checkable in polynomial time. Of 
+course, $\textsc{2-SAT} \in \classP$ as well as $\NP$ because of the reduction to \textsc{SCC}.\\
+
+
+\noindent What about the bigger \textsc{k-SAT}s? For a general \textsc{n-SAT}, $(a_1 \vee a_2 \vee $\dots$ \vee a_n)$ 
+can be rewritten as $(a_1 \vee a_2 \vee b_1) \wedge (\neg b_1 \vee a_3 \vee b_2) \wedge 
+(\neg b_2 \vee a_3 \vee b_3) \wedge \dots (\neg b_{n-3} \vee a_{n-1} \vee a_{n})$. This introduced $n-3$ new 
+variables $b_1, b_2, \dots b_{n-3}$ and made it into a \textsc{k-SAT}.
+
+\[
+\textsc{k-SAT} \le_p \textsc{3-SAT}
+\]
+
+Since we proved both $\textsc{k-SAT} \le_p \textsc{3-SAT}$ and $\textsc{3-SAT} \le_p \textsc{k-SAT}$, we 
+have proved that $\textsc{k-SAT} =_p \textsc{3-SAT}$. With some more effort, it can be shown that all of $\NP$ is 
+reducible to \textsc{3-SAT}. Thus \textsc{3-SAT} is $\NPcomp$ and with it, all \textsc{k-SAT}.
+
+\begin{center}
+
+\begin{tikzpicture}[node distance=4mm and 0.5mm]
+
+\node (scc) {\textsc{SCC}};
+\node[right=of scc] (eq1) {$=$};
+\node[right=of eq1] (sat2) {\textsc{2-SAT}};
+\node[right=of sat2] (red) {$\le_p$};
+\node[right=of red] (sat3) {\textsc{3-SAT}};
+\node[right=of sat3] (eq2) {$=$};
+\node[right=of eq2] (sat4) {\textsc{4-SAT}};
+\node[right=of sat4] (eq3) {$=$};
+\node[right=of eq3] (sat5) {\textsc{5-SAT}};
+\node[right=of sat5] (eq4) {$=$};
+\node[right=of eq4] (dots) {$\cdots$};
+
+\draw[decorate,decoration={brace,mirror,amplitude=8pt}]
+($(scc.west)+(-2mm,-6mm)$)--($(sat2.east)+(2mm,-6mm)$)
+node[midway,yshift=-18pt] {$\classP$};
+
+\draw[decorate,decoration={brace,mirror,amplitude=8pt}]
+($(sat3.west)+(-2mm,-6mm)$)--($(dots.east)+(2mm,-6mm)$)
+node[midway,yshift=-18pt] {$\NPcomp$};
+
+\end{tikzpicture}
+\end{center}
+
+$\classP$ and $\NPcomp$ are quite close in difficulty, or are they? It is conjectured (and widely believed) that they 
+are not equal. For more on this topic, see end-of-chapter problems!
 \section{RP}
 
 A decision problem belongs to $\RP$ if there exists a randomised polynomial-time algorithm with input size $n$ 
@@ -173,8 +255,9 @@ A decision problem belongs to $\ZPP$ if there exists a randomized algorithm that
 
 \section{BPP}
 A decision problem belongs to $\BPP$ if there exists a randomized polynomial-time algorithm 
-whose probability of producing the correct answer is at least $\frac{1}{n^c}$, where $c>0$.
-
+whose probability of producing the correct answer is at least $\frac{1}{n^c}$, where $c>0$. 
+Interestingly, it is believed that randomness does not truly add computation power and thus all the classes 
+$\classP$, $\RP$, $\ZPP$, $\BPP$ are the same. This is conjecture, just like $\classP \neq \NP$.
 \section{Summary}
 
 \begin{center}
@@ -223,7 +306,7 @@ are computable in polynomial time but not invertible in polynomial time.
 Consider the function $F: \{0,1\}^n \mapsto \{0,1\}^m$
 
 \begin{enumerate}[label=\textbf{(\alph*)}]
-\item Show that if $F$ is invertible, $m \ge n$
+\item Show that if $F$ is invertible then $m \ge n$.
 \item Using the above result, show that if $\classP=\NP$ then $F$ can not be a one-way function by 
 reformulating the problem of finding the inverse as a decision problem.
 \emph{Hint: Go bit-by-bit.}

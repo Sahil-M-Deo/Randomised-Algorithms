@@ -13,13 +13,13 @@
 \contentsline {section}{\numberline {3.2}P}{14}{section.3.2}%
 \contentsline {section}{\numberline {3.3}NP}{15}{section.3.3}%
 \contentsline {section}{\numberline {3.4}Polynomial-Time Reductions}{15}{section.3.4}%
-\contentsline {section}{\numberline {3.5}NP-Complete}{15}{section.3.5}%
+\contentsline {section}{\numberline {3.5}NP-Complete}{16}{section.3.5}%
 \contentsline {section}{\numberline {3.6}NP-Hard}{16}{section.3.6}%
-\contentsline {section}{\numberline {3.7}RP}{16}{section.3.7}%
+\contentsline {section}{\numberline {3.7}RP}{17}{section.3.7}%
 \contentsline {section}{\numberline {3.8}ZPP}{17}{section.3.8}%
-\contentsline {section}{\numberline {3.9}BPP}{17}{section.3.9}%
-\contentsline {section}{\numberline {3.10}Summary}{17}{section.3.10}%
-\contentsline {section}{\numberline {3.11}Problems}{18}{section.3.11}%
+\contentsline {section}{\numberline {3.9}BPP}{18}{section.3.9}%
+\contentsline {section}{\numberline {3.10}Summary}{18}{section.3.10}%
+\contentsline {section}{\numberline {3.11}Problems}{19}{section.3.11}%
 \contentsline {chapter}{\numberline {4}The Classics}{19}{chapter.4}%
 \contentsline {section}{\numberline {4.1}QuickSort}{19}{section.4.1}%
 \contentsline {subsection}{\numberline {4.1.1}The Algorithm}{19}{subsection.4.1.1}%
@@ -157,7 +157,7 @@
 \contentsline {subsection}{\numberline {12.3.1}The Scheme}{103}{subsection.12.3.1}%
 \contentsline {subsection}{\numberline {12.3.2}Soundness and Completeness}{103}{subsection.12.3.2}%
 \contentsline {subsection}{\numberline {12.3.3}Game Theory Perspective}{104}{subsection.12.3.3}%
-\contentsline {chapter}{Appendices}{105}{section*.81}%
+\contentsline {chapter}{Appendices}{105}{section*.2}%
 \contentsline {chapter}{\numberline {A}Probability and Expectation}{106}{appendix.A}%
 \contentsline {section}{\numberline {A.1}Linearity of Expectation}{106}{section.A.1}%
 \contentsline {section}{\numberline {A.2}Tail Sum Formula}{106}{section.A.2}%
@@ -202,4 +202,4 @@
 \contentsline {section}{\numberline {E.4}The Nullspace}{120}{section.E.4}%
 \contentsline {section}{\numberline {E.5}Nullity and Rank}{120}{section.E.5}%
 \contentsline {section}{\numberline {E.6}The Rank--Nullity Theorem}{120}{section.E.6}%
-\contentsline {paragraph}{Theorem (Rank--Nullity).}{120}{section*.92}%
+\contentsline {paragraph}{Theorem (Rank--Nullity).}{120}{section*.13}%

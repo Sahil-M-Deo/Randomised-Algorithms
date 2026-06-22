@@ -2624,6 +2624,10 @@ Delete(x)
 
 The expected time of deletion is $\Theta(\frac{n}{2m})$ since on 
 average half the linked list is searched in a linear traversal.
+
+Overall, the three operations are generally considered expected $\Theta(1)$ since we keep $n \le m$ and if 
+$n$ exceeds $m$ we rehash with a larger $m$.
+
 \section{Bloom Filters}
 
 Suppose we wish to store a set of elements and support the operations 
