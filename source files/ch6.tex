@@ -2,7 +2,7 @@
 
 \section{Skip Lists}
 
-\subsection*{Why not just use Arrays?}
+\subsection*{Arrays}
 Suppose we store the following array in contiguous memory:
 \[
 \begin{tikzpicture}[
@@ -26,9 +26,9 @@ font=\small
 \end{tikzpicture}
 \]
 
-Suppose we wish to insert the element \(67\) between \(3\) and \(4\).
-
-Since arrays occupy contiguous memory, every element beginning from \(4\) must be shifted one position to the right in order to create space for the new element.
+Suppose we wish to insert the element \(67\) between \(3\) and \(4\). Since arrays occupy contiguous 
+memory, every element beginning from \(4\) must be shifted one position to the right in order to 
+create space for the new element.
 
 \[
 \begin{tikzpicture}[
@@ -94,8 +94,7 @@ font=\small
 \end{tikzpicture}
 \]
 
-Insertion into an array requires shifting \(\Theta(n)\) elements in the worst as well as
- average case, so a single insertion is \(\Theta(n)\) time complexity.
+Insertion into an array requires shifting \(\Theta(n)\) elements in the worst as well as average case.
 
 \subsection*{How are Linked Lists any better?}
 
@@ -239,6 +238,8 @@ font=\small
 \end{tikzpicture}
 \]
 
+This linked list is exactly what we desired and can be equivalently represented as --
+
 \[
 \begin{tikzpicture}[
 >=Stealth,
@@ -246,8 +247,7 @@ every node/.style={
 draw,
 minimum width=0.9cm,
 minimum height=0.8cm,
-font=\small
-}
+font=\small}
 ]
 
 % Nodes
@@ -266,11 +266,10 @@ font=\small
 \end{tikzpicture}
 \]
 
-\[
-\textbf{Done!}
-\]
+\vspace{1em}
 
-We used a constant number of pointer operations to insert an element into the list. Thus insertion is \(\Theta(1)\) time complexity.
+We used a constant number of operations to insert an element into the list. 
+Thus insertion is \(\Theta(1)\) time complexity.
 \subsection*{Why Skip Lists?}
 
 Although insertion is \(\Theta(1)\) time complexity, searching for an element in linked 
@@ -280,7 +279,7 @@ we can not binary search since that requires random access in constant time, whi
 
 \noindent So the idea of skip lists is to bypass that limitation by
 adding ``express lanes'' to a linked list. Instead of traversing every element one-by-one, 
-we maintain additional higher-level lists that skip\footnote{Hence the name!} over many elements at once.\\
+we maintain additional higher-level lists that skip (hence the name) over many elements at once.\\
 
 
 \noindent Consider the following skip list --
@@ -366,22 +365,27 @@ number of nodes in level \(k\) is $\frac{n}{2^k}$.
 
 \subsection{Expected Height}
 
-Let \(H\) be the height of a skip list with \(n\) independent nodes, where each node is promoted to the next level with probability \(1/2\). Then:
+Let \(H\) be the height of a skip list with \(n\) independent nodes, where each node is 
+promoted to the next level with probability \(1/2\). Then it is easy to express the probability that 
+height $H$ is greater than or equal to $h$.
+
 \[
 \Pr(H\ge h)=1-(1-2^{-h})^n
 \]
 
-We use the tail-sum formula
+We use the tail-sum formula to find the expected value of \(H\).
+
 \[
 \mathbb{E}[H]=\sum_{h=1}^{\infty}\Pr(H\ge h)
 =\sum_{h=1}^{\infty}\left(1-(1-2^{-h})^n\right)
 \]
 
 
-\paragraph{Step 1: Split the expectation}
+\subsubsection*{Step 1: Split the expectation}
 
 
-Let $h_o=\lfloor \log_2 n \rfloor$
+Let $h_o=\lfloor \log_2 n \rfloor$ be the splitting point for the sum.
+
 \[
 \mathbb{E}[H]
 =\sum_{h\le h_0}\Pr(H\ge h)
@@ -390,29 +394,30 @@ Let $h_o=\lfloor \log_2 n \rfloor$
 \]
 
 
-\paragraph{Step 2: Bounding \(S_1\)}
+\subsubsection*{Step 2: Bounding \(S_1\)}
+
+Consider the function $f(h)=\Pr(H\ge h)=1-(1-2^{-h})^{n}$. Since $f(h)$ is a decreasing function, we can 
+bound it by $f(h_0)$ and $f(0)$.
 
 \[
-\text{Let } Pr(H\ge h)=f(h)=1-(1-2^{-h})^{n}
-\implies 
-f(h_{o}) \le f(h) \le f(0) \; \forall \; 0 \le h \le h_o
-\]
-
-\[
+f(h_{o}) \le f(h) \le f(0) 
 \implies 
 \sum_{h=1}^{h_o}f(h_{o}) \le \sum_{h=1}^{h_o}f(h) \le \sum_{h=1}^{h_o}f(0)
 \]
 
-Since $f(0)=1$, and $f(h_o) \ge 1-(1-\frac{1}{n})^n \ge 1-\frac{1}{e}$ we get:
+\vspace{0.5em}
+Since $f(0)=1$, and $f(h_o) \ge 1-(1-\frac{1}{n})^n \ge 1-\frac{1}{e}$ we get bounds for $S_1$.
 
 \[
 h_o(1-\frac{1}{e})\le S_1 \le h_o
 \]
 
-\paragraph{Step 3: Bounding \(S_2\)}
+\subsubsection*{Step 3: Bounding \(S_2\)}
 
 
-Since $(1-x)^{n} \ge 1-nx$,
+Using Bernoulli's inequality\footnote{Refer \autoref{bernoulli}}, $(1-x)^{n} \ge 1-nx$ so we can 
+bound $f(h)$.
+
 \[
 1-(1-2^{-h})^n \le n \cdot 2^{-h}
 \implies
@@ -989,8 +994,7 @@ IOT(root) \\starting the recursive traversal from the root
 \end{minipage}
 \end{center}
 
-\vspace{2em}
-\subsubsection*{Example}
+\vspace{1em}
 \begin{center}
 \begin{tikzpicture}[
 level 1/.style={level distance=20mm, sibling distance=40mm},
@@ -1011,18 +1015,19 @@ child {
 \end{tikzpicture}
 \end{center}
 
-Convince yourself that the output will be \texttt{1 2 3 4 5 6 7}. In-Order Traversal is most commonly seen in 
-\texttt{Depth-First Search}, popularly known as \texttt{DFS}. 
+Convince yourself that the output for the above tree will be \texttt{1 2 3 4 5 6 7}. In-Order Traversal 
+is most commonly seen in \texttt{Depth-First Search}, popularly known as \texttt{DFS}. 
 
 \subsection{Binary Search Trees}
 
 The value stored at each node is referred to as its \textbf{key}. A binary search tree (BST) is a 
-binary tree in which every non-leaf node satisfies
+binary tree in which every non-leaf node satisfies the following properties:
 \begin{itemize}
-\item all keys in the left subtree are smaller than the node's key,
-\item all keys in the right subtree are larger than the node's key.
+\item All keys in the left subtree are smaller than the node's key.
+\item All keys in the right subtree are larger than the node's key.
 \end{itemize}
 
+Any tree which has the above two properties is said to have the \textbf{BST} property.
 \begin{center}
 \begin{tikzpicture}[
 level 1/.style={level distance=20mm, sibling distance=40mm},
@@ -1457,137 +1462,6 @@ This tree is essentially a linked list. Its height is \(n\) and consequently all
 require \(\Theta(n)\) time. To avoid this degeneration we need a 
 mechanism for changing the shape of a tree while preserving the BST property.
 
-\subsection{Rotations}
-These are operations that transform a tree into another tree with the same inorder traversal. From an 
-undirected graph perspective the only change that occurs is one edge is deleted and one is added. But from 
-a rooted tree perspective 2 father-child relationships are changed. There are two types of rotations (left 
-and right) which are inverse of each other.
-
-\subsubsection*{Left Rotation}
-\vspace{1em}
-\begin{center}
-\begin{tikzpicture}[
-every node/.style={
-    circle,
-    draw,
-    minimum size=7mm,
-    inner sep=0pt
-},
-level distance=12mm,
-sibling distance=18mm
-]
-
-%---------------- Original ----------------
-\begin{scope}
-\node (x) at (0,0) {5};
-\node (y) at (2,-1.2) {8};
-\node (a) at (1,-2.4) {6};
-\node (b) at (3,-2.4) {11};
-
-\draw (x)--(y);
-\draw (y)--(a);
-\draw (y)--(b);
-
-\node[draw=none] at (1,-3.5) {Before};
-\end{scope}
-
-%---------------- Intermediate ----------------
-\begin{scope}[xshift=6cm]
-\node (x) at (0,0) {5};
-\node (y) at (2.3,-0.2) {8};
-\node (a) at (1,-2.4) {6};
-\node (b) at (3,-1.6) {11};
-
-\draw[dashed,thick,blue!80!black] (x)--(a);
-\draw (x)--(y);
-\draw[dashed,thick,red!90!black] (y)--(a);
-\draw (y)--(b);
-
-\node[draw=none] at (1,-3.5) {Intermediate};
-\end{scope}
-
-%---------------- Final ----------------
-\begin{scope}[xshift=13cm]
-\node (y) at (0.6,0) {8};
-\node (x) at (-1.2,-1.2) {5};
-\node (a) at (0,-2.4) {6};
-\node (b) at (2.4,-1.2) {11};
-
-\draw (y)--(x);
-\draw (y)--(b);
-\draw (x)--(a);
-
-\node[draw=none] at (0,-3.5) {After};
-\end{scope}
-
-\draw[->,thick] (3.5,-1) -- (4.8,-1);
-\draw[->,thick] (9.5,-1) -- (10.8,-1);
-
-\end{tikzpicture}
-\end{center}
-
-\subsubsection*{Right Rotation}
-\vspace{1em}
-\begin{center}
-\begin{tikzpicture}[
-every node/.style={
-    circle,
-    draw,
-    minimum size=7mm,
-    inner sep=0pt
-},
-level distance=12mm,
-sibling distance=18mm
-]
-
-%---------------- Original ----------------
-\begin{scope}
-\node (y) at (0.6,0) {8};
-\node (x) at (-1.2,-1.2) {5};
-\node (a) at (0,-2.4) {6};
-\node (b) at (2.4,-1.2) {11};
-
-\draw (y)--(x);
-\draw (y)--(b);
-\draw (x)--(a);
-
-\node[draw=none] at (0,-3.5) {Before};
-\end{scope}
-
-\draw[->,thick] (3.5,-1) -- (4.8,-1);
-\draw[->,thick] (9.5,-1) -- (10.8,-1);
-
-%---------------- Intermediate ----------------
-\begin{scope}[xshift=6cm]
-\node (x) at (0,0) {5};
-\node (y) at (2.3,-0.2) {8};
-\node (a) at (1,-2.4) {6};
-\node (b) at (3,-1.6) {11};
-
-\draw[dashed,thick,red!90!black] (x)--(a);
-\draw (x)--(y);
-\draw[dashed,thick,blue!80!black] (y)--(a);
-\draw (y)--(b);
-
-\node[draw=none] at (1,-3.5) {Intermediate};
-\end{scope}
-
-%---------------- Final ----------------
-\begin{scope}[xshift=13cm]
-\node (x) at (0,0) {5};
-\node (y) at (2,-1.2) {8};
-\node (a) at (1,-2.4) {6};
-\node (b) at (3,-2.4) {11};
-
-\draw (x)--(y);
-\draw (y)--(a);
-\draw (y)--(b);
-
-\node[draw=none] at (1,-3.5) {After};
-\end{scope}
-
-\end{tikzpicture}
-\end{center}
 
 \subsection{Min-Heaps}
 
@@ -1921,8 +1795,242 @@ child {
 
 
 It can be proved that when there is no more violation involving the inserted value, there is no more 
-violation in the tree. Thus the heap property is restored.
+violation in the tree. Thus the heap property is restored. 
 
+
+\subsection{Rotations}
+These are operations that transform a tree into another tree with the same inorder traversal. From an 
+undirected graph perspective the only change that occurs is one edge is deleted and one is added. But from 
+a rooted tree perspective 2 father-child relationships are changed. There are two types of rotations (left 
+and right) which are inverse of each other.
+
+\subsubsection*{Left Rotation}
+\vspace{1em}
+\begin{center}
+\begin{tikzpicture}[
+every node/.style={
+    circle,
+    draw,
+    minimum size=7mm,
+    inner sep=0pt
+},
+level distance=12mm,
+sibling distance=18mm
+]
+
+%---------------- Original ----------------
+\begin{scope}
+\node (x) at (0,0) {5};
+\node (y) at (2,-1.2) {8};
+\node (a) at (1,-2.4) {6};
+\node (b) at (3,-2.4) {11};
+
+\draw (x)--(y);
+\draw (y)--(a);
+\draw (y)--(b);
+
+\node[draw=none] at (1,-3.5) {Before};
+\end{scope}
+
+%---------------- Intermediate ----------------
+\begin{scope}[xshift=6cm]
+\node (x) at (0,0) {5};
+\node (y) at (2.3,-0.2) {8};
+\node (a) at (1,-2.4) {6};
+\node (b) at (3,-1.6) {11};
+
+\draw[dashed,thick,blue!80!black] (x)--(a);
+\draw (x)--(y);
+\draw[dashed,thick,red!90!black] (y)--(a);
+\draw (y)--(b);
+
+\node[draw=none] at (1,-3.5) {Intermediate};
+\end{scope}
+
+%---------------- Final ----------------
+\begin{scope}[xshift=13cm]
+\node (y) at (0.6,0) {8};
+\node (x) at (-1.2,-1.2) {5};
+\node (a) at (0,-2.4) {6};
+\node (b) at (2.4,-1.2) {11};
+
+\draw (y)--(x);
+\draw (y)--(b);
+\draw (x)--(a);
+
+\node[draw=none] at (0,-3.5) {After};
+\end{scope}
+
+\draw[->,thick] (3.5,-1) -- (4.8,-1);
+\draw[->,thick] (9.5,-1) -- (10.8,-1);
+
+\end{tikzpicture}
+\end{center}
+
+\subsubsection*{Right Rotation}
+\vspace{1em}
+\begin{center}
+\begin{tikzpicture}[
+every node/.style={
+    circle,
+    draw,
+    minimum size=7mm,
+    inner sep=0pt
+},
+level distance=12mm,
+sibling distance=18mm
+]
+
+%---------------- Original ----------------
+\begin{scope}
+\node (y) at (0.6,0) {8};
+\node (x) at (-1.2,-1.2) {5};
+\node (a) at (0,-2.4) {6};
+\node (b) at (2.4,-1.2) {11};
+
+\draw (y)--(x);
+\draw (y)--(b);
+\draw (x)--(a);
+
+\node[draw=none] at (0,-3.5) {Before};
+\end{scope}
+
+\draw[->,thick] (3.5,-1) -- (4.8,-1);
+\draw[->,thick] (9.5,-1) -- (10.8,-1);
+
+%---------------- Intermediate ----------------
+\begin{scope}[xshift=6cm]
+\node (x) at (0,0) {5};
+\node (y) at (2.3,-0.2) {8};
+\node (a) at (1,-2.4) {6};
+\node (b) at (3,-1.6) {11};
+
+\draw[dashed,thick,red!90!black] (x)--(a);
+\draw (x)--(y);
+\draw[dashed,thick,blue!80!black] (y)--(a);
+\draw (y)--(b);
+
+\node[draw=none] at (1,-3.5) {Intermediate};
+\end{scope}
+
+%---------------- Final ----------------
+\begin{scope}[xshift=13cm]
+\node (x) at (0,0) {5};
+\node (y) at (2,-1.2) {8};
+\node (a) at (1,-2.4) {6};
+\node (b) at (3,-2.4) {11};
+
+\draw (x)--(y);
+\draw (y)--(a);
+\draw (y)--(b);
+
+\node[draw=none] at (1,-3.5) {After};
+\end{scope}
+
+\end{tikzpicture}
+\end{center}
+
+Rotations can also fix heap violations the same way swaps did with the added benefit of preserving 
+in-order traversal. A violation with right child and parent can be fixed with a left rotation at the parent 
+and vice-versa. 
+
+\begin{center}
+\begin{tikzpicture}[
+every node/.style={
+    circle,
+    draw,
+    minimum size=7mm,
+    inner sep=0pt
+},
+level distance=12mm,
+sibling distance=18mm
+]
+
+%---------------- Original ----------------
+\begin{scope}
+\node (x) at (0,0) [fill=RED]{8};
+\node (y) at (2,-1.2) [fill=RED]{5};
+\node (a) at (1,-2.4) {6};
+\node (b) at (3,-2.4) {11};
+
+\draw (x)--(y);
+\draw (y)--(a);
+\draw (y)--(b);
+
+\node[draw=none] at (1,-3.5) {Before};
+\end{scope}
+
+%---------------- Final ----------------
+\begin{scope}[xshift=9cm]
+\node (y) at (0.6,0) {5};
+\node (x) at (-1.2,-1.2) {8};
+\node (a) at (0,-2.4) {6};
+\node (b) at (2.4,-1.2) {11};
+
+\draw (y)--(x);
+\draw (y)--(b);
+\draw (x)--(a);
+
+\node[draw=none] at (0,-3.5) {After};
+\end{scope}
+
+\node [draw=none] (c) at (5.3,-0.8) {Left Rotation};
+\draw[->,thick] (3.8,-1.2) -- (6.8,-1.2);
+
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[
+every node/.style={
+    circle,
+    draw,
+    minimum size=7mm,
+    inner sep=0pt
+},
+level distance=12mm,
+sibling distance=18mm
+]
+
+%---------------- Original ----------------
+\begin{scope}
+\node (y) at (0.6,0) {5};
+\node (x) at (-1.2,-1.2) [fill=RED]{8};
+\node (a) at (0,-2.4) [fill=RED]{6};
+\node (b) at (2.4,-1.2) {11};
+
+\draw (y)--(x);
+\draw (y)--(b);
+\draw (x)--(a);
+
+\node[draw=none] at (0,-3.5) {Before};
+\end{scope}
+
+
+%---------------- Final ----------------
+
+\begin{scope}[xshift=8.5cm]
+\node (y) at (0.6,0) {5};
+\node (x) at (-2.0,-2.4) {8};
+\node (a) at (-1.2,-1.2) {6};
+\node (b) at (2.4,-1.2) {11};
+
+\draw (y)--(a);
+\draw (y)--(b);
+\draw (x)--(a);
+
+\node[draw=none] at (0,-3.5) {After};
+\end{scope}
+
+\node [draw=none] (c) at (4.7,-0.8) {Left Rotation};
+\draw[->,thick] (3.2,-1.2) -- (6.2,-1.2);
+
+\end{tikzpicture}
+\end{center}
+
+Similar to Bubble Sort and the concept of inversions, we can look at the original tree as having $2$ 
+violations -- $8$ was above both $5$ and $6$ in the tree. Each rotation fixes exactly one of these 
+violations just like each swap in Bubble Sort.
 
 \subsection{Treaps}
 
@@ -1961,7 +2069,7 @@ child {
 \end{tikzpicture}
 \end{center}
 
-The above figure shows a treap.
+The above figure shows a treap in which the first value is the key and the second is the priority.
 
 \subsubsection*{Insertion}
 
@@ -2072,26 +2180,20 @@ child {
     node (2){$4,15$}
     child {
 		node {$3,30$}
-		child{node{}}
-		child{node{}}
 	}
     child {
-		node [fill=red!73](3){$6,60$}
-		child{node(4)[fill=red!73]{5,10}}
-		child{node{}}
+		node [fill=RED](3){$6,60$}
+		child{node(4)[fill=RED]{5,10}}
+		child [missing]
 	}
 }
 child {
     node {$12,30$}
     child {
 		node {$10,50$}
-		child{node{}}
-		child{node{}}
 	}
     child {
 		node {$14,70$}
-		child{node{}}
-		child{node{}}
 	}
 };
 
@@ -2178,11 +2280,34 @@ child {
 \end{tikzpicture}
 \end{center}
 
-The heap property is still violated since
 
-\[
-10 < 15.
-\]
+
+The heap property is still violated since $10 < 15$.
+
+\begin{center}
+\begin{tikzpicture}[
+level 1/.style={level distance=24mm,sibling distance=64mm},
+level 2/.style={level distance=18mm,sibling distance=32mm},
+level 3/.style={level distance=15mm,sibling distance=16mm},
+every node/.style={draw,rounded corners}
+]
+\node {$8,7$}
+child {
+    node [fill=RED]{$4,15$}
+    child {node {$3,30$}}
+    child {
+        node [fill=RED]{$5,10$}
+        child[missing]
+        child {node {$6,60$}}
+    }
+}
+child {
+    node {$12,30$}
+    child {node {$10,50$}}
+    child {node {$14,70$}}
+};
+\end{tikzpicture}
+\end{center}
 
 \paragraph{Step 3: Rotation at $(4,15)$}
 
@@ -2246,34 +2371,6 @@ We imagine the left child of $(5,10)$ (which is an empty node) for the purposes 
 \end{tikzpicture}
 \end{center}
 
-The treap now becomes
-
-\begin{center}
-\begin{tikzpicture}[
-level 1/.style={level distance=24mm,sibling distance=64mm},
-level 2/.style={level distance=18mm,sibling distance=32mm},
-level 3/.style={level distance=15mm,sibling distance=16mm},
-every node/.style={draw,rounded corners}
-]
-\node {$8,7$}
-child {
-    node {$5,10$}
-    child {
-        node {$4,15$}
-        child {node {$3,30$}}
-        child[missing]
-    }
-    child {
-        node {$6,60$}
-    }
-}
-child {
-    node {$12,30$}
-    child {node {$10,50$}}
-    child {node {$14,70$}}
-};
-\end{tikzpicture}
-\end{center}
 
 The heap property is now satisfied at every node:
 
@@ -2285,11 +2382,6 @@ The heap property is now satisfied at every node:
 30 < 70.
 \]
 
-The BST property is also preserved because rotations never change the
-in-order ordering of keys.
-
-\paragraph{Final Treap}
-
 \begin{center}
 \begin{tikzpicture}[
 level 1/.style={level distance=24mm,sibling distance=64mm},
@@ -2317,7 +2409,17 @@ child {
 \end{tikzpicture}
 \end{center}
 
-Hence the insertion of $(5,10)$ is complete.
+The heap property is now satisfied at every node. Notice that it takes at most $\Theta(H)$ time to fix a 
+violation since the violation always involves the inserted element and in each rotation its height 
+increases by exactly one.
+
+\subsubsection*{Search}
+Searching in a treap is exactly the same as in a binary search tree -- at most $\Theta(H)$ time.
+
+\subsubsection*{Deletion}
+To delete an element, we must find it first. So we use the standard search to find it. Once it is found, 
+we reverse the insert procedure by rotating \emph{down} until it becomes a leaf. Then we can safely 
+delete it.
 
 \section{Hash Tables}
 
