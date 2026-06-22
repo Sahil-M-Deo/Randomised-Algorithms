@@ -119,7 +119,7 @@ need not even have polynomially verifiable certificates for \texttt{YES}. The pr
 decision problems -- they could be any type of problem like optimisation or search problems. 
 
 \[
-\NPhard \; = \; \{L: L \le_p Q \quad \forall \; Q \in \NP\}
+\NPhard \; = \; \{L: Q \le_p L \quad \forall \; Q \in \NP\}
 \]
 
 An obvious conclusion is that $\NPcomp = \NP \cap \NPhard \subseteq \NPhard$.
@@ -162,7 +162,7 @@ course, $\textsc{2-SAT} \in \classP$ as well as $\NP$ because of the reduction t
 \noindent What about the bigger \textsc{k-SAT}s? For a general \textsc{n-SAT}, $(a_1 \vee a_2 \vee $\dots$ \vee a_n)$ 
 can be rewritten as $(a_1 \vee a_2 \vee b_1) \wedge (\neg b_1 \vee a_3 \vee b_2) \wedge 
 (\neg b_2 \vee a_3 \vee b_3) \wedge \dots (\neg b_{n-3} \vee a_{n-1} \vee a_{n})$. This introduced $n-3$ new 
-variables $b_1, b_2, \dots b_{n-3}$ and made it into a \textsc{k-SAT}.
+variables $b_1, b_2, \dots b_{n-3}$ and made it into a \textsc{3-SAT}.
 
 \[
 \textsc{k-SAT} \le_p \textsc{3-SAT}
