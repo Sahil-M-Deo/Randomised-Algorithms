@@ -1,0 +1,233 @@
+\chapter{Derandomization}
+
+\section{Introduction}
+
+Randomized algorithms often achieve remarkable simplicity and efficiency.
+However, they raise a natural question how much randomness is really necessary? Recall that we stated that for 
+our purposes, pseudo-randomness is true randomness. In this chapter, we will finally differentiate between 
+the two! Since true randomness is often expensive or unavailable, it is natural to ask whether one can 
+reduce, or even eliminate, the amount of randomness required. The study of such questions forms the 
+subject of \emph{derandomization}. 
+
+\section{Independence}
+
+\subsection{Mutual Independence}
+A set of random variables $S=\{X_1,X_2,\dots,X_n\}$ are said to be \emph{mutually independent} if for 
+every subset $s\subseteq S$, we can write the probability of a particular assignment of values as the product 
+of the individual probabilities. 
+
+\[
+\{X_{i_1},X_{i_2},\dots,X_{i_t}\}\subseteq\{X_1,X_2,\dots,X_n\}
+\]
+\[
+\implies 
+\Pr[X_{i_1}=a_1,\dots,X_{i_t}=a_t]
+=
+\prod_{j=1}^{t}\Pr[X_{i_j}=a_j]
+\]
+
+This definition is the strongest possible definition of independence and is the default meaning of the 
+term ``independent''.
+
+\subsection{k-Wise Independence}
+A set of random variables $X_1,X_2,\dots,X_n$ are said to be \emph{$k$-wise independent} if every subset of 
+at most $k$ variables is mutually independent. 
+
+By definition it follows that $k+1$-wise independence implies $k$-wise independence. Of course, $n$-wise 
+independence is the same as the whole set being independent and is thus the strongest version of $k$-wise 
+independence. The case $k=2$ is the weakest version of $k$-wise independence and is called \emph{pairwise 
+independence}.
+
+\section{Generating Independent Bits}
+
+Let $k=\lceil \log_2 n\rceil$.
+
+Choose uniformly random values
+
+\[
+a,b\in\mathbb F_{2^k}.
+\]
+
+For every vertex $v_i$, identify $i$ with an element of $\mathbb F_{2^k}$ and define
+
+\[
+X_i=a\cdot i+b.
+\]
+
+The least significant bit of $X_i$ determines the side of the cut.
+
+Only $2k=\Theta(\log n)$ random bits are required.
+The variables generated above are pairwise independent.
+
+Fix distinct vertices $i\neq j$.
+
+The equations
+
+\[
+a i+b=x
+\]
+
+and
+
+\[
+a j+b=y
+\]
+
+have a unique solution $(a,b)$ over $\mathbb F_{2^k}$.
+
+Hence every pair $(x,y)$ occurs with equal probability.
+
+Therefore the corresponding output bits are pairwise independent.
+
+\section{Bipartite Subgraph Re-revisited}
+Recall the probabilistic method of simply generating a random 2-coloring of the vertices and then checking the 
+number of bichromatic edges. For every run of that method, we toss a coin for each vertex. This corresponds to 
+$n=|V|$ random bits. In our proof that the expected $\mathbb E[X]$ is at least $m/2$, did we really need all $n$ 
+bits to be completely independent? 
+
+\section{Pairwise Independence}
+
+Observe carefully that the analysis of MAX-CUT only used the fact that,
+for every edge $(u,v)$,
+
+\[
+\Pr[u\text{ and }v\text{ are placed on opposite sides}]
+=\frac12.
+\]
+
+To establish this, it suffices that the random choices made for any pair
+of vertices are independent.
+
+Full independence among all $n$ vertices is unnecessary.
+
+Random variables $X_1,\dots,X_n$ are said to be
+\emph{pairwise independent} if for every distinct $i,j$,
+
+\[
+\Pr[X_i=a,X_j=b]
+\Pr[X_i=a]\Pr[X_j=b]
+\]
+
+for all possible values $a,b$.
+
+\section{MAX-CUT with Only $\Theta(\log n)$ Random Bits}
+
+Replacing the fully independent coin flips by pairwise independent ones
+preserves the original analysis.
+
+For every edge $e$,
+
+\[
+\Pr[e\text{ is cut}]=\frac12.
+\]
+
+Hence
+
+\[
+\mathbb E[\text{Cut Size}]=\frac m2
+\]
+
+still holds.
+
+Thus we obtain:
+
+There exists a randomized algorithm for MAX-CUT using only
+$\Theta(\log n)$ random bits while guaranteeing an expected cut size
+of at least $m/2$.
+
+\section{$k$-Wise Independence}
+
+Pairwise independence is merely the first step.
+
+Random variables $X_1,\dots,X_n$ are said to be
+\emph{$k$-wise independent} if every subset of at most $k$
+variables is jointly independent.
+
+\section{Polynomial Construction of $k$-Wise Independent Variables}
+
+Let $\mathbb F_q$ be a finite field with $q\ge n$.
+
+Choose uniformly random coefficients
+
+\[
+a_0,a_1,\dots,a_{k-1}\in\mathbb F_q.
+\]
+
+Define
+
+\[
+f(x)=a_0+a_1x+\cdots+a_{k-1}x^{k-1}.
+\]
+
+For each vertex $i$, set
+
+\[
+X_i=f(i).
+\]
+
+The random variables $X_1,\dots,X_n$ are $k$-wise independent.
+
+Fix distinct points
+
+\[
+i_1,\dots,i_k.
+\]
+
+For arbitrary values
+
+\[
+y_1,\dots,y_k,
+\]
+
+there exists a unique polynomial of degree at most $k-1$ satisfying
+
+\[
+f(i_j)=y_j
+\]
+
+for every $j$.
+
+Since all coefficient vectors are equally likely, every assignment to
+the chosen variables occurs with equal probability.
+
+Hence the variables are $k$-wise independent.
+
+\section{Why Use $k$-Wise Independence?}
+
+Many probabilistic analyses depend only on small groups of variables.
+
+Examples include:
+
+\begin{itemize}
+\item variance calculations --- pairwise independence suffices,
+\item Chebyshev bounds --- pairwise independence suffices,
+\item higher moment methods --- require higher-order independence,
+\item Chernoff-type bounds --- often require approximately
+$O(\log n)$-wise independence.
+\end{itemize}
+
+\section{The Method of Conditional Expectations}
+
+...
+
+\section{Pseudorandom Generators}
+
+...
+
+\section{Expander Walks}
+
+...
+
+\section{The Complexity-Theoretic View}
+
+\[
+\mathbf P\stackrel{?}{=}\mathbf{BPP}
+\]
+
+remains one of the central open problems in complexity theory.
+
+Most researchers conjecture that
+
+\[
+\mathbf P=\mathbf{BPP}.
+\]

@@ -157,6 +157,22 @@
 \contentsline {subsection}{\numberline {12.3.1}The Scheme}{105}{subsection.12.3.1}%
 \contentsline {subsection}{\numberline {12.3.2}Soundness and Completeness}{105}{subsection.12.3.2}%
 \contentsline {subsection}{\numberline {12.3.3}Game Theory Perspective}{106}{subsection.12.3.3}%
+\contentsline {chapter}{\numberline {13}Derandomization}{107}{chapter.13}%
+\contentsline {section}{\numberline {13.1}Introduction}{107}{section.13.1}%
+\contentsline {section}{\numberline {13.2}Independence}{107}{section.13.2}%
+\contentsline {subsection}{\numberline {13.2.1}Mutual Independence}{107}{subsection.13.2.1}%
+\contentsline {subsection}{\numberline {13.2.2}k-Wise Independence}{107}{subsection.13.2.2}%
+\contentsline {section}{\numberline {13.3}Generating Independent Bits}{107}{section.13.3}%
+\contentsline {section}{\numberline {13.4}Bipartite Subgraph Re-revisited}{108}{section.13.4}%
+\contentsline {section}{\numberline {13.5}Pairwise Independence}{108}{section.13.5}%
+\contentsline {section}{\numberline {13.6}MAX-CUT with Only $\Theta (\log n)$ Random Bits}{108}{section.13.6}%
+\contentsline {section}{\numberline {13.7}$k$-Wise Independence}{109}{section.13.7}%
+\contentsline {section}{\numberline {13.8}Polynomial Construction of $k$-Wise Independent Variables}{109}{section.13.8}%
+\contentsline {section}{\numberline {13.9}Why Use $k$-Wise Independence?}{109}{section.13.9}%
+\contentsline {section}{\numberline {13.10}The Method of Conditional Expectations}{110}{section.13.10}%
+\contentsline {section}{\numberline {13.11}Pseudorandom Generators}{110}{section.13.11}%
+\contentsline {section}{\numberline {13.12}Expander Walks}{110}{section.13.12}%
+\contentsline {section}{\numberline {13.13}The Complexity-Theoretic View}{110}{section.13.13}%
 \contentsline {chapter}{Appendices}{107}{section*.83}%
 \contentsline {chapter}{\numberline {A}Probability and Expectation}{108}{appendix.A}%
 \contentsline {section}{\numberline {A.1}Linearity of Expectation}{108}{section.A.1}%
