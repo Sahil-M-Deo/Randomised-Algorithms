@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  22 JUN 2026 10:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  22 JUN 2026 12:25
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -992,24 +992,24 @@ LaTeX Warning: Label `fig:randcheck' multiply defined.
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\appendices.aux))
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1068,7 +1068,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring ON on input line 2.
+Package hyperref Info: Link coloring ON on input line 3.
  (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.out)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.out)
 \@outlinefile=\write6
@@ -1097,10 +1097,10 @@ Package caption Info: End \AtBeginDocument code.
 
 pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
 DF version <1.7>, but at most version <1.5> allowed
-<../Images/Cover.pdf, id=746, 597.23125pt x 845.1575pt>
+<../Images/Cover.pdf, id=122, 597.23125pt x 845.1575pt>
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf>
-Package pdftex.def Info: ../Images/Cover.pdf  used on input line 5.
+Package pdftex.def Info: ../Images/Cover.pdf  used on input line 6.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 
 
@@ -1110,26 +1110,26 @@ DF version <1.7>, but at most version <1.5> allowed
 
 pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
 DF version <1.7>, but at most version <1.5> allowed
-<../Images/Cover.pdf, id=748, page=1, 597.23125pt x 845.1575pt>
+<../Images/Cover.pdf, id=124, page=1, 597.23125pt x 845.1575pt>
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
-Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 5.
+Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
-Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 5.
+Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
-Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 5.
+Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
-Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 5.
+Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
-Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 5.
+Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 6.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 [1
 
@@ -1158,265 +1158,6 @@ l.39 ... {5.4.1}Set of Sets}{28}{subsection.5.4.1}
 \openout7 = `report.toc'.
 
  [5]
-\openout2 = `ch1.aux'.
-
- (ch1.tex
-Chapter 1.
-
-Underfull \hbox (badness 10000) in paragraph at lines 5--8
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 10--20
-
- []
-
-LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 38.
-[6
-
-
-]
-Overfull \hbox (26.79057pt too wide) in paragraph at lines 66--67
-\T1/cmr/m/n/10.95 To gen-er-ate a ran-dom in-te-ger uni-formly from a range $\O
-T1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 L; R\OT1/cmr/m/n/10.95 ]$\T1/cmr/m/n/10.9
-5 , we use \T1/cmtt/m/n/10.95 uniform_int_distribution<int>\T1/cmr/m/n/10.95 . 
-
- []
-
-[7] [8]) [9
-
-]
-\openout2 = `ch2.aux'.
-
- (ch2.tex
-Chapter 2.
-
-Underfull \hbox (badness 10000) in paragraph at lines 4--10
-
- []
-
-[10
-
-
-
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 116--119
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 121--123
-
- []
-
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 149--152
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 153--156
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 164--167
-
- []
-
-[12]
-Underfull \hbox (badness 10000) in paragraph at lines 184--189
-
- []
-
-
-Overfull \hbox (27.08745pt too wide) in paragraph at lines 196--197
-[]\T1/cmr/m/n/10.95 Show that in gen-eral the time com-plex-ity for the av-er-a
-ge \T1/cmtt/m/n/10.95 push_back()\T1/cmr/m/n/10.95 is $\OT1/cmr/m/n/10.95 ^^B [
-]$\T1/cmr/m/n/10.95 . 
- []
-
-) [13
-
-]
-\openout2 = `ch3.aux'.
-
- (ch3.tex
-Chapter 3.
-
-Overfull \hbox (24.36528pt too wide) in paragraph at lines 44--52
- [] 
- []
-
-[14
-
-
-
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 78--82
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 89--91
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 92--98
-
- []
-
-[15] [16] [17]) [18
-
-]
-\openout2 = `ch4.aux'.
-
- (ch4.tex
-Chapter 4.
-
-Underfull \hbox (badness 10000) in paragraph at lines 4--9
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 27--30
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 53--55
-
- []
-
-[19
-
-
-
-
-] [20]
-Underfull \hbox (badness 10000) in paragraph at lines 183--189
-
- []
-
-[21]
-Underfull \hbox (badness 10000) in paragraph at lines 225--227
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 228--232
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 234--236
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 278--280
-
- []
-
-[22]
-Underfull \hbox (badness 10000) in paragraph at lines 329--332
-
- []
-
-[23]
-Underfull \hbox (badness 10000) in paragraph at lines 400--403
-
- []
-
-) [24
-
-]
-\openout2 = `ch5.aux'.
-
- (ch5.tex
-Chapter 5.
-
-Underfull \hbox (badness 10000) in paragraph at lines 56--57
-
- []
-
-[25
-
-
-
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 62--66
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 67--71
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 83--86
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 97--102
-
- []
-
-[26]
-Underfull \hbox (badness 10000) in paragraph at lines 126--130
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 131--136
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 137--141
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 160--162
-
- []
-
-[27]
-Underfull \hbox (badness 10000) in paragraph at lines 181--182
-
- []
-
-[28]
-Underfull \hbox (badness 10000) in paragraph at lines 250--256
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 257--260
-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [29]
-[30]
-Underfull \hbox (badness 10000) in paragraph at lines 335--336
-
- []
-
-[31]) [32
-
-]
 \openout2 = `ch6.aux'.
 
  (ch6.tex
@@ -1427,6 +1168,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 101--103
  []
 
 [33
+
+
+
 
 
 
@@ -1447,77 +1191,72 @@ Underfull \hbox (badness 10000) in paragraph at lines 341--343
  []
 
 [34] [35]
-Underfull \hbox (badness 10000) in paragraph at lines 438--440
+Underfull \hbox (badness 10000) in paragraph at lines 439--441
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 450--451
+Underfull \hbox (badness 10000) in paragraph at lines 451--452
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 472--473
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 483--486
+Underfull \hbox (badness 10000) in paragraph at lines 480--483
 
  []
 
 [36] [37]
-Underfull \hbox (badness 10000) in paragraph at lines 883--886
+Underfull \hbox (badness 10000) in paragraph at lines 880--883
 
  []
 
 [38]
-Underfull \hbox (badness 10000) in paragraph at lines 927--932
+Underfull \hbox (badness 10000) in paragraph at lines 924--929
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 934--938
+Underfull \hbox (badness 10000) in paragraph at lines 931--935
 
  []
 
 [39] [40]
-Underfull \hbox (badness 10000) in paragraph at lines 1054--1058
+Underfull \hbox (badness 10000) in paragraph at lines 1051--1055
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1110--1111
+Underfull \hbox (badness 10000) in paragraph at lines 1107--1108
 
  []
 
 [41]
-Underfull \hbox (badness 10000) in paragraph at lines 1139--1140
+Underfull \hbox (badness 10000) in paragraph at lines 1136--1137
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1208--1209
+Underfull \hbox (badness 10000) in paragraph at lines 1205--1206
 
  []
 
 [42]
-Underfull \hbox (badness 10000) in paragraph at lines 1248--1249
+Underfull \hbox (badness 10000) in paragraph at lines 1245--1246
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1289--1290
+Underfull \hbox (badness 10000) in paragraph at lines 1286--1287
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1332--1333
+Underfull \hbox (badness 10000) in paragraph at lines 1329--1330
 
  []
 
 [43]
-Underfull \hbox (badness 10000) in paragraph at lines 1377--1378
+Underfull \hbox (badness 10000) in paragraph at lines 1374--1375
 
  []
 
@@ -1526,12 +1265,12 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [44]
 [45] [46] [47]
-Overfull \hbox (5.52122pt too wide) in paragraph at lines 1867--1868
+Overfull \hbox (5.52122pt too wide) in paragraph at lines 1864--1865
  [] 
  []
 
 
-Overfull \hbox (56.73625pt too wide) in paragraph at lines 1930--1931
+Overfull \hbox (56.73625pt too wide) in paragraph at lines 1927--1928
  [] 
  []
 
@@ -1544,754 +1283,56 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 ibraries\tikzlibraryfit.code.tex
 File: tikzlibraryfit.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 ) [51]
-Overfull \hbox (5.61826pt too wide) in paragraph at lines 2371--2372
+Overfull \hbox (5.61826pt too wide) in paragraph at lines 2368--2369
  [] 
  []
 
 [52] [53] [54]
-Overfull \hbox (9.68422pt too wide) in paragraph at lines 2632--2638
+Overfull \hbox (9.68422pt too wide) in paragraph at lines 2629--2635
 \T1/cmr/m/n/10.95 Suppose we wish to store a set of el-e-ments and sup-port the
  op-er-a-tions \T1/cmtt/m/n/10.95 insert(x) \T1/cmr/m/n/10.95 and \T1/cmtt/m/n/
 10.95 contains(x)\T1/cmr/m/n/10.95 .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2669--2671
+Underfull \hbox (badness 10000) in paragraph at lines 2666--2668
 
  []
 
 [55]
-Underfull \hbox (badness 10000) in paragraph at lines 2685--2687
+Underfull \hbox (badness 10000) in paragraph at lines 2682--2684
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2692--2695
+Underfull \hbox (badness 10000) in paragraph at lines 2689--2692
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2697--2701
+Underfull \hbox (badness 10000) in paragraph at lines 2694--2698
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2703--2706
+Underfull \hbox (badness 10000) in paragraph at lines 2700--2703
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2707--2711
+Underfull \hbox (badness 10000) in paragraph at lines 2704--2708
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2734--2741
+Underfull \hbox (badness 10000) in paragraph at lines 2731--2738
 
  []
 
-[56] [57]) [58
+[56] [57] [58
 
-]
-\openout2 = `ch7.aux'.
-
- (ch7.tex
-Chapter 7.
-
-Underfull \hbox (badness 10000) in paragraph at lines 22--27
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 28--32
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 40--43
-
- []
-
-[59
-
-
-
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 107--111
-
- []
-
-[60]
-Underfull \hbox (badness 10000) in paragraph at lines 151--152
-
- []
-
-[61]
-Underfull \hbox (badness 10000) in paragraph at lines 246--248
-
- []
-
-[62]
-Underfull \hbox (badness 10000) in paragraph at lines 262--265
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 276--279
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 281--284
-
- []
-
-[63]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [64]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [65]
-Underfull \hbox (badness 10000) in paragraph at lines 558--563
-
- []
-
-[66]
-Underfull \hbox (badness 10000) in paragraph at lines 564--566
-
- []
-
-[67]
-Underfull \hbox (badness 10000) in paragraph at lines 712--716
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 728--731
-
- []
-
-[68]
-Underfull \hbox (badness 10000) in paragraph at lines 765--769
-
- []
-
-[69]) [70
-
-]
-\openout2 = `ch8.aux'.
-
- (ch8.tex
-Chapter 8.
-
-Underfull \hbox (badness 10000) in paragraph at lines 3--8
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 24--28
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 38--41
-
- []
-
-[71
-
-
-
-
-] [72]
-<../Images/randcheck_failprob.pdf, id=1457, 332.44202pt x 209.58301pt>
-File: ../Images/randcheck_failprob.pdf Graphic file (type pdf)
-<use ../Images/randcheck_failprob.pdf>
-Package pdftex.def Info: ../Images/randcheck_failprob.pdf  used on input line 1
-44.
-(pdftex.def)             Requested size: 353.31439pt x 222.74214pt.
- [73 <../Images/randcheck_failprob.pdf>] [74]
-Underfull \vbox (badness 6608) has occurred while \output is active []
-
- [75]
-Underfull \hbox (badness 10000) in paragraph at lines 348--351
-
- []
-
-<../Images/dominating_failprob.pdf, id=1537, 332.44202pt x 209.58301pt>
-File: ../Images/dominating_failprob.pdf Graphic file (type pdf)
-<use ../Images/dominating_failprob.pdf>
-Package pdftex.def Info: ../Images/dominating_failprob.pdf  used on input line 
-371.
-(pdftex.def)             Requested size: 353.31439pt x 222.74214pt.
-
-Underfull \vbox (badness 2744) has occurred while \output is active []
-
- [76]
-[77 <../Images/dominating_failprob.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 509--514
-
- []
-
-[78]
-Underfull \hbox (badness 10000) in paragraph at lines 516--517
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 554--555
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 596--599
-
- []
-
-[79]
-<../Images/worstcase_big.pdf, id=1627, 332.44202pt x 209.58301pt>
-File: ../Images/worstcase_big.pdf Graphic file (type pdf)
-<use ../Images/worstcase_big.pdf>
-Package pdftex.def Info: ../Images/worstcase_big.pdf  used on input line 623.
-(pdftex.def)             Requested size: 353.31439pt x 222.74214pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 633--638
-
- []
-
-[80 <../Images/worstcase_big.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 679--680
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 682--686
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 699--701
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 703--704
-
- []
-
-) [81]
-\openout2 = `ch9.aux'.
-
- (ch9.tex
-Chapter 9.
-
-Underfull \hbox (badness 10000) in paragraph at lines 20--21
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 22--32
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 34--35
-
- []
-
-[82
-
-
-
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 48--51
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 53--55
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 57--58
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 60--63
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 65--71
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 73--74
-
- []
-
-[83]
-Underfull \hbox (badness 10000) in paragraph at lines 175--177
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 183--185
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 192--193
-
- []
-
-[84]
-Underfull \hbox (badness 10000) in paragraph at lines 195--196
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 277--279
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 280--282
-
- []
-
-[85]
-Underfull \hbox (badness 10000) in paragraph at lines 310--311
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 313--315
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 316--319
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 324--328
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 352--355
-
- []
-
-[86]
-Underfull \hbox (badness 10000) in paragraph at lines 407--413
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 427--429
-
- []
-
-[87]
-Underfull \hbox (badness 10000) in paragraph at lines 440--442
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 475--480
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 490--493
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 501--503
-
- []
-
-[88]
-Underfull \hbox (badness 10000) in paragraph at lines 511--515
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 517--519
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 521--525
-
- []
-
-) [89]
-\openout2 = `ch10.aux'.
-
- (ch10.tex
-Chapter 10.
-
-Underfull \hbox (badness 10000) in paragraph at lines 5--7
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 9--15
-
- []
-
-[90
-
-
-
-
-] [91] [92] [93] [94]
-Underfull \hbox (badness 10000) in paragraph at lines 330--332
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 333--334
-
- []
-
-) [95]
-\openout2 = `ch11.aux'.
-
- (ch11.tex
-Chapter 11.
-
-Underfull \hbox (badness 10000) in paragraph at lines 6--9
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 10--15
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 16--18
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 24--30
-
- []
-
-[96
-
-
-
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 73--77
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 78--82
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 83--90
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 91--94
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 104--108
-
- []
-
-[97]
-Underfull \hbox (badness 10000) in paragraph at lines 124--127
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 134--139
-
- []
-
-
-Overfull \hbox (28.62825pt too wide) detected at line 172
-\U/msb/m/n/10.95 E\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OMS/cmsy/m/n/10.9
-5 j\OML/cmm/m/it/10.95 S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 L\OT1/cmr/m
-/n/10.95 ] = \OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 E\OT1
-/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95
- S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 L; S[] \OT1/cmr/m/n/10.95 = \OML/
-cmm/m/it/10.95 L\OT1/cmr/m/n/10.95 ]) + (1 \OMS/cmsy/m/n/10.95 ^^@ \OML/cmm/m/i
-t/10.95 q\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 E\OT1/cmr/m/n/10.95 [\OML/cmm/
-m/it/10.95 U[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 S[] \OT1/cmr/m/n/10.95 =
- \OML/cmm/m/it/10.95 L; S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 R\OT1/cmr/
-m/n/10.95 ] = \OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 (\OMS/cmsy/m/n/10.95 ^^@\
-OT1/cmr/m/n/10.95 1) + (1 \OMS/cmsy/m/n/10.95 ^^@ \OML/cmm/m/it/10.95 q\OT1/cmr
-/m/n/10.95 )(1) = 1 \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr/m/n/10.95 2\OML/cmm/m/it/1
-0.95 q
- []
-
-
-Overfull \hbox (31.4684pt too wide) detected at line 175
-\U/msb/m/n/10.95 E\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OMS/cmsy/m/n/10.9
-5 j\OML/cmm/m/it/10.95 S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 R\OT1/cmr/m
-/n/10.95 ] = \OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 E\OT1
-/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95
- S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 R; S[] \OT1/cmr/m/n/10.95 = \OML/
-cmm/m/it/10.95 L\OT1/cmr/m/n/10.95 ]) + (1 \OMS/cmsy/m/n/10.95 ^^@ \OML/cmm/m/i
-t/10.95 q\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 E\OT1/cmr/m/n/10.95 [\OML/cmm/
-m/it/10.95 U[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 S[] \OT1/cmr/m/n/10.95 =
- \OML/cmm/m/it/10.95 R; S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 R\OT1/cmr/
-m/n/10.95 ] = \OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 (1) + (1 \OMS/cmsy/m/n/10
-.95 ^^@ \OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 )(\OMS/cmsy/m/n/10.95 ^^@\OT1/c
-mr/m/n/10.95 1) = 2\OML/cmm/m/it/10.95 q \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr/m/n/1
-0.95 1
- []
-
-[98]
-Underfull \hbox (badness 10000) in paragraph at lines 200--202
-
- []
-
-
-Overfull \hbox (28.1009pt too wide) detected at line 234
-\U/msb/m/n/10.95 E\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OT1/cmr/m/n/10.95
- ] = [] \OML/cmm/m/it/10.95 p[] \OMS/cmsy/m/n/10.95 ^^A \OML/cmm/m/it/10.95 E\O
-T1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.
-95 S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 i\OT1/cmr/m/n/10.95 ][]  =[]\OM
-S/cmsy/m/n/10.95 )  \OML/cmm/m/it/10.95 E\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.9
-5 U[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/10.95 S[] \OT1/cmr/m/n/10.95 = 1] = \OM
-L/cmm/m/it/10.95 E\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OMS/cmsy/m/n/10.9
-5 j\OML/cmm/m/it/10.95 S[] \OT1/cmr/m/n/10.95 = 2] = [] = \OML/cmm/m/it/10.95 E
-\OT1/cmr/m/n/10.95 [\OML/cmm/m/it/10.95 U[]\OMS/cmsy/m/n/10.95 j\OML/cmm/m/it/1
-0.95 S[] \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 n\OT1/cmr/m/n/10.95 ]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 240--243
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 245--254
-
- []
-
-[99]
-Underfull \hbox (badness 10000) in paragraph at lines 255--262
-
- []
-
-) [100]
-\openout2 = `ch12.aux'.
-
- (ch12.tex
-Chapter 12.
-
-Underfull \hbox (badness 10000) in paragraph at lines 6--12
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 14--21
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 23--29
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 31--37
-
- []
-
-[101
-
-
-
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 38--46
-
- []
-
-[102]
-Underfull \hbox (badness 10000) in paragraph at lines 116--121
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 122--125
-
- []
-
-[103]) [104]
-\openout2 = `appendices.aux'.
-
- (appendices.tex [105
-
-
-
-
-]
-Appendix A.
-[106
-
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 109--114
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 136--139
-
- []
-
-[107] [108]
-Appendix B.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [109
-
-]
-[110] [111]
-Appendix C.
-
-Underfull \hbox (badness 10000) in paragraph at lines 456--460
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 462--465
-
- []
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 479.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\lim' on input line 479.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\limits' on input line 479.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 479.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\to' on input line 479.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\infty' on input line 479.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 479.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 479.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 480--483
-
- []
-
-[112
-
-] [113]
-Underfull \hbox (badness 10000) in paragraph at lines 578--582
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 593--597
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 599--601
-
- []
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 606.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 606.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 606.
-
-[114]
-Underfull \hbox (badness 10000) in paragraph at lines 662--668
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 675--680
-
- []
-
-[115]
-Underfull \hbox (badness 10000) in paragraph at lines 708--712
-
- []
-
-[116]
-Appendix D.
-[117
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 790--792
-
- []
-
-[118]
-Appendix E.
-[119
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 892--893
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 895--896
-
- []
-
-) [120] (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.aux
+]) [59]
+(C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.aux
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch1.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch2.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch3.aux)
@@ -2314,66 +1355,671 @@ L3 programming layer <2026-03-20>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: F0A9901F157120473A8D8E02D4312E51;25856.
+(rerunfilecheck)             Checksum: E5FC591AB5C7184AB1BBA6203DF7FE38;3359.
  ) 
 Here is how much of TeX's memory you used:
- 39107 strings out of 467691
- 884829 string characters out of 5416439
- 1435380 words of memory out of 5000000
- 66939 multiletter control sequences out of 15000+600000
- 665469 words of font info for 139 fonts, out of 8000000 for 9000
+ 37915 strings out of 467691
+ 859764 string characters out of 5416439
+ 1355604 words of memory out of 5000000
+ 66025 multiletter control sequences out of 15000+600000
+ 657078 words of font info for 115 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 104i,17n,111p,741b,2173s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbi109
-5.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm
-1000.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\e
-cti0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
-0\ectt0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dp
-i600\ecti1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
-/dpi600\ecbx1200.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen
-/ec/dpi600\ecbx0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
-pen/ec/dpi600\ecrm0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jk
-nappen/ec/dpi600\ecrm0600.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour
-/jknappen/ec/dpi600\ectt1440.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljf
-our/jknappen/ec/dpi600\tcrm1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/
-ljfour/jknappen/ec/dpi600\ecrm0800.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/
-pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\hp\AppData\Local\MiKTeX\fon
-ts/pk/ljfour/jknappen/ec/dpi600\ecbx2074.pk> <C:\Users\hp\AppData\Local\MiKTeX\
-fonts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\hp\AppData\Local\MiKT
-eX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\hp\AppData\Local\M
-iKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\hp\AppData\Loca
-l\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk><C:/Users/hp/AppData/Lo
-cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/hp/AppD
-ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/h
-p/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Us
-ers/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx9.pfb><
-C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10
-.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cme
-xtra/cmex8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/am
-sfonts/cm/cmmi10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/pub
-lic/amsfonts/cm/cmmi12.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/typ
-e1/public/amsfonts/cm/cmmi6.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/font
-s/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX
-/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Users/hp/AppData/Local/Programs/M
-iKTeX/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Users/hp/AppData/Local/Pro
-grams/MiKTeX/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><C:/Users/hp/AppDat
-a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/hp/A
-ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users
-/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/U
-sers/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><
-C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.p
-fb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
-r9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
-m/cmsy10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsf
-onts/cm/cmsy6.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public
-/amsfonts/cm/cmsy8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/p
-ublic/amsfonts/cm/cmsy9.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/ty
-pe1/public/amsfonts/symbols/msam10.pfb><C:/Users/hp/AppData/Local/Programs/MiKT
-eX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+ 104i,17n,111p,741b,1379s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+pdfTeX warning (dest): name{section.E.6} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.E.5} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.E.4} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.E.3} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.E.2} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.E.1} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{appendix.E} has been referenced but does not exist,
+ replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.D.3.4} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.D.3.3} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.D.3.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.D.3.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.D.3} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.D.2.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.D.2.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.D.2} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.D.1} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{appendix.D} has been referenced but does not exist,
+ replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.C.12} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.C.11} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.C.10} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.C.9} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.C.8} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.C.7} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.C.6} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.C.5} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.C.4} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.C.3} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.C.2} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.C.1} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{appendix.C} has been referenced but does not exist,
+ replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.B.4} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.B.3} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.B.2} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.B.1} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{appendix.B} has been referenced but does not exist,
+ replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.A.8} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.A.7} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.A.6} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.A.5} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.A.4} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.A.3} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.A.2} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.A.1} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{appendix.A} has been referenced but does not exist,
+ replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section*.81} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.12.3.3} has been referenced but does not
+ exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.12.3.2} has been referenced but does not
+ exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.12.3.1} has been referenced but does not
+ exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.12.3} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.12.2.2} has been referenced but does not
+ exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.12.2.1} has been referenced but does not
+ exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.12.2} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.12.1} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{chapter.12} has been referenced but does not exist,
+ replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.11.7} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.11.6} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.11.5} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.11.4} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.11.3} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.11.2.2} has been referenced but does not
+ exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.11.2.1} has been referenced but does not
+ exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.11.2} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.11.1} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{chapter.11} has been referenced but does not exist,
+ replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.10.4.1} has been referenced but does not
+ exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.10.4} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.10.3.2} has been referenced but does not
+ exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.10.3.1} has been referenced but does not
+ exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.10.3} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.10.2} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.10.1} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{chapter.10} has been referenced but does not exist,
+ replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.9.4.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.9.4.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.9.4} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.9.3} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.9.2} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.9.1} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{chapter.9} has been referenced but does not exist, 
+replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.8.4.6} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.8.4.5} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.8.4.4} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.8.4.3} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.8.4.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.8.4.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.8.4} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.8.3.4} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.8.3.3} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.8.3.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.8.3.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.8.3} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.8.2.4} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.8.2.3} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.8.2.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.8.2.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.8.2} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.8.1} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{chapter.8} has been referenced but does not exist, 
+replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.7.5} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.7.4.3} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.7.4.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.7.4.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.7.4} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.7.3.4} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.7.3.3} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.7.3.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.7.3.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.7.3} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.7.2.3} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.7.2.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.7.2.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.7.2} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.7.1} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{chapter.7} has been referenced but does not exist, 
+replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.5.6} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.5.5} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.5.4.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.5.4.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.5.4} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.5.3.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.5.3} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.5.2} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.5.1} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{chapter.5} has been referenced but does not exist, 
+replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.4.3} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.4.2.3} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.4.2.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.4.2.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.4.2} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.4.1.3} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.4.1.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.4.1.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.4.1} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{chapter.4} has been referenced but does not exist, 
+replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.3.11} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.3.10} has been referenced but does not exis
+t, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.3.9} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.3.8} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.3.7} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.3.6} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.3.5} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.3.4} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.3.3} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.3.2} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.3.1} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{chapter.3} has been referenced but does not exist, 
+replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.2.5} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.2.4} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.2.3} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.2.2} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.2.1} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{chapter.2} has been referenced but does not exist, 
+replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.1.3} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.1.2} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section.1.1} has been referenced but does not exist
+, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{chapter.1} has been referenced but does not exist, 
+replaced by a fixed one
+
+ <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbi1095.
+pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti10
+95.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcr
+m1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\
+ecrm0900.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi6
+00\ecrm0600.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
+pi600\ecrm0800.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/e
+c/dpi600\ecrm1000.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappe
+n/ec/dpi600\ecbx1200.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/jkna
+ppen/ec/dpi600\ecbx1440.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfour/j
+knappen/ec/dpi600\ecbx2074.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/ljfou
+r/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk/lj
+four/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts/pk
+/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\hp\AppData\Local\MiKTeX\fonts
+/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk><C:/Users/hp/AppData/Local/Programs/M
+iKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/hp/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/hp/AppData/Loca
+l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/hp/AppDat
+a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/hp/A
+ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users
+/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/
+Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb>
+<C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.
+pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/c
+msy10.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
+s/cm/cmsy8.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type1/public/am
+sfonts/symbols/msbm10.pfb>
 Output written on "C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.
-pdf" (121 pages, 1250041 bytes).
+pdf" (33 pages, 534279 bytes).
 PDF statistics:
- 2873 PDF objects out of 2984 (max. 8388607)
- 518 named destinations out of 1000 (max. 500000)
- 1523 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1220 PDF objects out of 1440 (max. 8388607)
+ 274 named destinations out of 1000 (max. 500000)
+ 260 words of extra memory for PDF output out of 10000 (max. 10000000)
 
