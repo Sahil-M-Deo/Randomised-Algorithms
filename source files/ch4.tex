@@ -3,9 +3,10 @@
 
 In general, to sort an input array of size n deterministically using only pairwise comparisons,
 it can be proved via a decision tree that we need at least $\approx n\log_2 n$ operations. From a 
-time complexity point of view this is $\Theta(n\log n)$ time. \texttt{QuickSort} does not have a better time 
-complexity, but it is parallelisable on a multi-core machine hence it is really quick! The STL 
-library of \texttt{C++} uses \texttt{QuickSort} in its \texttt{std::sort()} function.\\
+time complexity point of view this is $\Theta(n\log n)$ time. The STL library of \texttt{C++} uses 
+\texttt{QuickSort} in its \texttt{std::sort()} function not because it does better than this 
+but because it is parallelisable at the processor level (the details of which we omit since it is not 
+the focus of this book!)\\
 
 \subsection{The Algorithm}
 \begin{center}
@@ -25,15 +26,17 @@ QuickSort(A)
 \end{center}
 
 \noindent Note that \texttt{A<p} is our notation for the elements of \texttt{A} that are strictly less than \texttt{p}.
-Similarly we can define \texttt{A>p} and \texttt{A=p}. For simplicity of analysis, we will assume all 
-elements in the array are distinct since that is the toughest case. So \texttt{A=p} is a single element.\\
+Similarly we can define \texttt{A>p} and \texttt{A=p} and the final result is the concatenation of the sorted 
+versions of these three sets. 
+For simplicity of analysis, we will assume all elements in the array are distinct since that 
+is the toughest case. So \texttt{A=p} is a single element.\\
 
 
-\subsection{Worst Case Runtime}
+\subsection{Worst Case}
 \noindent A deterministic implementation may always choose the first or last element as pivot. 
 Unfortunately, this can lead to very poor performance on adversarial inputs. 
 For example, if the array is already sorted and we always choose the leftmost element as 
-pivot, the recursion becomes extremely unbalanced --
+pivot, the recursion becomes extremely unbalanced, leading to a runtime of $\Theta(n^2)$.
 
 \[
 T(n)=
@@ -47,18 +50,19 @@ version instead chooses the pivot uniformly at random. This modification dramati
 the behaviour of the algorithm -- it becomes very unlikely that we 
 repeatedly choose extremely bad pivots.
 
-\subsection{Expected Runtime}
+\subsection{Expected Time Complexity}
 
 \subsubsection*{Recurrence Relation}
-Let \(T(n)\) denote the expected runtime of randomised \texttt{QuickSort} on 
-an array of size \(n\) over all possible inputs.\\
+Let \(T(n)\) be the random variable denoting the runtime of randomised \texttt{QuickSort} on 
+an array of size \(n\).\\
 
 
-\noindent Suppose the pivot is at position \(k\), where \(0\le k\le n-1\). 
+\noindent Suppose the pivot is at index \(k\) (0-indexed), where \(0\le k\le n-1\). 
 Then the recursive subproblems have sizes \(k\) and \(n-1-k\). Since partitioning itself 
-takes n operations, we obtain the recurrence
+takes n operations, we obtain a recurrence relation for \(T(n)\). 
+
 \[
-T(n \mid \text{pivot} = k)
+T(n)\mid \text{pivot} = k
 =
 T(k)+T(n-1-k)+n
 \]
@@ -66,31 +70,40 @@ T(k)+T(n-1-k)+n
 \noindent Because the pivot is chosen uniformly at random, every value of \(k\) is equally likely. Taking expectation 
 over all random choices made by the algorithm gives
 \[
-E[T(n \mid \text{pivot} = k)]
+\mathbb E[T(n \mid \text{pivot} = k)]
 =
 n
 +
 \frac{1}{n}\sum_{k=0}^{n-1}
-\Big(
+\left(
 T(k)+T(n-1-k)
-\Big)
+\right)
 \]
 
-Using the law\footnote{See \autoref{total_expectation}} of total 
-expectation gives $E[T(n \mid \text{pivot} = k)] = T(n)$. Using that and the fact 
-$\sum_{k=0}^{n-1}T(k)=\sum_{k=0}^{n-1}T(n-1-k)$,
+Taking expectation over all possible values of \(k\) and using the law\footnote{See \autoref{total_expectation}} of total 
+expectation gives us a recurrence relation for $\mathbb E[T(n)]$ which we denote as $Y(n)$.
+
 \[
-T(n)=n+\frac{2}{n}\sum_{k=0}^{n-1}T(k)
+\mathbb E[\mathbb E[T(n \mid \text{pivot} = k)]] = 
+\mathbb E[T(n)]=n+\frac{1}{n}\sum_{k=0}^{n-1}\mathbb E[T(k)] + \mathbb E[T(n-1-k)]
 \]
 
+\[
+\implies 
+Y(n)
+=
+n+\frac{1}{n}\sum_{k=0}^{n-1}Y(k)+Y(n-1-k)
+=
+n+\frac{2}{n}\sum_{k=0}^{n-1}Y(k)
+\]
 
-\noindent Changing the variable from $T(n)$ to $S(n)$ gives,
+\noindent Changing the variable from $Y(n)$ to $S(n)=\sum_{k=0}^{n}Y(k)$ gives us a recurrence solvable by the 
+method of telescoping summation.
 \[
 \implies
 S(n)-S(n-1)
 =
 n+\frac{2}{n}S(n-1)
-\quad (\text{Substituting } S(n)=\sum_{k=0}^{n}T(k))
 \]
 
 \[
@@ -119,7 +132,7 @@ S(n)
 \]
 
 \vspace{0.5em}
-Summing this recurrence telescopically gives
+Summing this recurrence from $1$ to $n$ gives the final result as we desired.
 
 \[
 \frac{S(n)}{(n+1)(n+2)}
@@ -131,7 +144,7 @@ S(n)=\Theta(n^2\log n)
 
 \[
 \implies
-T(n)
+Y(n)
 =
 S(n)-S(n-1)
 =
@@ -216,11 +229,10 @@ QuickSelect(A,k)
 \end{center}
 
 Intuitively, this is similar to \texttt{QuickSort}. However, unlike \texttt{QuickSort}, 
-we recurse into only one side -- each step discarding a significant\footnote{On an expected basis.}
-fraction of the array. This is a similar approach to Binary Search although not 
-quite same since this does not assume a sorted array. 
+we recurse into only one side -- each step discarding a significant fraction of the array. This is a 
+similar approach to Binary Search although not quite same since this does not assume a sorted array. 
 
-\subsection{Expected Runtime}
+\subsection{Expected Time Complexity}
 
 Let \(X_i\) denote the size of the search space after \(i\) recursive calls of 
 \texttt{QuickSelect}. $(X_0=n)$\\
@@ -232,7 +244,7 @@ all elements are distinct.\\
 
 
 \noindent If the current search space has size \(x\), and the pivot ends up at position \(k\), 
-then the larger partition has size $\max(k-1,x-k)$\\
+then the larger partition has size equal to the maximum of $k-1$ and \(x-k\).\\
 
 \noindent Averaging over all pivot positions,
 \[
@@ -254,7 +266,8 @@ then the larger partition has size $\max(k-1,x-k)$\\
 \frac34 X_i
 \]
 
-Taking expectations and applying the law of total expectation,
+Taking expectations and applying the law of total expectation 
+(along with the fact that $X_0=\mathbb E[X_0]=n$) we get an upper bound for $\mathbb E[X_{i}]$.
 
 \[
 \mathbb E[X_{i+1}]
@@ -270,58 +283,57 @@ Taking expectations and applying the law of total expectation,
 \frac{\mathbb E[X_i]}{\mathbb E[X_0]}
 \le
 \left(\frac34\right)^i
+\implies \mathbb E[X_i] \le n \left(\frac{3}{4}\right)^i 
 \]
-\[
-\implies E[X_i] \le n (\frac{3}{4})^i \quad (\text{Using }\mathbb E[X_0]=X_0=n)
-\]
+
 
 \noindent Let $T$ be the random variable which denotes the number of recursive calls of \texttt{QuickSelect}. 
 It is the first $i$ such that $X_i \le 1$. \\
 
 
-\noindent Taking one comparison with the pivot as one operation,
+\noindent Taking one comparison with the pivot as an operation of unit time, we get an upper bound on the 
+expected time of \texttt{QuickSelect}.
 
 \[
-E[T_{run}] \le \sum_{i=1}^T n (\frac{3}{4})^i \le \sum_{i=1}^{\infty} n(\frac{3}{4})^i = 3n
+E[T_{run}] \le \sum_{i=1}^T n \left(\frac{3}{4}\right)^i \le \sum_{i=1}^{\infty} n\left(\frac{3}{4}\right)^i = 3n
 \]
 
-\noindent So the expected runtime of \texttt{QuickSelect} is \(\Theta(n)\), which is a significant improvement 
-over the sort-and-access method which takes \(\Theta(n\log n)\)
+\noindent It is quite obvious that $E[T_{run}] \ge n$ since reading the input takes $\Theta(n)$ time. 
+So the expected time complexity of \texttt{QuickSelect} is equal to \(\Theta(n)\), which is a 
+significant improvement over the sort-and-access method which takes \(\Theta(n\log n)\)
+
 \subsection{Expected Recursion Depth}
 
-Recall that $H$ is the first $i$ such that $X_i \le 1$.
-Since $X_i \le 1$ is equivalent to $i\ge T$, $i<H$ is equivalent to $X_i \ge 2$.
-Using Markov's Inequality\footnote{See \autoref{markov_inequality}},
+Define $H$ is the first $i$ such that $X_i \le 1$. This variable $H$ is by definition the depth of the 
+recursion tree of \texttt{QuickSelect}. Why does this matter? The analysis of this quantity will illustrate 
+general methods which will be useful in later chapters.\\
+
+
+\noindent Since $X_i \le 1$ is equivalent to $H \le i$, $H>i$ is 
+equivalent to $X_i \ge 2$. Using Markov's Inequality\footnote{See \autoref{markov_inequality}},
 \[
-\Pr(i<H)
+\Pr(H>i)
 =
 \Pr(X_i\ge2)
 \le
-\frac{\mathbb E[X_i]}{2}
+\frac{\mathbb E[X_i]}{2} \le \frac n2\left(\frac34\right)^i
 \]
 
-\noindent Using the upper bound for $\mathbb E[X_i]$,
+We can also use the trivial upper bound $1$ on $\Pr(H>i)$.
+
 \[
-\Pr(X_i\ge2)
-\le
-\frac{\mathbb E[X_i]}{2}
-\le
-\frac n2\left(\frac34\right)^i
+\Pr(H>i) \le \min\left(1,\frac n2\left(\frac34\right)^i\right)
 \]
 
-\noindent Using the tail sum formula\footnote{See \autoref{tail_sum}},
+\noindent Using the tail sum formula\footnote{See \autoref{tail_sum}} we can bound the expected value of $H$.
+
 \[
 \mathbb E[H]
 =
 \sum_{i=0}^{\infty}\Pr(H>i)
-\]
-
-\[
-\implies
-\mathbb E[H]
 \le
 \sum_{i=0}^{\infty}
-\min\left(1,\frac n2\left(\frac34\right)^i\right) \quad (\text{Using the trivial } Pr(H>i) \le 1)
+\min\left(1,\frac n2\left(\frac34\right)^i\right) 
 \]
 
 \vspace{0.6em}
@@ -337,39 +349,15 @@ the min() changes from $1$ to $\frac n2\left(\frac34\right)^i$.\\
 \]
 
 \vspace{1em}
-\noindent For the summation we can factor out the first term,
+\noindent For the summation we can factor out the first term, which by our choice of $m$ is less 
+than or equal to $1$. The summation left is a geometric series which evaluates to $4$.
 
 \[
 \sum_{i=m}^{\infty} \frac{n}{2} \left( \frac{3}{4} \right)^i
 =
 \left( \frac n2\left(\frac34\right)^m \right) \cdot 
 \left(\sum_{j=m}^{\infty}\left(\frac34\right)^{j-m}\right)
-\]
-
-\[
-\begin{aligned}
-\text{We have}\hspace{1em}
-\frac n2\left(\frac34\right)^m \le 1
-\text{ (By definition of }m)
-&
-\hspace{1em}\text{and }
-&
-\sum_{j=m}^{\infty}\left(\frac34\right)^{j-m}
-=
-\sum_{j=0}^{\infty}\left(\frac34\right)^{j}
-=
-\frac1{1-\frac34}
-=
-4
-\end{aligned}
-\]
-
-\[
-\implies
-\sum_{i=m}^{\infty}
-\frac n2\left(\frac34\right)^i
-\le
-4
+\le (1) \cdot (4)
 \]
 
 \[
@@ -386,6 +374,12 @@ m+4
 \mathbb E[H] \le \Theta(\log n)
 \]
 
+\subsection{Geometric Decline Theorem}
+For a general series of random variables $X_0=n, X_1, X_2, \ldots$ and $T$ being the first 
+$i$ such that $X_i \le 1$, given $\frac{\mathbb E[X_{i+1}]}{\mathbb E[X_{i}]} \le p$ 
+with $0<p<1$, the expected value of $T$ is at most $\Theta(\log n)$. The proof of this theorem is merely a 
+generalisation of the proof for the recursion depth of \texttt{QuickSelect} and is left as an 
+exercise to the reader.
 
 \clearpage
 \section{Problems}
@@ -393,18 +387,22 @@ m+4
 \begin{enumerate}
 \item[\textbf{1}]
 \begin{enumerate}[label=\textbf{(\alph*)}]
+
 \item We concluded an upper bound for the expected recursion depth $\mathbb E[H] \le \Theta(\log n)$ 
 for \texttt{QuickSelect}. But to justify the expected complexity as $\Theta(\log n)$, 
 show that $\mathbb E[H] \ge \Theta(\log n)$
 
-\item For a general series of random variables $X_0=n, X_1, X_2, \ldots$ and T being the first 
-$i$ such that $X_i \le 1$, given $\frac{\mathbb E[X_{i+1}]}{\mathbb E[X_{i}]} \le p$ 
-with $0<p<1$, show that $\mathbb E[T] \le \Theta(\log n)$\\
+\item Prove the Geometric Decline Theorem as stated in the text.
+
 \end{enumerate}
 
 \item[\textbf{2}]
 Let $C_n$ be the number of comparisons made by \texttt{QuickSort} on an array of size \(n\). 
-We already established $\mathbb E[C_n]=\sum\limits_{1 \le i < j \le n} \frac{2}{j-i+1}$
+We already established the value of $\mathbb E[C_n]$ in the chapter itself.
+
+\[
+\mathbb E[C_n]=\sum\limits_{1 \le i < j \le n} \frac{2}{j-i+1}
+\]
 
 \begin{enumerate}[label=\textbf{(\alph*)}]
 \item By grouping together all pairs with the same value of \(j-i\), show that

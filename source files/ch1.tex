@@ -7,41 +7,35 @@ Unlike deterministic algorithms, whose behaviour is completely determined by the
 the behaviour of a randomised algorithm may vary between different executions on the same input.\\
 
 
-\noindent Typically, the algorithm uses a random number generator (\texttt{rng}) to decide between multiple possible actions. 
-As a result, quantities such as running time\footnote{Such algorithms are called Las Vegas algorithms.}, 
-memory usage, or even correctness\footnote{
-Such an algorithm is called a Monte Carlo algorithm. The fact that correctness itself may become probabilistic can 
-initially seem undesirable, especially in critical systems where 
-absolute correctness is expected. However, in many practical situations, a sufficiently small error probability
-is considered acceptable. For example, if an algorithm can be shown to fail with probability at 
-most \(10^{-30}\), then the chance of failure may already be smaller than the probability of random hardware faults such as memory
-bit flips caused by cosmic radiation, which programmers typically ignore during ordinary software development.
-} can become random variables (though usually not all of them at the same time).\\
+\noindent Typically, the algorithm uses a random number generator (\texttt{rng}) to decide between multiple 
+possible actions. As a result, quantities such as running time (Las Vegas algorithms), memory usage, 
+or even correctness (Monte Carlo algorithms) can become random variables (though usually not all of 
+them at the same time). The fact that correctness itself is not guaranteed can initially 
+seem undesirable, especially in critical systems where absolute correctness is expected. 
+However, in many practical situations, a sufficiently small error probability is considered acceptable. 
+For example, if an algorithm can be shown to fail with probability at most \(10^{-30}\), then the 
+chance of failure may already be smaller than the probability of random hardware faults such as 
+memory bit flips caused by cosmic radiation, which programmers typically ignore during 
+ordinary software development.\\
 
 
 \noindent The performance of a randomised algorithm is therefore analysed using probability and expectation. 
 If $T_{run}$ denotes the runtime of the algorithm, we are usually interested in quantities 
-such as $T_{algo}=E[T_{run}]$ over all possible random choices made by the algorithm.\footnote{$T_{algo}$ can still be a 
+such as $T_{algo}=\mathbb E[T_{run}]$ over all possible random choices\footnote{$T_{algo}$ can still be a 
 random variable over the input - so this may \textbf{not} be the same as average case performance 
 of the algorithm $T_{avg}$, which is an expected value over all possible inputs.
 But for cleanliness of presentation, we will often ignore this distinction and use these terms 
-interchangeably or simply use the variable $T$ to mean either of them, depending on context.}
-
-\vspace{0.6em}
-Randomised algorithms are often used for the following purposes:
-\begin{itemize}
-    \item avoid adversarial worst case inputs (common in competitive programming)
-    \item simplify algorithm design and implementation
-    \item obtain polynomial-time approximate solutions to NP problems (the field of heuristic algorithms)
-\end{itemize}
+interchangeably or simply use the variable $T$ to mean either of them, depending on context.} made by 
+the algorithm.\\
 
 \section{Implementation of Randomness in \texttt{C++}}
 
 Let us make things more concrete with some actual code and implementation details! \texttt{C++} 
 provides pseudo-random\footnote{Since computers are deterministic, they rely on parameters like 
 atmospheric noise and temperature for randomness. The details are mostly irrelevant for us... We will 
-take pseudo random as true random for our purposes} number generators through the 
-\texttt{<random>} library. A commonly used generator is \texttt{mt19937}.
+take pseudo random as true random for our purposes until the very last chapter in which the differences will be 
+one of the main points of discussion$\dots$} 
+number generators through the \texttt{<random>} library. A commonly used generator is \texttt{mt19937}.
 
 \begin{center}
 \begin{minipage}{0.9\linewidth}
@@ -104,9 +98,13 @@ Sometimes, an algorithm must choose between multiple actions with specified prob
 \Pr(Z)=\frac{1}{5}
 \]
 
-\noindent One simple way to implement this is to generate a random integer uniformly from \(1\) to \(5\):
+\noindent One simple way to implement this is to generate a random integer uniformly from \(1\) to \(5\) and 
+partition the output space into sizes proportional to the probabilities we want to achieve.
 
-\begin{verbatim}
+\begin{center}
+\begin{minipage}{0.9\linewidth}
+\begin{framed}
+\begin{Verbatim}
 uniform_int_distribution<int>uid(1,5);
 
 int v=uid(rng);
@@ -123,10 +121,15 @@ else
 {
     //do Z
 }
-\end{verbatim}
+\end{Verbatim}
+\vspace{-4mm}
+\end{framed}
+\end{minipage}
+\end{center}
 
-thus implementing the required probabilities.
-
+Since we have now dealt with the actual implementation details in a real programming language, we are 
+well-equipped to write actual algorithms which use random decisions in their implementation. Sometimes we may 
+write code with simplified or approximate syntax (a.k.a. pseudocode) which makes it easier to understand.
 
 \clearpage
 \section{Problems}

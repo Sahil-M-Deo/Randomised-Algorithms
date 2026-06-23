@@ -31,54 +31,36 @@ term ``independent''.
 
 \subsection{k-Wise Independence}
 A set of random variables $X_1,X_2,\dots,X_n$ are said to be \emph{$k$-wise independent} if every subset of 
-at most $k$ variables is mutually independent. 
+at most $k$ variables is mutually independent.\\
 
-By definition it follows that $k+1$-wise independence implies $k$-wise independence. Of course, $n$-wise 
+
+\noindent By definition it follows that $k+1$-wise independence implies $k$-wise independence. Of course, $n$-wise 
 independence is the same as the whole set being independent and is thus the strongest version of $k$-wise 
 independence. The case $k=2$ is the weakest version of $k$-wise independence and is called \emph{pairwise 
 independence}.
 
 \section{Generating Independent Bits}
 
-Let $k=\lceil \log_2 n\rceil$.
+\subsection{Pairwise Independent}
 
-Choose uniformly random values
+Let us say that we wish to generate a pairwise independent set of $n$ random bits. 
+Let $n \in \mathbb R=\{0,1,\dots,2^k-1\}$. Consider the finite field $\mathbb F_{2^k}$ and index 
+the elements of $\mathbb F_{2^k}$ as $0,1,\dots,2^k-1$ (in any order) for our convenience. Hence the elements 
+of $\mathbb F_{2^k}$ are $\{p_0,p_1,\dots,p_{2^k-1}\}$.\\ 
 
-\[
-a,b\in\mathbb F_{2^k}.
-\]
+\noindent Choose uniformly random values $a,b \in \mathbb F_{2^k}$. Then define the function 
+$T : \mathbb R \to \{0,1\}$ as $T(i) = (a\cdot p_i+ b)\mod x$. For example, consider $a=x$, $b=x+1$, and 
+$p_i=x+1$ for the field $\mathbb F_4$ under the irreducible polynomial $x^2+x+1$. Then 
+$T(i)=((x)\cdot(x+1)+(x+1))\mod 2=(x^2+1)\mod x=1$. The point of taking modulo $x$ is to extract the constant 
+term from the polynomial.\\
 
-For every vertex $v_i$, identify $i$ with an element of $\mathbb F_{2^k}$ and define
+Why did we define $T$? That is because, with this definition of $T$, the set of bits 
+$\{T(0), T(1), \dots, T(n-1)\}$ are pairwise independent! Consider the probability of $T(i)=c, T(j)=d, c\neq d$ 
+together -- since both equations have a unique solution, the probability is that 
 
-\[
-X_i=a\cdot i+b.
-\]
 
-The least significant bit of $X_i$ determines the side of the cut.
-
-Only $2k=\Theta(\log n)$ random bits are required.
-The variables generated above are pairwise independent.
-
-Fix distinct vertices $i\neq j$.
-
-The equations
-
-\[
-a i+b=x
-\]
-
-and
-
-\[
-a j+b=y
-\]
-
-have a unique solution $(a,b)$ over $\mathbb F_{2^k}$.
-
-Hence every pair $(x,y)$ occurs with equal probability.
-
-Therefore the corresponding output bits are pairwise independent.
-
+If $y_1=ax_1+b$ and $y_2=ax_2+b$ are independent in the field $\mathbb F_{2^k}$, then 
+$T(0), T(1), \dots, T(n-1)$
 \section{Bipartite Subgraph Re-revisited}
 Recall the probabilistic method of simply generating a random 2-coloring of the vertices and then checking the 
 number of bichromatic edges. For every run of that method, we toss a coin for each vertex. This corresponds to 

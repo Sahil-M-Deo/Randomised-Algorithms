@@ -816,6 +816,116 @@ A clique in a graph $G$ is a subset chosen from the set of vertices of $G$ such 
 every pair of vertices in the clique is connected by an edge. The size of the clique is 
 defined as the number of vertices in the clique.
 
+
+
+\chapter{Abstract Algebra}
+
+\section{Rings}
+
+A \emph{ring} $(R,+,\cdot)$ is a set $R$ equipped with two binary operations, addition and multiplication 
+where the following properties hold.
+
+\begin{enumerate}
+    \item
+		The operation $+$ must satisfy the following properties for all $a,b,c\in R$:
+			\begin{enumerate}
+		    \item Closure: if $a,b\in R$, then $a+b\in R$.
+		    \item Associativity: $(a+b)+c=a+(b+c)$ 
+		    \item Identity: there exists $e\in G$ such that $a+e=e+a=a$
+		    \item Inverses: for every $a\in R$, there exists $a^{-1}\in R$ such that
+		    \[
+		    a+a^{-1}=a^{-1}+a=e
+		    \]
+		    \item Commutativity: $a+b=b+a$ 
+			\end{enumerate}
+    \item The operation $\cdot$ must satisfy the following properties on for all $a,b,c\in R$:
+	\begin{enumerate}
+	\item Associative: $(a \cdot b) \cdot c=a\cdot (b \cdot c)$
+    \item Distributive over $+$: $a\cdot(b+c)=a\cdot b+a\cdot c$
+	\end{enumerate}
+\end{enumerate}
+
+\subsection*{Commutative Rings}
+A ring is said to be \emph{commutative} if $a\cdot b=b\cdot a$ for all $a,b\in R$.
+
+\section{Fields}
+
+A \emph{field} $(F,+,\cdot)$ is a commutative ring with a multiplicative identity such that 
+every element which is not the additive identity possesses a multiplicative inverse. We choose to denote 
+the additive identity as $0$, the multiplicative identity as $1$, the additive inverse of $a$ as $(-a)$ and 
+the multiplicative inverse of $a$ as $a^{-1}$ or $\frac{1}{a}$.
+
+\subsection{Division}
+The operator \emph{division} is the operator $/$ where $a/b$ is defined as $a \cdot b^{-1}$ 
+if $b\neq 0$. If $b=0$, then $a/b$ is undefined. $a/b$ is also denoted as $\frac{a}{b}$ just like 
+normal divison. 
+
+\subsection{Finite Fields}
+A field containing finitely many elements is called a \emph{finite field}. A finite 
+field\footnote{Interestingly, all finite fields of the same size are isomorphic which is quite 
+intuitive because all the properties of the operators over the set are the same, only a relabeling 
+of elements can be done.} exists if and only if its size is of the form $p^k$ 
+where $p$ is a prime number and $k$ is a positive integer. Finite fields of size $p^k$ are denoted 
+by $F_{p^k}$. 
+
+\section{Polynomial Rings}
+Let $F$ be a field. The set of all polynomials with coefficients in $F$ is denoted by $F[x]$.
+
+\[
+f(x) \in F[x] \iff f(x)=a_n\cdot x^n+a_{n-1} \cdot x^{n-1}+\cdots+a_1\cdot x+a_0, \;\text{all }a_i \in F
+\]
+
+\subsection{Degree}
+The \emph{degree} of a nonzero polynomial is the largest index $n$ for which $a_n\neq0$. If all coefficients 
+are $0$, then the degree is assigned $-\infty$ to satisfy certain theorems about polynomials.
+
+\subsection{Division Algorithm}
+Let $f(x),g(x)\in F[x]$ with $g(x)\neq0$. Then there exist unique polynomials $q(x),r(x)\in F[x]$ 
+such that $f(x)=q(x)\cdot g(x)+r(x)$ where $\deg(r(x))<\deg(g(x))$. Here, polynomial multiplication is 
+performed in the usual way of convolution using the operators from the field $F$.
+
+\subsection{Factor Theorem}
+An immediate conclusion from the division algorithm is that if $f(a)=0$ for some $a\in F$, then 
+$f(x)$=$(x-a)\cdot g(x)$ where $g(x)$ is also a polynomial of degree one less than $f(x)$. 
+
+\subsection{Irreducible Polynomials}
+A nonconstant polynomial $f(x)\in F[x]$ is said to be \emph{irreducible} if it cannot be written as a 
+product of two polynomials of strictly smaller degree. For example, $x^2+x+1$ is an irreducible polynomial 
+over the polynomial ring $\mathbb F_2[x]$ -- this can be proved easily by simply putting $0$ and $1$ in the 
+polynomial and verifying that the value isn't $0$.\\
+
+\noindent Irreducible polynomials always exist for a polynomial ring over a finite field. Irreducible 
+polynomials over a field play a role analogous to that of prime numbers in the integers. 
+
+\section{Construction of \texorpdfstring{$\mathbb F_{2^k}$}{F(2\string^k)}}
+\label{general_finite_field}
+Let $p(x)\in\mathbb F_2[x]$ be an irreducible polynomial of degree $k$. Then the set $\mathbb F_2[x] \mod (p(x))$ 
+generates all polynomials of degree at most $k-1$. This set with the operators $+$ and $\cdot \mod p(x)$, 
+(where coefficients are reduced modulo 2) forms a field. Since each coefficient is in $\mathbb F_2$, we 
+have two choices for each coefficient ($0$ and $1$) so there are $2^k$ elements in this field and is a 
+valid construction for $\mathbb F_{2^k}$. For example, the field $\mathbb F_4$ consists of the 
+elements \{$0$, $1$, $x$, $x+1$\}.\\
+
+\noindent A common confusion is to think of $\mathbb F_{2^k} = \mathbb F_2[x] \mod (p(x))$ as a polynomial ring. This is 
+not the case, it is an actual field with all the properties as expected by the definition. This will become 
+more clear with examples.
+
+\subsection{Addition}
+Addition is performed coefficient-wise modulo $2$. Let us say that $x^3+x+1$ and $x^2+x+1$ are to be added.
+
+\[
+(x^3+x+1)+(x^2+x+1) = x^3+x^2+((1+1) \text{ mod } 2)x+((1+1) \text{ mod } 2) = x^3+x^2
+\]
+
+\subsection{Multiplication}
+Multiply the corresponding polynomials in the usual way and reduce the result modulo the 
+irreducible polynomial $p(x)$. Let us say that $x+1$ and $x$ are to be multiplied in the field 
+$F_{4}=\mathbb F_2[x] \mod (x^2+x+1)$.
+
+\[
+(x+1)\cdot (x) = (x^2+x) \text{ mod } (x^2+x+1) = -1 \text{ mod } (x^2+x+1) = 1 
+\]
+
 \chapter{Linear Algebra}
 
 \section{Vector Spaces}

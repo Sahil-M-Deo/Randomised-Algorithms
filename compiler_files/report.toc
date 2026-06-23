@@ -23,199 +23,217 @@
 \contentsline {chapter}{\numberline {4}The Classics}{20}{chapter.4}%
 \contentsline {section}{\numberline {4.1}QuickSort}{20}{section.4.1}%
 \contentsline {subsection}{\numberline {4.1.1}The Algorithm}{20}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Worst Case Runtime}{20}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Expected Runtime}{21}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.2}Worst Case}{20}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Expected Time Complexity}{21}{subsection.4.1.3}%
 \contentsline {section}{\numberline {4.2}QuickSelect}{22}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}The Algorithm}{22}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Expected Runtime}{23}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.2}Expected Time Complexity}{23}{subsection.4.2.2}%
 \contentsline {subsection}{\numberline {4.2.3}Expected Recursion Depth}{23}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Geometric Decline Theorem}{24}{subsection.4.2.4}%
 \contentsline {section}{\numberline {4.3}Problems}{25}{section.4.3}%
 \contentsline {chapter}{\numberline {5}Hashing}{26}{chapter.5}%
-\contentsline {section}{\numberline {5.1}What even is Hashing?}{26}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Polynomial Multiplication}{26}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Matrix Multiplication}{27}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Freivalds' Algorithm}{27}{subsection.5.3.1}%
-\contentsline {section}{\numberline {5.4}A Matrix Problem}{28}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}Set of Sets}{29}{subsection.5.4.1}%
-\contentsline {subsection}{\numberline {5.4.2}Hashing}{30}{subsection.5.4.2}%
-\contentsline {section}{\numberline {5.5}A Sliding Window Problem}{31}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Problems}{33}{section.5.6}%
-\contentsline {chapter}{\numberline {6}Data Structures}{34}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Skip Lists}{34}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}The Structure}{36}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Expected Height}{36}{subsection.6.1.2}%
-\contentsline {paragraph}{Step 4: Combining bounds}{37}{section*.21}%
-\contentsline {subsection}{\numberline {6.1.3}Search}{37}{subsection.6.1.3}%
-\contentsline {paragraph}{Step 1: Start at top, check right}{38}{section*.23}%
-\contentsline {paragraph}{Step 2: Moved down, now check right}{38}{section*.24}%
-\contentsline {paragraph}{Step 3: Moved right, check right}{39}{section*.25}%
-\contentsline {paragraph}{Step 4: Moved down, check right}{39}{section*.26}%
-\contentsline {paragraph}{Step 5: Moved right, found the target!}{39}{section*.27}%
-\contentsline {subsection}{\numberline {6.1.4}Insertion}{39}{subsection.6.1.4}%
-\contentsline {section}{\numberline {6.2}Treaps}{40}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Binary Trees}{40}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Tree Traversal}{41}{subsection.6.2.2}%
-\contentsline {subsection}{\numberline {6.2.3}Binary Search Trees}{41}{subsection.6.2.3}%
-\contentsline {subsection}{\numberline {6.2.4}Balancing}{45}{subsection.6.2.4}%
-\contentsline {subsection}{\numberline {6.2.5}Min-Heaps}{46}{subsection.6.2.5}%
-\contentsline {subsection}{\numberline {6.2.6}Rotations}{49}{subsection.6.2.6}%
-\contentsline {subsection}{\numberline {6.2.7}Treaps}{50}{subsection.6.2.7}%
-\contentsline {paragraph}{Step 1: BST Insertion}{51}{section*.35}%
-\contentsline {paragraph}{Step 2: Rotation at $(6,60)$}{52}{section*.36}%
-\contentsline {paragraph}{Step 3: Rotation at $(4,15)$}{53}{section*.37}%
-\contentsline {section}{\numberline {6.3}Hash Tables}{54}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}The Structure}{54}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Insertion}{54}{subsection.6.3.2}%
-\contentsline {paragraph}{First insertion}{54}{section*.40}%
-\contentsline {paragraph}{More insertions}{55}{section*.41}%
-\contentsline {paragraph}{First \emph {collision}}{55}{section*.42}%
-\contentsline {paragraph}{More collisions}{55}{section*.43}%
-\contentsline {subsection}{\numberline {6.3.3}Search}{55}{subsection.6.3.3}%
-\contentsline {subsection}{\numberline {6.3.4}Deletion}{56}{subsection.6.3.4}%
-\contentsline {section}{\numberline {6.4}Bloom Filters}{56}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}The Structure}{56}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}Insertion}{56}{subsection.6.4.2}%
-\contentsline {subsection}{\numberline {6.4.3}Search}{57}{subsection.6.4.3}%
-\contentsline {subsection}{\numberline {6.4.4}Utility of Bloom Filters}{57}{subsection.6.4.4}%
-\contentsline {section}{\numberline {6.5}Cuckoo Hashing}{57}{section.6.5}%
-\contentsline {subsection}{\numberline {6.5.1}The Structure}{57}{subsection.6.5.1}%
-\contentsline {subsection}{\numberline {6.5.2}Insertion}{58}{subsection.6.5.2}%
-\contentsline {subsection}{\numberline {6.5.3}Search}{58}{subsection.6.5.3}%
-\contentsline {section}{\numberline {6.6}Problems}{59}{section.6.6}%
-\contentsline {chapter}{\numberline {7}Number-Theoretic Algorithms}{61}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Introduction}{61}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Fermat Test}{61}{section.7.2}%
-\contentsline {subsection}{\numberline {7.2.1}Fermat's Little Theorem}{62}{subsection.7.2.1}%
-\contentsline {subsection}{\numberline {7.2.2}The Algorithm}{62}{subsection.7.2.2}%
-\contentsline {subsection}{\numberline {7.2.3}Error Probability}{62}{subsection.7.2.3}%
-\contentsline {section}{\numberline {7.3}Miller--Rabin Test}{63}{section.7.3}%
-\contentsline {subsection}{\numberline {7.3.1}A Key Property}{63}{subsection.7.3.1}%
-\contentsline {subsection}{\numberline {7.3.2}The Algorithm}{64}{subsection.7.3.2}%
-\contentsline {subsection}{\numberline {7.3.3}Error Probability}{64}{subsection.7.3.3}%
-\contentsline {subsection}{\numberline {7.3.4}Performance}{65}{subsection.7.3.4}%
-\contentsline {section}{\numberline {7.4}Pollard's Rho Algorithm}{65}{section.7.4}%
-\contentsline {subsection}{\numberline {7.4.1}Floyd's Cycle-Detection Algorithm}{66}{subsection.7.4.1}%
-\contentsline {subsection}{\numberline {7.4.2}The Algorithm}{68}{subsection.7.4.2}%
-\contentsline {subsection}{\numberline {7.4.3}Performance}{69}{subsection.7.4.3}%
-\contentsline {subsubsection}{Collision Model}{69}{section*.46}%
-\contentsline {subsubsection}{Probability of No Collision}{69}{section*.47}%
-\contentsline {subsubsection}{Expected Collision Step}{69}{section*.48}%
-\contentsline {subsubsection}{Collision Detection}{70}{section*.49}%
-\contentsline {subsubsection}{Cost Per Step}{70}{section*.50}%
-\contentsline {subsubsection}{Total Expected Complexity}{70}{section*.51}%
-\contentsline {section}{\numberline {7.5}Problems}{72}{section.7.5}%
-\contentsline {chapter}{\numberline {8}Probabilistic Method}{73}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Introduction}{73}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Array Construction}{73}{section.8.2}%
-\contentsline {subsection}{\numberline {8.2.1}Random Experiment}{73}{subsection.8.2.1}%
-\contentsline {subsection}{\numberline {8.2.2}Success Probability}{74}{subsection.8.2.2}%
-\contentsline {subsection}{\numberline {8.2.3}The Algorithm}{75}{subsection.8.2.3}%
-\contentsline {subsection}{\numberline {8.2.4}Expected Time Complexity}{76}{subsection.8.2.4}%
-\contentsline {section}{\numberline {8.3}Dominating Set}{76}{section.8.3}%
-\contentsline {subsection}{\numberline {8.3.1}Random Experiment}{77}{subsection.8.3.1}%
-\contentsline {subsection}{\numberline {8.3.2}Success Probability}{77}{subsection.8.3.2}%
-\contentsline {subsection}{\numberline {8.3.3}The Algorithm}{78}{subsection.8.3.3}%
-\contentsline {subsection}{\numberline {8.3.4}Expected Time Complexity}{78}{subsection.8.3.4}%
-\contentsline {section}{\numberline {8.4}Bipartite Subgraph}{79}{section.8.4}%
-\contentsline {subsection}{\numberline {8.4.1}Random Experiment}{79}{subsection.8.4.1}%
-\contentsline {subsection}{\numberline {8.4.2}The Algorithm}{80}{subsection.8.4.2}%
-\contentsline {subsection}{\numberline {8.4.3}Success Probability}{80}{subsection.8.4.3}%
-\contentsline {subsection}{\numberline {8.4.4}Expected Time Complexity}{82}{subsection.8.4.4}%
-\contentsline {subsection}{\numberline {8.4.5}Conjecture}{82}{subsection.8.4.5}%
-\contentsline {subsection}{\numberline {8.4.6}Derandomisation}{82}{subsection.8.4.6}%
-\contentsline {chapter}{\numberline {9}Online Algorithms}{84}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Introduction}{84}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Dating}{84}{section.9.2}%
-\contentsline {section}{\numberline {9.3}Load Balancing}{87}{section.9.3}%
-\contentsline {section}{\numberline {9.4}Distinct Elements}{89}{section.9.4}%
-\contentsline {subsection}{\numberline {9.4.1}Flajolet–Martin Method}{89}{subsection.9.4.1}%
-\contentsline {subsection}{\numberline {9.4.2}HyperLogLog Method}{91}{subsection.9.4.2}%
-\contentsline {chapter}{\numberline {10}Heuristic Algorithms}{92}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Introduction}{92}{section.10.1}%
-\contentsline {section}{\numberline {10.2}Dominating Set Revisited}{92}{section.10.2}%
-\contentsline {section}{\numberline {10.3}Independent Set}{94}{section.10.3}%
-\contentsline {subsection}{\numberline {10.3.1}Random Permutation}{94}{subsection.10.3.1}%
-\contentsline {subsection}{\numberline {10.3.2}Local Decision}{95}{subsection.10.3.2}%
-\contentsline {section}{\numberline {10.4}Bipartite Subgraph Revisited}{97}{section.10.4}%
-\contentsline {subsection}{\numberline {10.4.1}Self-Correction}{97}{subsection.10.4.1}%
-\contentsline {chapter}{\numberline {11}Game Theoretic Algorithms}{98}{chapter.11}%
-\contentsline {section}{\numberline {11.1}Definitions}{98}{section.11.1}%
-\contentsline {section}{\numberline {11.2}Nash Equilibria}{98}{section.11.2}%
-\contentsline {subsection}{\numberline {11.2.1}Kingdom's Dilemma}{99}{subsection.11.2.1}%
-\contentsline {subsection}{\numberline {11.2.2}Penalty Kick}{99}{subsection.11.2.2}%
-\contentsline {section}{\numberline {11.3}Mixed Strategies}{100}{section.11.3}%
-\contentsline {section}{\numberline {11.4}Mixed Strategy Nash Equilibria}{100}{section.11.4}%
-\contentsline {section}{\numberline {11.5}Indifference Theorem}{101}{section.11.5}%
-\contentsline {section}{\numberline {11.6}The Minimax Principle}{101}{section.11.6}%
-\contentsline {section}{\numberline {11.7}Problems}{102}{section.11.7}%
-\contentsline {chapter}{\numberline {12}Zero-Knowledge Proofs}{103}{chapter.12}%
-\contentsline {section}{\numberline {12.1}Definitions}{103}{section.12.1}%
-\contentsline {section}{\numberline {12.2}Card Color}{104}{section.12.2}%
-\contentsline {subsection}{\numberline {12.2.1}The Scheme}{104}{subsection.12.2.1}%
-\contentsline {subsection}{\numberline {12.2.2}Completeness and Soundness}{104}{subsection.12.2.2}%
-\contentsline {section}{\numberline {12.3}Graph Isomorphism}{104}{section.12.3}%
-\contentsline {subsection}{\numberline {12.3.1}The Scheme}{105}{subsection.12.3.1}%
-\contentsline {subsection}{\numberline {12.3.2}Soundness and Completeness}{105}{subsection.12.3.2}%
-\contentsline {subsection}{\numberline {12.3.3}Game Theory Perspective}{106}{subsection.12.3.3}%
-\contentsline {chapter}{\numberline {13}Derandomization}{107}{chapter.13}%
-\contentsline {section}{\numberline {13.1}Introduction}{107}{section.13.1}%
-\contentsline {section}{\numberline {13.2}Independence}{107}{section.13.2}%
-\contentsline {subsection}{\numberline {13.2.1}Mutual Independence}{107}{subsection.13.2.1}%
-\contentsline {subsection}{\numberline {13.2.2}k-Wise Independence}{107}{subsection.13.2.2}%
-\contentsline {section}{\numberline {13.3}Generating Independent Bits}{107}{section.13.3}%
-\contentsline {section}{\numberline {13.4}Bipartite Subgraph Re-revisited}{108}{section.13.4}%
-\contentsline {section}{\numberline {13.5}Pairwise Independence}{108}{section.13.5}%
-\contentsline {section}{\numberline {13.6}MAX-CUT with Only $\Theta (\log n)$ Random Bits}{108}{section.13.6}%
-\contentsline {section}{\numberline {13.7}$k$-Wise Independence}{109}{section.13.7}%
-\contentsline {section}{\numberline {13.8}Polynomial Construction of $k$-Wise Independent Variables}{109}{section.13.8}%
-\contentsline {section}{\numberline {13.9}Why Use $k$-Wise Independence?}{109}{section.13.9}%
-\contentsline {section}{\numberline {13.10}The Method of Conditional Expectations}{110}{section.13.10}%
-\contentsline {section}{\numberline {13.11}Pseudorandom Generators}{110}{section.13.11}%
-\contentsline {section}{\numberline {13.12}Expander Walks}{110}{section.13.12}%
-\contentsline {section}{\numberline {13.13}The Complexity-Theoretic View}{110}{section.13.13}%
-\contentsline {chapter}{Appendices}{107}{section*.83}%
-\contentsline {chapter}{\numberline {A}Probability and Expectation}{108}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Linearity of Expectation}{108}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Tail Sum Formula}{108}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Union Bound}{108}{section.A.3}%
-\contentsline {section}{\numberline {A.4}Independence of Expectation}{108}{section.A.4}%
-\contentsline {section}{\numberline {A.5}Variance}{108}{section.A.5}%
-\contentsline {section}{\numberline {A.6}Indicator Variables}{109}{section.A.6}%
-\contentsline {section}{\numberline {A.7}Law of Total Expectation}{109}{section.A.7}%
-\contentsline {section}{\numberline {A.8}Wald's Equation}{109}{section.A.8}%
-\contentsline {chapter}{\numberline {B}Inequalities}{111}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Exponential Inequality}{111}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Jensen’s Inequality}{111}{section.B.2}%
-\contentsline {section}{\numberline {B.3}Markov's Inequality}{112}{section.B.3}%
-\contentsline {section}{\numberline {B.4}Bernoulli's Inequality}{113}{section.B.4}%
-\contentsline {chapter}{\numberline {C}Convergence and Limit Theorems}{114}{appendix.C}%
-\contentsline {section}{\numberline {C.1}Identical and Independently Distributed Random Variables}{114}{section.C.1}%
-\contentsline {section}{\numberline {C.2}Almost Surely}{114}{section.C.2}%
-\contentsline {section}{\numberline {C.3}Almost Never}{114}{section.C.3}%
-\contentsline {section}{\numberline {C.4}$\lim \limits _{n\to \infty }X_n=Y$}{115}{section.C.4}%
-\contentsline {section}{\numberline {C.5}Convergence in Probability}{115}{section.C.5}%
-\contentsline {section}{\numberline {C.6}The Weak Law of Large Numbers}{115}{section.C.6}%
-\contentsline {section}{\numberline {C.7}Almost Sure Convergence}{116}{section.C.7}%
-\contentsline {section}{\numberline {C.8}$A_n$ infinitely often}{116}{section.C.8}%
-\contentsline {section}{\numberline {C.9}The Borel--Cantelli Lemmas}{116}{section.C.9}%
-\contentsline {section}{\numberline {C.10}The Strong Law of Large Numbers}{117}{section.C.10}%
-\contentsline {section}{\numberline {C.11}Convergence in Distribution}{117}{section.C.11}%
-\contentsline {section}{\numberline {C.12}The Central Limit Theorem}{118}{section.C.12}%
-\contentsline {chapter}{\numberline {D}Discrete Mathematics}{119}{appendix.D}%
-\contentsline {section}{\numberline {D.1}Pigeonhole Principle}{119}{section.D.1}%
-\contentsline {section}{\numberline {D.2}Relations}{119}{section.D.2}%
-\contentsline {subsection}{\numberline {D.2.1}Partial Orders}{119}{subsection.D.2.1}%
-\contentsline {subsection}{\numberline {D.2.2}Equivalence Relations}{120}{subsection.D.2.2}%
-\contentsline {section}{\numberline {D.3}Graph Theory}{120}{section.D.3}%
-\contentsline {subsection}{\numberline {D.3.1}Degree}{120}{subsection.D.3.1}%
-\contentsline {subsection}{\numberline {D.3.2}Bipartite Graph}{120}{subsection.D.3.2}%
-\contentsline {subsection}{\numberline {D.3.3}Subgraph}{120}{subsection.D.3.3}%
-\contentsline {subsection}{\numberline {D.3.4}Clique}{120}{subsection.D.3.4}%
-\contentsline {chapter}{\numberline {E}Linear Algebra}{121}{appendix.E}%
-\contentsline {section}{\numberline {E.1}Vector Spaces}{121}{section.E.1}%
-\contentsline {section}{\numberline {E.2}Subspaces}{121}{section.E.2}%
-\contentsline {section}{\numberline {E.3}Dimension of a Subspace}{121}{section.E.3}%
-\contentsline {section}{\numberline {E.4}The Nullspace}{122}{section.E.4}%
-\contentsline {section}{\numberline {E.5}Nullity and Rank}{122}{section.E.5}%
-\contentsline {section}{\numberline {E.6}The Rank--Nullity Theorem}{122}{section.E.6}%
-\contentsline {paragraph}{Theorem (Rank--Nullity).}{122}{section*.94}%
+\contentsline {section}{\numberline {5.1}Introduction}{26}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Universal Hash Families}{26}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Strongly Universal Hash Families}{27}{section.5.3}%
+\contentsline {section}{\numberline {5.4}$k$-Wise Independent Hash Families}{27}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Polynomial Multiplication}{28}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Matrix Multiplication}{29}{section.5.6}%
+\contentsline {subsection}{\numberline {5.6.1}Freivalds' Algorithm}{29}{subsection.5.6.1}%
+\contentsline {section}{\numberline {5.7}A Matrix Problem}{30}{section.5.7}%
+\contentsline {subsection}{\numberline {5.7.1}Set of Sets}{31}{subsection.5.7.1}%
+\contentsline {subsection}{\numberline {5.7.2}Hashing}{31}{subsection.5.7.2}%
+\contentsline {section}{\numberline {5.8}A Sliding Window Problem}{33}{section.5.8}%
+\contentsline {section}{\numberline {5.9}Problems}{35}{section.5.9}%
+\contentsline {chapter}{\numberline {6}Data Structures}{36}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Skip Lists}{36}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}The Structure}{38}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Expected Height}{38}{subsection.6.1.2}%
+\contentsline {paragraph}{Step 4: Combining bounds}{39}{section*.21}%
+\contentsline {subsection}{\numberline {6.1.3}Search}{39}{subsection.6.1.3}%
+\contentsline {paragraph}{Step 1: Start at top, check right}{40}{section*.23}%
+\contentsline {paragraph}{Step 2: Moved down, now check right}{40}{section*.24}%
+\contentsline {paragraph}{Step 3: Moved right, check right}{41}{section*.25}%
+\contentsline {paragraph}{Step 4: Moved down, check right}{41}{section*.26}%
+\contentsline {paragraph}{Step 5: Moved right, found the target!}{41}{section*.27}%
+\contentsline {subsection}{\numberline {6.1.4}Insertion}{41}{subsection.6.1.4}%
+\contentsline {section}{\numberline {6.2}Treaps}{42}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Binary Trees}{42}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Tree Traversal}{43}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}Binary Search Trees}{43}{subsection.6.2.3}%
+\contentsline {subsection}{\numberline {6.2.4}Balancing}{47}{subsection.6.2.4}%
+\contentsline {subsection}{\numberline {6.2.5}Min-Heaps}{48}{subsection.6.2.5}%
+\contentsline {subsection}{\numberline {6.2.6}Rotations}{51}{subsection.6.2.6}%
+\contentsline {subsection}{\numberline {6.2.7}Treaps}{52}{subsection.6.2.7}%
+\contentsline {paragraph}{Step 1: BST Insertion}{53}{section*.35}%
+\contentsline {paragraph}{Step 2: Rotation at $(6,60)$}{54}{section*.36}%
+\contentsline {paragraph}{Step 3: Rotation at $(4,15)$}{55}{section*.37}%
+\contentsline {section}{\numberline {6.3}Hash Tables}{56}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}The Structure}{56}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Insertion}{56}{subsection.6.3.2}%
+\contentsline {paragraph}{First insertion}{56}{section*.40}%
+\contentsline {paragraph}{More insertions}{57}{section*.41}%
+\contentsline {paragraph}{First \emph {collision}}{57}{section*.42}%
+\contentsline {paragraph}{More collisions}{57}{section*.43}%
+\contentsline {subsection}{\numberline {6.3.3}Search}{57}{subsection.6.3.3}%
+\contentsline {subsection}{\numberline {6.3.4}Deletion}{58}{subsection.6.3.4}%
+\contentsline {section}{\numberline {6.4}Bloom Filters}{58}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}The Structure}{58}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Insertion}{58}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Search}{59}{subsection.6.4.3}%
+\contentsline {subsection}{\numberline {6.4.4}Utility of Bloom Filters}{59}{subsection.6.4.4}%
+\contentsline {section}{\numberline {6.5}Cuckoo Hashing}{59}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}The Structure}{59}{subsection.6.5.1}%
+\contentsline {subsection}{\numberline {6.5.2}Insertion}{60}{subsection.6.5.2}%
+\contentsline {subsection}{\numberline {6.5.3}Search}{60}{subsection.6.5.3}%
+\contentsline {section}{\numberline {6.6}Problems}{61}{section.6.6}%
+\contentsline {chapter}{\numberline {7}Number-Theoretic Algorithms}{63}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Introduction}{63}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Fermat Test}{63}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}Fermat's Little Theorem}{64}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}The Algorithm}{64}{subsection.7.2.2}%
+\contentsline {subsection}{\numberline {7.2.3}Error Probability}{64}{subsection.7.2.3}%
+\contentsline {section}{\numberline {7.3}Miller--Rabin Test}{65}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}A Key Property}{65}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.3.2}The Algorithm}{66}{subsection.7.3.2}%
+\contentsline {subsection}{\numberline {7.3.3}Error Probability}{66}{subsection.7.3.3}%
+\contentsline {subsection}{\numberline {7.3.4}Performance}{67}{subsection.7.3.4}%
+\contentsline {section}{\numberline {7.4}Pollard's Rho Algorithm}{67}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Floyd's Cycle-Detection Algorithm}{68}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}The Algorithm}{70}{subsection.7.4.2}%
+\contentsline {subsection}{\numberline {7.4.3}Performance}{71}{subsection.7.4.3}%
+\contentsline {subsubsection}{Collision Model}{71}{section*.46}%
+\contentsline {subsubsection}{Probability of No Collision}{71}{section*.47}%
+\contentsline {subsubsection}{Expected Collision Step}{71}{section*.48}%
+\contentsline {subsubsection}{Collision Detection}{72}{section*.49}%
+\contentsline {subsubsection}{Cost Per Step}{72}{section*.50}%
+\contentsline {subsubsection}{Total Expected Complexity}{72}{section*.51}%
+\contentsline {section}{\numberline {7.5}Problems}{74}{section.7.5}%
+\contentsline {chapter}{\numberline {8}Probabilistic Method}{75}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Introduction}{75}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Array Construction}{75}{section.8.2}%
+\contentsline {subsection}{\numberline {8.2.1}Random Experiment}{75}{subsection.8.2.1}%
+\contentsline {subsection}{\numberline {8.2.2}Success Probability}{76}{subsection.8.2.2}%
+\contentsline {subsection}{\numberline {8.2.3}The Algorithm}{77}{subsection.8.2.3}%
+\contentsline {subsection}{\numberline {8.2.4}Expected Time Complexity}{78}{subsection.8.2.4}%
+\contentsline {section}{\numberline {8.3}Dominating Set}{78}{section.8.3}%
+\contentsline {subsection}{\numberline {8.3.1}Random Experiment}{79}{subsection.8.3.1}%
+\contentsline {subsection}{\numberline {8.3.2}Success Probability}{79}{subsection.8.3.2}%
+\contentsline {subsection}{\numberline {8.3.3}The Algorithm}{80}{subsection.8.3.3}%
+\contentsline {subsection}{\numberline {8.3.4}Expected Time Complexity}{80}{subsection.8.3.4}%
+\contentsline {section}{\numberline {8.4}Bipartite Subgraph}{81}{section.8.4}%
+\contentsline {subsection}{\numberline {8.4.1}Random Experiment}{81}{subsection.8.4.1}%
+\contentsline {subsection}{\numberline {8.4.2}The Algorithm}{82}{subsection.8.4.2}%
+\contentsline {subsection}{\numberline {8.4.3}Success Probability}{82}{subsection.8.4.3}%
+\contentsline {subsection}{\numberline {8.4.4}Expected Time Complexity}{84}{subsection.8.4.4}%
+\contentsline {subsection}{\numberline {8.4.5}Conjecture}{84}{subsection.8.4.5}%
+\contentsline {subsection}{\numberline {8.4.6}Derandomisation}{84}{subsection.8.4.6}%
+\contentsline {chapter}{\numberline {9}Online Algorithms}{86}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Introduction}{86}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Dating}{86}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Load Balancing}{89}{section.9.3}%
+\contentsline {section}{\numberline {9.4}Distinct Elements}{91}{section.9.4}%
+\contentsline {subsection}{\numberline {9.4.1}Flajolet–Martin Method}{91}{subsection.9.4.1}%
+\contentsline {subsection}{\numberline {9.4.2}HyperLogLog Method}{93}{subsection.9.4.2}%
+\contentsline {chapter}{\numberline {10}Heuristic Algorithms}{94}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Introduction}{94}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Dominating Set Revisited}{94}{section.10.2}%
+\contentsline {section}{\numberline {10.3}Independent Set}{96}{section.10.3}%
+\contentsline {subsection}{\numberline {10.3.1}Random Permutation}{96}{subsection.10.3.1}%
+\contentsline {subsection}{\numberline {10.3.2}Local Decision}{97}{subsection.10.3.2}%
+\contentsline {section}{\numberline {10.4}Bipartite Subgraph Revisited}{99}{section.10.4}%
+\contentsline {subsection}{\numberline {10.4.1}Self-Correction}{99}{subsection.10.4.1}%
+\contentsline {chapter}{\numberline {11}Game Theoretic Algorithms}{100}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Definitions}{100}{section.11.1}%
+\contentsline {section}{\numberline {11.2}Nash Equilibria}{100}{section.11.2}%
+\contentsline {subsection}{\numberline {11.2.1}Kingdom's Dilemma}{101}{subsection.11.2.1}%
+\contentsline {subsection}{\numberline {11.2.2}Penalty Kick}{101}{subsection.11.2.2}%
+\contentsline {section}{\numberline {11.3}Mixed Strategies}{102}{section.11.3}%
+\contentsline {section}{\numberline {11.4}Mixed Strategy Nash Equilibria}{102}{section.11.4}%
+\contentsline {section}{\numberline {11.5}Indifference Theorem}{103}{section.11.5}%
+\contentsline {section}{\numberline {11.6}The Minimax Principle}{103}{section.11.6}%
+\contentsline {section}{\numberline {11.7}Problems}{104}{section.11.7}%
+\contentsline {chapter}{\numberline {12}Zero-Knowledge Proofs}{105}{chapter.12}%
+\contentsline {section}{\numberline {12.1}Definitions}{105}{section.12.1}%
+\contentsline {section}{\numberline {12.2}Card Color}{106}{section.12.2}%
+\contentsline {subsection}{\numberline {12.2.1}The Scheme}{106}{subsection.12.2.1}%
+\contentsline {subsection}{\numberline {12.2.2}Completeness and Soundness}{106}{subsection.12.2.2}%
+\contentsline {section}{\numberline {12.3}Graph Isomorphism}{106}{section.12.3}%
+\contentsline {subsection}{\numberline {12.3.1}The Scheme}{107}{subsection.12.3.1}%
+\contentsline {subsection}{\numberline {12.3.2}Soundness and Completeness}{107}{subsection.12.3.2}%
+\contentsline {subsection}{\numberline {12.3.3}Game Theory Perspective}{108}{subsection.12.3.3}%
+\contentsline {chapter}{\numberline {13}Derandomization}{109}{chapter.13}%
+\contentsline {section}{\numberline {13.1}Introduction}{109}{section.13.1}%
+\contentsline {section}{\numberline {13.2}Independence}{109}{section.13.2}%
+\contentsline {subsection}{\numberline {13.2.1}Mutual Independence}{109}{subsection.13.2.1}%
+\contentsline {subsection}{\numberline {13.2.2}k-Wise Independence}{109}{subsection.13.2.2}%
+\contentsline {section}{\numberline {13.3}Generating Independent Bits}{110}{section.13.3}%
+\contentsline {subsection}{\numberline {13.3.1}Pairwise Independent}{110}{subsection.13.3.1}%
+\contentsline {section}{\numberline {13.4}Bipartite Subgraph Re-revisited}{110}{section.13.4}%
+\contentsline {section}{\numberline {13.5}Pairwise Independence}{110}{section.13.5}%
+\contentsline {section}{\numberline {13.6}MAX-CUT with Only $\Theta (\log n)$ Random Bits}{110}{section.13.6}%
+\contentsline {section}{\numberline {13.7}$k$-Wise Independence}{111}{section.13.7}%
+\contentsline {section}{\numberline {13.8}Polynomial Construction of $k$-Wise Independent Variables}{111}{section.13.8}%
+\contentsline {section}{\numberline {13.9}Why Use $k$-Wise Independence?}{111}{section.13.9}%
+\contentsline {section}{\numberline {13.10}The Method of Conditional Expectations}{112}{section.13.10}%
+\contentsline {section}{\numberline {13.11}Pseudorandom Generators}{112}{section.13.11}%
+\contentsline {section}{\numberline {13.12}Expander Walks}{112}{section.13.12}%
+\contentsline {section}{\numberline {13.13}The Complexity-Theoretic View}{112}{section.13.13}%
+\contentsline {chapter}{Appendices}{113}{section*.83}%
+\contentsline {chapter}{\numberline {A}Probability and Expectation}{114}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Linearity of Expectation}{114}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Tail Sum Formula}{114}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Union Bound}{114}{section.A.3}%
+\contentsline {section}{\numberline {A.4}Independence of Expectation}{114}{section.A.4}%
+\contentsline {section}{\numberline {A.5}Variance}{114}{section.A.5}%
+\contentsline {section}{\numberline {A.6}Indicator Variables}{115}{section.A.6}%
+\contentsline {section}{\numberline {A.7}Law of Total Expectation}{115}{section.A.7}%
+\contentsline {section}{\numberline {A.8}Wald's Equation}{115}{section.A.8}%
+\contentsline {chapter}{\numberline {B}Inequalities}{117}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Exponential Inequality}{117}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Jensen’s Inequality}{117}{section.B.2}%
+\contentsline {section}{\numberline {B.3}Markov's Inequality}{118}{section.B.3}%
+\contentsline {section}{\numberline {B.4}Bernoulli's Inequality}{119}{section.B.4}%
+\contentsline {chapter}{\numberline {C}Convergence and Limit Theorems}{120}{appendix.C}%
+\contentsline {section}{\numberline {C.1}Identical and Independently Distributed Random Variables}{120}{section.C.1}%
+\contentsline {section}{\numberline {C.2}Almost Surely}{120}{section.C.2}%
+\contentsline {section}{\numberline {C.3}Almost Never}{120}{section.C.3}%
+\contentsline {section}{\numberline {C.4}$\lim \limits _{n\to \infty }X_n=Y$}{121}{section.C.4}%
+\contentsline {section}{\numberline {C.5}Convergence in Probability}{121}{section.C.5}%
+\contentsline {section}{\numberline {C.6}The Weak Law of Large Numbers}{121}{section.C.6}%
+\contentsline {section}{\numberline {C.7}Almost Sure Convergence}{122}{section.C.7}%
+\contentsline {section}{\numberline {C.8}$A_n$ infinitely often}{122}{section.C.8}%
+\contentsline {section}{\numberline {C.9}The Borel--Cantelli Lemmas}{122}{section.C.9}%
+\contentsline {section}{\numberline {C.10}The Strong Law of Large Numbers}{123}{section.C.10}%
+\contentsline {section}{\numberline {C.11}Convergence in Distribution}{123}{section.C.11}%
+\contentsline {section}{\numberline {C.12}The Central Limit Theorem}{124}{section.C.12}%
+\contentsline {chapter}{\numberline {D}Discrete Mathematics}{125}{appendix.D}%
+\contentsline {section}{\numberline {D.1}Pigeonhole Principle}{125}{section.D.1}%
+\contentsline {section}{\numberline {D.2}Relations}{125}{section.D.2}%
+\contentsline {subsection}{\numberline {D.2.1}Partial Orders}{125}{subsection.D.2.1}%
+\contentsline {subsection}{\numberline {D.2.2}Equivalence Relations}{126}{subsection.D.2.2}%
+\contentsline {section}{\numberline {D.3}Graph Theory}{126}{section.D.3}%
+\contentsline {subsection}{\numberline {D.3.1}Degree}{126}{subsection.D.3.1}%
+\contentsline {subsection}{\numberline {D.3.2}Bipartite Graph}{126}{subsection.D.3.2}%
+\contentsline {subsection}{\numberline {D.3.3}Subgraph}{126}{subsection.D.3.3}%
+\contentsline {subsection}{\numberline {D.3.4}Clique}{126}{subsection.D.3.4}%
+\contentsline {chapter}{\numberline {E}Abstract Algebra}{127}{appendix.E}%
+\contentsline {section}{\numberline {E.1}Rings}{127}{section.E.1}%
+\contentsline {section}{\numberline {E.2}Fields}{127}{section.E.2}%
+\contentsline {subsection}{\numberline {E.2.1}Division}{127}{subsection.E.2.1}%
+\contentsline {subsection}{\numberline {E.2.2}Finite Fields}{128}{subsection.E.2.2}%
+\contentsline {section}{\numberline {E.3}Polynomial Rings}{128}{section.E.3}%
+\contentsline {subsection}{\numberline {E.3.1}Degree}{128}{subsection.E.3.1}%
+\contentsline {subsection}{\numberline {E.3.2}Division Algorithm}{128}{subsection.E.3.2}%
+\contentsline {subsection}{\numberline {E.3.3}Factor Theorem}{128}{subsection.E.3.3}%
+\contentsline {subsection}{\numberline {E.3.4}Irreducible Polynomials}{128}{subsection.E.3.4}%
+\contentsline {section}{\numberline {E.4}Construction of $\mathbb F_{2^k}$}{128}{section.E.4}%
+\contentsline {subsection}{\numberline {E.4.1}Addition}{129}{subsection.E.4.1}%
+\contentsline {subsection}{\numberline {E.4.2}Multiplication}{129}{subsection.E.4.2}%
+\contentsline {chapter}{\numberline {F}Linear Algebra}{130}{appendix.F}%
+\contentsline {section}{\numberline {F.1}Vector Spaces}{130}{section.F.1}%
+\contentsline {section}{\numberline {F.2}Subspaces}{130}{section.F.2}%
+\contentsline {section}{\numberline {F.3}Dimension of a Subspace}{130}{section.F.3}%
+\contentsline {section}{\numberline {F.4}The Nullspace}{131}{section.F.4}%
+\contentsline {section}{\numberline {F.5}Nullity and Rank}{131}{section.F.5}%
+\contentsline {section}{\numberline {F.6}The Rank--Nullity Theorem}{131}{section.F.6}%
+\contentsline {paragraph}{Theorem (Rank--Nullity).}{131}{section*.95}%

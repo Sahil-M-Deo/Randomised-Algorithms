@@ -1,23 +1,169 @@
 
 \chapter{Hashing}
 
-\section{What even is Hashing?}
+\section{Introduction}
 
-A recurring theme in randomized algorithms is the idea of replacing a large object by a much smaller \textit{fingerprint} or \textit{hash} which approximately preserves equality.
+A recurring theme in randomized algorithms is the idea of replacing a large object by a much smaller 
+\textit{fingerprint} or \textit{hash} which approximately preserves equality. Instead of comparing 
+two complicated objects directly, we compare their hashes. If the hashes differ, the objects are 
+certainly different. If the hashes are equal, the objects are \emph{probably} equal.\\
 
-Instead of comparing two complicated objects directly, we compare their hashes.
-If the hashes differ, the objects are certainly different.
-If the hashes are equal, the objects are \emph{probably} equal.
 
-The power of hashing comes from the fact that computing and comparing hashes is often significantly 
+\noindent The power of hashing comes from the fact that computing and comparing hashes is often significantly 
 faster than comparing the original objects themselves. It may also be seen as a form of compression 
 that preserves some information about the original object. In data structures like the \texttt{unordered set}, 
-hashing helps to achieve constant time complexity (on average) within finite memory constraints.
+hashing helps to achieve constant time complexity (on average) within finite memory constraints.\\
 
-Usually hashes are many-one functions, meaning that multiple different objects can have the same hash. 
+
+\noindent Usually hashes are many-one functions, meaning that multiple different objects can have the same hash. 
 Two inputs having the same hash is called a \textit{collision}. The probability of collision depends on 
 the specific hash function used and the distribution of inputs. A good hash function should minimize the 
 probability of collisions for typical inputs.
+
+\section{Universal Hash Families}
+
+In many applications, we want a low probability of a hash collision because the performance of certain data 
+structures and algorithms depends on it. Since the whole point of a hash function is to go from a large set 
+(the domain $D$) to a smaller set (the range $R$), we will be interested in the case $|D| >> |R|$ where 
+significant collisions are forced to occur.\\ 
+
+
+\noindent Let $U$ be the domain (whose elements are called keys) and let $[m]=\{0,1,\dots,m-1\}$ denote the 
+set of outputs. A family of hash functions $\mathcal H=\{h:U\to [m]\}$ is said to be 
+\emph{universal} if for every pair of distinct keys $x,y\in U$, the probability of collision for a random 
+$h \in \mathcal H$ is no greater than completely random assignment.
+
+\[
+\Pr_{h \in \mathcal H}[h(x)=h(y)]\le \frac1m, \;\; x \neq y
+\]
+
+The hash functions themselves are completely deterministic, so $h(x)=h(y)$ is either true or false --- its truth 
+value is known if $h$ is known. So the probability is coming from the random choice of the 
+hash function $h$. The key idea is that even if an adversary knows the design of the hash functions 
+in the family, they cannot predict which hash function will be used so they can not force a 
+collision with high probability. \\
+
+
+Suppose $p$ is a prime and $U=\{0,1,\dots,p-1\}$. For any integers
+$a\in\{1,\dots,p-1\}$ and $b\in\{0,\dots,p-1\}$, define
+\[
+h_{a,b}(x)=((ax+b)\bmod p)\bmod m
+\]
+
+The family
+\[
+\mathcal H=\{h_{a,b}:1\le a\le p-1,\ 0\le b<p\}
+\]
+forms a universal family.
+
+\section{Strongly Universal Hash Families}
+
+Universal hashing only bounds the probability of collisions. In many
+applications, we require a stronger guarantee: not only should collisions be
+unlikely, but the hash values of distinct keys should behave as independent
+random variables.
+
+
+A family of hash functions
+\[
+\mathcal H=\{h:U\to [m]\}
+\]
+is called \emph{strongly universal} (or \emph{2-wise independent}) if for
+every pair of distinct keys $x,y\in U$ and for every pair of table locations
+$i,j\in[m]$,
+\[
+\Pr_{h\sim\mathcal H}[h(x)=i\land h(y)=j]=\frac1{m^2}
+\]
+
+
+In other words, for any two distinct keys, the hash values are independent and
+uniformly distributed over $[m]$.
+
+Strong universality immediately implies universality. Indeed,
+\[
+\Pr[h(x)=h(y)]
+=\sum_{i=0}^{m-1}\Pr[h(x)=i\land h(y)=i]
+=\sum_{i=0}^{m-1}\frac1{m^2}
+=\frac1m
+\]
+
+The converse, however, is not true: a universal family need not be strongly
+universal.
+
+Strongly universal hash families play an important role in randomized
+algorithms, data streaming, sketching, and cryptographic protocols.
+
+\section{\texorpdfstring{$k$}{k}-Wise Independent Hash Families}
+
+Strong universality captures independence among pairs of keys. More generally,
+we may require independence among larger collections of keys.
+
+
+A family of hash functions
+\[
+\mathcal H=\{h:U\to [m]\}
+\]
+is said to be \emph{$k$-wise independent} if for every collection of distinct
+keys
+\[
+x_1,x_2,\dots,x_k\in U
+\]
+and every choice of values
+\[
+y_1,y_2,\dots,y_k\in [m]
+\]
+we have
+\[
+\Pr_{h\sim\mathcal H}
+\bigl[h(x_1)=y_1,\dots,h(x_k)=y_k\bigr]
+=\frac1{m^k}
+\]
+
+
+Equivalently, the random variables
+\[
+h(x_1),h(x_2),\dots,h(x_k)
+\]
+are jointly independent and each is uniformly distributed over $[m]$.
+
+The hierarchy of notions is therefore
+\[
+k\text{-wise independent}
+\implies
+(k-1)\text{-wise independent}
+\implies
+\cdots
+\implies
+2\text{-wise independent}
+\implies
+\text{universal}
+\]
+
+A standard construction of $k$-wise independent hash families uses
+polynomials over finite fields. Let $\mathbb F_q$ be a finite field with
+$q$ elements. Choose coefficients
+\[
+a_0,a_1,\dots,a_{k-1}\in\mathbb F_q
+\]
+uniformly and independently at random, and define
+\[
+h(x)=a_{k-1}x^{k-1}+\cdots+a_1x+a_0
+\]
+
+For any distinct points
+\[
+x_1,\dots,x_k\in\mathbb F_q
+\]
+the values
+\[
+h(x_1),\dots,h(x_k)
+\]
+are uniformly and independently distributed over $\mathbb F_q$. Hence this
+construction yields a $k$-wise independent family.
+
+Families with limited independence are extremely useful in randomized
+algorithms because they often require far fewer random bits than complete
+independence while still providing the guarantees needed for analysis.
 
 \section{Polynomial Multiplication}
 
