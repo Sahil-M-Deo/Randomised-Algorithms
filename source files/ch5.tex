@@ -24,12 +24,12 @@ probability of collisions for typical inputs.
 
 In many applications, we want a low probability of a hash collision because the performance of certain data 
 structures and algorithms depends on it. Since the whole point of a hash function is to go from a large set 
-(the domain $D$) to a smaller set (the range $R$), we will be interested in the case $|D| >> |R|$ where 
-significant collisions are forced to occur.\\ 
+(the domain $U$ whose size is $n$) to a smaller set (the range $R$ whose size is $m$), we will be 
+interested in the case $n\gg m$ where significant collisions are \textbf{forced} to occur.\\ 
 
 
 \noindent Let $U$ be the domain (whose elements are called keys) and let $[m]=\{0,1,\dots,m-1\}$ denote the 
-set of outputs. A family of hash functions $\mathcal H=\{h:U\to [m]\}$ is said to be 
+range. A family of hash functions $\mathcal H=\{h:U\to [m]\}$ is said to be 
 \emph{universal} if for every pair of distinct keys $x,y\in U$, the probability of collision for a random 
 $h \in \mathcal H$ is no greater than completely random assignment.
 
@@ -37,197 +37,151 @@ $h \in \mathcal H$ is no greater than completely random assignment.
 \Pr_{h \in \mathcal H}[h(x)=h(y)]\le \frac1m, \;\; x \neq y
 \]
 
-The hash functions themselves are completely deterministic, so $h(x)=h(y)$ is either true or false --- its truth 
+The hash functions themselves are completely deterministic, so $h(x)=h(y)$ is either true or false -- its truth 
 value is known if $h$ is known. So the probability is coming from the random choice of the 
 hash function $h$. The key idea is that even if an adversary knows the design of the hash functions 
 in the family, they cannot predict which hash function will be used so they can not force a 
 collision with high probability. \\
 
 
-Suppose $p$ is a prime and $U=\{0,1,\dots,p-1\}$. For any integers
-$a\in\{1,\dots,p-1\}$ and $b\in\{0,\dots,p-1\}$, define
-\[
-h_{a,b}(x)=((ax+b)\bmod p)\bmod m
-\]
-
-The family
-\[
-\mathcal H=\{h_{a,b}:1\le a\le p-1,\ 0\le b<p\}
-\]
-forms a universal family.
+\noindent For example, suppose $p$ is a prime and $U=\{0,1,\dots,p-1\}$. For any integers
+$a\in\{1,\dots,p-1\}$ and $b\in\{0,\dots,p-1\}$, define $h_{a,b}(x)=((ax+b)\bmod p)\bmod m$. The 
+family $\mathcal H=\{h_{a,b}:1\le a\le p-1,\ 0\le b<p\}$ forms a universal family.
 
 \section{Strongly Universal Hash Families}
 
 Universal hashing only bounds the probability of collisions. In many
-applications, we require a stronger guarantee: not only should collisions be
-unlikely, but the hash values of distinct keys should behave as independent
-random variables.
+applications, we require a stronger guarantee that the hash values of distinct keys should 
+behave as pairwise independent random variables. A family of hash 
+functions $\mathcal H=\{h:U\to [m]\}$ is called \emph{strongly universal} 
+or \emph{2-wise independent} if for every pair of distinct keys $x,y\in U$ and 
+for every pair of hash values $i,j\in[m]$,
 
-
-A family of hash functions
 \[
-\mathcal H=\{h:U\to [m]\}
-\]
-is called \emph{strongly universal} (or \emph{2-wise independent}) if for
-every pair of distinct keys $x,y\in U$ and for every pair of table locations
-$i,j\in[m]$,
-\[
-\Pr_{h\sim\mathcal H}[h(x)=i\land h(y)=j]=\frac1{m^2}
+\Pr\limits_{h \in \mathcal H}(h(x)=i \text{ and } h(y)=j)=\frac1{m^2}
 \]
 
 
 In other words, for any two distinct keys, the hash values are independent and
-uniformly distributed over $[m]$.
+uniformly distributed over $[m]$. Strong universality 
+immediately implies universality by putting $i=j$ in the definition since $\frac{1}{m}$ is exactly the upper 
+bound on the probability of collision.
 
-Strong universality immediately implies universality. Indeed,
 \[
-\Pr[h(x)=h(y)]
-=\sum_{i=0}^{m-1}\Pr[h(x)=i\land h(y)=i]
+\Pr\limits_{h \in \mathcal H}(h(x)=h(y))
+=\sum_{i=0}^{m-1}\Pr\limits_{h \in \mathcal H}(h(x)=i \text{ and } h(y)=i)
 =\sum_{i=0}^{m-1}\frac1{m^2}
 =\frac1m
 \]
 
-The converse, however, is not true: a universal family need not be strongly
-universal.
-
-Strongly universal hash families play an important role in randomized
-algorithms, data streaming, sketching, and cryptographic protocols.
-
 \section{\texorpdfstring{$k$}{k}-Wise Independent Hash Families}
 
-Strong universality captures independence among pairs of keys. More generally,
-we may require independence among larger collections of keys.
 
+A family of hash functions $\mathcal H=\{h:U\to [m]\}$ is said to be \emph{$k$-wise independent} 
+if for every collection of distinct keys $x_1,x_2,\dots,x_k\in U$ and every choice of 
+values $y_1,y_2,\dots,y_k\in [m]$, we have
 
-A family of hash functions
-\[
-\mathcal H=\{h:U\to [m]\}
-\]
-is said to be \emph{$k$-wise independent} if for every collection of distinct
-keys
-\[
-x_1,x_2,\dots,x_k\in U
-\]
-and every choice of values
-\[
-y_1,y_2,\dots,y_k\in [m]
-\]
-we have
 \[
 \Pr_{h\sim\mathcal H}
-\bigl[h(x_1)=y_1,\dots,h(x_k)=y_k\bigr]
+\left(h(x_1)=y_1,\dots,h(x_k)=y_k\right)
 =\frac1{m^k}
 \]
 
+Equivalently, the random variables $h(x_1),h(x_2),\dots,h(x_k)$ are jointly independent 
+and each is uniformly distributed over $[m]$. \\
 
-Equivalently, the random variables
-\[
-h(x_1),h(x_2),\dots,h(x_k)
-\]
-are jointly independent and each is uniformly distributed over $[m]$.
 
-The hierarchy of notions is therefore
-\[
-k\text{-wise independent}
-\implies
-(k-1)\text{-wise independent}
-\implies
-\cdots
-\implies
-2\text{-wise independent}
-\implies
-\text{universal}
-\]
+\noindent A standard construction of $k$-wise independent 
+hash families uses polynomials over finite fields. Let $\mathbb F_q$ be a finite field with
+$q$ elements. Choose coefficients $a_0,a_1,\dots,a_{k-1}\in\mathbb F_q$ uniformly and independently 
+at random, and define the hash function $h$ as
 
-A standard construction of $k$-wise independent hash families uses
-polynomials over finite fields. Let $\mathbb F_q$ be a finite field with
-$q$ elements. Choose coefficients
-\[
-a_0,a_1,\dots,a_{k-1}\in\mathbb F_q
-\]
-uniformly and independently at random, and define
 \[
 h(x)=a_{k-1}x^{k-1}+\cdots+a_1x+a_0
 \]
 
-For any distinct points
-\[
-x_1,\dots,x_k\in\mathbb F_q
-\]
-the values
-\[
-h(x_1),\dots,h(x_k)
-\]
-are uniformly and independently distributed over $\mathbb F_q$. Hence this
-construction yields a $k$-wise independent family.
+It can be proved that the random variables $h(x_1),h(x_2),\dots,h(x_k)$ are uniformly and 
+independently distributed over $\mathbb F_q$ for all $x_1,x_2,\dots,x_k\in U$. Hence this construction yields the $k$-wise independent 
+hash family 
 
-Families with limited independence are extremely useful in randomized
-algorithms because they often require far fewer random bits than complete
-independence while still providing the guarantees needed for analysis.
+\[
+\mathcal H=\{h:h(x)=a_{k-1}x^{k-1}+\cdots+a_1x+a_0, \text{ all } a_i \in \mathbb F_q\}
+\]
+
+We now have enough theoretical understanding of hashing to see some applications which will hopefully 
+make things concrete!
 
 \section{Polynomial Multiplication}
 
-Suppose we are given two expressions:
+Suppose we are given two polynomial expressions of degree $k$ - $P(x)=\prod_{i=1}^k (a_i x+b_i)$ and 
+$Q(x) = \sum_{j=0}^k c_j x^j$. For example, $P(x)=(x-1)(x-2)(x-3)$ and $Q(x)=x^3-6x^2+11x-6$. We would 
+like to design a procedure to check whether $P(x)\equiv Q(x)$ or not. Naively expanding the product 
+takes $\Theta(k^2)$ time, and then comparing the resulting polynomials takes $\Theta(k)$ time, so the total 
+verification time is $\Theta(k^2)$.\\
+
+
+\noindent A more efficient approach is to design a hash function which is easily computable 
+for both $P(x)$ and $Q(x)$. Consider the hash family $\mathcal H: \{h_a(P):a \in Z_{64}=\{0,1,\dots,2^{64}-1\}\}$ be 
+such that $h_a(P)=P(a)$. What this means is that we evaluate the polynomial $P(x)$ at a value from among 
+the $2^{64}$ integers in $Z_{64}$ and the result is our hash for the polynomial. From the 
+perspective of the verification procedure, we return "equal" if $h(P)=h(Q)$ and "not equal" otherwise.\\
+
+
+\noindent For example, let $P(x)=(x-1)(x-2)(x-3)$ and $Q(x)=x^3-6x^2+11x-6$, and let us say 
+we draw a random hash and get $h_{10}$.
+
 \[
-P(x)=\prod_{i=1}^k (a_i x+b_i), Q(x) = \sum_{j=0}^k c_j x^j
+P(10)=(10-1)(10-2)(10-3)=504, \;\; Q(10)=10^3-6(10^2)+11(10)-6=504
 \]
 
-We would like to verify whether
+So we return "equal". Indeed, multiplying both polynomials out by hand proves that they are indeed 
+equal polynomials.
+
+\subsection{Error Probability}
+\noindent The probability of a collision is 
+
 \[
-P(x)\equiv Q(x)
+\Pr\limits_{h \in \mathcal H} (h(P)=h(Q)) = \Pr\limits_{a \in Z_{64}} (P(a)=Q(a))
 \]
 
-Naively expanding the product takes $\Theta(k^2)$ time, and then comparing the resulting 
-polynomials takes $\Theta(k)$ time, so the total verification time is $\Theta(k^2)$.
+Since $P-Q$ is a polynomial of degree at most $k$, the probability of a collision for a 
+particular pair of polynomials is the probability of a random number in $Z_{64}$ being a root of $P-Q$ which 
+is at most $\frac{k}{2^{64}}$.
 
-A more efficient approach is to compute the hashes of the polynomials.
-Choose three random values
 \[
-r_1,r_2,r_3
-\]
-from the domain of the polynomial.
-
-Define the hash of a polynomial to be the tuple
-\[
-(P(r_1),P(r_2),P(r_3))
+\Pr\limits_{a \in Z_{64}} (P(a)=Q(a)) = \Pr\limits_{a \in Z_{64}} (P(a)-Q(a)=0) \le \frac{k}{2^{64}}
 \]
 
-Similarly compute
-\[
-(Q(r_1),Q(r_2),Q(r_3))
-\]
+\noindent For even large $k$ such as $10^{5}$, the probability of collision is at most $10^{-14}$ 
+which is quite small. So as is usual for hashing methods, there are no false "not equal", 
+only false "equal" with probability at most $10^{-14}$.\\
 
-If the hashes differ at any coordinate, then the polynomials are certainly different.
+\subsection{Time Complexity}
 
-If all three evaluations agree, then with high probability the polynomials are identical.\\
+Evaluating $P$ at a random point is first calculating $a_i x+b_i$ for each bracket - this is 
+three arithmetic operations per bracket. After that we calculate the product of all $k$ brackets. 
+The calculation of $Q$ at that same random point is first the calculation of $x, x^2, \dots, x^k$ which 
+can be done in $k$ multiplications. Coefficient muliplications are at most $k$ multiplications. 
+Addition of the $k+1$ terms is at most $k+1$ additions. Overall this takes at most $6k+1 = \Theta(k)$ 
+operations. \\
 
-The reason this works is that the nonzero polynomial $P(x)-Q(x)$ of degree at most $k$ can 
-have at most $k$ roots 
-in the domain from which we are choosing the random values.
 
-If we are choosing random 32-bit integers, then the probability of a false positive 
-(i.e. the polynomials are different but the hashes match) 
-is at most $\left(\frac{k}{2^{32}}\right)^3$ since we are checking three independent random values, 
-which is astronomically small for any reasonable $k$!\\
-
-\noindent Each evaluation of $P$ or $Q$ at a random point takes $\Theta(k)$ time, so 
-the total verification time is $\Theta(k)$. So we have achieved a significant improvement over 
-the naive\footnote{There exists deterministic techniques to get this down to $\Theta(k\log k)$ time, 
+\noindent Thus the total verification time is $\Theta(k)$, which is a significant improvement 
+over the naive\footnote{There exists 
+deterministic techniques to get this down to $\Theta(k\log k)$ time, 
 but they have a large constant factor and also are very difficult to implement.} $\Theta(k^2)$ time.\\
-
-\noindent Note that choosing 3 random values has no particular significance - we could choose any small
-constant number of random values to achieve this - it is a tradeoff between time and correctness probability.
 
 \section{Matrix Multiplication}
 
 Suppose we are given matrices $A,B,C\in\mathbb{R}^{n\times n}$
 and wish to verify whether
+
 \[
 AB=C
 \]
 
-Computing the product explicitly requires matrix multiplication. Standard matrix multiplication takes $\Theta(n^3)$ time.\\
-time, while the fastest known algorithms run in roughly $\Theta(n^{2.37})$ time, though 
+Computing the product explicitly requires matrix multiplication. Standard matrix multiplication takes 
+$\Theta(n^3)$ time, while the fastest known algorithms run in roughly $\Theta(n^{2.37})$ time, though 
 they are highly complicated and rarely used in practice. \\
 
 
@@ -242,29 +196,18 @@ x_n
 
 Instead of comparing the matrices themselves, we compute $ABX$ and $CX$. Since matrix-vector 
 multiplication takes only $\Theta(n^2)$ and we are doing 3 
-such multiplications -- $B\cdot X$, then $A\cdot(BX)$, and $C\cdot X$.
+such multiplications - $B\cdot X$, then $A\cdot(BX)$, and $C\cdot X$.
 Then we compare the two products entry by entry in $\Theta(n)$ time.
 So the overall procedure is $\Theta(n^2)$ time. \\
 
-\noindent The quantity \(MX\) may be viewed as a compact randomized hash of the matrix \(M\). If two matrices differ, 
+\noindent The quantity \(MX\) may be viewed as a hash of the matrix \(M\). If two matrices differ, 
 their hashes are unlikely to coincide for a random choice of \(X\).
-
-\noindent More generally, one may choose k independent random vectors
-\[
-X_1,X_2,\dots,X_k
-\]
-and define the hash of a matrix \(M\) as
-\[
-\textbf{H}(M)=(MX_1,MX_2,\dots,MX_k)
-\]
-
-Each additional random vector independently decreases the probability of error.
-Here k must be $\Theta(1)$ to preserve the overall $\Theta(n^2)$ time complexity.
 
 \subsection*{Error Probability Analysis}
 
 Let \(M=AB-C\). We want to bound the probability that \(MX=0\) when 
-\(M\) is nonzero. Choose a prime \(p\), and consider the finite field
+\(M\) is nonzero. Choose a prime \(p\), and consider the finite field $\mathbb Z_p$.
+
 \[
 \mathbb Z_p=(\{0,1,2,\dots,p-1\},+_p,\times_p)
 \]
@@ -272,7 +215,17 @@ Let \(M=AB-C\). We want to bound the probability that \(MX=0\) when
 \noindent To avoid making the entries of $M\equiv0\pmod{p}$ when it is 
 nonzero over \(\mathbb Z\) (and thus avoiding making it null in $\mathbb Z_p$), we use such a $p$
 which is strictly greater than every entry of $M$. We then choose the random 
-vector $X\in\mathbb Z_p^n$ uniformly at random.\\
+vector $X\in\mathbb Z_p^n$ uniformly at random. \(\mathbb (Z_p)^n\) is a vector space\footnote{It may be helpful to brush up on 
+the theory of vector spaces, but you may choose to not bother with the finer details 
+and take my word for it!} of dimension \(n\) over \(\mathbb Z_p\). If $M$ is not the null matrix, 
+the dimension of its nullspace\footnote{Refer \autoref{nullspace}} is at most \(n-1\).\\
+
+\noindent In general, a \(d\)-dimensional vector space over \(\mathbb Z_p\) contains exactly 
+\(p^d\) vectors and here the nullspace has dimension at most \(n-1\).
+
+\[
+\implies |nullspace(M)| \le p^{n-1}
+\]
 
 \noindent Notice that whenever \(MX=0\) over the integers, we also have \(MX=0\) over \(\mathbb Z_p\) 
 since $0 \equiv 0\pmod{p}$. So the set of false positives over \(\mathbb Z\) is a subset 
@@ -280,17 +233,9 @@ of the set of false positives over \(\mathbb Z_p\). Thus the
 probability of a false positive over \(\mathbb Z\) is 
 at most the probability of a false positive over \(\mathbb Z_p\).\\
 
-\noindent Now \(\mathbb (Z_p)^n\) is a vector space\footnote{It may be helpful to brush up on 
-the theory of vector spaces, but you may choose to not bother with the finer details 
-and take my word for it!} of dimension \(n\) over \(\mathbb Z_p\). If $M$ is not the null matrix, 
-the dimension of its nullspace\footnote{Refer \autoref{nullspace}} is at most \(n-1\).\\
 
-\noindent A \(d\)-dimensional vector space over \(\mathbb Z_p\) contains exactly \(p^d\) vectors. So
-\[
-|nullspace(M)| \le p^{n-1}
-\]
-\vspace{0.5em}
 \noindent Since \(X\) is chosen uniformly from \(\mathbb (Z_p)^n\), which contains \(p^n\) vectors,
+
 \[
 \Pr(MX=0 \mid \mathbb Z) \le \Pr(MX=0 \mid \mathbb Z_p)
 \le
@@ -299,12 +244,14 @@ the dimension of its nullspace\footnote{Refer \autoref{nullspace}} is at most \(
 \frac1p
 \]
 
-A suitable choice is \hspace{0.2em} $p=2^{64}+13$ \hspace{0.2em}if we are working with 64-bit integers, 
+A suitable choice is \hspace{0.1em} $p=2^{64}+13$ \hspace{0.2em}if we are working with 64-bit integers, 
 which gives an astronomically small error probability of about $5.4\times10^{-20}$.
 \section{A Matrix Problem}
 
-\textbf{Problem Statement\footnote{This question was taken from Codeforces. The editorial indicates that my hashing solution wasn't intended, but when has that ever stopped me?}:} Given two \(n\times m\) matrices \(A\) and \(B\), determine if they are equivalent under row and column permutations. That is, can we permute the rows and columns of \(A\) to obtain \(B\)?
-\\ Additional Constraints: A and B both satisfy -- the set of all entries is \{1,2, \dots, nm\}. \\
+\textbf{Problem Statement\footnote{This question was taken from Codeforces. The editorial indicates 
+that the intended solution was deterministic and hashing isn't intended, but when has that 
+ever stopped me?}:} Given two \(n\times m\) matrices \(A\) and \(B\), determine if they are equivalent under row and column permutations. That is, can we permute the rows and columns of \(A\) to obtain \(B\)?
+\\ Additional Constraints: A and B both satisfy - the set of all entries is \{1,2, \dots, nm\}. \\
 
 \noindent \textbf{Reduction:} First we reduce the problem to a simpler one. If we consider R(M) to be the set of all $R_i$ where each $R_i$ is the set of values in the 
 $i$-th row of a matrix M, and similarly C(M) then the matrices A and B are equivalent under row and column permutations
@@ -404,7 +351,7 @@ are not equivalent under row permutations.\\
 an expected time complexity of \(\Theta(nm)\) due to the linear time required 
 to compute the hashes and the expected constant time for hash set operations.\\
 
-\noindent This method involved hashing so the correctness of the algorithm is itself a random variable -- but 
+\noindent This method involved hashing so the correctness of the algorithm is itself a random variable - but 
 given the constraint that the matrix entries are from \{1,2,\dots,nm\}, it seems highly 
 unlikely that this will fail. In fact, it seems that this may be a unique hash in this case, but I am yet 
 to find a proof for general (n,m).
@@ -532,8 +479,68 @@ We can improve this (if needed) by doing a second round of hashing with a differ
 \begin{enumerate}
 
 \item[\textbf{1}]
+Consider a general universal hash family $\mathcal H$ with all hash functions having size of 
+domain $|U|=n$ and range $|R|=m$ with $n\gg m$. 
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+
+\item Let $x,y \in U$ and $h \in \mathcal H$. Define the indicator variable 
+$I(h,x,y)$ as $I(h,x,y)=1$ if $h(x)=h(y)$ and $I(h,x,y)=0$ otherwise. Show that the overall 
+collision probability $Q(\mathcal H)$ for the hash family over all keys is
+
+\[
+Q(\mathcal H)=\frac{\sum\limits_{h \in \mathcal H}\left( \sum\limits_{x \neq y} I(h,x,y)\right)}{\binom{n}{2}\cdot |\mathcal H|}
+\]
+
+\item For a particular $h \in \mathcal H$, let $s_i$ be the number of keys mapped to bucket $i$. Show that 
+the number of colliding pairs under $h$ is
+
+\[
+\left(\sum\limits_{x \neq y} I(h,x,y)\right)=C(h)=\sum_{i=0}^{m-1}\binom{s_i}{2}
+\]
+
+\item Use $\sum_{i=0}^{m-1} s_i = n$ and Jensen's inequality suitably to show that
+
+\[
+C(h) \ge \frac{n(n-m)}{2m}
+\]
+
+\item Use the conclusions from \textbf{(a)}, \textbf{(b)} and \textbf{(c)} to show that
+
+\[
+Q(\mathcal H)=\frac{\sum\limits_{h \in \mathcal H}C(h)}{\binom{n}{2}\cdot |\mathcal H|} \ge \frac{n-m}{m(n-1)}
+\]
+
+\item Show that the collision probability for a particular pair of keys $x,y$ is
+
+\[
+\Pr\limits_{h \in \mathcal H}(h(x)=h(y)) = \frac{\sum\limits_{h \in \mathcal H}I(h,x,y)}{|\mathcal H|}
+\]
+
+\item Use the result from \textbf{(e)} and rearrange the expression for $Q(\mathcal H)$ from \textbf{(a)} to 
+show that
+
+\[
+Q(\mathcal H)=\frac{\sum\limits_{x\neq y} \left(\Pr\limits_{h \in \mathcal H}(h(x)=h(y))\right)}{\binom{n}{2}} \ge \frac{n-m}{m(n-1)}
+\]
+
+\item Use the result from \textbf{(f)} and apply the pigeonhole principle to conclude that there 
+exists a pair of keys $x^*,y^*$ such that\footnote{This conclusion shows why universal hash families 
+operating on a large domain have the requirement of collision probability upper bound $\frac{1}{m}$, 
+because the guarantee is approximately optimal for $n \gg m$. Any guarantee smaller than that would get violated because the 
+pigeonhole principle shows the existence of a pair of keys which violate any guarantee smaller than $\frac{1}{m}$.}
+
+\[
+	\Pr\limits_{h \in \mathcal H}(h(x^*)=h(y^*)) \ge \frac{n-m}{m(n-1)} \approx \frac{1}{m}
+\]
+
+
+
+\end{enumerate}
+
+\item[\textbf{2}]
 For hashes of form $H(x)=(ax+b)\bmod c$, why is it preferred to have c as a prime number? \textit{Hint: Think of 
-the arithmetic progression (a very common occurence in data) with common difference d -- 
+the arithmetic progression (a very common occurrence in data) with common difference d - 
 what happens when d is not coprime with c?}
 
 \end{enumerate}

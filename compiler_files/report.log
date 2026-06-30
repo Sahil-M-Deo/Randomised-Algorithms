@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  23 JUN 2026 20:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.4.19)  30 JUN 2026 19:09
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1098,7 +1098,7 @@ Package caption Info: End \AtBeginDocument code.
 
 pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
 DF version <1.7>, but at most version <1.5> allowed
-<../Images/Cover.pdf, id=882, 597.23125pt x 845.1575pt>
+<../Images/Cover.pdf, id=890, 597.23125pt x 845.1575pt>
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf>
 Package pdftex.def Info: ../Images/Cover.pdf  used on input line 5.
@@ -1111,7 +1111,7 @@ DF version <1.7>, but at most version <1.5> allowed
 
 pdfTeX warning: pdflatex.exe (file ../Images/Cover.pdf): PDF inclusion: found P
 DF version <1.7>, but at most version <1.5> allowed
-<../Images/Cover.pdf, id=884, page=1, 597.23125pt x 845.1575pt>
+<../Images/Cover.pdf, id=892, page=1, 597.23125pt x 845.1575pt>
 File: ../Images/Cover.pdf Graphic file (type pdf)
 <use ../Images/Cover.pdf, page 1>
 Package pdftex.def Info: ../Images/Cover.pdf , page1 used on input line 5.
@@ -1151,7 +1151,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.39 ...olynomial Multiplication}{28}{section.5.5}
+l.39 ...olynomial Multiplication}{27}{section.5.5}
                                                   % [1
 
 {C:/Users/hp/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2] [3] [4])
@@ -1382,83 +1382,81 @@ Underfull \hbox (badness 10000) in paragraph at lines 40--45
 
 
 ]
-Overfull \hbox (17.58202pt too wide) detected at line 140
-\OML/cmm/m/it/10.95 k[]  \OT1/cmr/m/n/10.95 =[]\OMS/cmsy/m/n/10.95 )  \OT1/cmr/
-m/n/10.95 (\OML/cmm/m/it/10.95 k \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr/m/n/10.95 1)[
-]  =[]\OMS/cmsy/m/n/10.95 )  []  \OT1/cmr/m/n/10.95 =[]\OMS/cmsy/m/n/10.95 )  \
-OT1/cmr/m/n/10.95 2[]  =[]\OMS/cmsy/m/n/10.95 )  []
+Underfull \hbox (badness 10000) in paragraph at lines 90--92
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 116--121
+
  []
 
 [27]
-Underfull \hbox (badness 10000) in paragraph at lines 202--203
+Underfull \hbox (badness 10000) in paragraph at lines 123--128
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 208--212
+Underfull \hbox (badness 10000) in paragraph at lines 155--158
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--217
+Underfull \hbox (badness 10000) in paragraph at lines 161--167
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 169--173
 
  []
 
 [28]
-Underfull \hbox (badness 10000) in paragraph at lines 229--232
+Underfull \hbox (badness 10000) in paragraph at lines 183--186
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 243--248
+Underfull \hbox (badness 10000) in paragraph at lines 197--202
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--276
+Underfull \hbox (badness 10000) in paragraph at lines 215--222
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 230--235
 
  []
 
 [29]
-Underfull \hbox (badness 10000) in paragraph at lines 277--282
+Underfull \hbox (badness 10000) in paragraph at lines 253--255
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 283--287
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 306--308
+Underfull \hbox (badness 10000) in paragraph at lines 274--275
 
  []
 
 [30]
-Underfull \hbox (badness 10000) in paragraph at lines 327--328
-
- []
-
-[31]
-Underfull \hbox (badness 10000) in paragraph at lines 396--402
+Underfull \hbox (badness 10000) in paragraph at lines 343--349
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 403--406
+Underfull \hbox (badness 10000) in paragraph at lines 350--353
 
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [32]
-[33]
-Underfull \hbox (badness 10000) in paragraph at lines 481--482
+[31] [32]
+Underfull \hbox (badness 10000) in paragraph at lines 428--429
 
  []
 
-[34]) [35
+[33]) [34
 
 ]
 \openout2 = `ch6.aux'.
@@ -1470,7 +1468,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 101--103
 
  []
 
-[36
+[35
 
 
 
@@ -1490,7 +1488,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 341--343
 
  []
 
-[37] [38]
+[36] [37]
 Underfull \hbox (badness 10000) in paragraph at lines 439--441
 
  []
@@ -1505,12 +1503,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 480--483
 
  []
 
-[39] [40]
+[38] [39]
 Underfull \hbox (badness 10000) in paragraph at lines 880--883
 
  []
 
-[41]
+[40]
 Underfull \hbox (badness 10000) in paragraph at lines 924--929
 
  []
@@ -1520,7 +1518,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 931--935
 
  []
 
-[42] [43]
+[41] [42]
 Underfull \hbox (badness 10000) in paragraph at lines 1051--1055
 
  []
@@ -1530,7 +1528,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1107--1108
 
  []
 
-[44]
+[43]
 Underfull \hbox (badness 10000) in paragraph at lines 1136--1137
 
  []
@@ -1540,7 +1538,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1205--1206
 
  []
 
-[45]
+[44]
 Underfull \hbox (badness 10000) in paragraph at lines 1245--1246
 
  []
@@ -1555,7 +1553,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1329--1330
 
  []
 
-[46]
+[45]
 Underfull \hbox (badness 10000) in paragraph at lines 1374--1375
 
  []
@@ -1563,8 +1561,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 1374--1375
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [47]
-[48] [49] [50]
+ [46]
+[47] [48] [49]
 Overfull \hbox (5.52122pt too wide) in paragraph at lines 1864--1865
  [] 
  []
@@ -1577,17 +1575,17 @@ Overfull \hbox (56.73625pt too wide) in paragraph at lines 1927--1928
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [51]
-[52] [53]
+ [50]
+[51] [52]
 (C:\Users\hp\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tikz/l
 ibraries\tikzlibraryfit.code.tex
 File: tikzlibraryfit.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-) [54]
+) [53]
 Overfull \hbox (5.61826pt too wide) in paragraph at lines 2368--2369
  [] 
  []
 
-[55] [56] [57]
+[54] [55] [56]
 Overfull \hbox (9.68422pt too wide) in paragraph at lines 2633--2639
 \T1/cmr/m/n/10.95 Suppose we wish to store a set of el-e-ments and sup-port the
  op-er-a-tions \T1/cmtt/m/n/10.95 insert(x) \T1/cmr/m/n/10.95 and \T1/cmtt/m/n/
@@ -1599,7 +1597,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 2670--2672
 
  []
 
-[58]
+[57]
 Underfull \hbox (badness 10000) in paragraph at lines 2686--2688
 
  []
@@ -1629,9 +1627,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 2735--2742
 
  []
 
-[59] [60] [61
+[58] [59] [60
 
-]) [62]
+]) [61]
 \openout2 = `ch7.aux'.
 
  (ch7.tex
@@ -1651,7 +1649,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 40--43
 
  []
 
-[63
+[62
 
 
 
@@ -1661,17 +1659,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 107--111
 
  []
 
-[64]
+[63]
 Underfull \hbox (badness 10000) in paragraph at lines 151--152
 
  []
 
-[65]
+[64]
 Underfull \hbox (badness 10000) in paragraph at lines 246--248
 
  []
 
-[66]
+[65]
 Underfull \hbox (badness 10000) in paragraph at lines 262--265
 
  []
@@ -1686,23 +1684,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 281--284
 
  []
 
-[67]
+[66]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [67]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [68]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [69]
 Underfull \hbox (badness 10000) in paragraph at lines 558--563
 
  []
 
-[70]
+[69]
 Underfull \hbox (badness 10000) in paragraph at lines 564--566
 
  []
 
-[71]
+[70]
 Underfull \hbox (badness 10000) in paragraph at lines 712--716
 
  []
@@ -1712,12 +1710,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 728--731
 
  []
 
-[72]
+[71]
 Underfull \hbox (badness 10000) in paragraph at lines 765--769
 
  []
 
-[73]) [74
+[72]) [73
 
 ]
 \openout2 = `ch8.aux'.
@@ -1739,27 +1737,27 @@ Underfull \hbox (badness 10000) in paragraph at lines 38--41
 
  []
 
-[75
+[74
 
 
 
 
-] [76]
-<../Images/randcheck_failprob.pdf, id=1649, 332.44202pt x 209.58301pt>
+] [75]
+<../Images/randcheck_failprob.pdf, id=1664, 332.44202pt x 209.58301pt>
 File: ../Images/randcheck_failprob.pdf Graphic file (type pdf)
 <use ../Images/randcheck_failprob.pdf>
 Package pdftex.def Info: ../Images/randcheck_failprob.pdf  used on input line 1
 44.
 (pdftex.def)             Requested size: 353.31439pt x 222.74214pt.
- [77 <../Images/randcheck_failprob.pdf>] [78]
+ [76 <../Images/randcheck_failprob.pdf>] [77]
 Underfull \vbox (badness 6608) has occurred while \output is active []
 
- [79]
+ [78]
 Underfull \hbox (badness 10000) in paragraph at lines 348--351
 
  []
 
-<../Images/dominating_failprob.pdf, id=1730, 332.44202pt x 209.58301pt>
+<../Images/dominating_failprob.pdf, id=1745, 332.44202pt x 209.58301pt>
 File: ../Images/dominating_failprob.pdf Graphic file (type pdf)
 <use ../Images/dominating_failprob.pdf>
 Package pdftex.def Info: ../Images/dominating_failprob.pdf  used on input line 
@@ -1768,13 +1766,13 @@ Package pdftex.def Info: ../Images/dominating_failprob.pdf  used on input line
 
 Underfull \vbox (badness 2744) has occurred while \output is active []
 
- [80]
-[81 <../Images/dominating_failprob.pdf>]
+ [79]
+[80 <../Images/dominating_failprob.pdf>]
 Underfull \hbox (badness 10000) in paragraph at lines 509--514
 
  []
 
-[82]
+[81]
 Underfull \hbox (badness 10000) in paragraph at lines 516--517
 
  []
@@ -1789,8 +1787,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 596--599
 
  []
 
-[83]
-<../Images/worstcase_big.pdf, id=1819, 332.44202pt x 209.58301pt>
+[82]
+<../Images/worstcase_big.pdf, id=1834, 332.44202pt x 209.58301pt>
 File: ../Images/worstcase_big.pdf Graphic file (type pdf)
 <use ../Images/worstcase_big.pdf>
 Package pdftex.def Info: ../Images/worstcase_big.pdf  used on input line 623.
@@ -1800,7 +1798,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 633--638
 
  []
 
-[84 <../Images/worstcase_big.pdf>]
+[83 <../Images/worstcase_big.pdf>]
 Underfull \hbox (badness 10000) in paragraph at lines 679--680
 
  []
@@ -1820,7 +1818,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 703--704
 
  []
 
-) [85]
+) [84]
 \openout2 = `ch9.aux'.
 
  (ch9.tex
@@ -1840,7 +1838,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 34--35
 
  []
 
-[86
+[85
 
 
 
@@ -1875,7 +1873,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 73--74
 
  []
 
-[87]
+[86]
 Underfull \hbox (badness 10000) in paragraph at lines 175--177
 
  []
@@ -1890,7 +1888,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 192--193
 
  []
 
-[88]
+[87]
 Underfull \hbox (badness 10000) in paragraph at lines 195--196
 
  []
@@ -1905,7 +1903,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 280--282
 
  []
 
-[89]
+[88]
 Underfull \hbox (badness 10000) in paragraph at lines 310--311
 
  []
@@ -1930,7 +1928,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 352--355
 
  []
 
-[90]
+[89]
 Underfull \hbox (badness 10000) in paragraph at lines 407--413
 
  []
@@ -1940,7 +1938,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 427--429
 
  []
 
-[91]
+[90]
 Underfull \hbox (badness 10000) in paragraph at lines 440--442
 
  []
@@ -1960,7 +1958,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 501--503
 
  []
 
-[92]
+[91]
 Underfull \hbox (badness 10000) in paragraph at lines 511--515
 
  []
@@ -1975,7 +1973,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 521--525
 
  []
 
-) [93]
+) [92]
 \openout2 = `ch10.aux'.
 
  (ch10.tex
@@ -1990,12 +1988,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 9--15
 
  []
 
-[94
+[93
 
 
 
 
-] [95] [96] [97] [98]
+] [94] [95] [96] [97]
 Underfull \hbox (badness 10000) in paragraph at lines 330--332
 
  []
@@ -2005,7 +2003,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 333--334
 
  []
 
-) [99]
+) [98]
 \openout2 = `ch11.aux'.
 
  (ch11.tex
@@ -2030,7 +2028,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 24--30
 
  []
 
-[100
+[99
 
 
 
@@ -2060,7 +2058,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 104--108
 
  []
 
-[101]
+[100]
 Underfull \hbox (badness 10000) in paragraph at lines 124--127
 
  []
@@ -2104,7 +2102,7 @@ mr/m/n/10.95 1) = 2\OML/cmm/m/it/10.95 q \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr/m/n/1
 0.95 1
  []
 
-[102]
+[101]
 Underfull \hbox (badness 10000) in paragraph at lines 200--202
 
  []
@@ -2133,12 +2131,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 245--254
 
  []
 
-[103]
+[102]
 Underfull \hbox (badness 10000) in paragraph at lines 255--262
 
  []
 
-) [104]
+) [103]
 \openout2 = `ch12.aux'.
 
  (ch12.tex
@@ -2163,7 +2161,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 31--37
 
  []
 
-[105
+[104
 
 
 
@@ -2173,7 +2171,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 38--46
 
  []
 
-[106]
+[105]
 Underfull \hbox (badness 10000) in paragraph at lines 116--121
 
  []
@@ -2183,7 +2181,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 122--125
 
  []
 
-[107]) [108]
+[106]) [107]
 \openout2 = `ch13.aux'.
 
  (ch13.tex
@@ -2198,7 +2196,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 46--50
 
  []
 
-[109
+[108
 
 
 
@@ -2233,7 +2231,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 95.
 
-[110]
+[109]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 120.
@@ -2258,17 +2256,17 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 177.
 
-[111]) [112]
+[110]) [111]
 \openout2 = `appendices.aux'.
 
- (appendices.tex [113
+ (appendices.tex [112
 
 
 
 
 ]
 Appendix A.
-[114
+[113
 
 
 ]
@@ -2281,15 +2279,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 136--139
 
  []
 
-[115] [116]
+[114] [115]
 Appendix B.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [117
+ [116
 
 ]
-[118] [119]
+[117] [118]
 Appendix C.
 
 Underfull \hbox (badness 10000) in paragraph at lines 456--460
@@ -2338,9 +2336,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 480--483
 
  []
 
-[120
+[119
 
-] [121]
+] [120]
 Underfull \hbox (badness 10000) in paragraph at lines 578--582
 
  []
@@ -2367,7 +2365,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 606.
 
-[122]
+[121]
 Underfull \hbox (badness 10000) in paragraph at lines 662--668
 
  []
@@ -2377,23 +2375,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 675--680
 
  []
 
-[123]
+[122]
 Underfull \hbox (badness 10000) in paragraph at lines 708--712
 
  []
 
-[124]
+[123]
 Appendix D.
-[125
+[124
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 790--792
 
  []
 
-[126]
+[125]
 Appendix E.
-[127
+[126
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 892--896
@@ -2405,9 +2403,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 902--908
 
  []
 
-[128] [129]
+[127] [128]
 Appendix F.
-[130
+[129
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 1002--1003
@@ -2419,7 +2417,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1005--1006
 
  []
 
-) [131] (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.aux
+) [130] (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.aux
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch1.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch2.aux)
 (C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\ch3.aux)
@@ -2443,13 +2441,13 @@ L3 programming layer <2026-03-20>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 6414DF44556CF7409F0EE044E7A6D0A7;31489.
+(rerunfilecheck)             Checksum: FE1D80816AF4C89F467B1D9A5FD6F4D7;31781.
  ) 
 Here is how much of TeX's memory you used:
- 39310 strings out of 467691
- 888175 string characters out of 5416439
- 1437822 words of memory out of 5000000
- 67069 multiletter control sequences out of 15000+600000
+ 39321 strings out of 467691
+ 888296 string characters out of 5416439
+ 1436824 words of memory out of 5000000
+ 67071 multiletter control sequences out of 15000+600000
  667496 words of font info for 142 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  104i,17n,111p,741b,2173s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -2502,9 +2500,9 @@ lic/amsfonts/cm/cmsy6.pfb><C:/Users/hp/AppData/Local/Programs/MiKTeX/fonts/type
 fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/hp/AppData/Local/Progr
 ams/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
 Output written on "C:\Users\hp\OneDrive\Desktop\THE BOOK\compiler_files\report.
-pdf" (132 pages, 1326899 bytes).
+pdf" (131 pages, 1333445 bytes).
 PDF statistics:
- 3138 PDF objects out of 3580 (max. 8388607)
- 581 named destinations out of 1000 (max. 500000)
- 1795 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 3154 PDF objects out of 3580 (max. 8388607)
+ 590 named destinations out of 1000 (max. 500000)
+ 1811 words of extra memory for PDF output out of 10000 (max. 10000000)
 
