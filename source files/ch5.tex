@@ -16,7 +16,8 @@ hashing helps to achieve constant time complexity (on average) within finite mem
 
 
 \noindent Usually hashes are many-one functions, meaning that multiple different objects can have the same hash. 
-Two inputs having the same hash is called a \textit{collision}. The probability of collision depends on 
+Two inputs having the same hash is called a \textit{collision}. A false conclusion of equality due to a collision is
+called a \textit{false positive}. The probability of collision depends on 
 the specific hash function used and the distribution of inputs. A good hash function should minimize the 
 probability of collisions for typical inputs.
 
@@ -113,7 +114,7 @@ make things concrete!
 
 \section{Polynomial Multiplication}
 
-Suppose we are given two polynomial expressions of degree $k$ - $P(x)=\prod_{i=1}^k (a_i x+b_i)$ and 
+Suppose we are given two polynomial expressions of degree $k$, $P(x)=\prod_{i=1}^k (a_i x+b_i)$ and 
 $Q(x) = \sum_{j=0}^k c_j x^j$. For example, $P(x)=(x-1)(x-2)(x-3)$ and $Q(x)=x^3-6x^2+11x-6$. We would 
 like to design a procedure to check whether $P(x)\equiv Q(x)$ or not. Naively expanding the product 
 takes $\Theta(k^2)$ time, and then comparing the resulting polynomials takes $\Theta(k)$ time, so the total 
@@ -153,8 +154,8 @@ is at most $\frac{k}{2^{64}}$.
 \]
 
 \noindent For even large $k$ such as $10^{5}$, the probability of collision is at most $10^{-14}$ 
-which is quite small. So as is usual for hashing methods, there are no false "not equal", 
-only false "equal" with probability at most $10^{-14}$.\\
+which is quite small. So as is usual for hashing methods, there are no false negatives, only false positives 
+with probability at most $10^{-14}$.\\
 
 \subsection{Time Complexity}
 
@@ -203,7 +204,7 @@ So the overall procedure is $\Theta(n^2)$ time. \\
 \noindent The quantity \(MX\) may be viewed as a hash of the matrix \(M\). If two matrices differ, 
 their hashes are unlikely to coincide for a random choice of \(X\).
 
-\subsection*{Error Probability Analysis}
+\subsection{Error Probability}
 
 Let \(M=AB-C\). We want to bound the probability that \(MX=0\) when 
 \(M\) is nonzero. Choose a prime \(p\), and consider the finite field $\mathbb Z_p$.
@@ -246,79 +247,87 @@ at most the probability of a false positive over \(\mathbb Z_p\).\\
 
 A suitable choice is \hspace{0.1em} $p=2^{64}+13$ \hspace{0.2em}if we are working with 64-bit integers, 
 which gives an astronomically small error probability of about $5.4\times10^{-20}$.
+
 \section{A Matrix Problem}
 
-\textbf{Problem Statement\footnote{This question was taken from Codeforces. The editorial indicates 
-that the intended solution was deterministic and hashing isn't intended, but when has that 
-ever stopped me?}:} Given two \(n\times m\) matrices \(A\) and \(B\), determine if they are equivalent under row and column permutations. That is, can we permute the rows and columns of \(A\) to obtain \(B\)?
-\\ Additional Constraints: A and B both satisfy - the set of all entries is \{1,2, \dots, nm\}. \\
+Given two \(n\times m\) matrices \(A\) and \(B\), determine if they are equivalent under row 
+and column permutations. That is, can we permute the rows and columns of \(A\) to obtain \(B\)?
+Additionally, the sets of entries of A and B are both equal to $\{1,2,\dots,nm\}$. \\
 
-\noindent \textbf{Reduction:} First we reduce the problem to a simpler one. If we consider R(M) to be the set of all $R_i$ where each $R_i$ is the set of values in the 
-$i$-th row of a matrix M, and similarly C(M) then the matrices A and B are equivalent under row and column permutations
-if and only if R(A) = R(B) and C(A) = C(B).
+First we reduce the problem\footnote{This question was taken from Codeforces. The editorial indicates 
+that the intended solution was deterministic, but where's the fun in that?} to a simpler one. 
+Consider R(M) to be the set of all $R_i$ where each $R_i$ is the set of values in the $i$-th row of 
+a matrix M, and similarly C(M) be the set of all $C_i$. Clearly, if A and B are equivalent under 
+row and column permutations, then R(A) = R(B) and C(A) = C(B) since the row and column sets are 
+preserved under these permutations. This proves that the set of all B such that R(B) = R(A) and 
+C(B) = C(A) contains all matrices equivalent to A under row and column permutations (i.e. the 
+set of all B such that R(B) = R(A) and C(B) = C(A) is a superset of the set of all B equivalent to A 
+under row and column permutations).\\
 
-\subsection*{Proof of Reduction}
-Clearly, if A and B are equivalent under row and column permutations, then R(A) = R(B) and C(A) = C(B) 
-since the row and column sets are preserved under these permutations. This proves that the set of all B such that R(B) = R(A) and C(B) = C(A)
-contains all matrices equivalent to A under row and column permutations (i.e. the set of all B such that 
-R(B) = R(A) and C(B) = C(A) is a superset of the set of all B equivalent to A under row and column permutations).
 
-Now notice that the number of row and column permutations on A are $n!\cdot m!$ (including the identity permutation). 
-Each of these permutations gives a different matrix since the entries are all distinct.
-Also it can be shown that the number of matrices with given R(M) and C(M) is also $n!\cdot m!$ (In fact while proving 
-this you will notice that the fact we are proving is quite intuitive)  
+\noindent Now notice that the number of row and column permutations on A 
+are $n!\cdot m!$ (including the identity permutation). Each of these permutations gives 
+a different matrix since the entries are all distinct. It can be easily shown that the number 
+of matrices with given R(M) and C(M) is $n!\cdot m!$. Since the two sets have the same size and 
+one contains the other, they must be equal! Hence the condition R(A) = R(B) and C(A) = C(B) is necessary 
+as well as sufficient to conclude that A and B are equivalent under row and column permutations. So one way to 
+check this condition is to create a set of sets of both matrices and check equality. But we 
+can do better if we use hashing!
 
-Since the two sets have the same size and one contains the other, they must be equal. 
-Hence R(A) = R(B) and C(A) = C(B) implies that A and B are equivalent under row and column permutations.
-
-(Note that we assumed all entries are distinct in the above proof)\\
-
-\subsection{Set of Sets}
-
-Formally, let $R_i$ be the set of values in row \(i\). 
-
-\[
-R_i = \{a_{i1}, a_{i2}, \dots, a_{im}\}
-\]
-
-The condition requires that the set of all $R_i$ of the matrix $A$ with the 
-set of all $R_i$ of the matrix $B$. 
-
-\[
-\{R_1, R_2, \dots, R_n\}_A = \{R_1, R_2, \dots, R_n\}_B
-\]
-
-We require a similar condition for columns as well. This method is exact but 
-computationally heavy due to the need to construct complex set-of-sets structures which 
-take $\Theta(nm\log(nm))$ time  as well as a lot of space.
-
+\subsection{The Algorithm}
 \begin{center}
 \begin{minipage}{0.9\linewidth}
 \begin{framed}
 \begin{Verbatim}
-set<set<int>>F;//set of sets for first matrix
-for(int i=0;i<n;i++)
-{
-    set<int>temp(first[i].begin(),first[i].end()); //set of ith row
-    F.insert(temp);
-}
+pair_hash(x,y){return x*(2^32)+y;}
 
-for(int i=0;i<n;i++)
+hash_matrix(mat, orientation)
 {
-    set<int>temp(second[i].begin(),second[i].end()); //set of ith row
-    if (!F.count(temp)) //early exit 
-    {
-        cout<<"NO\n";
-        return;
-    }
+	unordered_set s;
+	n=mat.num_rows, m=mat.num_cols;
+	if(orientation=="row")
+	{
+		loop(i from 0 to n-1)
+		{
+		    sum=0,squaresum=0;
+		    loop(j from 0 to m-1)
+		    {
+	        int x=first[i][j];
+	        sum+=x;
+	        squaresum+=x*x;
+	    }
+	    s.insert(pair_hash(sum,squaresum));
+	}
+	else
+	{
+	    loop(i from 0 to m-1)
+	    {
+	        sum=0,squaresum=0;
+	        loop(j from 0 to n-1)
+	        {
+	            int x=first[j][i];
+	            sum+=x;
+	            squaresum+=x*x;
+	        }
+	        s.insert(pair_hash(sum,squaresum));
+	    }
+	}
+	return s;
 }
+unordered_set RA=hash_matrix(A, "row");
+unordered_set RB=hash_matrix(B, "row");
+unordered_set CA=hash_matrix(A, "column");
+unordered_set CB=hash_matrix(B, "column");
+
+print((RA==RB)&&(CA==CB));
 \end{Verbatim}
 \vspace{-4mm}
 \end{framed}
 \end{minipage}
 \end{center}
 
-\subsection{Hashing}
+
+\subsection{Error Probability}
 
 To obtain a more efficient solution, each row is hashed to a pair of values 
 $(\text{sum}, \text{squaresum})$, where $\text{sum}$ and $\text{squaresum}$ denote the 
@@ -328,13 +337,8 @@ sum and sum of squares of elements in the row respectively.
 h(R_i) = \left(\sum_{j=1}^{m} a_{ij}, \sum_{j=1}^{m} a_{ij}^2\right)
 \]
 
-We define a custom hash for a pair $(x,y)$ as $x \cdot 2^{32} + y$
-
-\[
-H(x,y) = x \cdot 2^{32} + y
-\]
-
-So overall the hash for the row is a single value $H(h(R_i))$.
+We defined a custom hash for a pair $(x,y)$ as $H(x,y) = x \cdot 2^{32} + y$ so we can combine the two values 
+into a single hash value. 
 
 \[
 \mathbf{H}(R_i) = H(h(R_i))
@@ -342,137 +346,71 @@ So overall the hash for the row is a single value $H(h(R_i))$.
 
 where $x$ and $y$ are the computed row statistics. This choice of pair hash is popular 
 for 32 bit integers, as it combines the two values into a single 64-bit integer guaranteeing uniqueness. We 
-insert the hashes of all rows of matrix \(A\) into an unordered set and 
-then check if the hashes of rows of matrix \(B\) are present in this set. If any 
-hash from \(B\) is not found in the set from \(A\), we can conclude that the matrices 
-are not equivalent under row permutations.\\
-
-\noindent Similarly for columns, we compute the column hashes and compare them in the same manner. This method has 
-an expected time complexity of \(\Theta(nm)\) due to the linear time required 
-to compute the hashes and the expected constant time for hash set operations.\\
-
-\noindent This method involved hashing so the correctness of the algorithm is itself a random variable - but 
-given the constraint that the matrix entries are from \{1,2,\dots,nm\}, it seems highly 
-unlikely that this will fail. In fact, it seems that this may be a unique hash in this case, but I am yet 
-to find a proof for general (n,m).
-
-\begin{center}
-\begin{minipage}{0.9\linewidth}
-\begin{framed}
-\begin{Verbatim}
-auto pair_hash=[](int x,int y){
-    return ((x)<<32)+y;
-};
-
-unordered_set<long long>s;
-loop(i,n)
-{
-    long long v1=0,v2=0;
-    loop(j,m)
-    {
-        int x=first[i][j];
-        v1+=x;
-        v2+=x*x;
-    }
-    s.insert(pair_hash(v1,v2));
-}
-loop(i,n)
-{
-    long long v1=0,v2=0;
-    loop(j,m)
-    {
-        int x=second[i][j];
-        v1+=x;
-        v2+=x*x;
-    }
-    if(!s.count(pair_hash(v1,v2))) //early exit
-    {
-        cout<<"NO\n";
-        return;
-    }          
-}
-\end{Verbatim}
-\vspace{-4mm}
-\end{framed}
-\end{minipage}
-\end{center}
+insert the hashes of all rows of matrix \(A\) into an unordered set and similarly for matrix \(B\). 
+If the two sets are equal, we conclude that the row sets of the two matrices are equal. The exact same 
+procedure is repeated for the column sets of the two matrices. If both the row and column sets are equal, 
+we conclude that the two matrices are equivalent under row and column permutations. While it is quite 
+complicated to give a rigorous proof of correctness, the intuition is that the additional constraint on the 
+entries of the matrices being distinct integers from 1 to \(nm\) makes a false positive extremely unlikely.\\
 
 \section{A Sliding Window Problem}
+Two integer arrays $x$ and $y$, each of size $n$, are given along with an integer $k$ $(1 \le k \le n)$. For 
+every contiguous subarray (window) of size $k$, determine whether the 
+corresponding windows in $x$ and $y$ contain the same multiset of elements at every position. More precisely, 
+for every index $i$ such that $0 \le i \le n-k$, consider the multisets $\{x_i, x_{i+1}, 
+\dots, x_{i+k-1}\}$ and $\{y_i, y_{i+1}, \dots, y_{i+k-1}\}$ and check whether they 
+are identical for all $i$.
 
-\textbf{The Problem} Two integer arrays $x$ and $y$, each of size $n$, are given along with an integer $k$ $(1 \le k \le n)$. For every contiguous subarray (window) of size $k$, determine whether the corresponding windows in $x$ and $y$ contain the same multiset of elements at every position.
 
-More precisely, for every index (1-based) $i$ such that $1 \le i \le n-k+1$, we compare the multisets:
-\[
-\{x_i, x_{i+1}, \dots, x_{i+k-1}\} \quad \text{and} \quad \{y_i, y_{i+1}, \dots, y_{i+k-1}\}
-\]
-and check whether they are identical for all $i$.
-
-\subsection*{Rolling Hash Method}
-
-To obtain an efficient solution, we maintain two rolling hashes for each window:
-\[
-S = \sum a_i, \quad Q = \sum a_i^2
-\]
-
-These values can be updated in $\Theta(1)$ time when the window slides by removing the outgoing element and adding the incoming element.
-
-For each position $i$, we compute:
-\[
-(S_x(i), Q_x(i)) \quad \text{and} \quad (S_y(i), Q_y(i))
-\]
-and check whether:
-\[
-(S_x(i), Q_x(i)) = (S_y(i), Q_y(i))
-\]
-
-If the condition holds for all $i$, we conclude that every corresponding window has identical multiset structure.\\
+\subsection{The Algorithm}
 
 \begin{center}
 \begin{minipage}{0.9\linewidth}
 \begin{framed}
 \begin{Verbatim}
-long long sumX=0,sumY=0;
-long long sumX2=0,sumY2=0;
-
-for(int i=0;i<k;i++)
+bool ok=1;
+sumX=0,sumY=0; //X is for array x, Y is for array y
+sumX2=0,sumY2=0; 
+loop(i from 0 to k-1)
 {
     sumX+=x[i];
     sumY+=y[i];
     sumX2+=x[i]*x[i];
     sumY2+=y[i]*y[i];
 }
-
-bool ok=1;
-for(int i=k;i<n;i++)
+if(!((sumX==sumY)&&(sumX2==sumY2)))
+	ok=0;
+loop(i from k to n-1)
 {
     if(!((sumX==sumY)&&(sumX2==sumY2)))
-    {
-        ok=0;
-        break;
-    }
-
-    sumX-=x[i-k];
-    sumX+=x[i];
-    sumX2-=x[i-k]*x[i-k];
-    sumX2+=x[i]*x[i];
-
-    sumY-=y[i-k];
-    sumY+=y[i];
-    sumY2-=y[i-k]*y[i-k];
-    sumY2+=y[i]*y[i];
+		ok=0;
+    sumX+=x[i]-x[i-k];
+    sumX2+=x[i]*x[i]-x[i-k]*x[i-k];
+    sumY+=y[i]-y[i-k];
+    sumY2+=y[i]*y[i]-y[i-k]*y[i-k];
 }
-cout<<(ok?"YES":"NO");
+
+print(ok);
 \end{Verbatim}
 \vspace{-4mm}
 \end{framed}
 \end{minipage}
 \end{center}
 
-This method is very easy to implement and runs in $\Theta(n)$ time, which is efficient for this problem. 
-What was especially nice about this method is that we can maintain the hash values in constant time as the window slides, 
-which is what I meant by using a \textbf{rolling hash}.
-However, it relies on the assumption that the hash values are unique for different multisets.
-We can improve this (if needed) by doing a second round of hashing with a different hash function like polynomial hashing. 
+\subsection{Time Complexity}
+
+We used the hash $\left(\sum a_i,\;\sum a_i^2\right)$ for each 
+window of size $k$ in both arrays so we can compare the two windows in $\Theta(1)$ time. The additional 
+benefit is that the change in the hash when the window slides by one position 
+can also be computed in $\Theta(1)$ time\footnote{This kind of a hash is called a \emph{rolling hash}.}! Thus 
+the overall time complexity is $\Theta(n)$, which is optimal since we have to at least read 
+all the elements of both arrays.\\
+
+\subsection{Error Probability}
+It is quite difficult to show an upper bound on the probability of a false positive for this 
+problem, but it is quite intuitive that for integer valued arrays it is very unlikely for 
+both quantities to be same. Despite my best efforts, I was unable to find a counterexample for 
+the overall solution of this problem$\dots$ 
 
 \clearpage
 \section{Problems}
@@ -527,8 +465,9 @@ Q(\mathcal H)=\frac{\sum\limits_{x\neq y} \left(\Pr\limits_{h \in \mathcal H}(h(
 \item Use the result from \textbf{(f)} and apply the pigeonhole principle to conclude that there 
 exists a pair of keys $x^*,y^*$ such that\footnote{This conclusion shows why universal hash families 
 operating on a large domain have the requirement of collision probability upper bound $\frac{1}{m}$, 
-because the guarantee is approximately optimal for $n \gg m$. Any guarantee smaller than that would get violated because the 
-pigeonhole principle shows the existence of a pair of keys which violate any guarantee smaller than $\frac{1}{m}$.}
+because the guarantee is optimal for $n \gg m$. Any guarantee smaller than that is impossible 
+because the pigeonhole principle shows the existence of a pair of keys 
+which violate any guarantee smaller than $\frac{1}{m}$.}
 
 \[
 	\Pr\limits_{h \in \mathcal H}(h(x^*)=h(y^*)) \ge \frac{n-m}{m(n-1)} \approx \frac{1}{m}
@@ -542,5 +481,52 @@ pigeonhole principle shows the existence of a pair of keys which violate any gua
 For hashes of form $H(x)=(ax+b)\bmod c$, why is it preferred to have c as a prime number? \textit{Hint: Think of 
 the arithmetic progression (a very common occurrence in data) with common difference d - 
 what happens when d is not coprime with c?}
+
+\item[\textbf{3}]
+An array is called \emph{good} if its elements can be rearranged into consecutive integers. More precisely,
+an array $b$ of length $l$ is good if its elements can be rearranged into $x,x+1,\dots,x+l-1$ 
+for some integer $x$. Consider a pair of disjoint subarrays of equal length $l$ of an array to be 
+\emph{noice} if they both are good and their concatenation is good. The task is to print the maximum value of 
+$l$ for a given array $A$. 
+
+For example, for the array $A=[2,1,5,3,4]$, the maximum value of $l$ is 2 because the subarrays
+$[2,1]$ and $[3,4]$ are good and their concatenation $[2,1,3,4]$ is also good and we can not have a bigger 
+$l$ because the total length is $5$.
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item Let $A=[a_0,a_1,\dots,a_{l-1}]$ and $S(A)=\sum\limits_{i=0}^{l-1} a_i,\; 
+Q(A)=\sum\limits_{i=0}^{l-1} a_i^2$. Show that $A$ is good if 
+
+\[
+lQ(A)-S^2(A)=\frac{l^2(l^2-1)}{12}
+\]
+
+\item Write a loop which uses the above property to implement a rolling hash to detect all good subarrays of 
+length $l$ in an array of size $n$ in overall $\Theta(n)$ time. 
+
+\item In a noice pair of subarrays $A_1$ and $A_2$ of length $l$ each, show that 
+
+\[
+|S(A_1)-S(A_2)|=l^2
+\]
+
+\item Consider that for a given $l$, we do a single linear pass over the array in order to detect at 
+least one noice pair of subarrays of length $l$ each if such a pair exists. Show that it suffices to store 
+a mapping of $S(A)$ to the earliest occurence of that $S(A)$ seen among the good subarrays, and at each 
+index $i$ check whether $S(A)-l^2$ or $S(A)+l^2$ has been seen before. Think of how we can use the information of 
+the earliest occurence to ensure that the two subarrays are disjoint. 
+
+\item Finalise the above ideas into a complete algorithm of time complexity at most $\Theta(n^2\log n)$ using 
+ordered maps or $\Theta(n^2)$ using unordered maps for an input array of size $n$.
+
+\item Use the idea that variance is shift-invariant (adding a constant to all 
+elements does not change the variance) to show the result from \textbf{(a)} without brute calculation.
+
+\[
+l\cdot Q(A)-S^2(A) = l \cdot var(\{x,x+1,\dots,x+l-1\}) 
+\]
+
+
+\end{enumerate}
 
 \end{enumerate}
