@@ -132,114 +132,110 @@
 \contentsline {subsection}{\numberline {8.4.3}Success Probability}{82}{subsection.8.4.3}%
 \contentsline {subsection}{\numberline {8.4.4}Expected Time Complexity}{84}{subsection.8.4.4}%
 \contentsline {subsection}{\numberline {8.4.5}Conjecture}{84}{subsection.8.4.5}%
-\contentsline {subsection}{\numberline {8.4.6}Derandomisation}{84}{subsection.8.4.6}%
-\contentsline {chapter}{\numberline {9}Online Algorithms}{86}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Introduction}{86}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Dating}{86}{section.9.2}%
-\contentsline {section}{\numberline {9.3}Load Balancing}{89}{section.9.3}%
-\contentsline {section}{\numberline {9.4}Distinct Elements}{91}{section.9.4}%
-\contentsline {subsection}{\numberline {9.4.1}Flajolet–Martin Method}{91}{subsection.9.4.1}%
-\contentsline {subsection}{\numberline {9.4.2}HyperLogLog Method}{93}{subsection.9.4.2}%
-\contentsline {chapter}{\numberline {10}Heuristic Algorithms}{95}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Introduction}{95}{section.10.1}%
-\contentsline {section}{\numberline {10.2}Dominating Set Revisited}{95}{section.10.2}%
-\contentsline {section}{\numberline {10.3}Independent Set}{97}{section.10.3}%
-\contentsline {subsection}{\numberline {10.3.1}Random Permutation}{97}{subsection.10.3.1}%
-\contentsline {subsection}{\numberline {10.3.2}Local Decision}{98}{subsection.10.3.2}%
-\contentsline {section}{\numberline {10.4}Bipartite Subgraph Revisited}{100}{section.10.4}%
-\contentsline {subsection}{\numberline {10.4.1}Self-Correction}{100}{subsection.10.4.1}%
-\contentsline {chapter}{\numberline {11}Game Theoretic Algorithms}{101}{chapter.11}%
-\contentsline {section}{\numberline {11.1}Definitions}{101}{section.11.1}%
-\contentsline {section}{\numberline {11.2}Nash Equilibria}{101}{section.11.2}%
-\contentsline {subsection}{\numberline {11.2.1}Kingdom's Dilemma}{102}{subsection.11.2.1}%
-\contentsline {subsection}{\numberline {11.2.2}Penalty Kick}{102}{subsection.11.2.2}%
-\contentsline {section}{\numberline {11.3}Mixed Strategies}{103}{section.11.3}%
-\contentsline {section}{\numberline {11.4}Mixed Strategy Nash Equilibria}{103}{section.11.4}%
-\contentsline {section}{\numberline {11.5}Indifference Theorem}{104}{section.11.5}%
-\contentsline {section}{\numberline {11.6}The Minimax Principle}{104}{section.11.6}%
-\contentsline {section}{\numberline {11.7}Problems}{105}{section.11.7}%
-\contentsline {chapter}{\numberline {12}Zero-Knowledge Proofs}{106}{chapter.12}%
-\contentsline {section}{\numberline {12.1}Definitions}{106}{section.12.1}%
-\contentsline {section}{\numberline {12.2}Card Color}{107}{section.12.2}%
-\contentsline {subsection}{\numberline {12.2.1}The Scheme}{107}{subsection.12.2.1}%
-\contentsline {subsection}{\numberline {12.2.2}Completeness and Soundness}{107}{subsection.12.2.2}%
-\contentsline {section}{\numberline {12.3}Graph Isomorphism}{107}{section.12.3}%
-\contentsline {subsection}{\numberline {12.3.1}The Scheme}{108}{subsection.12.3.1}%
-\contentsline {subsection}{\numberline {12.3.2}Soundness and Completeness}{108}{subsection.12.3.2}%
-\contentsline {subsection}{\numberline {12.3.3}Game Theory Perspective}{109}{subsection.12.3.3}%
-\contentsline {chapter}{\numberline {13}Derandomization}{110}{chapter.13}%
-\contentsline {section}{\numberline {13.1}Introduction}{110}{section.13.1}%
-\contentsline {section}{\numberline {13.2}Independence}{110}{section.13.2}%
-\contentsline {subsection}{\numberline {13.2.1}Mutual Independence}{110}{subsection.13.2.1}%
-\contentsline {subsection}{\numberline {13.2.2}k-Wise Independence}{110}{subsection.13.2.2}%
-\contentsline {section}{\numberline {13.3}Generating Independent Bits}{111}{section.13.3}%
-\contentsline {subsection}{\numberline {13.3.1}Pairwise Independent}{111}{subsection.13.3.1}%
-\contentsline {section}{\numberline {13.4}Bipartite Subgraph Re-revisited}{111}{section.13.4}%
-\contentsline {section}{\numberline {13.5}Pairwise Independence}{111}{section.13.5}%
-\contentsline {section}{\numberline {13.6}MAX-CUT with Only $\Theta (\log n)$ Random Bits}{111}{section.13.6}%
-\contentsline {section}{\numberline {13.7}$k$-Wise Independence}{112}{section.13.7}%
-\contentsline {section}{\numberline {13.8}Polynomial Construction of $k$-Wise Independent Variables}{112}{section.13.8}%
-\contentsline {section}{\numberline {13.9}Why Use $k$-Wise Independence?}{112}{section.13.9}%
-\contentsline {section}{\numberline {13.10}The Method of Conditional Expectations}{113}{section.13.10}%
-\contentsline {section}{\numberline {13.11}Pseudorandom Generators}{113}{section.13.11}%
-\contentsline {section}{\numberline {13.12}Expander Walks}{113}{section.13.12}%
-\contentsline {section}{\numberline {13.13}The Complexity-Theoretic View}{113}{section.13.13}%
-\contentsline {chapter}{Appendices}{114}{section*.80}%
-\contentsline {chapter}{\numberline {A}Probability and Expectation}{115}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Linearity of Expectation}{115}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Tail Sum Formula}{115}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Union Bound}{115}{section.A.3}%
-\contentsline {section}{\numberline {A.4}Independence of Expectation}{115}{section.A.4}%
-\contentsline {section}{\numberline {A.5}Variance}{115}{section.A.5}%
-\contentsline {section}{\numberline {A.6}Indicator Variables}{116}{section.A.6}%
-\contentsline {section}{\numberline {A.7}Law of Total Expectation}{116}{section.A.7}%
-\contentsline {section}{\numberline {A.8}Wald's Equation}{116}{section.A.8}%
-\contentsline {chapter}{\numberline {B}Inequalities}{118}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Exponential Inequality}{118}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Jensen’s Inequality}{118}{section.B.2}%
-\contentsline {section}{\numberline {B.3}Markov's Inequality}{119}{section.B.3}%
-\contentsline {section}{\numberline {B.4}Bernoulli's Inequality}{120}{section.B.4}%
-\contentsline {chapter}{\numberline {C}Convergence and Limit Theorems}{121}{appendix.C}%
-\contentsline {section}{\numberline {C.1}Identical and Independently Distributed Random Variables}{121}{section.C.1}%
-\contentsline {section}{\numberline {C.2}Almost Surely}{121}{section.C.2}%
-\contentsline {section}{\numberline {C.3}Almost Never}{121}{section.C.3}%
-\contentsline {section}{\numberline {C.4}$\lim \limits _{n\to \infty }X_n=Y$}{122}{section.C.4}%
-\contentsline {section}{\numberline {C.5}Convergence in Probability}{122}{section.C.5}%
-\contentsline {section}{\numberline {C.6}The Weak Law of Large Numbers}{122}{section.C.6}%
-\contentsline {section}{\numberline {C.7}Almost Sure Convergence}{123}{section.C.7}%
-\contentsline {section}{\numberline {C.8}$A_n$ infinitely often}{123}{section.C.8}%
-\contentsline {section}{\numberline {C.9}The Borel--Cantelli Lemmas}{123}{section.C.9}%
-\contentsline {section}{\numberline {C.10}The Strong Law of Large Numbers}{124}{section.C.10}%
-\contentsline {section}{\numberline {C.11}Convergence in Distribution}{124}{section.C.11}%
-\contentsline {section}{\numberline {C.12}The Central Limit Theorem}{125}{section.C.12}%
-\contentsline {chapter}{\numberline {D}Discrete Mathematics}{126}{appendix.D}%
-\contentsline {section}{\numberline {D.1}Pigeonhole Principle}{126}{section.D.1}%
-\contentsline {section}{\numberline {D.2}Relations}{126}{section.D.2}%
-\contentsline {subsection}{\numberline {D.2.1}Partial Orders}{126}{subsection.D.2.1}%
-\contentsline {subsection}{\numberline {D.2.2}Equivalence Relations}{127}{subsection.D.2.2}%
-\contentsline {section}{\numberline {D.3}Graph Theory}{127}{section.D.3}%
-\contentsline {subsection}{\numberline {D.3.1}Degree}{127}{subsection.D.3.1}%
-\contentsline {subsection}{\numberline {D.3.2}Bipartite Graph}{127}{subsection.D.3.2}%
-\contentsline {subsection}{\numberline {D.3.3}Subgraph}{127}{subsection.D.3.3}%
-\contentsline {subsection}{\numberline {D.3.4}Clique}{127}{subsection.D.3.4}%
-\contentsline {chapter}{\numberline {E}Abstract Algebra}{128}{appendix.E}%
-\contentsline {section}{\numberline {E.1}Rings}{128}{section.E.1}%
-\contentsline {section}{\numberline {E.2}Fields}{128}{section.E.2}%
-\contentsline {subsection}{\numberline {E.2.1}Division}{128}{subsection.E.2.1}%
-\contentsline {subsection}{\numberline {E.2.2}Finite Fields}{129}{subsection.E.2.2}%
-\contentsline {section}{\numberline {E.3}Polynomial Rings}{129}{section.E.3}%
-\contentsline {subsection}{\numberline {E.3.1}Degree}{129}{subsection.E.3.1}%
-\contentsline {subsection}{\numberline {E.3.2}Division Algorithm}{129}{subsection.E.3.2}%
-\contentsline {subsection}{\numberline {E.3.3}Factor Theorem}{129}{subsection.E.3.3}%
-\contentsline {subsection}{\numberline {E.3.4}Irreducible Polynomials}{129}{subsection.E.3.4}%
-\contentsline {section}{\numberline {E.4}Construction of $\mathbb F_{2^k}$}{129}{section.E.4}%
-\contentsline {subsection}{\numberline {E.4.1}Addition}{130}{subsection.E.4.1}%
-\contentsline {subsection}{\numberline {E.4.2}Multiplication}{130}{subsection.E.4.2}%
-\contentsline {chapter}{\numberline {F}Linear Algebra}{131}{appendix.F}%
-\contentsline {section}{\numberline {F.1}Vector Spaces}{131}{section.F.1}%
-\contentsline {section}{\numberline {F.2}Subspaces}{131}{section.F.2}%
-\contentsline {section}{\numberline {F.3}Dimension of a Subspace}{131}{section.F.3}%
-\contentsline {section}{\numberline {F.4}The Nullspace}{132}{section.F.4}%
-\contentsline {section}{\numberline {F.5}Nullity and Rank}{132}{section.F.5}%
-\contentsline {section}{\numberline {F.6}The Rank--Nullity Theorem}{132}{section.F.6}%
-\contentsline {paragraph}{Theorem (Rank--Nullity).}{132}{section*.92}%
+\contentsline {chapter}{\numberline {9}Online Algorithms}{85}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Introduction}{85}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Dating}{85}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Load Balancing}{88}{section.9.3}%
+\contentsline {section}{\numberline {9.4}Distinct Elements}{90}{section.9.4}%
+\contentsline {subsection}{\numberline {9.4.1}Flajolet–Martin Method}{90}{subsection.9.4.1}%
+\contentsline {subsection}{\numberline {9.4.2}HyperLogLog Method}{92}{subsection.9.4.2}%
+\contentsline {chapter}{\numberline {10}Heuristic Algorithms}{94}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Introduction}{94}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Dominating Set Revisited}{94}{section.10.2}%
+\contentsline {section}{\numberline {10.3}Independent Set}{96}{section.10.3}%
+\contentsline {subsection}{\numberline {10.3.1}Random Permutation}{96}{subsection.10.3.1}%
+\contentsline {subsection}{\numberline {10.3.2}Local Decision}{97}{subsection.10.3.2}%
+\contentsline {section}{\numberline {10.4}Bipartite Subgraph Revisited}{99}{section.10.4}%
+\contentsline {subsection}{\numberline {10.4.1}Self-Correction}{99}{subsection.10.4.1}%
+\contentsline {chapter}{\numberline {11}Game Theoretic Algorithms}{100}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Definitions}{100}{section.11.1}%
+\contentsline {section}{\numberline {11.2}Nash Equilibria}{100}{section.11.2}%
+\contentsline {subsection}{\numberline {11.2.1}Kingdom's Dilemma}{101}{subsection.11.2.1}%
+\contentsline {subsection}{\numberline {11.2.2}Penalty Kick}{101}{subsection.11.2.2}%
+\contentsline {section}{\numberline {11.3}Mixed Strategies}{102}{section.11.3}%
+\contentsline {section}{\numberline {11.4}Mixed Strategy Nash Equilibria}{102}{section.11.4}%
+\contentsline {section}{\numberline {11.5}Indifference Theorem}{103}{section.11.5}%
+\contentsline {section}{\numberline {11.6}The Minimax Principle}{103}{section.11.6}%
+\contentsline {section}{\numberline {11.7}Problems}{104}{section.11.7}%
+\contentsline {chapter}{\numberline {12}Zero-Knowledge Proofs}{105}{chapter.12}%
+\contentsline {section}{\numberline {12.1}Definitions}{105}{section.12.1}%
+\contentsline {section}{\numberline {12.2}Card Color}{106}{section.12.2}%
+\contentsline {subsection}{\numberline {12.2.1}The Scheme}{106}{subsection.12.2.1}%
+\contentsline {subsection}{\numberline {12.2.2}Completeness and Soundness}{106}{subsection.12.2.2}%
+\contentsline {section}{\numberline {12.3}Graph Isomorphism}{106}{section.12.3}%
+\contentsline {subsection}{\numberline {12.3.1}The Scheme}{107}{subsection.12.3.1}%
+\contentsline {subsection}{\numberline {12.3.2}Soundness and Completeness}{107}{subsection.12.3.2}%
+\contentsline {subsection}{\numberline {12.3.3}Game Theory Perspective}{108}{subsection.12.3.3}%
+\contentsline {chapter}{\numberline {13}Derandomisation}{109}{chapter.13}%
+\contentsline {section}{\numberline {13.1}Introduction}{109}{section.13.1}%
+\contentsline {section}{\numberline {13.2}Independence}{109}{section.13.2}%
+\contentsline {subsection}{\numberline {13.2.1}Mutual Independence}{109}{subsection.13.2.1}%
+\contentsline {subsection}{\numberline {13.2.2}k-Wise Independence}{109}{subsection.13.2.2}%
+\contentsline {section}{\numberline {13.3}Generating Pairwise Independent Bits}{109}{section.13.3}%
+\contentsline {subsection}{\numberline {13.3.1}Linear Map}{110}{subsection.13.3.1}%
+\contentsline {subsection}{\numberline {13.3.2}XOR Construction}{110}{subsection.13.3.2}%
+\contentsline {subsection}{\numberline {13.3.3}Minimum Cost}{111}{subsection.13.3.3}%
+\contentsline {section}{\numberline {13.4}Bipartite Subgraph Yet Again}{113}{section.13.4}%
+\contentsline {subsection}{\numberline {13.4.1}The Algorithm}{113}{subsection.13.4.1}%
+\contentsline {subsection}{\numberline {13.4.2}Time Complexity}{113}{subsection.13.4.2}%
+\contentsline {subsection}{\numberline {13.4.3}Method Of Conditional Expectation}{114}{subsection.13.4.3}%
+\contentsline {section}{\numberline {13.5}Problems}{116}{section.13.5}%
+\contentsline {chapter}{Appendices}{118}{section*.82}%
+\contentsline {chapter}{\numberline {A}Probability and Expectation}{119}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Linearity of Expectation}{119}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Tail Sum Formula}{119}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Union Bound}{119}{section.A.3}%
+\contentsline {section}{\numberline {A.4}Independence of Expectation}{119}{section.A.4}%
+\contentsline {section}{\numberline {A.5}Variance}{119}{section.A.5}%
+\contentsline {section}{\numberline {A.6}Indicator Variables}{120}{section.A.6}%
+\contentsline {section}{\numberline {A.7}Law of Total Expectation}{120}{section.A.7}%
+\contentsline {section}{\numberline {A.8}Wald's Equation}{120}{section.A.8}%
+\contentsline {chapter}{\numberline {B}Inequalities}{122}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Exponential Inequality}{122}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Jensen’s Inequality}{122}{section.B.2}%
+\contentsline {section}{\numberline {B.3}Markov's Inequality}{123}{section.B.3}%
+\contentsline {section}{\numberline {B.4}Bernoulli's Inequality}{124}{section.B.4}%
+\contentsline {chapter}{\numberline {C}Convergence and Limit Theorems}{125}{appendix.C}%
+\contentsline {section}{\numberline {C.1}Identical and Independently Distributed Random Variables}{125}{section.C.1}%
+\contentsline {section}{\numberline {C.2}Almost Surely}{125}{section.C.2}%
+\contentsline {section}{\numberline {C.3}Almost Never}{125}{section.C.3}%
+\contentsline {section}{\numberline {C.4}$\lim \limits _{n\to \infty }X_n=Y$}{126}{section.C.4}%
+\contentsline {section}{\numberline {C.5}Convergence in Probability}{126}{section.C.5}%
+\contentsline {section}{\numberline {C.6}The Weak Law of Large Numbers}{126}{section.C.6}%
+\contentsline {section}{\numberline {C.7}Almost Sure Convergence}{127}{section.C.7}%
+\contentsline {section}{\numberline {C.8}$A_n$ infinitely often}{127}{section.C.8}%
+\contentsline {section}{\numberline {C.9}The Borel--Cantelli Lemmas}{127}{section.C.9}%
+\contentsline {section}{\numberline {C.10}The Strong Law of Large Numbers}{128}{section.C.10}%
+\contentsline {section}{\numberline {C.11}Convergence in Distribution}{128}{section.C.11}%
+\contentsline {section}{\numberline {C.12}The Central Limit Theorem}{129}{section.C.12}%
+\contentsline {chapter}{\numberline {D}Discrete Mathematics}{130}{appendix.D}%
+\contentsline {section}{\numberline {D.1}Pigeonhole Principle}{130}{section.D.1}%
+\contentsline {section}{\numberline {D.2}Relations}{130}{section.D.2}%
+\contentsline {subsection}{\numberline {D.2.1}Partial Orders}{130}{subsection.D.2.1}%
+\contentsline {subsection}{\numberline {D.2.2}Equivalence Relations}{131}{subsection.D.2.2}%
+\contentsline {section}{\numberline {D.3}Graph Theory}{131}{section.D.3}%
+\contentsline {subsection}{\numberline {D.3.1}Degree}{131}{subsection.D.3.1}%
+\contentsline {subsection}{\numberline {D.3.2}Bipartite Graph}{131}{subsection.D.3.2}%
+\contentsline {subsection}{\numberline {D.3.3}Subgraph}{131}{subsection.D.3.3}%
+\contentsline {subsection}{\numberline {D.3.4}Clique}{131}{subsection.D.3.4}%
+\contentsline {chapter}{\numberline {E}Abstract Algebra}{132}{appendix.E}%
+\contentsline {section}{\numberline {E.1}Rings}{132}{section.E.1}%
+\contentsline {section}{\numberline {E.2}Fields}{132}{section.E.2}%
+\contentsline {subsection}{\numberline {E.2.1}Division}{132}{subsection.E.2.1}%
+\contentsline {subsection}{\numberline {E.2.2}Finite Fields}{133}{subsection.E.2.2}%
+\contentsline {section}{\numberline {E.3}Polynomial Rings}{133}{section.E.3}%
+\contentsline {subsection}{\numberline {E.3.1}Degree}{133}{subsection.E.3.1}%
+\contentsline {subsection}{\numberline {E.3.2}Division Algorithm}{133}{subsection.E.3.2}%
+\contentsline {subsection}{\numberline {E.3.3}Factor Theorem}{133}{subsection.E.3.3}%
+\contentsline {subsection}{\numberline {E.3.4}Irreducible Polynomials}{133}{subsection.E.3.4}%
+\contentsline {section}{\numberline {E.4}Construction of $\mathbb F_{2^k}$}{133}{section.E.4}%
+\contentsline {subsection}{\numberline {E.4.1}Addition}{134}{subsection.E.4.1}%
+\contentsline {subsection}{\numberline {E.4.2}Multiplication}{134}{subsection.E.4.2}%
+\contentsline {chapter}{\numberline {F}Linear Algebra}{135}{appendix.F}%
+\contentsline {section}{\numberline {F.1}Vector Spaces}{135}{section.F.1}%
+\contentsline {section}{\numberline {F.2}Subspaces}{135}{section.F.2}%
+\contentsline {section}{\numberline {F.3}Dimension of a Subspace}{135}{section.F.3}%
+\contentsline {section}{\numberline {F.4}The Nullspace}{136}{section.F.4}%
+\contentsline {section}{\numberline {F.5}Nullity and Rank}{136}{section.F.5}%
+\contentsline {section}{\numberline {F.6}The Rank--Nullity Theorem}{136}{section.F.6}%
+\contentsline {paragraph}{Theorem (Rank--Nullity).}{136}{section*.94}%
